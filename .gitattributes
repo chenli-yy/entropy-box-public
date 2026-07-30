@@ -1,0 +1,5 @@
+# 大体积生成物：文本压缩正常，但每次重编译会产生大 diff。
+# 若开始频繁重新生成，考虑改用 Git LFS 或只在 release 里附带。
+*.json  -diff
+*.mp4   binary
+*.jpg   binary

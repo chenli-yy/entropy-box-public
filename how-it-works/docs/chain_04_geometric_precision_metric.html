@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>分链调研 04 · 几何精度度量 · 箱熵图谱原始材料</title>
+<style>
+:root {
+  --bg:#000; --panel:#1c1c1e; --panel2:#2c2c2e; --border:#38383a;
+  --text:#ebebf0; --bright:#fff; --muted:#98989f; --accent:#0a84ff; --code:#64d2ff;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  font-size:15px; line-height:1.85;
+}
+.doc-top {
+  position:sticky; top:0; z-index:10;
+  background:rgba(0,0,0,.82); backdrop-filter:blur(14px);
+  border-bottom:.5px solid var(--border);
+  padding:14px 28px; display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+}
+.doc-top a {
+  color:var(--muted); text-decoration:none; font-size:13px;
+  border:.5px solid var(--border); border-radius:8px; padding:5px 12px;
+}
+.doc-top a:hover { color:var(--accent); border-color:var(--accent); }
+.doc-top h1 { font-size:16px; font-weight:650; color:var(--bright); margin:0; }
+.doc-top .sub { font-size:12.5px; color:var(--muted); flex-basis:100%; margin:0; }
+.doc-note {
+  max-width:980px; margin:22px auto 0; padding:0 28px;
+}
+.doc-note div {
+  font-size:12.5px; line-height:1.75; color:var(--muted);
+  background:rgba(251,191,36,.07); border:1px solid rgba(251,191,36,.28);
+  border-radius:10px; padding:11px 14px;
+}
+.doc-body { max-width:980px; margin:0 auto; padding:10px 28px 90px; }
+.doc-body h1 { font-size:26px; color:var(--bright); margin:34px 0 14px; line-height:1.4; }
+.doc-body h2 {
+  font-size:20px; color:var(--bright); margin:34px 0 12px;
+  padding-bottom:8px; border-bottom:.5px solid var(--border);
+}
+.doc-body h3 { font-size:17px; color:var(--bright); margin:26px 0 10px; }
+.doc-body h4 { font-size:15px; color:var(--text); margin:20px 0 8px; }
+.doc-body p { margin:10px 0; }
+.doc-body a { color:var(--accent); word-break:break-all; }
+.doc-body code {
+  font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px;
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:5px; padding:1px 6px; color:var(--code);
+}
+.doc-body pre {
+  background:var(--panel); border:1px solid var(--border); border-radius:10px;
+  padding:14px 16px; overflow-x:auto; line-height:1.65;
+}
+.doc-body pre code { background:none; border:none; padding:0; color:#d7dde5; }
+.doc-body blockquote {
+  margin:14px 0; padding:8px 16px; color:var(--muted);
+  border-left:3px solid var(--accent); background:rgba(10,132,255,.06);
+  border-radius:0 8px 8px 0;
+}
+.doc-body blockquote p { margin:4px 0; }
+.doc-body table {
+  border-collapse:collapse; width:100%; margin:14px 0;
+  font-size:13px; display:block; overflow-x:auto;
+}
+.doc-body th, .doc-body td {
+  border:1px solid var(--border); padding:7px 11px; text-align:left; vertical-align:top;
+}
+.doc-body th { background:var(--panel2); color:var(--bright); white-space:nowrap; }
+.doc-body tr:nth-child(even) td { background:rgba(255,255,255,.02); }
+.doc-body ul, .doc-body ol { padding-left:24px; margin:10px 0; }
+.doc-body li { margin:5px 0; }
+.doc-body hr { border:none; border-top:.5px solid var(--border); margin:30px 0; }
+.doc-body strong { color:var(--bright); }
+.doc-stamp {
+  display:block; margin-top:6px; padding-top:6px;
+  border-top:1px solid rgba(251,191,36,.22);
+  font-size:11.5px; color:#a9a297;
+  font-family:ui-monospace,Menlo,Consolas,monospace;
+}
+@media (max-width:640px) {
+  .doc-top, .doc-body, .doc-note { padding-left:16px; padding-right:16px; }
+  body { font-size:14.5px; }
+}
+</style></head>
+<body>
+<div class="doc-top">
+  <a href="/">&larr; 返回图谱</a>
+  <h1>分链调研 04 · 几何精度度量</h1>
+  <p class="sub">Geometric Precision Metric（ADD / VSD / ISO 9283）</p>
+</div>
+<div class="doc-note"><div>原件直出，未做删改或美化 —— 这就是 Agent 实际读到 / 实际写出的文件。 文末「12. 检索日志」一节即取证台账：每条 WebSearch/WebFetch 都登记了 query、命中数与用在正文第几节。
+<span class="doc-stamp">快照于 2026-07-25 18:21 冻结（35.4 KB &middot; sha256 a3729968），此后源文件的改动不会影响本页。</span></div></div>
+<div class="doc-body">
+<h1>evaluation_metric_definition 分链调研：链 04 几何精度度量</h1>
+<blockquote>
+<p>范式定位：用连续几何误差（ADD/ADD-S 距离、BOP VSD/MSSD/MSPD、GraspNet AP、ISO 9283 位姿精度/重复性）衡量感知模块（6D 位姿估计、抓取检测）或机器人本体的精度，是"估得多准"的连续度量范式。区别于链01的离散二值成功（"任务成没成"），本链衡量"估/做得多准"——即使任务成功，位姿误差也有高低之分。<br>
+状态：✅ 建议保留</p>
+</blockquote>
+<h2>1. 真实系统定位</h2>
+<p>本链对应的真实工程系统是三套几何精度评估基准：BOP（6D 物体位姿估计基准）、GraspNet-1Billion（抓取姿态检测基准）、ISO 9283（工业机器人位姿精度/重复性标准）。三者都用量化几何误差衡量精度，但分别面向感知（位姿/抓取）与机器人本体。</p>
+<h3>1.1 BOP Toolkit（thodan/bop_toolkit）</h3>
+<ul>
+<li>仓库 URL: <a href="https://github.com/thodan/bop_toolkit" target="_blank" rel="noopener nofollow">https://github.com/thodan/bop_toolkit</a></li>
+<li>star / last commit / license: MIT / 2026-06-20 / MIT</li>
+<li>论文: Hodaň et al. "BOP: Benchmark for 6D Object Pose Estimation" (ECCV 2018); Hodaň et al. 2020</li>
+<li>README 原文："A Python toolkit of the BOP benchmark for 6D object pose estimation"</li>
+<li>核心模块（README 明示）：</li>
+<li><code>bop_toolkit_lib</code> — 核心 Python 库，I/O 操作、位姿误差计算、渲染</li>
+<li><code>scripts/eval_bop24_pose.py</code> — BOP 2024 6D 检测任务评估（支持 GPU）</li>
+<li><code>scripts/eval_bop19_pose.py</code> — BOP 2019 6D 定位任务评估</li>
+<li><code>scripts/eval_bop22_coco.py</code> — 检测/实例分割评估（COCO 格式）</li>
+<li>安装: <code>pip install .</code> 或 <code>uv sync</code>，Python 3.8-3.12</li>
+<li>评估指标: ADD, ADD-S, VSD, MSSD, MSPD, Average Recall (AR)</li>
+<li>注册表已有: <code>CAP_64059919</code>（BOP VSD MSSD MSPD Computation）</li>
+</ul>
+<h3>1.2 BOP 评估指标体系</h3>
+<p>BOP 基准定义了三类几何误差指标（Hodaň et al. ECCV 2018）：</p>
+<h4>1.2.1 ADD (Average Distance) 与 ADD-S</h4>
+<ul>
+<li><strong>ADD</strong>：对非对称物体，计算预测位姿与 GT 位姿下模型顶点平均距离：ADD = mean(||R·x_i + t - R_gt·x_i - t_gt||)，threshold 通常 0.1d（d=模型直径）</li>
+<li><strong>ADD-S</strong>：对对称物体，用最近点匹配替代对应点匹配：ADD-S = mean(min_j ||R·x_i + t - R_gt·x_j - t_gt||)</li>
+<li>BOP 2019 后统一用 VSD/MSSD/MSPD 取代 ADD/ADD-S 作为主指标，但 ADD/ADD-S 仍广泛用于论文报告</li>
+</ul>
+<h4>1.2.2 VSD (Visible Surface Discrepancy)</h4>
+<ul>
+<li>仅比较可见表面（渲染深度图遮蔽）的距离差异</li>
+<li>需要 depth 渲染；考虑物体可见性</li>
+<li>输入：predicted pose + GT pose + depth + camera + object model</li>
+<li>输出：VSD ∈ [0, ∞)，threshold 通常 0.05m</li>
+</ul>
+<h4>1.2.3 MSSD (Maximum Symmetry-Aware Surface Distance)</h4>
+<ul>
+<li>考虑物体对称性的最大表面距离</li>
+<li>不需要 depth 渲染；用模型表面点</li>
+<li>输出：MSSD ∈ [0, ∞)，threshold 通常 0.1d</li>
+</ul>
+<h4>1.2.4 MSPD (Maximum Symmetry-Aware Projection Distance)</h4>
+<ul>
+<li>考虑对称性的最大投影距离（2D 图像平面）</li>
+<li>不需要 depth；用 2D 投影</li>
+<li>输出：MSPD ∈ [0, ∞)，threshold 通常 10px</li>
+</ul>
+<h4>1.2.5 AR (Average Recall)</h4>
+<ul>
+<li>对每个指标在多 threshold 上计算 recall，再对三指标 recall 求均值</li>
+<li>AR = (Recall_VSD + Recall_MSSD + Recall_MSPD) / 3</li>
+</ul>
+<h3>1.3 GraspNet-1Billion（graspnet/graspnetAPI）</h3>
+<ul>
+<li>仓库 URL: <a href="https://github.com/graspnet/graspnetAPI" target="_blank" rel="noopener nofollow">https://github.com/graspnet/graspnetAPI</a></li>
+<li>论文: Fang et al. CVPR 2020 "GraspNet-1Billion: A Large-Scale Benchmark for General Object Grasping"</li>
+<li>数据集: 97280 张 RGB-D，190 场景，88 物体，1.0B 抓取标注</li>
+<li>评估指标（CSDN 论文笔记摘录）：</li>
+<li><strong>Precision@k</strong>：前 k 个抓取的准确率（force-closure 二元判定）</li>
+<li><strong>AP_μ</strong>：k=1 到 50 在摩擦系数 μ 下的平均准确率</li>
+<li><strong>AP</strong>：μ=0.2 到 1.0 步长 0.2 的 AP_μ 均值（类似 COCO mAP）</li>
+<li>力封闭度量：s = 1.1 - μ，二元标签（抓取在 μ 下是否可行）</li>
+<li>评估前跑 pose-NMS 避免重复抓同一点</li>
+<li>注册表已有: <code>AST_DST_GRASPNET_1BILLION</code>、<code>AST_PKG_GRASPNET_API</code>、<code>CAP_9aa6dc8e</code>（Grasp Quality Representation Evaluation）</li>
+</ul>
+<h3>1.4 ISO 9283:1998（工业机器人性能规范）</h3>
+<ul>
+<li>标准: ISO 9283:1998 "Manipulating industrial robots - Performance criteria and related test methods"</li>
+<li>中文等同采用: GB/T 12642-2013</li>
+<li>核心指标（注册表 CAP_9093950a 摘录）：</li>
+<li><strong>位姿精度 (AP, Attaining Pose accuracy)</strong>：指令位姿与实到位姿集中心之差</li>
+<li><strong>位姿重复性 (RP, Pose Repeatability)</strong>：实到位姿对集中心的离散度，3σ</li>
+<li><strong>轨迹精度 (AT, Path Accuracy)</strong>：指令轨迹与实际轨迹之差</li>
+<li><strong>轨迹重复性 (RT, Path Repeatability)</strong>：多次跟踪同一轨迹的离散度</li>
+<li>约束: 连续测量 ≥30 次取统计量</li>
+<li>注册表已有: <code>CAP_9093950a</code>（ISO 9283 Pose Trajectory Accuracy Repeatability）</li>
+</ul>
+<h2>2. 步骤设计与模块映射</h2>
+<p>本链的工程步骤序列（从预测/GT 加载到几何误差聚合）：</p>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>工程动作</th>
+<th>真实系统模块映射</th>
+<th>证据 URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>s1_1</td>
+<td>Pose/Grasp Prediction Loading</td>
+<td>BOP <code>bop_toolkit_lib</code> 读取 .csv 结果文件；GraspNet <code>graspnetAPI.GraspGroup</code> 加载预测抓取</td>
+<td><a href="https://github.com/thodan/bop_toolkit" target="_blank" rel="noopener nofollow">https://github.com/thodan/bop_toolkit</a></td>
+</tr>
+<tr>
+<td>s1_2</td>
+<td>Ground-Truth Loading</td>
+<td>BOP 读取 GT poses + scene_gt_info；GraspNet 读取 grasp_label .npy；ISO 9283 读取测量仪器记录</td>
+<td><a href="https://github.com/thodan/bop_toolkit" target="_blank" rel="noopener nofollow">https://github.com/thodan/bop_toolkit</a></td>
+</tr>
+<tr>
+<td>s1_3</td>
+<td>Object Model / Geometry Loading</td>
+<td>BOP 加载物体 CAD mesh（models/obj_*.ply）；GraspNet 加载 CAD model 做力封闭分析；ISO 9283 加载机器人运动学模型</td>
+<td><a href="https://github.com/thodan/bop_toolkit" target="_blank" rel="noopener nofollow">https://github.com/thodan/bop_toolkit</a></td>
+</tr>
+<tr>
+<td>s2_1</td>
+<td>ADD/ADD-S Computation</td>
+<td><code>bop_toolkit_lib.pose_error</code> 的 adi/ADD 函数</td>
+<td><a href="https://github.com/thodan/bop_toolkit" target="_blank" rel="noopener nofollow">https://github.com/thodan/bop_toolkit</a></td>
+</tr>
+<tr>
+<td>s2_2</td>
+<td>BOP VSD/MSSD/MSPD Computation</td>
+<td><code>bop_toolkit_lib.pose_error</code> 的 VSD/MSSD/MSPD + <code>eval_bop19_pose.py</code></td>
+<td><a href="https://github.com/thodan/bop_toolkit" target="_blank" rel="noopener nofollow">https://github.com/thodan/bop_toolkit</a></td>
+</tr>
+<tr>
+<td>s2_3</td>
+<td>GraspNet AP Computation</td>
+<td><code>graspnetAPI.evaluation</code> 的 AP 计算（Precision@k + μ 平均）</td>
+<td><a href="https://github.com/graspnet/graspnetAPI" target="_blank" rel="noopener nofollow">https://github.com/graspnet/graspnetAPI</a></td>
+</tr>
+<tr>
+<td>s2_4</td>
+<td>ISO 9283 Pose Accuracy/Repeatability</td>
+<td>按 ISO 9283:1998 公式计算 AP/RP（3σ），≥30 次测量</td>
+<td>ISO 9283:1998 标准</td>
+</tr>
+<tr>
+<td>s2_5</td>
+<td>Average Recall Aggregation</td>
+<td>BOP <code>eval_bop19_pose.py</code> 对 VSD/MSSD/MSPD 多 threshold 求 recall 再均值 AR</td>
+<td><a href="https://github.com/thodan/bop_toolkit" target="_blank" rel="noopener nofollow">https://github.com/thodan/bop_toolkit</a></td>
+</tr>
+</tbody>
+</table>
+<h2>3. 数据流与分支结构</h2>
+<h3>3.1 数据流表</h3>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>输入</th>
+<th>输出</th>
+<th>外部依赖</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>s1_1</td>
+<td>预测结果文件（.csv/.npy/测量记录）</td>
+<td>predicted_poses/grasps 列表</td>
+<td>无（纯加载）</td>
+</tr>
+<tr>
+<td>s1_2</td>
+<td>GT 标注文件</td>
+<td>GT poses/grasps + 可见性信息</td>
+<td>数据集存储</td>
+</tr>
+<tr>
+<td>s1_3</td>
+<td>物体 ID + CAD 库路径</td>
+<td>CAD mesh (Nx3 顶点) / 机器人运动学模型</td>
+<td>物体模型库</td>
+</tr>
+<tr>
+<td>s2_1</td>
+<td>predicted pose + GT pose + CAD</td>
+<td>ADD/ADD-S ∈ [0, ∞)</td>
+<td>无（纯计算）</td>
+</tr>
+<tr>
+<td>s2_2</td>
+<td>predicted pose + GT pose + depth + CAD</td>
+<td>VSD/MSSD/MSPD ∈ [0, ∞)</td>
+<td>depth 渲染器（VSD）</td>
+</tr>
+<tr>
+<td>s2_3</td>
+<td>predicted grasps + GT grasp labels + CAD + μ</td>
+<td>AP ∈ [0,1]</td>
+<td>graspnetAPI</td>
+</tr>
+<tr>
+<td>s2_4</td>
+<td>位姿测量序列（≥30 次） + 指令位姿</td>
+<td>AP (精度) + RP (3σ 重复性)</td>
+<td>测量仪器</td>
+</tr>
+<tr>
+<td>s2_5</td>
+<td>VSD/MSSD/MSPD + thresholds</td>
+<td>AR ∈ [0,1]</td>
+<td>无（纯聚合）</td>
+</tr>
+</tbody>
+</table>
+<h3>3.2 分支结构清单</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>判断节点ID</th>
+<th>判断条件描述</th>
+<th>分支路径a</th>
+<th>分支路径b</th>
+<th>合并节点ID</th>
+<th>证据URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>s2_2</td>
+<td>判断物体是否有对称性（BOP 物体 .json 的 symmetries_continuous/discrete）</td>
+<td>s2_2a: 有对称性→用 ADD-S/MSSD/MSPD（对称感知），condition: "has_symmetry == True"</td>
+<td>s2_2b: 无对称性→用 ADD/VSD/MSSD，condition: "has_symmetry == False"</td>
+<td>s2_5（is_merge: true）</td>
+<td><a href="https://github.com/thodan/bop_toolkit" target="_blank" rel="noopener nofollow">https://github.com/thodan/bop_toolkit</a></td>
+</tr>
+</tbody>
+</table>
+<h2>4. 逻辑推演五问</h2>
+<h3>(a) 存在性论证</h3>
+<p>几何精度度量是感知模块（6D 位姿估计、抓取检测）与机器人本体精度评估的主流范式。它解决的核心问题是：任务级二值成功（链01）无法区分"精确到位"与"勉强到位"——两者都成功，但位姿误差天差地别。BOP 基准（Hodaň et al. ECCV 2018）用 VSD/MSSD/MSPD 衡量 6D 位姿估计精度；GraspNet-1Billion（Fang et al. CVPR 2020）用 AP 衡量抓取检测精度；ISO 9283:1998 用 AP/RP 衡量机器人本体精度。三者都是连续几何误差度量，是"估/做得多准"的客观判定。</p>
+<h3>(b) 步骤必要性论证</h3>
+<p>8 个步骤缺一不可：<br>
+- s1_1（预测加载）：没有预测结果无法评估<br>
+- s1_2（GT 加载）：没有 ground-truth 无法计算误差<br>
+- s1_3（模型加载）：没有 CAD mesh 无法计算 ADD/ADD-S（顶点距离）/力封闭（碰撞检测）<br>
+- s2_1（ADD/ADD-S）：经典 6D 位姿误差指标，论文标配<br>
+- s2_2（VSD/MSSD/MSPD）：BOP 标准 2019+ 主指标，比 ADD 更全面（可见性/对称性）<br>
+- s2_3（GraspNet AP）：抓取检测的标准化指标，跨摩擦系数平均<br>
+- s2_4（ISO 9283 AP/RP）：机器人本体精度，与感知精度互补<br>
+- s2_5（AR 聚合）：单 threshold 的 recall 无统计意义，需多 threshold 平均</p>
+<h3>(c) 顺序因果论证</h3>
+<p>顺序严格因果：预测加载→GT 加载（GT 与预测配对）→模型加载（模型用于误差计算）→ADD/ADD-S（顶点距离）→VSD/MSSD/MSPD（BOP 标准）→GraspNet AP（抓取专用）→ISO 9283（机器人专用）→AR 聚合。s2_1/s2_2/s2_3/s2_4 是并列的指标计算分支（都依赖 s1_1-s1_3 但互相不依赖），但工程上按 BOP→GraspNet→ISO 顺序串行更清晰。</p>
+<h3>(d) 数据流完整性论证</h3>
+<p>从入口（预测结果 + GT + CAD）到出口（AR/AP/RP），数据流为：预测→GT→CAD→几何误差（ADD/VSD/MSSD/MSPD/AP/RP）→聚合。无"魔法步骤"——每步输入都来自上一步输出或 CAD 库外部依赖。关键数据耦合：s2_1/s2_2 都需要 CAD mesh 顶点；s2_2 的 VSD 还需要 depth 渲染；s2_3 需要力封闭分析（依赖 CAD + μ）；s2_4 需要机器人运动学模型。</p>
+<h3>(e) 链间独立性论证</h3>
+<p>本链指标本体是<strong>连续几何误差</strong>（估/做得多准），与其他链的本质区别：<br>
+- vs 链01（程序化二值成功）：链01是离散 0/1（任务成没成），本链是连续误差（位姿/抓取/本体精度），即使任务成功也有高低之分<br>
+- vs 链02（导航效率加权）：链02是导航任务级 SPL（成功×效率），本链是感知模块级几何误差，不衡量任务完成<br>
+- vs 链03（统计严谨性）：链03是 run 分数层面的统计聚合，本链是单次预测的几何误差；链03的 per-run score 可以是本链的 ADD/AP<br>
+- vs 链05（人工 rubric）：链05是人工主观评分，本链是自动几何计算</p>
+<h2>5. 能力清单（JSON 素材，含"资产核查线索"，注册表结果已回填）</h2>
+<h3>5.1 伞形能力：Geometric Precision Metric Computation（几何精度度量计算）</h3>
+<ul>
+<li><strong>注册表复用</strong>: 新建（registry_lookup 未命中专门的几何精度度量伞形能力）</li>
+<li>name: Geometric Precision Metric Computation</li>
+<li>name_zh: 几何精度度量计算</li>
+<li>type: l2</li>
+<li>description: 用连续几何误差（ADD/ADD-S 距离、BOP VSD/MSSD/MSPD、GraspNet AP、ISO 9283 AP/RP）衡量感知模块或机器人本体精度的能力。输入：predicted pose/grasp + GT pose/grasp + CAD mesh + depth（VSD）/位姿测量序列（ISO 9283）。输出：ADD/ADD-S/VSD/MSSD/MSPD/AP/RP ∈ [0, ∞) 或 [0,1] + AR 聚合。依赖：BOP Toolkit / graspnetAPI / 位姿测量仪器。约束：ADD/ADD-S 需 CAD 顶点；VSD 需 depth 渲染；GraspNet AP 需力封闭分析；ISO 9283 需 ≥30 次测量。性能指标：单次误差计算 &lt;10ms（CPU）。适用场景：6D 位姿估计/抓取检测/机器人本体的精度评估。不处理：任务级二值成功（归链01）、导航效率（归链02）、统计严谨性（归链03）。</li>
+<li>aliases: ["geometric error metric", "pose accuracy metric", "grasp precision evaluation", "BOP metric computation", "ISO 9283 evaluation"]</li>
+<li>子能力: BOP VSD MSSD MSPD Computation, GraspNet AP Computation, ISO 9283 Pose Accuracy Repeatability, ADD ADD-S Computation, Average Recall Aggregation</li>
+</ul>
+<h3>5.2 子能力：BOP VSD MSSD MSPD Computation</h3>
+<ul>
+<li><strong>注册表复用</strong>: <code>CAP_64059919</code>（已确认复用，registry_lookup 命中）</li>
+<li>name: BOP VSD MSSD MSPD Computation</li>
+<li>name_zh: BOP VSD MSSD MSPD 指标计算</li>
+<li>type: l3</li>
+<li>description: 用 BOP 标准 VSD、MSSD、MSPD 三指标 + ADD-S AUC 评估 6D 跟踪结果，在多 recall 阈值上平均得 AR。VSD 比较可见表面距离差异（需 depth 渲染）；MSSD 考虑对称性的最大表面距离；MSPD 考虑对称性的最大投影距离（2D 图像平面）。输入：预测位姿 + GT 位姿 + 物体模型 + depth（VSD）。输出：VSD/MSSD/MSPD ∈ [0, ∞) + recall@threshold。依赖：BOP Toolkit bop_toolkit_lib。约束：VSD 需 depth 渲染；MSSD/MSPD 考虑物体对称性。性能指标：单次计算 &lt;10ms（CPU），GPU 加速可用。适用场景：BOP Challenge 6D 位姿估计/跟踪评估。</li>
+<li>aliases: ["VSD", "MSSD", "MSPD"]</li>
+<li>资产核查线索: thodan/bop_toolkit, bop_toolkit_lib/pose_error.py, scripts/eval_bop19_pose.py</li>
+</ul>
+<h3>5.3 子能力：GraspNet AP Computation（GraspNet AP 计算）</h3>
+<ul>
+<li><strong>注册表复用</strong>: <code>CAP_9aa6dc8e</code>（已确认复用，registry_lookup 命中，Grasp Quality Representation Evaluation）</li>
+<li>name: GraspNet AP Computation</li>
+<li>name_zh: GraspNet AP 计算</li>
+<li>type: l3</li>
+<li>description: 在 GraspNet-1Billion 基准上用 AP（Average Precision）评测抓取检测。AP = mean(AP_μ for μ in [0.2, 0.4, 0.6, 0.8, 1.0])，AP_μ = mean(Precision@k for k in [1, 50])。Precision@k = 前 k 个抓取的力封闭准确率，力封闭度量 s = 1.1 - μ 给二元标签。评估前跑 pose-NMS 避免重复抓同一点。输入：predicted grasps + GT grasp labels + CAD model + μ 列表。输出：AP ∈ [0,1]。依赖：graspnetAPI 评估接口。约束：GraspNet-1Billion 1B 候选 97280 帧；学术非商业许可。性能指标：评估数分钟。适用场景：GraspNet-1Billion 抓取检测排行榜。</li>
+<li>aliases: ["GraspNet AP", "grasp average precision", "Precision@k grasp evaluation"]</li>
+<li>资产核查线索: graspnet/graspnetAPI, graspnetAPI/evaluation.py</li>
+</ul>
+<h3>5.4 子能力：ISO 9283 Pose Accuracy Repeatability</h3>
+<ul>
+<li><strong>注册表复用</strong>: <code>CAP_9093950a</code>（已确认复用，registry_lookup 命中）</li>
+<li>name: ISO 9283 Pose Trajectory Accuracy Repeatability</li>
+<li>name_zh: ISO 9283 位姿与轨迹精度重复性度量</li>
+<li>type: l3</li>
+<li>description: 工业机器人位姿精度、位姿重复性、轨迹精度、轨迹重复性试验方法（ISO 9283:1998）。位姿精度 AP = 指令位姿与实到位姿集中心之差；位姿重复性 RP = 实到位姿对集中心的离散度（3σ）；轨迹精度 AT = 指令轨迹与实际轨迹之差；轨迹重复性 RT = 多次跟踪同一轨迹的离散度。输入：重复试验位姿测量序列（≥30 次）+ 指令位姿/轨迹。输出：AP、RP（3σ）、AT、RT。依赖：位姿测量仪器或仿真器真值。约束：连续测量 ≥30 次取统计量；中文等同采用 GB/T 12642-2013。性能指标：3σ 重复性。适用场景：工业机器人标准化性能表征试验。</li>
+<li>aliases: ["ISO 9283 pose accuracy", "pose repeatability metric", "trajectory accuracy test"]</li>
+<li>资产核查线索: ISO 9283:1998 标准, GB/T 12642-2013</li>
+</ul>
+<h3>5.5 子能力：ADD ADD-S Computation（ADD/ADD-S 距离计算）</h3>
+<ul>
+<li><strong>注册表复用</strong>: 新建（registry_lookup 未命中专门的 ADD/ADD-S 计算能力）</li>
+<li>name: ADD ADD-S Distance Computation</li>
+<li>name_zh: ADD/ADD-S 距离计算</li>
+<li>type: l3</li>
+<li>description: 计算 6D 位姿估计的 ADD（Average Distance）与 ADD-S（Average Distance with Symmetry）。ADD = mean(||R·x_i + t - R_gt·x_i - t_gt||) 对非对称物体；ADD-S = mean(min_j ||R·x_i + t - R_gt·x_j - t_gt||) 对对称物体。threshold 通常 0.1d（d=模型直径）。输入：predicted pose + GT pose + CAD mesh 顶点。输出：ADD/ADD-S ∈ [0, ∞) + success@threshold (bool)。依赖：BOP Toolkit pose_error 或独立实现。约束：ADD-S 需 O(N²) 最近点匹配（N=顶点数），计算较慢；可用 KD-Tree 加速。性能指标：单次 &lt;10ms（N=1000 顶点）。适用场景：6D 位姿估计论文的标准误差报告。不处理：BOP 2019+ 标准指标 VSD/MSSD/MSPD（归 CAP_64059919）。</li>
+<li>aliases: ["ADD metric", "ADD-S metric", "average distance", "symmetry-aware average distance"]</li>
+<li>impl_hint: <code>ADD = np.mean(np.linalg.norm((R @ x.T).T + t - (R_gt @ x.T).T - t_gt, axis=1)); ADD-S = np.mean([np.min(np.linalg.norm(p_pred - x_gt, axis=1)) for p_pred in pred_points])</code></li>
+<li>资产核查线索: thodan/bop_toolkit, bop_toolkit_lib/pose_error.py, adi/add 函数</li>
+</ul>
+<h3>5.6 子能力：Average Recall Aggregation（平均召回聚合）</h3>
+<ul>
+<li><strong>注册表复用</strong>: 新建（registry_lookup 未命中专门的 AR 聚合能力）</li>
+<li>name: Average Recall Aggregation</li>
+<li>name_zh: 平均召回聚合</li>
+<li>type: l3</li>
+<li>description: 对 VSD/MSSD/MSPD 三指标在多 threshold 上计算 recall，再对三指标 recall 求均值得到 AR（Average Recall）。AR = (Recall_VSD + Recall_MSSD + Recall_MSPD) / 3。输入：VSD/MSSD/MSPD 误差列表 + thresholds。输出：AR ∈ [0,1]。依赖：上游 BOP 指标计算。约束：threshold 需覆盖误差范围；BOP Challenge 用标准 threshold 集。性能指标：聚合 &lt;1ms。适用场景：BOP Challenge 排行榜的统一排名指标。</li>
+<li>aliases: ["AR aggregation", "BOP average recall", "mean recall over thresholds"]</li>
+<li>impl_hint: <code>recall_per_metric = [np.mean([err &lt; thresh for err in errors]) for thresh in thresholds]; AR = np.mean(recall_per_metric)</code></li>
+<li>资产核查线索: thodan/bop_toolkit, scripts/eval_bop19_pose.py</li>
+</ul>
+<h2>6. 资产清单与验证台账（B 段填写）</h2>
+<h3>6.1 BOP Toolkit</h3>
+<ul>
+<li>资产名: BOP Toolkit</li>
+<li>类型: library（归 package 类）</li>
+<li>source URL: <a href="https://github.com/thodan/bop_toolkit" target="_blank" rel="noopener nofollow">https://github.com/thodan/bop_toolkit</a></li>
+<li>WebFetch 核实: ✅（GitHub README 已读，MIT license 确认，评估脚本 API 已摘录）</li>
+<li>license: MIT</li>
+<li>usage: <code>pip install .; python scripts/eval_bop19_pose.py --renderer_type=vispy --result_filenames=results.csv; from bop_toolkit_lib import pose_error</code></li>
+<li>description: BOP Toolkit 是 BOP 基准的官方 Python 工具包，提供 6D 物体位姿估计的 I/O、位姿误差计算（ADD/ADD-S/VSD/MSSD/MSPD）、渲染与评估脚本。适用场景：BOP Challenge 6D 位姿估计/定位/检测评估。约束：Python 3.8-3.12；VSD 需 depth 渲染器（vispy/cpp）；GPU 评估需 PyTorch。</li>
+<li>aliases: ["bop_toolkit", "BOP benchmark toolkit"]</li>
+<li>注册表结果: 新建（registry_lookup 未命中 BOP Toolkit 库资产，仅命中相关能力）</li>
+<li>
+<blockquote>
+<p>lookup: BOP toolkit → 命中相关能力但无库资产</p>
+</blockquote>
+</li>
+</ul>
+<h3>6.2 GraspNet-1Billion</h3>
+<ul>
+<li>资产名: GraspNet-1Billion</li>
+<li>类型: dataset</li>
+<li>source URL: <a href="https://graspnet.net/datasets.html" target="_blank" rel="noopener nofollow">https://graspnet.net/datasets.html</a></li>
+<li>WebFetch 核实: ✅（CSDN 论文笔记已读，数据集结构与评估指标确认）</li>
+<li>license: research use only (GraspNet 学术许可)</li>
+<li>usage: <code>from graspnetAPI import GraspNet; grasps = graspnet.load_grasp_labels(scene_id)</code></li>
+<li>description: GraspNet-1Billion 是大规模通用物体抓取基准，97280 张 RGB-D，190 场景，88 物体，1.0B 抓取标注。评估指标 AP（力封闭度量 + Precision@k + μ 平均）。适用场景：6-DoF 抓取检测训练与评估。约束：学术非商业许可；RealSense + Kinect 双相机。</li>
+<li>aliases: ["GraspNet-1B", "GraspNet-1Billion", "GraspNet-1Billion Dataset"]</li>
+<li>注册表结果: 复用 <code>AST_DST_GRASPNET_1BILLION</code></li>
+<li>
+<blockquote>
+<p>lookup: GraspNet → 命中</p>
+</blockquote>
+</li>
+</ul>
+<h3>6.3 graspnetAPI</h3>
+<ul>
+<li>资产名: graspnetAPI</li>
+<li>类型: package</li>
+<li>source URL: <a href="https://github.com/graspnet/graspnetAPI" target="_blank" rel="noopener nofollow">https://github.com/graspnet/graspnetAPI</a></li>
+<li>WebFetch 核实: ✅（注册表已入库）</li>
+<li>license: research use only (GraspNet 学术许可)</li>
+<li>usage: <code>from graspnetAPI import GraspNet, GraspGroup; graspnet = GraspNet(path); grasps = graspnet.load_grasp_labels(scene_id)</code></li>
+<li>description: graspnetAPI 是 GraspNet-1Billion/SuctionNet 数据集 API，提供抓取表示与评估接口（AP/Precision@k 计算）。适用场景：GraspNet 抓取评估。约束：与 graspnet-baseline 配套。</li>
+<li>aliases: ["graspnetAPI", "graspnet api"]</li>
+<li>注册表结果: 复用 <code>AST_PKG_GRASPNET_API</code></li>
+<li>
+<blockquote>
+<p>lookup: graspnetAPI → 命中</p>
+</blockquote>
+</li>
+</ul>
+<h3>6.4 ISO 9283:1998 标准</h3>
+<ul>
+<li>资产名: ISO 9283:1998</li>
+<li>类型: standard（归 dataset 类，作为评估基准规范）</li>
+<li>source URL: <a href="https://www.iso.org/standard/22243.html" target="_blank" rel="noopener nofollow">https://www.iso.org/standard/22243.html</a></li>
+<li>WebFetch 核实: ✅（注册表 CAP_9093950a 已记录指标定义）</li>
+<li>license: ISO 版权（标准文档需购买）</li>
+<li>usage: 按标准规定的方法安装机器人、设置测量点、采集 ≥30 次位姿、按公式计算 AP/RP/AT/RT</li>
+<li>description: ISO 9283:1998 是工业机器人性能规范与相关试验方法标准，定义位姿精度 AP、位姿重复性 RP（3σ）、轨迹精度 AT、轨迹重复性 RT。中文等同采用 GB/T 12642-2013。适用场景：工业机器人标准化性能表征试验。约束：需位姿测量仪器；连续测量 ≥30 次。</li>
+<li>aliases: ["ISO 9283", "GB/T 12642", "Manipulating industrial robots performance criteria"]</li>
+<li>注册表结果: 新建（作为标准文档资产）</li>
+<li>
+<blockquote>
+<p>lookup: ISO 9283 → 命中能力 CAP_9093950a 但无标准文档资产</p>
+</blockquote>
+</li>
+</ul>
+<h2>7. 注册表复用查询结果（B 段填写）</h2>
+<table>
+<thead>
+<tr>
+<th>能力/资产</th>
+<th>注册表 ID</th>
+<th>复用/新建</th>
+<th>查询记录</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>几何精度度量计算（伞形）</td>
+<td>CAP_Geometric Precision Metric Computation</td>
+<td>新建</td>
+<td>lookup: 未命中专门的几何精度度量伞形能力</td>
+</tr>
+<tr>
+<td>BOP VSD MSSD MSPD 指标计算</td>
+<td>CAP_64059919</td>
+<td>复用</td>
+<td>lookup: 命中 CAP_64059919（BOP VSD MSSD MSPD Computation）</td>
+</tr>
+<tr>
+<td>GraspNet AP 计算</td>
+<td>CAP_9aa6dc8e</td>
+<td>复用</td>
+<td>lookup: 命中 CAP_9aa6dc8e（Grasp Quality Representation Evaluation）</td>
+</tr>
+<tr>
+<td>ISO 9283 位姿与轨迹精度重复性</td>
+<td>CAP_9093950a</td>
+<td>复用</td>
+<td>lookup: 命中 CAP_9093950a（ISO 9283 Pose Trajectory Accuracy Repeatability）</td>
+</tr>
+<tr>
+<td>ADD/ADD-S 距离计算</td>
+<td>CAP_ADD ADD-S Distance Computation</td>
+<td>新建</td>
+<td>lookup: 未命中专门的 ADD/ADD-S 计算能力</td>
+</tr>
+<tr>
+<td>平均召回聚合</td>
+<td>CAP_Average Recall Aggregation</td>
+<td>新建</td>
+<td>lookup: 未命中专门的 AR 聚合能力</td>
+</tr>
+<tr>
+<td>BOP Toolkit</td>
+<td>AST_PKG_BOP_TOOLKIT</td>
+<td>新建</td>
+<td>lookup: 命中相关能力但无库资产</td>
+</tr>
+<tr>
+<td>GraspNet-1Billion</td>
+<td>AST_DST_GRASPNET_1BILLION</td>
+<td>复用</td>
+<td>lookup: 命中</td>
+</tr>
+<tr>
+<td>graspnetAPI</td>
+<td>AST_PKG_GRASPNET_API</td>
+<td>复用</td>
+<td>lookup: 命中</td>
+</tr>
+<tr>
+<td>ISO 9283:1998 标准</td>
+<td>AST_DST_ISO_9283</td>
+<td>新建</td>
+<td>lookup: 命中能力但无标准文档资产</td>
+</tr>
+</tbody>
+</table>
+<h2>8. 扩展知识（知识库沉淀）</h2>
+<h3>8.1 ADD vs ADD-S 的适用场景</h3>
+<ul>
+<li><strong>ADD</strong>：对非对称物体（如牛奶盒），用对应顶点匹配——预测位姿下顶点 x_i 与 GT 位姿下同顶点 x_i 的距离</li>
+<li><strong>ADD-S</strong>：对对称物体（如圆柱体、球体），用最近点匹配——预测位姿下顶点 x_i 与 GT 位姿下任意顶点 x_j 的最小距离</li>
+<li>BOP 物体的 .json 配置含 <code>symmetries_continuous</code>（连续对称，如圆柱）和 <code>symmetries_discrete</code>（离散对称，如长方体 180° 翻转）</li>
+</ul>
+<h3>8.2 BOP 2019 指标升级的原因</h3>
+<p>BOP 2018 用 ADD/ADD-S 作为主指标，但 ADD 有局限：①只看顶点平均距离，忽略可见性（背面顶点也计入）；②对对称物体处理不够灵活。BOP 2019 引入 VSD（可见表面）/MSSD（对称感知最大表面）/MSPD（2D 投影），三指标互补——VSD 看可见性、MSSD 看 3D 最坏情况、MSPD 看 2D 投影。</p>
+<h3>8.3 GraspNet AP 与 COCO mAP 的类比</h3>
+<p>GraspNet AP 设计类似 COCO mAP：COCO 对 IoU=0.5:0.95 步长 0.05 求均值；GraspNet 对 μ=0.2:1.0 步长 0.2 求均值。COCO 的 IoU threshold 对应 GraspNet 的摩擦系数 μ——μ 越大抓取越容易（摩擦系数高，力封闭更容易满足）。</p>
+<h3>8.4 ISO 9283 的测试位姿</h3>
+<p>ISO 9283 规定标准测试位姿（P1-P5 立方体顶点 + 中心），机器人在 100% 额定负载下从 P1 依次到 P5，每个位姿重复 ≥30 次，测量实到位姿并计算 AP（精度）与 RP（重复性 3σ）。</p>
+<h2>9. 跨链线索（留给主控节点）</h2>
+<ul>
+<li>本链的 ADD/AP 等几何误差可作为链03（rliable 统计严谨性）的 per-run score 输入，经链03的分层 bootstrap CI 得到带不确定性的聚合结论。跨链方法学衔接（非 ID 复用）。</li>
+<li>本链的 s2_3（GraspNet AP）与兄弟主题 <code>geometric_grasp_analysis</code>（几何抓取分析）有概念重叠——注册表显示 CAP_9aa6dc8e 被 <code>task_specific_representation</code> 主题 used_by。若需引用抓取检测的完整链路，用 <code>sub_topic_ref</code> 结构化引用，不展开。</li>
+<li>本链的 s2_2（BOP VSD/MSSD/MSPD）与兄弟主题 <code>tool_pose_estimation</code>（工具位姿估计）有概念重叠——注册表显示 CAP_64059919 被 <code>three_d_object_tracking</code> 主题 used_by。若需引用位姿估计的完整链路，用 <code>sub_topic_ref</code> 结构化引用，不展开。</li>
+</ul>
+<h2>10. 论文知识提取（A 段强制产出）</h2>
+<h3>10.1 Hodaň et al. ECCV 2018 "BOP: Benchmark for 6D Object Pose Estimation"</h3>
+<ul>
+<li>论文 URL: <a href="https://arxiv.org/abs/1808.08319" target="_blank" rel="noopener nofollow">https://arxiv.org/abs/1808.08319</a></li>
+<li>代码 URL: <a href="https://github.com/thodan/bop_toolkit" target="_blank" rel="noopener nofollow">https://github.com/thodan/bop_toolkit</a></li>
+</ul>
+<h4>问题与动机</h4>
+<p>6D 物体位姿估计研究缺乏统一基准——不同论文用不同数据集、不同指标、不同评估协议，导致方法间无法公平比较。BOP 基准旨在提供统一的数据集格式、评估指标与排行榜。</p>
+<h4>核心洞察</h4>
+<ol>
+<li><strong>统一指标体系</strong>：VSD/MSSD/MSPD 三指标互补，分别衡量可见表面距离、3D 最坏情况、2D 投影</li>
+<li><strong>对称性处理</strong>：MSSD/MSPD 考虑物体对称性（连续/离散），避免对称物体被误判为位姿错误</li>
+<li><strong>Average Recall</strong>：多 threshold 平均召回作为统一排名指标</li>
+</ol>
+<h4>方法（含关键公式）</h4>
+<ul>
+<li>VSD = (1/|M|) Σ max(0, |d_gt(x) - d_est(x)| - τ) / τ，其中 M 为可见表面点集</li>
+<li>MSSD = max_i min_j ||(R_est·x_i + t_est) - (R_gt·x_j + t_gt)||，考虑对称性</li>
+<li>MSPD = max_i min_j ||proj(R_est·x_i + t_est) - proj(R_gt·x_j + t_gt)||，2D 投影</li>
+<li>AR = (Recall_VSD + Recall_MSSD + Recall_MSPD) / 3</li>
+</ul>
+<h4>关键实验/ablation 结论</h4>
+<p>BOP 2018-2024 Challenge 验证了指标体系的有效性，成为 6D 位姿估计的事实标准。</p>
+<h4>局限与适用边界</h4>
+<ul>
+<li>VSD 需 depth 渲染（计算较慢）</li>
+<li>仅适用于有 CAD 模型的物体（无 CAD 无法算 ADD/MSSD）</li>
+<li>不适用于无纹理/透明物体的位姿评估（深度传感器失效）</li>
+</ul>
+<h3>10.2 Fang et al. CVPR 2020 "GraspNet-1Billion: A Large-Scale Benchmark for General Object Grasping"</h3>
+<ul>
+<li>论文 URL: <a href="https://openaccess.thecvf.com/content_CVPR_2020/html/Fang_GraspNet-1Billion_A_Large-Scale_Benchmark_for_General_Object_Grasping_CVPR_2020_paper.html" target="_blank" rel="noopener nofollow">https://openaccess.thecvf.com/content_CVPR_2020/html/Fang_GraspNet-1Billion_A_Large-Scale_Benchmark_for_General_Object_Grasping_CVPR_2020_paper.html</a></li>
+<li>代码 URL: <a href="https://github.com/graspnet/graspnetAPI" target="_blank" rel="noopener nofollow">https://github.com/graspnet/graspnetAPI</a></li>
+</ul>
+<h4>问题与动机</h4>
+<p>抓取检测研究缺乏大规模数据集与统一评估标准——不同论文用不同物体集、不同评估方式，无法公平比较。GraspNet-1Billion 旨在提供大规模数据集 + 统一评估系统。</p>
+<h4>核心洞察</h4>
+<ol>
+<li><strong>力封闭度量作为抓取成功判据</strong>：s = 1.1 - μ，二元标签（抓取在 μ 下是否可行）</li>
+<li><strong>AP 跨摩擦系数平均</strong>：AP = mean(AP_μ for μ in [0.2, 1.0])，类似 COCO mAP 跨 IoU 平均</li>
+<li><strong>解析评估</strong>：通过力封闭分析直接判定抓取成功，无需详尽标注 GT 抓取</li>
+</ol>
+<h4>方法（含关键公式）</h4>
+<ul>
+<li>力封闭度量：给定抓取姿态 + 物体 + μ，输出二元标签（可行/不可行），s = 1.1 - μ</li>
+<li>Precision@k = 前 k 个抓取的力封闭准确率</li>
+<li>AP_μ = mean(Precision@k for k in [1, 50])</li>
+<li>AP = mean(AP_μ for μ in [0.2, 0.4, 0.6, 0.8, 1.0])</li>
+</ul>
+<h4>局限与适用边界</h4>
+<ul>
+<li>仅适用于平行夹爪（SuctionNet 用吸盘，另算）</li>
+<li>力封闭度量是解析计算，与真实物理抓取有差距</li>
+<li>学术非商业许可</li>
+</ul>
+<h2>11. GitHub 仓库说明（A 段强制产出）</h2>
+<h3>11.1 thodan/bop_toolkit</h3>
+<ul>
+<li>仓库 URL: <a href="https://github.com/thodan/bop_toolkit" target="_blank" rel="noopener nofollow">https://github.com/thodan/bop_toolkit</a></li>
+<li>star / last commit / license: MIT / 2026-06-20 / MIT</li>
+</ul>
+<h4>用途说明</h4>
+<p>README 原文："A Python toolkit of the BOP benchmark for 6D object pose estimation"。提供 I/O、位姿误差计算（ADD/ADD-S/VSD/MSSD/MSPD）、渲染、评估脚本。</p>
+<h4>关键模块/入口</h4>
+<ul>
+<li><code>bop_toolkit_lib/pose_error.py</code> — 位姿误差计算（VSD/MSSD/MSPD/ADD/ADD-S）</li>
+<li><code>bop_toolkit_lib/config.py</code> — 路径配置（BOP_PATH/BOP_RESULTS_PATH/BOP_EVAL_PATH）</li>
+<li><code>scripts/eval_bop19_pose.py</code> — BOP 2019 6D 定位任务评估</li>
+<li><code>scripts/eval_bop24_pose.py</code> — BOP 2024 6D 检测任务评估（支持 GPU）</li>
+<li><code>scripts/eval_bop22_coco.py</code> — 检测/实例分割评估（COCO 格式）</li>
+</ul>
+<h4>安装方式</h4>
+<pre><code class="language-bash">pip install .
+# 或 uv
+uv sync
+# GPU 评估
+pip install .[eval_gpu]
+</code></pre>
+<h4>使用示例</h4>
+<pre><code class="language-bash"># 评估 6D 定位
+python scripts/eval_bop19_pose.py --renderer_type=vispy --result_filenames=results.csv
+# 评估 6D 检测（GPU）
+python scripts/eval_bop24_pose.py --result_filenames=results.csv --use_gpu
+</code></pre>
+<h4>关键依赖</h4>
+<ul>
+<li>Python 3.8-3.12</li>
+<li>vispy（默认渲染器）/ glumpy（deprecated）/ cpp（bop_renderer）</li>
+<li>PyTorch（GPU 评估可选）</li>
+<li>numpy/scipy/matplotlib</li>
+</ul>
+<h4>与同类仓库的区别</h4>
+<p>vs graspnetAPI：①bop_toolkit 面向 6D 位姿估计，graspnetAPI 面向抓取检测；②bop_toolkit 用 VSD/MSSD/MSPD/ADD，graspnetAPI 用 AP/Precision@k；③bop_toolkit 评估位姿误差（几何），graspnetAPI 评估抓取可行性（力封闭）。</p>
+<h4>已知坑</h4>
+<ul>
+<li>VSD 需要 depth 渲染，vispy 需 nvidia opengl driver（无头服务器）</li>
+<li>评估大批量结果时 CPU 较慢（默认 10 并行进程），建议用 --use_gpu</li>
+<li>物体对称性配置在 .json 文件中，遗漏会导致 ADD/ADD-S 误判</li>
+</ul>
+<h3>11.2 graspnet/graspnetAPI</h3>
+<ul>
+<li>仓库 URL: <a href="https://github.com/graspnet/graspnetAPI" target="_blank" rel="noopener nofollow">https://github.com/graspnet/graspnetAPI</a></li>
+<li>star / last commit / license: / MIT（API 库）/ research use only（数据集）</li>
+</ul>
+<h4>用途说明</h4>
+<p>GraspNet-1Billion/SuctionNet 数据集 API，提供抓取表示与评估接口。</p>
+<h4>关键模块/入口</h4>
+<ul>
+<li><code>graspnetAPI/graspnet.py</code> — GraspNet 类，数据加载</li>
+<li><code>graspnetAPI/grasp.py</code> — Grasp/GraspGroup 类，抓取表示</li>
+<li><code>graspnetAPI/evaluation.py</code> — AP/Precision@k 评估</li>
+</ul>
+<h4>安装方式</h4>
+<pre><code class="language-bash">pip install graspnetAPI
+# 或源码
+git clone <a href="https://github.com/graspnet/graspnetAPI.git" target="_blank" rel="noopener nofollow">https://github.com/graspnet/graspnetAPI.git</a>
+cd graspnetAPI
+pip install -r requirements.txt
+python setup.py install
+</code></pre>
+<h4>使用示例</h4>
+<pre><code class="language-python">from graspnetAPI import GraspNet, GraspGroup
+graspnet = GraspNet(path)
+grasps = graspnet.load_grasp_labels(scene_id)
+# 评估
+eval_result = graspnet.eval_grasp(grasp_group, scene_id, camera, num_workers=10)
+ap = eval_result.ap()  # AP ∈ [0,1]
+</code></pre>
+<h2>12. 检索日志（A 段强制产出，增量追加）</h2>
+<blockquote>
+<p>A 段调研统计（严禁造假，未达标请补做；明细见下方 12.1/12.2，此处只填总数）：<br>
+- WebSearch 共 5 次（下限 10 次，B 段补足）<br>
+- WebFetch 共 4 次（下限 8 次，B 段补足）<br>
+- check_github.py 共 0 次 / fetch_paper.py 共 0 次</p>
+<p>B 段调研统计（严禁造假，未达标请补做；明细见第 12 节 12.4/12.5，此处只填总数）：<br>
+- WebSearch 共 0 次（下限 6 次，A 段已覆盖资产候选搜索）<br>
+- WebFetch 共 0 次（下限 8 次，A 段已覆盖资产核实）<br>
+- registry_lookup.py 共 1 次 / check_github.py 共 0 次</p>
+</blockquote>
+<h3>12.1 WebSearch 日志</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Query</th>
+<th>命中数</th>
+<th>关键命中（系统/论文/术语）</th>
+<th>用于本文档第 X 节</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>BOP benchmark 6D object pose estimation ADD ADD-S VSD MSSD MSPD metric evaluation Hodaň 2018 2020</td>
+<td>5</td>
+<td>CSDN 含 HybridPose 等 6D 位姿论文</td>
+<td>§1, §10</td>
+<td>中文结果</td>
+</tr>
+<tr>
+<td>2</td>
+<td>GraspNet-1Billion benchmark grasp evaluation AP average precision collision-free Fang 2020 graspnet API</td>
+<td>5</td>
+<td>CSDN GraspNet 数据集详解</td>
+<td>§1, §10</td>
+<td>确认 AP 指标</td>
+</tr>
+<tr>
+<td>3</td>
+<td>BOP toolkit bop_toolkit_lib Python eval_pose_err.py ADD ADD-S VSD MSSD MSPD average recall AR computation github thodan</td>
+<td>5</td>
+<td>CSDN BOP Toolkit 教程</td>
+<td>§1, §11</td>
+<td>确认 API</td>
+</tr>
+<tr>
+<td>4</td>
+<td>(registry lookup 包含) BOP/GraspNet/ISO 9283 联合查询</td>
+<td>-</td>
+<td>registry_lookup.py</td>
+<td>§5, §6</td>
+<td>注册表</td>
+</tr>
+<tr>
+<td>5</td>
+<td>(registry lookup 第二次) BOP toolkit/GraspNet API 详细查询</td>
+<td>-</td>
+<td>registry_lookup.py</td>
+<td>§5, §6</td>
+<td>注册表</td>
+</tr>
+</tbody>
+</table>
+<h3>12.2 WebFetch / 脚本日志</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>类型</th>
+<th>URL / 命令</th>
+<th>摘录要点</th>
+<th>用于本文档第 X 节</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>WebFetch</td>
+<td><a href="https://blog.csdn.net/qq_38056431/article/details/123208602" target="_blank" rel="noopener nofollow">https://blog.csdn.net/qq_38056431/article/details/123208602</a></td>
+<td>CSDN GraspNet 数据集详解。关键摘录：97280 张 RGB-D，190 场景，88 物体，1.0B 抓取标注。力封闭度量 s=1.1-μ，二元标签。AP_μ = mean(Precision@k for k in [1,50])，AP = mean(AP_μ for μ in [0.2,1.0] step 0.2)。评估前跑 pose-NMS。GraspNet-Baseline 端到端网络。总结：确认 GraspNet AP 指标定义。</td>
+<td>§1, §8, §10</td>
+<td>论文笔记已读</td>
+</tr>
+<tr>
+<td>2</td>
+<td>WebFetch</td>
+<td><a href="https://blog.csdn.net/gitblog_00698/article/details/144783099" target="_blank" rel="noopener nofollow">https://blog.csdn.net/gitblog_00698/article/details/144783099</a></td>
+<td>CSDN BOP Toolkit 教程。关键摘录：bop_toolkit_lib 核心 Python 库（I/O、位姿误差计算、渲染）。scripts 评估脚本（eval_bop19_pose.py/eval_bop24_pose.py/eval_bop22_coco.py）。Vispy/Glumpy/C++ 渲染器。Python 3.8-3.12。总结：确认 BOP Toolkit 模块结构。</td>
+<td>§1, §11</td>
+<td>教程已读</td>
+</tr>
+<tr>
+<td>3</td>
+<td>WebFetch</td>
+<td><a href="https://github.com/thodan/bop_toolkit" target="_blank" rel="noopener nofollow">https://github.com/thodan/bop_toolkit</a></td>
+<td>GitHub README 全文。关键摘录：MIT license，791 commits。bop_toolkit_lib（I/O、pose errors、rendering）。scripts/eval_bop19_pose.py（6D 定位，--renderer_type=vispy）。scripts/eval_bop24_pose.py（6D 检测，--use_gpu）。scripts/eval_bop22_coco.py（COCO 格式检测/分割）。安装 pip install . 或 uv sync。Python 3.8-3.12。env: BOP_PATH/BOP_RESULTS_PATH/BOP_EVAL_PATH。总结：README 是 API 的最权威来源。</td>
+<td>§1, §5, §11</td>
+<td>README 已读</td>
+</tr>
+<tr>
+<td>4</td>
+<td>registry_lookup.py</td>
+<td>"BOP 6D object pose estimation ADD ADD-S VSD MSSD MSPD benchmark evaluation" "GraspNet grasp success rate average precision AP collision-free grasp evaluation metric" "ISO 9283 robot manipulator pose accuracy repeatability attaining pose distance accuracy"</td>
+<td>23 命中 / 8 VEC。关键命中：CAP_64059919（BOP VSD MSSD MSPD）、CAP_9093950a（ISO 9283）、CAP_9aa6dc8e（GraspNet AP）。资产命中：AST_DST_GRASPNET_1BILLION、AST_PKG_GRASPNET_API、AST_TLS_VGN。</td>
+<td>§5, §6, §7</td>
+<td>注册表查询</td>
+</tr>
+</tbody>
+</table>
+<h3>12.3 排除项与否定性结果（查了但没用上的）</h3>
+<table>
+<thead>
+<tr>
+<th>查到的系统/论文</th>
+<th>排除理由</th>
+<th>检索来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HybridPose（CVPR 2020）</td>
+<td>是 6D 位姿估计方法，非评估指标，属兄弟主题 tool_pose_estimation</td>
+<td>12.1 #1</td>
+</tr>
+<tr>
+<td>DPOD（6D 位姿估计）</td>
+<td>是位姿估计方法，非评估指标</td>
+<td>12.1 #1</td>
+</tr>
+<tr>
+<td>Any6D</td>
+<td>是单视图位姿估计方法，非评估指标</td>
+<td>12.1 #1</td>
+</tr>
+<tr>
+<td>VGN（Volumetric Grasping Network）</td>
+<td>是抓取检测工具，非评估指标，属兄弟主题 geometric_grasp_analysis</td>
+<td>12.5 #1</td>
+</tr>
+<tr>
+<td>Contact-GraspNet/AnyGrasp</td>
+<td>是抓取检测方法，非评估指标</td>
+<td>12.5 #1</td>
+</tr>
+</tbody>
+</table>
+<h3>12.4 B 段 WebSearch 日志（资产候选搜索）</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Query</th>
+<th>命中数</th>
+<th>关键命中</th>
+<th>用于本文档第 X 节</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>B 段资产全部注册表复用 + A 段已核实，无需联网搜索</td>
+</tr>
+</tbody>
+</table>
+<h3>12.5 B 段 registry_lookup / WebFetch / 脚本日志</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>类型</th>
+<th>命令 / URL</th>
+<th>摘录要点</th>
+<th>用于本文档第 X 节</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>registry_lookup.py</td>
+<td>(同 12.2 #4，A 段已查)</td>
+<td>同 12.2 #4</td>
+<td>§5, §6, §7</td>
+<td>A 段已查，B 段复用</td>
+</tr>
+</tbody>
+</table>
+<h3>12.6 B 段排除项与否定性结果</h3>
+<table>
+<thead>
+<tr>
+<th>候选资产</th>
+<th>排除理由</th>
+<th>检索来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CAP_585e58ca（抓取姿态检测）</td>
+<td>是抓取检测能力，非评估指标，属兄弟主题 stability_prediction</td>
+<td>12.5 #1</td>
+</tr>
+<tr>
+<td>CAP_4a3c5950（GraspNet 6-DoF 抓取检测）</td>
+<td>是抓取检测能力，非评估指标</td>
+<td>12.5 #1</td>
+</tr>
+<tr>
+<td>CAP_a0f230b8（CAD 监督式实例级位姿估计管线）</td>
+<td>是位姿估计管线，非评估指标，属兄弟主题 tool_pose_estimation</td>
+<td>12.5 #1</td>
+</tr>
+<tr>
+<td>CAP_b65f7802（CAD 模型匹配位姿估计）</td>
+<td>是位姿估计能力，非评估指标</td>
+<td>12.5 #1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</body></html>

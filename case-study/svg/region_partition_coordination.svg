@@ -1,0 +1,1260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="618" height="10400"
+ viewBox="0 0 618 10400"
+ shape-rendering="geometricPrecision" text-rendering="optimizeLegibility">
+<!--SV-THEME--><style>/* 一份 SVG 两种主题 */@media (prefers-color-scheme: light){[fill="#0B0D16"]{fill:#F6F3EC}[stroke="#0B0D16"]{stroke:#F6F3EC}[fill="#0D1D28"]{fill:#E4F1F8}[stroke="#0D1D28"]{stroke:#E4F1F8}[fill="#0D1F2C"]{fill:#E4F3F8}[stroke="#0D1F2C"]{stroke:#E4F3F8}[fill="#0E2019"]{fill:#E3F5EC}[stroke="#0E2019"]{stroke:#E3F5EC}[fill="#12162A"]{fill:#EFEBE2}[stroke="#12162A"]{stroke:#EFEBE2}[fill="#151A2B"]{fill:#FFFFFF}[stroke="#151A2B"]{stroke:#FFFFFF}[fill="#161A26"]{fill:#F0EEE8}[stroke="#161A26"]{stroke:#F0EEE8}[fill="#1A1430"]{fill:#EFEAFB}[stroke="#1A1430"]{stroke:#EFEAFB}[fill="#231A0C"]{fill:#FAF2DF}[stroke="#231A0C"]{stroke:#FAF2DF}[fill="#2A0F1E"]{fill:#FBE6EF}[stroke="#2A0F1E"]{stroke:#FBE6EF}[fill="#2A3050"]{fill:#DFD8CC}[stroke="#2A3050"]{stroke:#DFD8CC}[fill="#39406A"]{fill:#C7BDAD}[stroke="#39406A"]{stroke:#C7BDAD}[fill="#3FC5E8"]{fill:#0E6E8C}[stroke="#3FC5E8"]{stroke:#0E6E8C}[fill="#3FD6E8"]{fill:#0E6E8C}[stroke="#3FD6E8"]{stroke:#0E6E8C}[fill="#4FA8FF"]{fill:#1668A8}[stroke="#4FA8FF"]{stroke:#1668A8}[fill="#4FB3E8"]{fill:#1668A8}[stroke="#4FB3E8"]{stroke:#1668A8}[fill="#4FC08D"]{fill:#1F7A55}[stroke="#4FC08D"]{stroke:#1F7A55}[fill="#5C6480"]{fill:#8A8378}[stroke="#5C6480"]{stroke:#8A8378}[fill="#5FD08A"]{fill:#1F7A55}[stroke="#5FD08A"]{stroke:#1F7A55}[fill="#6E7796"]{fill:#A9A196}[stroke="#6E7796"]{stroke:#A9A196}[fill="#6FD3A6"]{fill:#166344}[stroke="#6FD3A6"]{stroke:#166344}[fill="#7A87A8"]{fill:#5A637C}[stroke="#7A87A8"]{stroke:#5A637C}[fill="#7B8BFF"]{fill:#3A46B0}[stroke="#7B8BFF"]{stroke:#3A46B0}[fill="#8A93B0"]{fill:#7B7368}[stroke="#8A93B0"]{stroke:#7B7368}[fill="#8FA3B8"]{fill:#4E5F70}[stroke="#8FA3B8"]{stroke:#4E5F70}[fill="#9B87FF"]{fill:#5B3FD4}[stroke="#9B87FF"]{stroke:#5B3FD4}[fill="#A9B0C8"]{fill:#5A5349}[stroke="#A9B0C8"]{stroke:#5A5349}[fill="#B08D7A"]{fill:#6D5546}[stroke="#B08D7A"]{stroke:#6D5546}[fill="#B98BFF"]{fill:#5B3FD4}[stroke="#B98BFF"]{stroke:#5B3FD4}[fill="#D6DAE8"]{fill:#2E2A25}[stroke="#D6DAE8"]{stroke:#2E2A25}[fill="#E8A33D"]{fill:#9A6C0B}[stroke="#E8A33D"]{stroke:#9A6C0B}[fill="#EDE7DD"]{fill:#191714}[stroke="#EDE7DD"]{stroke:#191714}[fill="#FF5FA8"]{fill:#B02063}[stroke="#FF5FA8"]{stroke:#B02063}[fill="#FF6B6B"]{fill:#C0392B}[stroke="#FF6B6B"]{stroke:#C0392B}[fill="#FF8FC2"]{fill:#8F1B4E}[stroke="#FF8FC2"]{stroke:#8F1B4E}[fill="#FFB03D"]{fill:#9A6C0B}[stroke="#FFB03D"]{stroke:#9A6C0B}}html[data-theme="light"] [fill="#0B0D16"]{fill:#F6F3EC}html[data-theme="light"] [stroke="#0B0D16"]{stroke:#F6F3EC}html[data-theme="light"] [fill="#0D1D28"]{fill:#E4F1F8}html[data-theme="light"] [stroke="#0D1D28"]{stroke:#E4F1F8}html[data-theme="light"] [fill="#0D1F2C"]{fill:#E4F3F8}html[data-theme="light"] [stroke="#0D1F2C"]{stroke:#E4F3F8}html[data-theme="light"] [fill="#0E2019"]{fill:#E3F5EC}html[data-theme="light"] [stroke="#0E2019"]{stroke:#E3F5EC}html[data-theme="light"] [fill="#12162A"]{fill:#EFEBE2}html[data-theme="light"] [stroke="#12162A"]{stroke:#EFEBE2}html[data-theme="light"] [fill="#151A2B"]{fill:#FFFFFF}html[data-theme="light"] [stroke="#151A2B"]{stroke:#FFFFFF}html[data-theme="light"] [fill="#161A26"]{fill:#F0EEE8}html[data-theme="light"] [stroke="#161A26"]{stroke:#F0EEE8}html[data-theme="light"] [fill="#1A1430"]{fill:#EFEAFB}html[data-theme="light"] [stroke="#1A1430"]{stroke:#EFEAFB}html[data-theme="light"] [fill="#231A0C"]{fill:#FAF2DF}html[data-theme="light"] [stroke="#231A0C"]{stroke:#FAF2DF}html[data-theme="light"] [fill="#2A0F1E"]{fill:#FBE6EF}html[data-theme="light"] [stroke="#2A0F1E"]{stroke:#FBE6EF}html[data-theme="light"] [fill="#2A3050"]{fill:#DFD8CC}html[data-theme="light"] [stroke="#2A3050"]{stroke:#DFD8CC}html[data-theme="light"] [fill="#39406A"]{fill:#C7BDAD}html[data-theme="light"] [stroke="#39406A"]{stroke:#C7BDAD}html[data-theme="light"] [fill="#3FC5E8"]{fill:#0E6E8C}html[data-theme="light"] [stroke="#3FC5E8"]{stroke:#0E6E8C}html[data-theme="light"] [fill="#3FD6E8"]{fill:#0E6E8C}html[data-theme="light"] [stroke="#3FD6E8"]{stroke:#0E6E8C}html[data-theme="light"] [fill="#4FA8FF"]{fill:#1668A8}html[data-theme="light"] [stroke="#4FA8FF"]{stroke:#1668A8}html[data-theme="light"] [fill="#4FB3E8"]{fill:#1668A8}html[data-theme="light"] [stroke="#4FB3E8"]{stroke:#1668A8}html[data-theme="light"] [fill="#4FC08D"]{fill:#1F7A55}html[data-theme="light"] [stroke="#4FC08D"]{stroke:#1F7A55}html[data-theme="light"] [fill="#5C6480"]{fill:#8A8378}html[data-theme="light"] [stroke="#5C6480"]{stroke:#8A8378}html[data-theme="light"] [fill="#5FD08A"]{fill:#1F7A55}html[data-theme="light"] [stroke="#5FD08A"]{stroke:#1F7A55}html[data-theme="light"] [fill="#6E7796"]{fill:#A9A196}html[data-theme="light"] [stroke="#6E7796"]{stroke:#A9A196}html[data-theme="light"] [fill="#6FD3A6"]{fill:#166344}html[data-theme="light"] [stroke="#6FD3A6"]{stroke:#166344}html[data-theme="light"] [fill="#7A87A8"]{fill:#5A637C}html[data-theme="light"] [stroke="#7A87A8"]{stroke:#5A637C}html[data-theme="light"] [fill="#7B8BFF"]{fill:#3A46B0}html[data-theme="light"] [stroke="#7B8BFF"]{stroke:#3A46B0}html[data-theme="light"] [fill="#8A93B0"]{fill:#7B7368}html[data-theme="light"] [stroke="#8A93B0"]{stroke:#7B7368}html[data-theme="light"] [fill="#8FA3B8"]{fill:#4E5F70}html[data-theme="light"] [stroke="#8FA3B8"]{stroke:#4E5F70}html[data-theme="light"] [fill="#9B87FF"]{fill:#5B3FD4}html[data-theme="light"] [stroke="#9B87FF"]{stroke:#5B3FD4}html[data-theme="light"] [fill="#A9B0C8"]{fill:#5A5349}html[data-theme="light"] [stroke="#A9B0C8"]{stroke:#5A5349}html[data-theme="light"] [fill="#B08D7A"]{fill:#6D5546}html[data-theme="light"] [stroke="#B08D7A"]{stroke:#6D5546}html[data-theme="light"] [fill="#B98BFF"]{fill:#5B3FD4}html[data-theme="light"] [stroke="#B98BFF"]{stroke:#5B3FD4}html[data-theme="light"] [fill="#D6DAE8"]{fill:#2E2A25}html[data-theme="light"] [stroke="#D6DAE8"]{stroke:#2E2A25}html[data-theme="light"] [fill="#E8A33D"]{fill:#9A6C0B}html[data-theme="light"] [stroke="#E8A33D"]{stroke:#9A6C0B}html[data-theme="light"] [fill="#EDE7DD"]{fill:#191714}html[data-theme="light"] [stroke="#EDE7DD"]{stroke:#191714}html[data-theme="light"] [fill="#FF5FA8"]{fill:#B02063}html[data-theme="light"] [stroke="#FF5FA8"]{stroke:#B02063}html[data-theme="light"] [fill="#FF6B6B"]{fill:#C0392B}html[data-theme="light"] [stroke="#FF6B6B"]{stroke:#C0392B}html[data-theme="light"] [fill="#FF8FC2"]{fill:#8F1B4E}html[data-theme="light"] [stroke="#FF8FC2"]{stroke:#8F1B4E}html[data-theme="light"] [fill="#FFB03D"]{fill:#9A6C0B}html[data-theme="light"] [stroke="#FFB03D"]{stroke:#9A6C0B}</style>
+<defs>
+  <marker id="arr" markerWidth="12" markerHeight="9" refX="10" refY="4.5" orient="auto">
+    <polygon points="0 0,12 4.5,0 9" fill="#5C6480"/>
+  </marker>
+  <marker id="arr-gray" markerWidth="12" markerHeight="9" refX="10" refY="4.5" orient="auto">
+    <polygon points="0 0,12 4.5,0 9" fill="#39406A"/>
+  </marker>
+</defs>
+<rect width="100%" height="100%" fill="#0B0D16" rx="0"/>
+<rect x="0.0" y="0.0" width="618.0" height="100.0" rx="0" fill="#101528" stroke="none" stroke-width="0"/>
+  <text x="309.0" y="52.0" font-size="20" fill="#EDE7DD" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="309.0" dy="0">区域划分协调  (Region Partition Coordination)</tspan></text>
+  <rect x="15.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.5"/>
+  <text x="37.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="37.0" dy="0">阶段</tspan></text>
+  <rect x="99.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#231A0C" stroke="#E8A33D" stroke-width="1.5"/>
+  <text x="121.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="121.0" dy="0">步骤</tspan></text>
+  <rect x="183.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#0D1D28" stroke="#4FB3E8" stroke-width="1.5"/>
+  <text x="205.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="205.0" dy="0">子链</tspan></text>
+  <rect x="267.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="1.5"/>
+  <text x="289.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="289.0" dy="0">判断</tspan></text>
+  <rect x="351.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#1A1430" stroke="#9B87FF" stroke-width="1.5"/>
+  <text x="373.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="373.0" dy="0">分支</tspan></text>
+  <rect x="435.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#0E2019" stroke="#4FC08D" stroke-width="1.5"/>
+  <text x="457.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="457.0" dy="0">合并</tspan></text>
+  <rect x="519.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#161A26" stroke="#7A87A8" stroke-width="1.5"/>
+  <text x="541.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="541.0" dy="0">编码</tspan></text>
+  <rect x="36.0" y="164.0" width="546.0" height="2024.0" rx="8" fill="#151A2B" stroke="#2A3050" stroke-width="2.0"/>
+  <rect x="36.0" y="164.0" width="546.0" height="48.0" rx="8" fill="#16223A" stroke="none" stroke-width="0"/>
+  <rect x="36.0" y="188.0" width="546.0" height="24.0" rx="0" fill="#16223A" stroke="none" stroke-width="0"/>
+  <text x="309.0" y="189.0" font-size="15" fill="#7FD9F0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="309.0" dy="0">任务链 1: DARP 几何迭代分区 + STC 覆盖协调</tspan></text>
+  <rect x="56.0" y="232.0" width="506.0" height="100.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="232.0" width="506.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="252.0" width="506.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="309.0" y="253.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="309.0" dy="0">s0 — 栅格环境建模</tspan></text>
+  <rect x="56.0" y="348.0" width="506.0" height="100.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="348.0" width="506.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="368.0" width="506.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="309.0" y="369.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="309.0" dy="0">s1 — 距离评估矩阵计算</tspan></text>
+  <rect x="56.0" y="464.0" width="506.0" height="492.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="464.0" width="506.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="484.0" width="506.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="309.0" y="485.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="309.0" dy="0">s2 — 坐标下降面积均衡迭代</tspan></text>
+  <rect x="56.0" y="972.0" width="506.0" height="100.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="972.0" width="506.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="992.0" width="506.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="309.0" y="993.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="309.0" dy="0">s3 — 子区域分配与边界提取</tspan></text>
+  <rect x="56.0" y="1088.0" width="506.0" height="100.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="1088.0" width="506.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="1108.0" width="506.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="309.0" y="1109.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="309.0" dy="0">s4 — Mega Cell 2×2 粗化</tspan></text>
+  <rect x="56.0" y="1204.0" width="506.0" height="468.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="1204.0" width="506.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="1224.0" width="506.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="309.0" y="1225.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="309.0" dy="0">s5 — 范式选择判断</tspan></text>
+  <rect x="56.0" y="1688.0" width="506.0" height="100.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="1688.0" width="506.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="1708.0" width="506.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="309.0" y="1709.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="309.0" dy="0">s6 — 环绕路径生成</tspan></text>
+  <rect x="56.0" y="1804.0" width="506.0" height="364.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="1804.0" width="506.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="1824.0" width="506.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="309.0" y="1825.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="309.0" dy="0">s7 — 多机器人并行覆盖执行</tspan></text>
+  <rect x="36.0" y="2220.0" width="516.0" height="1456.0" rx="8" fill="#151A2B" stroke="#2A3050" stroke-width="2.0"/>
+  <rect x="36.0" y="2220.0" width="516.0" height="48.0" rx="8" fill="#16223A" stroke="none" stroke-width="0"/>
+  <rect x="36.0" y="2244.0" width="516.0" height="24.0" rx="0" fill="#16223A" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="2245.0" font-size="15" fill="#7FD9F0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">任务链 2: Voronoi/Power-diagram 等量分区 + 分布式覆盖控制</tspan></text>
+  <rect x="56.0" y="2288.0" width="476.0" height="100.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="2288.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="2308.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="2309.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s0 — 密度函数环境建模</tspan></text>
+  <rect x="56.0" y="2404.0" width="476.0" height="100.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="2404.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="2424.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="2425.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s1 — Voronoi分区与质心计算</tspan></text>
+  <rect x="56.0" y="2520.0" width="476.0" height="100.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="2520.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="2540.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="2541.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s2 — Lloyd梯度覆盖控制</tspan></text>
+  <rect x="56.0" y="2636.0" width="476.0" height="144.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="2636.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="2656.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="2657.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s3 — 环境凸性判断</tspan></text>
+  <rect x="56.0" y="2796.0" width="476.0" height="100.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="2796.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="2816.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="2817.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s4 — Power权重等量分区</tspan></text>
+  <rect x="56.0" y="2912.0" width="476.0" height="100.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="2912.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="2932.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="2933.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s5 — 连通性感知分区修正</tspan></text>
+  <rect x="56.0" y="3028.0" width="476.0" height="248.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="3028.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="3048.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="3049.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s7 — 覆盖类型判断</tspan></text>
+  <rect x="56.0" y="3292.0" width="476.0" height="364.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="3292.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="3312.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="3313.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s8 — 分布式覆盖执行</tspan></text>
+  <rect x="36.0" y="3708.0" width="516.0" height="1960.0" rx="8" fill="#151A2B" stroke="#2A3050" stroke-width="2.0"/>
+  <rect x="36.0" y="3708.0" width="516.0" height="48.0" rx="8" fill="#16223A" stroke="none" stroke-width="0"/>
+  <rect x="36.0" y="3732.0" width="516.0" height="24.0" rx="0" fill="#16223A" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="3733.0" font-size="15" fill="#7FD9F0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">任务链 3: 在线前沿区域分解探索协调</tspan></text>
+  <rect x="56.0" y="3776.0" width="476.0" height="100.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="3776.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="3796.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="3797.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s0 — 未知环境感知与建图</tspan></text>
+  <rect x="56.0" y="3892.0" width="476.0" height="236.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="3892.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="3912.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="3913.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s1 — 分区方式判断</tspan></text>
+  <rect x="56.0" y="4144.0" width="476.0" height="272.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="4144.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="4164.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="4165.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s2 — 成对交互区域分配</tspan></text>
+  <rect x="56.0" y="4432.0" width="476.0" height="272.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="4432.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="4452.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="4453.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s3 — CVRP负载均衡</tspan></text>
+  <rect x="56.0" y="4720.0" width="476.0" height="144.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="4720.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="4740.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="4741.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s4 — 增量FIS更新</tspan></text>
+  <rect x="56.0" y="4880.0" width="476.0" height="272.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="4880.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="4900.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="4901.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s5 — 分层探索规划</tspan></text>
+  <rect x="56.0" y="5168.0" width="476.0" height="100.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="5168.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="5188.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="5189.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s6 — 多机器人并发探索执行</tspan></text>
+  <rect x="56.0" y="5284.0" width="476.0" height="364.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="5284.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="5304.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="5305.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s7 — 在线区域细化与重分配</tspan></text>
+  <rect x="36.0" y="5700.0" width="516.0" height="2432.0" rx="8" fill="#151A2B" stroke="#2A3050" stroke-width="2.0"/>
+  <rect x="36.0" y="5700.0" width="516.0" height="48.0" rx="8" fill="#16223A" stroke="none" stroke-width="0"/>
+  <rect x="36.0" y="5724.0" width="516.0" height="24.0" rx="0" fill="#16223A" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="5725.0" font-size="15" fill="#7FD9F0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">任务链 4: Boustrophedon 细胞分解 + 工作负载分配协调</tspan></text>
+  <rect x="56.0" y="5768.0" width="476.0" height="100.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="5768.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="5788.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="5789.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s0 — 多边形环境建模</tspan></text>
+  <rect x="56.0" y="5884.0" width="476.0" height="100.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="5884.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="5904.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="5905.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s1 — 扫掠线临界点检测</tspan></text>
+  <rect x="56.0" y="6000.0" width="476.0" height="272.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="6000.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="6020.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="6021.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s2 — 细胞分解与邻接图构建</tspan></text>
+  <rect x="56.0" y="6288.0" width="476.0" height="144.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="6288.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="6308.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="6309.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s3 — Boustrophedon Swath生成</tspan></text>
+  <rect x="56.0" y="6448.0" width="476.0" height="100.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="6448.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="6468.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="6469.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s4 — 方向优化判断</tspan></text>
+  <rect x="56.0" y="6564.0" width="476.0" height="272.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="6564.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="6584.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="6585.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s5 — E-GTSP/TSP顺序优化</tspan></text>
+  <rect x="56.0" y="6852.0" width="476.0" height="272.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="6852.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="6872.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="6873.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s6 — mTSP多机器人负载分配</tspan></text>
+  <rect x="56.0" y="7140.0" width="476.0" height="272.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="7140.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="7160.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="7161.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s7 — VG不相交段连接</tspan></text>
+  <rect x="56.0" y="7428.0" width="476.0" height="144.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="7428.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="7448.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="7449.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s8 — 多机器人并行覆盖执行</tspan></text>
+  <rect x="56.0" y="7588.0" width="476.0" height="364.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="7588.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="7608.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="7609.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s9 — 故障检测与传播式重分配</tspan></text>
+  <rect x="56.0" y="7968.0" width="476.0" height="144.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="7968.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="7988.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="7989.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s_orphan — 其他步骤</tspan></text>
+  <rect x="36.0" y="8164.0" width="516.0" height="2160.0" rx="8" fill="#151A2B" stroke="#2A3050" stroke-width="2.0"/>
+  <rect x="36.0" y="8164.0" width="516.0" height="48.0" rx="8" fill="#16223A" stroke="none" stroke-width="0"/>
+  <rect x="36.0" y="8188.0" width="516.0" height="24.0" rx="0" fill="#16223A" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="8189.0" font-size="15" fill="#7FD9F0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">任务链 5: 拓扑图划分巡逻协调</tspan></text>
+  <rect x="56.0" y="8232.0" width="476.0" height="100.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="8232.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="8252.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="8253.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s0 — 拓扑图环境建模</tspan></text>
+  <rect x="56.0" y="8348.0" width="476.0" height="364.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="8348.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="8368.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="8369.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s1 — 巡逻策略类型判断</tspan></text>
+  <rect x="56.0" y="8728.0" width="476.0" height="272.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="8728.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="8748.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="8749.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s2 — Maximum k-Cut图划分</tspan></text>
+  <rect x="56.0" y="9016.0" width="476.0" height="100.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="9016.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="9036.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="9037.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s3 — 马尔可夫链转移矩阵设计</tspan></text>
+  <rect x="56.0" y="9132.0" width="476.0" height="100.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="9132.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="9152.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="9153.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s4 — Mean First Hitting Time计算</tspan></text>
+  <rect x="56.0" y="9248.0" width="476.0" height="272.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="9248.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="9268.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="9269.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s5 — 启发式下降分区优化</tspan></text>
+  <rect x="56.0" y="9536.0" width="476.0" height="100.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="9536.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="9556.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="9557.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s6 — 环形/分区轨迹设计（确定性变体）</tspan></text>
+  <rect x="56.0" y="9652.0" width="476.0" height="272.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="9652.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="9672.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="9673.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s7 — Idleness驱动分布式目标选择</tspan></text>
+  <rect x="56.0" y="9940.0" width="476.0" height="364.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="9940.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="9960.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="9961.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s8 — 多机器人并发巡逻执行</tspan></text>
+  <line x1="309.0" y1="272.0" x2="309.0" y2="348.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 309.0 388.0 L 309.0 456.0 L 274.0 456.0 L 274.0 524.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 624.0 L 274.0 638.0 L 156.0 638.0 L 156.0 652.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 624.0 L 274.0 638.0 L 392.0 638.0 L 392.0 652.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 716.0 L 156.0 730.0 L 274.0 730.0 L 274.0 744.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 716.0 L 392.0 794.0 L 156.0 794.0 L 156.0 872.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 844.0 L 274.0 858.0 L 156.0 858.0 L 156.0 872.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 844.0 L 274.0 858.0 L 392.0 858.0 L 392.0 872.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 936.0 L 156.0 954.0 L 309.0 954.0 L 309.0 972.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 936.0 L 392.0 954.0 L 309.0 954.0 L 309.0 972.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="309.0" y1="1012.0" x2="309.0" y2="1088.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 309.0 1128.0 L 309.0 1196.0 L 171.0 1196.0 L 171.0 1264.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="171.0" y1="1328.0" x2="191.0" y2="1374.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="407.0" y1="1328.0" x2="407.0" y2="1356.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 191.0 1438.0 L 191.0 1563.0 L 309.0 1563.0 L 309.0 1688.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 407.0 1456.0 L 407.0 1470.0 L 171.0 1470.0 L 171.0 1484.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="407.0" y1="1456.0" x2="407.0" y2="1484.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="171.0" y1="1548.0" x2="156.0" y2="1582.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 407.0 1548.0 L 407.0 1565.0 L 156.0 1565.0 L 156.0 1582.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="257.0" y1="1614.0" x2="291.0" y2="1614.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 407.0 1652.0 L 407.0 1670.0 L 309.0 1670.0 L 309.0 1688.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 309.0 1728.0 L 309.0 1796.0 L 274.0 1796.0 L 274.0 1864.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 1964.0 L 274.0 1978.0 L 156.0 1978.0 L 156.0 1992.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 1964.0 L 274.0 1978.0 L 392.0 1978.0 L 392.0 1992.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 2056.0 L 156.0 2070.0 L 274.0 2070.0 L 274.0 2084.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 2056.0 L 392.0 2070.0 L 274.0 2070.0 L 274.0 2084.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="294.0" y1="2328.0" x2="294.0" y2="2404.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="294.0" y1="2444.0" x2="294.0" y2="2520.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 294.0 2560.0 L 294.0 2628.0 L 156.0 2628.0 L 156.0 2696.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 2760.0 L 156.0 2778.0 L 294.0 2778.0 L 294.0 2796.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 2760.0 L 392.0 2778.0 L 294.0 2778.0 L 294.0 2796.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="294.0" y1="2836.0" x2="294.0" y2="2912.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 294.0 2952.0 L 294.0 3020.0 L 156.0 3020.0 L 156.0 3088.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 3152.0 L 156.0 3166.0 L 274.0 3166.0 L 274.0 3180.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 3152.0 L 392.0 3252.0 L 274.0 3252.0 L 274.0 3352.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="274.0" y1="3256.0" x2="274.0" y2="3352.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 3452.0 L 274.0 3466.0 L 156.0 3466.0 L 156.0 3480.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 3452.0 L 274.0 3466.0 L 392.0 3466.0 L 392.0 3480.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 3544.0 L 156.0 3558.0 L 274.0 3558.0 L 274.0 3572.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 3544.0 L 392.0 3558.0 L 274.0 3558.0 L 274.0 3572.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 294.0 3816.0 L 294.0 3884.0 L 156.0 3884.0 L 156.0 3952.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="156.0" y1="4016.0" x2="156.0" y2="4044.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="392.0" y1="4016.0" x2="392.0" y2="4044.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="156.0" y1="4108.0" x2="156.0" y2="4204.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="392.0" y1="4108.0" x2="372.0" y2="4222.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="156.0" y1="4304.0" x2="156.0" y2="4332.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 4304.0 L 156.0 4318.0 L 392.0 4318.0 L 392.0 4332.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="372.0" y1="4286.0" x2="372.0" y2="4492.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="156.0" y1="4396.0" x2="176.0" y2="4492.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 4396.0 L 392.0 4444.0 L 176.0 4444.0 L 176.0 4492.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="176.0" y1="4592.0" x2="156.0" y2="4620.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 176.0 4592.0 L 176.0 4606.0 L 392.0 4606.0 L 392.0 4620.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 372.0 4592.0 L 372.0 4686.0 L 156.0 4686.0 L 156.0 4780.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="372.0" y1="4592.0" x2="392.0" y2="4780.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="156.0" y1="4684.0" x2="156.0" y2="4780.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 4684.0 L 392.0 4732.0 L 156.0 4732.0 L 156.0 4780.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="294.0" y1="4760.0" x2="274.0" y2="4940.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 4844.0 L 156.0 4892.0 L 274.0 4892.0 L 274.0 4940.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 4844.0 L 392.0 4892.0 L 274.0 4892.0 L 274.0 4940.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 5040.0 L 274.0 5054.0 L 156.0 5054.0 L 156.0 5068.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 5040.0 L 274.0 5054.0 L 392.0 5054.0 L 392.0 5068.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 5132.0 L 156.0 5150.0 L 294.0 5150.0 L 294.0 5168.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 5132.0 L 392.0 5150.0 L 294.0 5150.0 L 294.0 5168.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="294.0" y1="5208.0" x2="274.0" y2="5344.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 5444.0 L 274.0 5458.0 L 156.0 5458.0 L 156.0 5472.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 5444.0 L 274.0 5458.0 L 392.0 5458.0 L 392.0 5472.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 5536.0 L 156.0 5550.0 L 274.0 5550.0 L 274.0 5564.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 5536.0 L 392.0 5550.0 L 274.0 5550.0 L 274.0 5564.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="294.0" y1="5808.0" x2="294.0" y2="5884.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="294.0" y1="5924.0" x2="274.0" y2="6060.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 6160.0 L 274.0 6174.0 L 156.0 6174.0 L 156.0 6188.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 6160.0 L 274.0 6174.0 L 392.0 6174.0 L 392.0 6188.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="156.0" y1="6252.0" x2="156.0" y2="6348.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 6252.0 L 392.0 6300.0 L 156.0 6300.0 L 156.0 6348.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="294.0" y1="6328.0" x2="294.0" y2="6448.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 6412.0 L 156.0 6426.0 L 156.0 6426.0 L 156.0 6348.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 294.0 6488.0 L 294.0 7258.0 L 156.0 7258.0 L 156.0 8028.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 294.0 6488.0 L 294.0 7258.0 L 392.0 7258.0 L 392.0 8028.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="156.0" y1="6724.0" x2="156.0" y2="6752.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 6724.0 L 156.0 6738.0 L 392.0 6738.0 L 392.0 6752.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 372.0 6706.0 L 372.0 6720.0 L 156.0 6720.0 L 156.0 6624.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 6816.0 L 156.0 6873.0 L 372.0 6873.0 L 372.0 6930.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="392.0" y1="6816.0" x2="372.0" y2="6930.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="156.0" y1="7012.0" x2="156.0" y2="7040.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 7012.0 L 156.0 7026.0 L 392.0 7026.0 L 392.0 7040.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 372.0 6994.0 L 372.0 7008.0 L 156.0 7008.0 L 156.0 6912.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 7104.0 L 156.0 7161.0 L 372.0 7161.0 L 372.0 7218.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="392.0" y1="7104.0" x2="372.0" y2="7218.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="156.0" y1="7300.0" x2="156.0" y2="7328.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 7300.0 L 156.0 7314.0 L 392.0 7314.0 L 392.0 7328.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 372.0 7282.0 L 372.0 7296.0 L 156.0 7296.0 L 156.0 7200.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="156.0" y1="7392.0" x2="156.0" y2="7488.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 7392.0 L 392.0 7440.0 L 156.0 7440.0 L 156.0 7488.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="294.0" y1="7468.0" x2="274.0" y2="7648.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 7552.0 L 156.0 7566.0 L 156.0 7566.0 L 156.0 7488.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 7748.0 L 274.0 7762.0 L 156.0 7762.0 L 156.0 7776.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 7748.0 L 274.0 7762.0 L 392.0 7762.0 L 392.0 7776.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 7840.0 L 156.0 7854.0 L 274.0 7854.0 L 274.0 7868.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 7840.0 L 392.0 7854.0 L 274.0 7854.0 L 274.0 7868.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 8092.0 L 156.0 8120.0 L 372.0 8120.0 L 372.0 6642.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 8092.0 L 392.0 8120.0 L 372.0 8120.0 L 372.0 6642.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 294.0 8272.0 L 294.0 8340.0 L 156.0 8340.0 L 156.0 8408.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 8472.0 L 156.0 8486.0 L 274.0 8486.0 L 274.0 8500.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 8472.0 L 392.0 8630.0 L 156.0 8630.0 L 156.0 8788.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 8600.0 L 274.0 8614.0 L 156.0 8614.0 L 156.0 8628.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 8600.0 L 274.0 8614.0 L 392.0 8614.0 L 392.0 8628.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 8692.0 L 156.0 9114.0 L 294.0 9114.0 L 294.0 9536.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 8692.0 L 392.0 9114.0 L 294.0 9114.0 L 294.0 9536.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="156.0" y1="8888.0" x2="156.0" y2="8916.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 8888.0 L 156.0 8902.0 L 392.0 8902.0 L 392.0 8916.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 372.0 8870.0 L 372.0 8943.0 L 294.0 8943.0 L 294.0 9016.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 8980.0 L 156.0 9044.0 L 156.0 9044.0 L 156.0 8788.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 8980.0 L 392.0 9346.0 L 274.0 9346.0 L 274.0 9712.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="294.0" y1="9056.0" x2="294.0" y2="9132.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="294.0" y1="9172.0" x2="274.0" y2="9308.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 9408.0 L 274.0 9422.0 L 156.0 9422.0 L 156.0 9436.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 9408.0 L 274.0 9422.0 L 392.0 9422.0 L 392.0 9436.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 9500.0 L 156.0 9759.0 L 372.0 9759.0 L 372.0 10018.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="392.0" y1="9500.0" x2="372.0" y2="10018.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 294.0 9576.0 L 294.0 9797.0 L 372.0 9797.0 L 372.0 10018.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 9812.0 L 274.0 9826.0 L 156.0 9826.0 L 156.0 9840.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 9812.0 L 274.0 9826.0 L 392.0 9826.0 L 392.0 9840.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 9904.0 L 156.0 9961.0 L 372.0 9961.0 L 372.0 10018.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="392.0" y1="9904.0" x2="372.0" y2="10018.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="156.0" y1="10100.0" x2="156.0" y2="10128.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 10100.0 L 156.0 10114.0 L 392.0 10114.0 L 392.0 10128.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 372.0 10082.0 L 372.0 10096.0 L 156.0 10096.0 L 156.0 10000.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 10192.0 L 156.0 10206.0 L 274.0 10206.0 L 274.0 10220.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 10192.0 L 392.0 10206.0 L 274.0 10206.0 L 274.0 10220.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <g class="step-node" data-sid="s2_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>收敛性判断
+判断：DARP 迭代是否收敛（各子区域面积差 &lt; 阈值 AND 连通性满足）。
+CAP_091a2c1a</title>
+  <polygon points="274.0,524.0 354.0,574.0 274.0,624.0 194.0,574.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="274.0" y="566.0" font-size="12" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">收敛性判断</tspan></text>
+  <text x="274.0" y="586.0" font-size="9.5" fill="#FF8FC2" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="274.0" dy="0">迭代收敛判定</tspan></text>
+  <rect x="252.0" y="514.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="274.0" y="522.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：收敛
+条件：面积差 &lt; 阈值且所有子区域连通，迭代收敛完成。
+CAP_091a2c1a</title>
+  <rect x="56.0" y="652.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="679.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">条件：收敛</tspan></text>
+  <rect x="62.0" y="656.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="667.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  <text x="156.0" y="706.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">坐标下降面积均衡迭代</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：未收敛
+条件：连通性不满足，需调整子区域边界（迭代调整逻辑在s2步骤description中描述）。
+CAP_091a2c1a</title>
+  <rect x="292.0" y="652.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="679.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">条件：未收敛</tspan></text>
+  <rect x="298.0" y="656.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="667.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  <text x="392.0" y="706.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="392.0" dy="0">坐标下降面积均衡迭代</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>解存在性判断
+判断：当前地图拓扑和机器人数量下是否存在等面积连通分区最优解。
+CAP_7da88b44</title>
+  <polygon points="274.0,744.0 354.0,794.0 274.0,844.0 194.0,794.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="274.0" y="786.0" font-size="12" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">解存在性判断</tspan></text>
+  <text x="274.0" y="806.0" font-size="9.5" fill="#FF8FC2" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="274.0" dy="0">最优解存在性</tspan></text>
+  <rect x="252.0" y="734.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="274.0" y="742.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_2a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：存在最优解
+条件：存在等面积连通分区最优解，继续正常分区流程。
+CAP_7da88b44</title>
+  <rect x="56.0" y="872.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="899.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">条件：存在最优解</tspan></text>
+  <rect x="62.0" y="876.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="887.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  <text x="156.0" y="926.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">DARP迭代几何分区</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_2b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：无最优解
+条件：地图拓扑或机器人数导致无等面积连通最优解，使用 non-equal portions 近似分区。
+CAP_7da88b44</title>
+  <rect x="292.0" y="872.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="899.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">条件：无最优解</tspan></text>
+  <rect x="298.0" y="876.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="887.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  <text x="392.0" y="926.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="392.0" dy="0">DARP迭代几何分区</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：DARP+STC 范式
+条件：mode == DARP，各子区域独立构建 MST + 独立环绕覆盖。
+CAP_d56f052b</title>
+  <rect x="71.0" y="1264.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="171.0" y="1291.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">条件：DARP+STC 范式</tspan></text>
+  <rect x="77.0" y="1268.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="94.0" y="1279.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="94.0" dy="0">分支</tspan></text>
+  <text x="171.0" y="1318.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="171.0" dy="0">STC生成树覆盖路径生成</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：MSTC*/TMSTC* 范式
+条件：mode == MSTC，共享生成树 + 拓扑环均衡划分相遇点。
+CAP_8c8f9357</title>
+  <rect x="307.0" y="1264.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="407.0" y="1282.2" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="407.0" dy="0">条件：MSTC*/TMSTC*</tspan><tspan x="407.0" dy="17.6">范式</tspan></text>
+  <rect x="313.0" y="1268.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="330.0" y="1279.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="330.0" dy="0">分支</tspan></text>
+  <text x="407.0" y="1318.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="407.0" dy="0">协同生成树扫掠规划</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_2a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>独立子区域生成树构建
+在各子区域的 mega cell 图上独立构建最小生成树（Prim/Kruskal），为 STC 环绕路径提供骨架。输入：各子区域 spanning graph H_i。输出：K 棵生成树 T_i。性能指标：Prim 算法 O(V²)，Kruskal O(E log V)。
+CAP_da78fbc2</title>
+  <rect x="91.0" y="1374.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="191.0" y="1401.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="191.0" dy="0">独立子区域生成树构建</tspan></text>
+  <rect x="97.0" y="1378.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="114.0" y="1389.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="114.0" dy="0">分支</tspan></text>
+  <text x="191.0" y="1428.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="191.0" dy="0">生成树构建</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_2b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>TMSTC* 砖块划分判断
+判断：TMSTC* 最小砖块划分是否可用 DINIC 最大流求解。
+CAP_104f4d92</title>
+  <polygon points="407.0,1356.0 487.0,1406.0 407.0,1456.0 327.0,1406.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="407.0" y="1389.9" font-size="12" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="407.0" dy="0">TMSTC* 砖块划分</tspan><tspan x="407.0" dy="16.2">判断</tspan></text>
+  <text x="407.0" y="1418.0" font-size="9.5" fill="#FF8FC2" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="407.0" dy="0">DINIC 可行性</tspan></text>
+  <rect x="385.0" y="1346.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="407.0" y="1354.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="407.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_2b_a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：DINIC 可用
+条件：DINIC 最大流可行，用 DINIC 求二分图最大独立集实现最小砖块划分。
+CAP_104f4d92</title>
+  <rect x="71.0" y="1484.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="171.0" y="1511.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">条件：DINIC 可用</tspan></text>
+  <rect x="77.0" y="1488.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="94.0" y="1499.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="94.0" dy="0">分支</tspan></text>
+  <text x="171.0" y="1538.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="171.0" dy="0">转弯感知砖块生成树构建</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_2b_b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：DINIC 不可用
+条件：DINIC 不可行，降级使用其他 MST 形状（DFS/Kruskal/ACO 等）。
+CAP_da78fbc2</title>
+  <rect x="307.0" y="1484.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="407.0" y="1511.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="407.0" dy="0">条件：DINIC 不可用</tspan></text>
+  <rect x="313.0" y="1488.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="330.0" y="1499.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="330.0" dy="0">分支</tspan></text>
+  <text x="407.0" y="1538.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="407.0" dy="0">生成树构建</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_2b_merge" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>合并：生成树完成
+合并：生成树构建完成（DINIC 砖块划分或降级 MST）。
+CAP_8c8f9357</title>
+  <rect x="56.0" y="1582.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="1609.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">合并：生成树完成</tspan></text>
+  <rect x="62.0" y="1586.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="1597.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  <text x="156.0" y="1636.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">协同生成树扫掠规划</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_3" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>拓扑环均衡划分
+MSTC* 协同核心：生成树周界形成闭合环路，在环上找 K 个相遇点使各机器人路径权重（cell 数 + 转弯数）均衡，贪心搜索最优均衡划分。输入：生成树 T + 机器人数量 K + 砖块路径权重。输出：K 个相遇点。约束：划分点在树节点上；各机器人路径权重均衡。
+CAP_4c2b9547</title>
+  <rect x="292.0" y="1576.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="407.0" y="1613.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="407.0" dy="0">拓扑环均衡划分</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s7_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>故障检测判断
+判断：覆盖执行中某机器人是否故障/超时。
+CAP_2fadbc82</title>
+  <polygon points="274.0,1864.0 354.0,1914.0 274.0,1964.0 194.0,1914.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="274.0" y="1906.0" font-size="12" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">故障检测判断</tspan></text>
+  <text x="274.0" y="1926.0" font-size="9.5" fill="#FF8FC2" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="274.0" dy="0">机器人故障检测</tspan></text>
+  <rect x="252.0" y="1854.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="274.0" y="1862.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s7_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：无故障
+条件：所有机器人正常运行，继续执行覆盖直至完成。
+CAP_5b894e07</title>
+  <rect x="56.0" y="1992.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="2019.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">条件：无故障</tspan></text>
+  <rect x="62.0" y="1996.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="2007.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  <text x="156.0" y="2046.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">子区域覆盖路径规划与执行</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s7_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：机器人故障
+条件：某机器人故障/超时，对剩余未覆盖区域重新运行 DARP 分区给其他可用机器人。
+CAP_2fadbc82</title>
+  <rect x="292.0" y="1992.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="2019.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">条件：机器人故障</tspan></text>
+  <rect x="298.0" y="1996.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="2007.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  <text x="392.0" y="2046.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="392.0" dy="0">多机器人失效区域重划分</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s7_end" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>合并：覆盖完成
+合并：全覆盖任务完成（正常完成或故障重分配后完成）。
+CAP_18e16c73</title>
+  <rect x="174.0" y="2084.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="274.0" y="2111.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">合并：覆盖完成</tspan></text>
+  <rect x="180.0" y="2088.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="197.0" y="2099.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="197.0" dy="0">分支</tspan></text>
+  <text x="274.0" y="2138.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="274.0" dy="0">多机器人覆盖空间分区</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：凸环境
+条件：环境为凸集，使用欧氏距离标准Voronoi。
+CAP_dd313afa</title>
+  <rect x="56.0" y="2696.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="2723.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">条件：凸环境</tspan></text>
+  <rect x="62.0" y="2700.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="2711.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  <text x="156.0" y="2750.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">Voronoi划分与质心计算</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：非凸环境
+条件：环境非凸或含障碍物，使用测地距离Voronoi分区。
+CAP_a1f3e2b7</title>
+  <rect x="292.0" y="2696.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="2723.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">条件：非凸环境</tspan></text>
+  <rect x="298.0" y="2700.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="2711.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  <text x="392.0" y="2750.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="392.0" dy="0">测地距离非凸覆盖分区</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s7_a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：持续覆盖
+条件：持续覆盖，覆盖质量随时间衰减，需在线重规划路径。
+CAP_b7c4f8d2</title>
+  <rect x="56.0" y="3088.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="3115.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">条件：持续覆盖</tspan></text>
+  <rect x="62.0" y="3092.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="3103.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  <text x="156.0" y="3142.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">持续覆盖衰减模型</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s7_b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：静态部署
+条件：静态部署，机器人一次性到达质心位置即完成。
+CAP_ddd670ff</title>
+  <rect x="292.0" y="3088.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="3115.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">条件：静态部署</tspan></text>
+  <rect x="298.0" y="3092.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="3103.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  <text x="392.0" y="3142.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="392.0" dy="0">Lloyd梯度覆盖部署</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s7_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>图基覆盖路径在线规划
+在分区内构建扫掠路径图，将覆盖误差作为边权重，用Bellman-Ford变种算法在线求最优覆盖路径。支持开放路径。输入：分区+覆盖误差场。输出：最优覆盖路径waypoint序列。
+CAP_c9d5a1e3</title>
+  <rect x="159.0" y="3180.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="274.0" y="3217.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">图基覆盖路径在线规划</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s8_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>故障检测判断
+判断：覆盖执行中某机器人是否故障/离线。
+CAP_818eeec5</title>
+  <polygon points="274.0,3352.0 354.0,3402.0 274.0,3452.0 194.0,3402.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="274.0" y="3394.0" font-size="12" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">故障检测判断</tspan></text>
+  <text x="274.0" y="3414.0" font-size="9.5" fill="#FF8FC2" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="274.0" dy="0">机器人故障检测</tspan></text>
+  <rect x="252.0" y="3342.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="274.0" y="3350.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s8_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：无故障
+条件：所有机器人正常运行，继续执行覆盖。
+CAP_18e16c73</title>
+  <rect x="56.0" y="3480.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="3507.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">条件：无故障</tspan></text>
+  <rect x="62.0" y="3484.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="3495.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  <text x="156.0" y="3534.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">多机器人覆盖空间分区</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s8_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：机器人故障
+条件：某机器人故障/离线，剩余机器人重新触发power diagram分区接管故障区域。
+CAP_818eeec5</title>
+  <rect x="292.0" y="3480.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="3507.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">条件：机器人故障</tspan></text>
+  <rect x="298.0" y="3484.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="3495.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  <text x="392.0" y="3534.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="392.0" dy="0">Power Diagram等量分区</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s8_end" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>合并：覆盖完成
+合并：覆盖任务完成（静态部署到位或持续覆盖周期完成）。
+CAP_18e16c73</title>
+  <rect x="174.0" y="3572.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="274.0" y="3599.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">合并：覆盖完成</tspan></text>
+  <rect x="180.0" y="3576.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="197.0" y="3587.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="197.0" dy="0">分支</tspan></text>
+  <text x="274.0" y="3626.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="274.0" dy="0">多机器人覆盖空间分区</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：hgrid分解
+条件：hgrid，RACER层次网格分解。
+CAP_25d2bdab</title>
+  <rect x="56.0" y="3952.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="3979.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">条件：hgrid分解</tspan></text>
+  <rect x="62.0" y="3956.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="3967.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  <text x="156.0" y="4006.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">分层栅格空间分解</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：Voronoi分区
+条件：Voronoi，CURE动态Voronoi或GVP-MREP图Voronoi。
+CAP_e8f1a2b3</title>
+  <rect x="292.0" y="3952.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="3979.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">条件：Voronoi分区</tspan></text>
+  <rect x="298.0" y="3956.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="3967.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  <text x="392.0" y="4006.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="392.0" dy="0">动态Voronoi探索分区</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_hgrid" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>在线Hgrid空间分解
+RACER核心：整个未知空间在线递归分层分解为粗粒度区域单元，保证各机同步探索不同区域。整个未知空间不断按预定义边界划分为多个网格，并不断细分成包含不同大小的网格单元，这些网格单元作为分配任务的基本单元。当某区域被探索超过阈值（如70%）时自动细分，完全探索的区域从活动列表移除，不可达区域被智能过滤。输入：未知空间体素/栅格。输出：hgrid区域单元。约束：粗粒度全局覆盖+局部细化。性能指标：线性数组存储O(1)查询，比八叉树快3-5倍。
+CAP_25d2bdab</title>
+  <rect x="56.0" y="4044.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="4071.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">在线Hgrid空间分解</tspan></text>
+  <rect x="62.0" y="4048.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="4059.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  <text x="156.0" y="4098.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">分层栅格空间分解</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_voronoi" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>动态Voronoi/图Voronoi探索分区
+CURE/GVP-MREP变体：CURE用动态Voronoi图对正在被探索的空间进行分区，每机负责自己的Voronoi cell，随机器人位置和已知区域变化动态更新；GVP-MREP在多机器人动态拓扑图（MR-DTG）上用图Voronoi分区将节点分配给最近UAV，考虑实际运动代价。输入：已知/未知区域边界+机器人位置或MR-DTG。输出：各机器人Voronoi分区或图节点分配。
+CAP_e8f1a2b3 / CAP_a1b3c5d7</title>
+  <rect x="292.0" y="4044.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="4062.2" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">动态Voronoi/图</tspan><tspan x="392.0" dy="17.6">Voronoi探索分区</tspan></text>
+  <rect x="298.0" y="4048.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="4059.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  <text x="392.0" y="4098.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="392.0" dy="0">动态Voronoi探索分区 +1</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>配对交互结果判断
+判断：配对交互是否成功（邻居在线且无冲突）。
+CAP_c087f0ff</title>
+  <polygon points="156.0,4204.0 236.0,4254.0 156.0,4304.0 76.0,4254.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="156.0" y="4246.0" font-size="12" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">配对交互结果判断</tspan></text>
+  <text x="156.0" y="4266.0" font-size="9.5" fill="#FF8FC2" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">交互结果</tspan></text>
+  <rect x="134.0" y="4194.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="156.0" y="4202.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_v" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>质心检测与前沿分配
+CURE/rrt_exploration变体：CURE检测未知连通区域的质心，设计参数不敏感效用函数评估质心信息量，分层全局/局部探索窗口检测；rrt_exploration用RRT随机树检测前沿点，基于revenue评分分配给各机器人。输入：已知/未知区域地图或占据栅格+机器人状态。输出：质心/前沿目标分配。
+CAP_f9b2c3d4 / CAP_b2c4d6e8</title>
+  <rect x="272.0" y="4222.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="372.0" y="4249.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="372.0" dy="0">质心检测与前沿分配</tspan></text>
+  <rect x="278.0" y="4226.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="295.0" y="4237.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="295.0" dy="0">分支</tspan></text>
+  <text x="372.0" y="4276.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="372.0" dy="0">未知区域质心检测与评估 +1</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：交互成功
+条件：成功，更新网格所有权。
+CAP_c087f0ff</title>
+  <rect x="56.0" y="4332.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="4359.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">条件：交互成功</tspan></text>
+  <rect x="62.0" y="4336.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="4347.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  <text x="156.0" y="4386.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">成对区域分配</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：交互失败
+条件：交互失败，选择下一个最久未交互邻居重试（重试逻辑在s2步骤description中描述）。
+CAP_c087f0ff</title>
+  <rect x="292.0" y="4332.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="4359.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">条件：交互失败</tspan></text>
+  <rect x="298.0" y="4336.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="4347.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  <text x="392.0" y="4386.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="392.0" dy="0">成对区域分配</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>CVRP可行性判断
+判断：CVRP是否可行（区域数不超过求解器限制）。
+CAP_a6ca4c18</title>
+  <polygon points="176.0,4492.0 256.0,4542.0 176.0,4592.0 96.0,4542.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="176.0" y="4534.0" font-size="12" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="176.0" dy="0">CVRP可行性判断</tspan></text>
+  <text x="176.0" y="4554.0" font-size="9.5" fill="#FF8FC2" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="176.0" dy="0">CVRP可行性</tspan></text>
+  <rect x="154.0" y="4482.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="176.0" y="4490.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="176.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_v" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>分层探索窗口判断
+判断：局部探索窗口中是否存在质心（CURE变体）。
+CAP_f9b2c3d4</title>
+  <polygon points="372.0,4492.0 452.0,4542.0 372.0,4592.0 292.0,4542.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="372.0" y="4534.0" font-size="12" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="372.0" dy="0">分层探索窗口判断</tspan></text>
+  <text x="372.0" y="4554.0" font-size="9.5" fill="#FF8FC2" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="372.0" dy="0">质心检测</tspan></text>
+  <rect x="350.0" y="4482.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="372.0" y="4490.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="372.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：CVRP可行
+条件：可行，LKH-3求解均衡CP。
+CAP_a6ca4c18</title>
+  <rect x="56.0" y="4620.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="4647.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">条件：CVRP可行</tspan></text>
+  <rect x="62.0" y="4624.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="4635.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  <text x="156.0" y="4674.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">CVRP负载均衡</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：CVRP不可行
+条件：不可行，稀疏图路径搜索降级。
+CAP_65c4a6aa</title>
+  <rect x="292.0" y="4620.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="4647.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">条件：CVRP不可行</tspan></text>
+  <rect x="298.0" y="4624.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="4635.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  <text x="392.0" y="4674.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="392.0" dy="0">去中心化协同无人机探索</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：局部质心存在
+条件：存在，局部窗口质心引导。
+CAP_f9b2c3d4</title>
+  <rect x="56.0" y="4780.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="4807.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">条件：局部质心存在</tspan></text>
+  <rect x="62.0" y="4784.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="4795.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  <text x="156.0" y="4834.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">未知区域质心检测与评估</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：全局窗口激活
+条件：不存在，激活全局探索窗口找质心。
+CAP_f9b2c3d4</title>
+  <rect x="292.0" y="4780.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="4807.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">条件：全局窗口激活</tspan></text>
+  <rect x="298.0" y="4784.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="4795.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  <text x="392.0" y="4834.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="392.0" dy="0">未知区域质心检测与评估</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>路径更新判断
+判断：覆盖路径是否需要更新（新区域发现/区域完成）。
+CAP_65c4a6aa</title>
+  <polygon points="274.0,4940.0 354.0,4990.0 274.0,5040.0 194.0,4990.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="274.0" y="4982.0" font-size="12" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">路径更新判断</tspan></text>
+  <text x="274.0" y="5002.0" font-size="9.5" fill="#FF8FC2" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="274.0" dy="0">路径更新触发</tspan></text>
+  <rect x="252.0" y="4930.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="274.0" y="4938.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：需更新路径
+条件：需要更新，重新规划CP + CVRP重分配。
+CAP_a6ca4c18</title>
+  <rect x="56.0" y="5068.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="5095.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">条件：需更新路径</tspan></text>
+  <rect x="62.0" y="5072.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="5083.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  <text x="156.0" y="5122.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">CVRP负载均衡</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：无需更新
+条件：不需要，继续当前路径执行。
+CAP_06093bc8</title>
+  <rect x="292.0" y="5068.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="5095.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">条件：无需更新</tspan></text>
+  <rect x="298.0" y="5072.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="5083.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  <text x="392.0" y="5122.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="392.0" dy="0">多机轨迹执行</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s7_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>探索进度判断
+判断：某区域被探索是否超过阈值（如70%）。
+CAP_25d2bdab</title>
+  <polygon points="274.0,5344.0 354.0,5394.0 274.0,5444.0 194.0,5394.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="274.0" y="5386.0" font-size="12" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">探索进度判断</tspan></text>
+  <text x="274.0" y="5406.0" font-size="9.5" fill="#FF8FC2" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="274.0" dy="0">探索完成度</tspan></text>
+  <rect x="252.0" y="5334.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="274.0" y="5342.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s7_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：超过阈值
+条件：超过阈值，自动细分/移除已完成区域（在线细化重分配的迭代逻辑在s7步骤description中描述）。
+CAP_25d2bdab</title>
+  <rect x="56.0" y="5472.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="5499.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">条件：超过阈值</tspan></text>
+  <rect x="62.0" y="5476.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="5487.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  <text x="156.0" y="5526.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">分层栅格空间分解</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s7_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：未超阈值
+条件：未超过阈值，保持当前粒度，继续探索。
+CAP_65c4a6aa</title>
+  <rect x="292.0" y="5472.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="5499.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">条件：未超阈值</tspan></text>
+  <rect x="298.0" y="5476.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="5487.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  <text x="392.0" y="5526.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="392.0" dy="0">去中心化协同无人机探索</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s7_end" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>合并：探索完成
+合并：探索任务完成（探索完整个未知空间或任务终止）。
+CAP_65c4a6aa</title>
+  <rect x="174.0" y="5564.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="274.0" y="5591.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">合并：探索完成</tspan></text>
+  <rect x="180.0" y="5568.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="197.0" y="5579.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="197.0" dy="0">分支</tspan></text>
+  <text x="274.0" y="5618.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="274.0" dy="0">去中心化协同无人机探索</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>环境复杂度判断
+判断：环境是否含孔洞/障碍物（决定单cell还是多cell分解）。
+CAP_59377ad0</title>
+  <polygon points="274.0,6060.0 354.0,6110.0 274.0,6160.0 194.0,6110.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="274.0" y="6102.0" font-size="12" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">环境复杂度判断</tspan></text>
+  <text x="274.0" y="6122.0" font-size="9.5" fill="#FF8FC2" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="274.0" dy="0">环境孔洞/障碍物检测</tspan></text>
+  <rect x="252.0" y="6050.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="274.0" y="6058.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：无障碍单cell
+条件：环境不含孔洞/障碍物，单cell分解，直接进入swath生成。
+CAP_d06b7a8e</title>
+  <rect x="56.0" y="6188.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="6215.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">条件：无障碍单cell</tspan></text>
+  <rect x="62.0" y="6192.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="6203.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  <text x="156.0" y="6242.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">牛耕覆盖路径生成</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：含障碍多cell
+条件：环境含孔洞/障碍物，多cell分解 + 邻接图构建。
+CAP_eb706634</title>
+  <rect x="292.0" y="6188.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="6215.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">条件：含障碍多cell</tspan></text>
+  <rect x="298.0" y="6192.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="6203.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  <text x="392.0" y="6242.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="392.0" dy="0">Cell邻接图构建</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_merge" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>合并：细胞分解完成
+合并：细胞分解完成（单cell或多cell+邻接图）。
+CAP_59377ad0</title>
+  <rect x="56.0" y="6348.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="6375.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">合并：细胞分解完成</tspan></text>
+  <rect x="62.0" y="6352.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="6363.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  <text x="156.0" y="6402.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">Boustrophedon单元分解</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>cell数量判断
+判断：cell数量是否多到需要联合方向+顺序优化（E-GTSP）还是仅需顺序优化（TSP）。
+CAP_4163a20d</title>
+  <polygon points="156.0,6624.0 236.0,6674.0 156.0,6724.0 76.0,6674.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="156.0" y="6666.0" font-size="12" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">cell数量判断</tspan></text>
+  <text x="156.0" y="6686.0" font-size="9.5" fill="#FF8FC2" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">cell数量与复杂度</tspan></text>
+  <rect x="134.0" y="6614.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="156.0" y="6622.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_merge" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>合并：Swath生成完成
+合并：swath生成完成（固定方向或优化方向）。
+CAP_d06b7a8e</title>
+  <rect x="272.0" y="6642.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="372.0" y="6669.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="372.0" dy="0">合并：Swath生成完成</tspan></text>
+  <rect x="278.0" y="6646.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="295.0" y="6657.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="295.0" dy="0">分支</tspan></text>
+  <text x="372.0" y="6696.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="372.0" dy="0">牛耕覆盖路径生成</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：多cell E-GTSP
+条件：多cell，用E-GTSP联合优化swath方向+访问顺序。
+CAP_4163a20d</title>
+  <rect x="56.0" y="6752.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="6779.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">条件：多cell E-GTSP</tspan></text>
+  <rect x="62.0" y="6756.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="6767.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  <text x="156.0" y="6806.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">等式广义旅行商swath顺序优化</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：少cell TSP
+条件：少cell，用标准TSP优化cell访问顺序。
+CAP_62ede55d</title>
+  <rect x="292.0" y="6752.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="6779.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">条件：少cell TSP</tspan></text>
+  <rect x="298.0" y="6756.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="6767.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  <text x="392.0" y="6806.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="392.0" dy="0">cell遍历顺序TSP优化</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s6_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>机器人数量判断
+判断：机器人数量是否大于1（需要多机分配还是单机）。
+CAP_9a8def8f</title>
+  <polygon points="156.0,6912.0 236.0,6962.0 156.0,7012.0 76.0,6962.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="156.0" y="6954.0" font-size="12" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">机器人数量判断</tspan></text>
+  <text x="156.0" y="6974.0" font-size="9.5" fill="#FF8FC2" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">机器人数量</tspan></text>
+  <rect x="134.0" y="6902.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="156.0" y="6910.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s6_merge" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>合并：顺序优化完成
+合并：swath顺序优化完成（E-GTSP或TSP）。
+CAP_cc883fe3</title>
+  <rect x="272.0" y="6930.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="372.0" y="6957.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="372.0" dy="0">合并：顺序优化完成</tspan></text>
+  <rect x="278.0" y="6934.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="295.0" y="6945.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="295.0" dy="0">分支</tspan></text>
+  <text x="372.0" y="6984.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="372.0" dy="0">最小能耗覆盖排序（TSP）</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s6_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：多机分配
+条件：多机器人，mTSP求解器分配 + 负载均衡。
+CAP_9a8def8f</title>
+  <rect x="56.0" y="7040.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="7067.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">条件：多机分配</tspan></text>
+  <rect x="62.0" y="7044.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="7055.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  <text x="156.0" y="7094.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">多机器人负载均衡单元分配</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s6_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：单机
+条件：单机器人，所有swath分配给一个机器人。
+CAP_d06b7a8e</title>
+  <rect x="292.0" y="7040.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="7067.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">条件：单机</tspan></text>
+  <rect x="298.0" y="7044.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="7055.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  <text x="392.0" y="7094.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="392.0" dy="0">牛耕覆盖路径生成</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s7_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>不相交段判断
+判断：swath间是否存在不相交段需要visibility graph连接。
+CAP_5c8f2d3a</title>
+  <polygon points="156.0,7200.0 236.0,7250.0 156.0,7300.0 76.0,7250.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="156.0" y="7242.0" font-size="12" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">不相交段判断</tspan></text>
+  <text x="156.0" y="7262.0" font-size="9.5" fill="#FF8FC2" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">swath不相交检测</tspan></text>
+  <rect x="134.0" y="7190.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="156.0" y="7198.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s7_merge" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>合并：分配完成
+合并：多机器人负载分配完成（mTSP或单机）。
+CAP_9a8def8f</title>
+  <rect x="272.0" y="7218.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="372.0" y="7245.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="372.0" dy="0">合并：分配完成</tspan></text>
+  <rect x="278.0" y="7222.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="295.0" y="7233.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="295.0" dy="0">分支</tspan></text>
+  <text x="372.0" y="7272.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="372.0" dy="0">多机器人负载均衡单元分配</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s7_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：不相交段
+条件：存在不相交段，修改VG连接 + 航向驱动遍历。
+CAP_5c8f2d3a</title>
+  <rect x="56.0" y="7328.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="7355.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">条件：不相交段</tspan></text>
+  <rect x="62.0" y="7332.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="7343.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  <text x="156.0" y="7382.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">修改可见性图不相交段连接</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s7_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：连续swath
+条件：所有swath连续，直接输出路径。
+CAP_d06b7a8e</title>
+  <rect x="292.0" y="7328.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="7355.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">条件：连续swath</tspan></text>
+  <rect x="298.0" y="7332.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="7343.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  <text x="392.0" y="7382.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="392.0" dy="0">牛耕覆盖路径生成</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s8_merge" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>合并：路径生成完成
+合并：覆盖路径生成完成（VG连接或直接连续）。
+CAP_59377ad0</title>
+  <rect x="56.0" y="7488.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="7515.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">合并：路径生成完成</tspan></text>
+  <rect x="62.0" y="7492.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="7503.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  <text x="156.0" y="7542.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">Boustrophedon单元分解</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s9_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>故障检测判断
+判断：覆盖执行中某机器人是否故障/低电量。
+CAP_3a7b9e1f</title>
+  <polygon points="274.0,7648.0 354.0,7698.0 274.0,7748.0 194.0,7698.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="274.0" y="7690.0" font-size="12" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">故障检测判断</tspan></text>
+  <text x="274.0" y="7710.0" font-size="9.5" fill="#FF8FC2" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="274.0" dy="0">机器人故障检测</tspan></text>
+  <rect x="252.0" y="7638.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="274.0" y="7646.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s9_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：无故障
+条件：所有机器人正常运行，正常完成覆盖。
+CAP_18e16c73</title>
+  <rect x="56.0" y="7776.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="7803.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">条件：无故障</tspan></text>
+  <rect x="62.0" y="7780.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="7791.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  <text x="156.0" y="7830.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">多机器人覆盖空间分区</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s9_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：机器人故障
+条件：某机器人故障/低电量，邻接树传播式重分配故障路径给邻近机器人。
+CAP_3a7b9e1f</title>
+  <rect x="292.0" y="7776.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="7803.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">条件：机器人故障</tspan></text>
+  <rect x="298.0" y="7780.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="7791.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  <text x="392.0" y="7830.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="392.0" dy="0">传播式失效覆盖重分配</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s9_end" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>合并：覆盖完成
+合并：全覆盖任务完成（正常完成或故障重分配后完成）。
+CAP_18e16c73</title>
+  <rect x="174.0" y="7868.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="274.0" y="7895.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">合并：覆盖完成</tspan></text>
+  <rect x="180.0" y="7872.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="197.0" y="7883.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="197.0" dy="0">分支</tspan></text>
+  <text x="274.0" y="7922.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="274.0" dy="0">多机器人覆盖空间分区</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：方向优化
+条件：需要能耗优化，用旋转卡尺算法计算最小面积外接矩形确定全局最优扫掠方向。
+CAP_b65a47a0</title>
+  <rect x="56.0" y="8028.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="8055.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">条件：方向优化</tspan></text>
+  <rect x="62.0" y="8032.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="8043.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  <text x="156.0" y="8082.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">转弯最小化swath生成</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：固定方向
+条件：固定方向，使用默认或用户指定方向。
+CAP_d06b7a8e</title>
+  <rect x="292.0" y="8028.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="8055.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">条件：固定方向</tspan></text>
+  <rect x="298.0" y="8032.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="8043.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  <text x="392.0" y="8082.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="392.0" dy="0">牛耕覆盖路径生成</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：确定性策略
+条件：确定性策略，进入环形/分区轨迹设计。
+CAP_c5e7f9a0</title>
+  <rect x="56.0" y="8408.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="8435.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">条件：确定性策略</tspan></text>
+  <rect x="62.0" y="8412.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="8423.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  <text x="156.0" y="8462.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">刷新时间最优轨迹设计</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：随机策略
+条件：随机（马尔可夫链）策略，进入图划分流程。
+CAP_7c9f2d3e</title>
+  <rect x="292.0" y="8408.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="8435.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">条件：随机策略</tspan></text>
+  <rect x="298.0" y="8412.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="8423.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  <text x="392.0" y="8462.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="392.0" dy="0">最大k割图划分</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>图拓扑类型判断
+判断：拓扑图是链图、树图还是环图（决定多项式最优还是近似算法）。
+CAP_c5e7f9a0</title>
+  <polygon points="274.0,8500.0 354.0,8550.0 274.0,8600.0 194.0,8550.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="274.0" y="8542.0" font-size="12" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">图拓扑类型判断</tspan></text>
+  <text x="274.0" y="8562.0" font-size="9.5" fill="#FF8FC2" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="274.0" dy="0">图拓扑结构</tspan></text>
+  <rect x="252.0" y="8490.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="274.0" y="8498.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_2a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：链图/树图
+条件：链图/树图，多项式时间最优算法计算最优refresh time环形轨迹。
+CAP_c5e7f9a0</title>
+  <rect x="56.0" y="8628.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="8655.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">条件：链图/树图</tspan></text>
+  <rect x="62.0" y="8632.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="8643.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  <text x="156.0" y="8682.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">刷新时间最优轨迹设计</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_2b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：环图
+条件：环图，NP-hard，用常数因子近似算法。
+CAP_c5e7f9a0</title>
+  <rect x="292.0" y="8628.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="8655.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">条件：环图</tspan></text>
+  <rect x="298.0" y="8632.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="8643.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  <text x="392.0" y="8682.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="392.0" dy="0">刷新时间最优轨迹设计</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_0" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>分区方式判断
+判断：采用预计算分区还是涌现式分区。
+CAP_18e16c73</title>
+  <polygon points="156.0,8788.0 236.0,8838.0 156.0,8888.0 76.0,8838.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="156.0" y="8830.0" font-size="12" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">分区方式判断</tspan></text>
+  <text x="156.0" y="8850.0" font-size="9.5" fill="#FF8FC2" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">分区方式</tspan></text>
+  <rect x="134.0" y="8778.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="156.0" y="8786.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>均衡图分割（MSP变体）
+MSP变体：使用均衡图分割算法（多级子图分割）将拓扑图切为k个大小近似相等的子图，每个机器人负责一个子图。均衡约束确保各机器人工作负载近似相等。输入：拓扑图+机器人数量。输出：k个均衡子图。约束：均衡分割是NP-hard，使用多级启发式近似。
+CAP_a3c5d7e8</title>
+  <rect x="272.0" y="8806.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="372.0" y="8833.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="372.0" dy="0">均衡图分割（MSP变体）</tspan></text>
+  <rect x="278.0" y="8810.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="295.0" y="8821.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="295.0" dy="0">分支</tspan></text>
+  <text x="372.0" y="8860.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="372.0" dy="0">均衡图分割领地分配</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：预计算分区
+条件：预计算分区，进入图划分（maximum k-cut / MSP均衡分割）。
+CAP_7c9f2d3e</title>
+  <rect x="56.0" y="8916.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="8943.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">条件：预计算分区</tspan></text>
+  <rect x="62.0" y="8920.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="8931.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  <text x="156.0" y="8970.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">最大k割图划分</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：涌现式分区
+条件：涌现式分区，LR-PT局部反应式 + 自主领地涌现。
+CAP_d6f8a0b1</title>
+  <rect x="292.0" y="8916.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="8943.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">条件：涌现式分区</tspan></text>
+  <rect x="298.0" y="8920.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="8931.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  <text x="392.0" y="8970.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="392.0" dy="0">涌现式区域划分巡逻</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>收敛判断
+判断：启发式下降算法是否收敛（划分改进小于阈值）。
+CAP_7c9f2d3e</title>
+  <polygon points="274.0,9308.0 354.0,9358.0 274.0,9408.0 194.0,9358.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="274.0" y="9350.0" font-size="12" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">收敛判断</tspan></text>
+  <text x="274.0" y="9370.0" font-size="9.5" fill="#FF8FC2" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="274.0" dy="0">收敛判定</tspan></text>
+  <rect x="252.0" y="9298.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="274.0" y="9306.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：已收敛
+条件：改进小于阈值，输出最终划分。
+CAP_7c9f2d3e</title>
+  <rect x="56.0" y="9436.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="9463.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">条件：已收敛</tspan></text>
+  <rect x="62.0" y="9440.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="9451.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  <text x="156.0" y="9490.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">最大k割图划分</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：未收敛
+条件：改进大于等于阈值，继续迭代下降（迭代逻辑在s5启发式下降步骤的description中描述）。
+CAP_7c9f2d3e</title>
+  <rect x="292.0" y="9436.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="9463.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">条件：未收敛</tspan></text>
+  <rect x="298.0" y="9440.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="9451.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  <text x="392.0" y="9490.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="392.0" dy="0">最大k割图划分</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s7_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>基站连通性判断
+判断：是否需要兼顾基站连通性（回连报告）。
+CAP_b4d6e8f9</title>
+  <polygon points="274.0,9712.0 354.0,9762.0 274.0,9812.0 194.0,9762.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="274.0" y="9754.0" font-size="12" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">基站连通性判断</tspan></text>
+  <text x="274.0" y="9774.0" font-size="9.5" fill="#FF8FC2" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="274.0" dy="0">基站连通性需求</tspan></text>
+  <rect x="252.0" y="9702.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="274.0" y="9710.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s7_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：需基站连通
+条件：需要，LR-PT统一效用函数（巡逻 + 回连）。
+CAP_d6f8a0b1</title>
+  <rect x="56.0" y="9840.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="9867.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">条件：需基站连通</tspan></text>
+  <rect x="62.0" y="9844.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="9855.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  <text x="156.0" y="9894.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">涌现式区域划分巡逻</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s7_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：纯idleness
+条件：不需要，纯idleness驱动目标选择。
+CAP_b4d6e8f9</title>
+  <rect x="292.0" y="9840.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="9867.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">条件：纯idleness</tspan></text>
+  <rect x="298.0" y="9844.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="9855.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  <text x="392.0" y="9894.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="392.0" dy="0">空闲度驱动分布式目标选择</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s8_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>故障检测判断
+判断：巡逻执行中某机器人是否故障/离线。
+CAP_a3c5d7e8</title>
+  <polygon points="156.0,10000.0 236.0,10050.0 156.0,10100.0 76.0,10050.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="156.0" y="10042.0" font-size="12" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">故障检测判断</tspan></text>
+  <text x="156.0" y="10062.0" font-size="9.5" fill="#FF8FC2" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">机器人故障检测</tspan></text>
+  <rect x="134.0" y="9990.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="156.0" y="9998.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s8_merge" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>合并：策略确定
+合并：巡逻策略确定（随机马尔可夫/确定性环形/涌现式LR-PT）。
+CAP_18e16c73</title>
+  <rect x="272.0" y="10018.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="372.0" y="10045.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="372.0" dy="0">合并：策略确定</tspan></text>
+  <rect x="278.0" y="10022.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="295.0" y="10033.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="295.0" dy="0">分支</tspan></text>
+  <text x="372.0" y="10072.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="372.0" dy="0">多机器人覆盖空间分区</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s8_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：无故障
+条件：所有机器人正常运行，正常巡逻。
+CAP_18e16c73</title>
+  <rect x="56.0" y="10128.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="10155.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">条件：无故障</tspan></text>
+  <rect x="62.0" y="10132.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="10143.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  <text x="156.0" y="10182.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">多机器人覆盖空间分区</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s8_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>条件：机器人故障
+条件：某机器人故障/离线，剩余机器人重新划分受影响子图。
+CAP_a3c5d7e8</title>
+  <rect x="292.0" y="10128.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="10155.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">条件：机器人故障</tspan></text>
+  <rect x="298.0" y="10132.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="10143.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  <text x="392.0" y="10182.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="392.0" dy="0">均衡图分割领地分配</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s8_end" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>合并：巡逻完成
+合并：巡逻任务持续进行（正常巡逻或故障重分配后继续）。
+CAP_18e16c73</title>
+  <rect x="174.0" y="10220.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="274.0" y="10247.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">合并：巡逻完成</tspan></text>
+  <rect x="180.0" y="10224.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="197.0" y="10235.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="197.0" dy="0">分支</tspan></text>
+  <text x="274.0" y="10274.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="274.0" dy="0">多机器人覆盖空间分区</tspan></text>
+  </g>
+</svg>

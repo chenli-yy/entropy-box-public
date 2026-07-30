@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Compiled topic — Entropy Box</title>
+<link rel="stylesheet" href="cs.css">
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="crumb"><a href="../">Entropy Box</a> / <a href="./">Case studies</a> /
+    <span id="c-kw"></span></div>
+  <h1 id="t-en">Loading…<span class="zh" id="t-zh"></span></h1>
+  <div class="stat" id="t-stat"></div>
+  <div style="margin-top:18px" id="t-nav"></div>
+</header>
+
+<p id="err"></p>
+
+<h2>Task-chain diagram</h2>
+<p class="sub">Rendered from the compiled record at build time. Steps are grouped by
+chain; branch and merge nodes are drawn where the record declares them. The diagram
+adapts to light and dark colour schemes.</p>
+<div class="svgbox"><img id="svg" alt="Task chain diagram"></div>
+
+<h2>Topic description<span class="n">as stored</span></h2>
+<div class="card"><div class="desc" id="t-desc"></div></div>
+
+<h2>Provenance<span class="n" id="e-n"></span></h2>
+<p class="sub">Each task chain was researched in its own agent session, which recorded
+a ledger of every search issued, every page fetched, where each result was used, and
+which candidates were investigated and then <em>excluded</em>. Totals below are from
+those ledgers.</p>
+<div class="card" id="evid"></div>
+
+<h2>Task chains<span class="n" id="c-n"></span></h2>
+<div id="chains"></div>
+
+<h2>Capabilities<span class="n" id="k-n"></span></h2>
+<p class="sub">Each carries bilingual canonical names and a description written to a
+fixed template: method, prerequisites, inputs, outputs, constraints, performance
+envelope, applicability, and the boundary against sibling capabilities. Descriptions
+are in Chinese, the source language of the corpus.</p>
+<div id="caps"></div>
+
+<h2>Implementing assets<span class="n" id="a-n"></span></h2>
+<p class="sub">One repository is exactly one asset. Star counts and licences quoted in
+the descriptions were read from the repositories during compilation.</p>
+<div id="assets"></div>
+
+<footer>
+  <span id="f-links"></span> &nbsp;·&nbsp;
+  <a href="./">all case studies</a> &nbsp;·&nbsp;
+  <a href="../">back to index</a>
+</footer>
+</div>
+
+<script>
+function esc(s){return (s==null?'':String(s)).replace(/[&<>"]/g,function(c){
+  return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+
+var kw=(new URLSearchParams(location.search)).get('t')||'a_star_path_planning';
+document.getElementById('c-kw').textContent = kw;
+document.getElementById('svg').src = 'svg/'+kw+'.svg';
+document.getElementById('f-links').innerHTML =
+  'Data: <a href="data/'+esc(kw)+'.json">'+esc(kw)+'.json</a> · ' +
+  '<a href="svg/'+esc(kw)+'.svg">diagram (SVG)</a>';
+
+fetch('data/'+kw+'.json').then(function(r){
+  if(!r.ok) throw new Error('HTTP '+r.status); return r.json();
+}).then(render).catch(function(e){
+  document.getElementById('err').textContent =
+    'Could not load this topic ('+e.message+'). Check the ?t= parameter, or serve the '+
+    'folder over HTTP if you opened it from disk.';
+});
+
+fetch('index.json').then(function(r){return r.json();}).then(function(d){
+  var t=(d.topics||[]), i=t.findIndex(function(x){return x.keyword===kw;});
+  var nav='';
+  if(i>0) nav+='<a class="navbtn" href="topic.html?t='+encodeURIComponent(t[i-1].keyword)+'">&larr; '+esc(t[i-1].en)+'</a>';
+  if(i>=0&&i<t.length-1) nav+='<a class="navbtn" href="topic.html?t='+encodeURIComponent(t[i+1].keyword)+'">'+esc(t[i+1].en)+' &rarr;</a>';
+  document.getElementById('t-nav').innerHTML=nav;
+}).catch(function(){});
+
+function render(d){
+  var t=d.topic||{};
+  document.getElementById('t-en').firstChild.textContent = t.en||kw;
+  document.getElementById('t-zh').textContent = t.zh?('· '+t.zh):'';
+  document.getElementById('t-desc').textContent = t.description||'';
+  document.title = (t.en||kw)+' — Entropy Box';
+
+  var ch=d.chains||[], nSteps=0,nBr=0,nMg=0;
+  ch.forEach(function(c){(c.steps||[]).forEach(function(s){
+    nSteps++; if((s.next||[]).length>1) nBr++; if(s.is_merge) nMg++;});});
+  var st=[['chains',ch.length],['steps',nSteps],['capabilities',(d.capabilities||[]).length],
+          ['assets',(d.assets||[]).length],['branch points',nBr],['merge points',nMg]];
+  if(t.domain) st.push(['domain',t.domain]);
+  document.getElementById('t-stat').innerHTML = st.map(function(s){
+    return '<div><div class="v" style="font-size:'+(typeof s[1]==='string'?'13px':'22px')+
+           ';'+(typeof s[1]==='string'?'color:var(--dim);font-weight:600;padding-top:6px':'')+'">'+
+           esc(s[1])+'</div><div class="k">'+s[0]+'</div></div>';}).join('');
+
+  var e=d.evidence||{};
+  document.getElementById('e-n').textContent = e.ledgers?(e.ledgers+' ledgers'):'';
+  document.getElementById('evid').innerHTML =
+    '<div class="chips">'+
+    [['research documents',e.chain_documents],['retrieval ledgers',e.ledgers],
+     ['web searches recorded',e.websearch_total],['pages fetched',e.webfetch_total],
+     ['ledgers with negative-results tables',e.with_negative_results]]
+    .filter(function(x){return x[1]!=null;})
+    .map(function(x){return '<span class="chip'+(x[0].indexOf('negative')>=0&&x[1]?' ok':' ev')+
+      '"><b>'+x[1]+'</b> '+x[0]+'</span>';}).join('')+'</div>'+
+    (e.with_negative_results ? '<div class="desc">Negative-results tables record candidates '+
+      'that were found and deliberately excluded, with the reason and the log line the '+
+      'candidate came from. A research record that only ever reports successful retrieval '+
+      'is indistinguishable from a fabricated one.</div>' : '');
+
+  document.getElementById('c-n').textContent = ch.length;
+  document.getElementById('chains').innerHTML = ch.map(function(c){
+    var steps=(c.steps||[]).map(function(s){
+      var cls = s.is_merge?'merge':((s.next||[]).length>1?'branch':'');
+      var caps=(s.caps||[]).map(function(x){return '<span class="pill">'+esc(x)+'</span>';}).join('');
+      return '<li class="'+cls+'"><div class="stepname">'+esc(s.name)+'</div>'+
+        (s.condition?'<div class="cond">if '+esc(s.condition)+'</div>':'')+
+        (s.description?'<div class="stepdesc">'+esc(s.description)+'</div>':'')+
+        (caps?'<div class="caps">'+caps+'</div>':'')+'</li>';}).join('');
+    return '<div class="card chain"><h3>'+esc(c.name)+'</h3>'+
+           '<ul class="steps">'+steps+'</ul></div>';}).join('');
+
+  document.getElementById('k-n').textContent = (d.capabilities||[]).length;
+  document.getElementById('caps').innerHTML = (d.capabilities||[]).map(function(k){
+    var meta=[];
+    if(k.parent) meta.push('parent: '+esc(k.parent));
+    if((k.children||[]).length) meta.push('children: '+k.children.length);
+    if((k.aliases||[]).length) meta.push('aliases: '+k.aliases.map(esc).join(', '));
+    var ast=(k.assets||[]).map(function(x){return '<span class="pill ast">'+esc(x)+'</span>';}).join('');
+    return '<div class="card cap"><div class="hd"><span class="en">'+esc(k.en)+'</span>'+
+      (k.zh?'<span class="zh">'+esc(k.zh)+'</span>':'')+
+      '<span class="lv">'+esc((k.level||'').toUpperCase())+'</span></div>'+
+      (k.description?'<div class="desc">'+esc(k.description)+'</div>':'')+
+      (ast?'<div class="caps" style="margin-top:9px">'+ast+'</div>':'')+
+      (meta.length?'<div class="meta">'+meta.map(function(m){return '<span>'+m+'</span>';}).join('')+'</div>':'')+
+    '</div>';}).join('');
+
+  document.getElementById('a-n').textContent = (d.assets||[]).length;
+  document.getElementById('assets').innerHTML = (d.assets||[]).map(function(a){
+    var impl=(a.implements||[]).map(function(x){return '<span class="pill">'+esc(x)+'</span>';}).join('');
+    return '<div class="card ast"><div class="hd"><span class="nm">'+esc(a.name)+'</span>'+
+      '<span class="lv">'+esc(a.type||'')+'</span></div>'+
+      (a.source?'<div class="src"><a href="'+esc(a.source)+'" rel="noopener nofollow">'+esc(a.source)+'</a></div>':'')+
+      (a.description?'<div class="desc">'+esc(a.description)+'</div>':'')+
+      (a.usage?'<details style="margin-top:8px"><summary>usage</summary><div class="desc">'+esc(a.usage)+'</div></details>':'')+
+      (impl?'<div class="caps" style="margin-top:9px">'+impl+'</div>':'')+
+    '</div>';}).join('');
+}
+</script>
+</body>
+</html>

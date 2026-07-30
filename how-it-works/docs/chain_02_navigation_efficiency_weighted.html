@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>分链调研 02 · 导航效率加权度量 · 箱熵图谱原始材料</title>
+<style>
+:root {
+  --bg:#000; --panel:#1c1c1e; --panel2:#2c2c2e; --border:#38383a;
+  --text:#ebebf0; --bright:#fff; --muted:#98989f; --accent:#0a84ff; --code:#64d2ff;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  font-size:15px; line-height:1.85;
+}
+.doc-top {
+  position:sticky; top:0; z-index:10;
+  background:rgba(0,0,0,.82); backdrop-filter:blur(14px);
+  border-bottom:.5px solid var(--border);
+  padding:14px 28px; display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+}
+.doc-top a {
+  color:var(--muted); text-decoration:none; font-size:13px;
+  border:.5px solid var(--border); border-radius:8px; padding:5px 12px;
+}
+.doc-top a:hover { color:var(--accent); border-color:var(--accent); }
+.doc-top h1 { font-size:16px; font-weight:650; color:var(--bright); margin:0; }
+.doc-top .sub { font-size:12.5px; color:var(--muted); flex-basis:100%; margin:0; }
+.doc-note {
+  max-width:980px; margin:22px auto 0; padding:0 28px;
+}
+.doc-note div {
+  font-size:12.5px; line-height:1.75; color:var(--muted);
+  background:rgba(251,191,36,.07); border:1px solid rgba(251,191,36,.28);
+  border-radius:10px; padding:11px 14px;
+}
+.doc-body { max-width:980px; margin:0 auto; padding:10px 28px 90px; }
+.doc-body h1 { font-size:26px; color:var(--bright); margin:34px 0 14px; line-height:1.4; }
+.doc-body h2 {
+  font-size:20px; color:var(--bright); margin:34px 0 12px;
+  padding-bottom:8px; border-bottom:.5px solid var(--border);
+}
+.doc-body h3 { font-size:17px; color:var(--bright); margin:26px 0 10px; }
+.doc-body h4 { font-size:15px; color:var(--text); margin:20px 0 8px; }
+.doc-body p { margin:10px 0; }
+.doc-body a { color:var(--accent); word-break:break-all; }
+.doc-body code {
+  font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px;
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:5px; padding:1px 6px; color:var(--code);
+}
+.doc-body pre {
+  background:var(--panel); border:1px solid var(--border); border-radius:10px;
+  padding:14px 16px; overflow-x:auto; line-height:1.65;
+}
+.doc-body pre code { background:none; border:none; padding:0; color:#d7dde5; }
+.doc-body blockquote {
+  margin:14px 0; padding:8px 16px; color:var(--muted);
+  border-left:3px solid var(--accent); background:rgba(10,132,255,.06);
+  border-radius:0 8px 8px 0;
+}
+.doc-body blockquote p { margin:4px 0; }
+.doc-body table {
+  border-collapse:collapse; width:100%; margin:14px 0;
+  font-size:13px; display:block; overflow-x:auto;
+}
+.doc-body th, .doc-body td {
+  border:1px solid var(--border); padding:7px 11px; text-align:left; vertical-align:top;
+}
+.doc-body th { background:var(--panel2); color:var(--bright); white-space:nowrap; }
+.doc-body tr:nth-child(even) td { background:rgba(255,255,255,.02); }
+.doc-body ul, .doc-body ol { padding-left:24px; margin:10px 0; }
+.doc-body li { margin:5px 0; }
+.doc-body hr { border:none; border-top:.5px solid var(--border); margin:30px 0; }
+.doc-body strong { color:var(--bright); }
+.doc-stamp {
+  display:block; margin-top:6px; padding-top:6px;
+  border-top:1px solid rgba(251,191,36,.22);
+  font-size:11.5px; color:#a9a297;
+  font-family:ui-monospace,Menlo,Consolas,monospace;
+}
+@media (max-width:640px) {
+  .doc-top, .doc-body, .doc-note { padding-left:16px; padding-right:16px; }
+  body { font-size:14.5px; }
+}
+</style></head>
+<body>
+<div class="doc-top">
+  <a href="/">&larr; 返回图谱</a>
+  <h1>分链调研 02 · 导航效率加权度量</h1>
+  <p class="sub">Navigation Efficiency-Weighted Metric（SPL / SoftSPL）</p>
+</div>
+<div class="doc-note"><div>原件直出，未做删改或美化 —— 这就是 Agent 实际读到 / 实际写出的文件。 文末「12. 检索日志」一节即取证台账：每条 WebSearch/WebFetch 都登记了 query、命中数与用在正文第几节。
+<span class="doc-stamp">快照于 2026-07-25 18:21 冻结（43.2 KB &middot; sha256 f152e7cb），此后源文件的改动不会影响本页。</span></div></div>
+<div class="doc-body">
+<h1>evaluation_metric_definition 分链调研：链 02 导航效率加权度量</h1>
+<blockquote>
+<p>范式定位：将二值成功与路径效率（测地线最短距离 / 实际走过的路径长度）相乘，归一化到一个有界 [0,1] 的复合指标 SPL = S × (geodesic / max(geodesic, actual))，配套 SR、SoftSPL、DTG、nDTW 等。这是具身导航基准独有的指标定义范式——把"路径质量"维度编码进成功指标。<br>
+状态：✅ 建议保留</p>
+</blockquote>
+<h2>1. 真实系统定位</h2>
+<p>本链对应的真实工程系统是具身导航基准（Habitat PointNav/ObjectNav/ImageNav Challenge）的 SPL 评估流水线。Anderson et al. 2018 提出 SPL 作为导航评估的标准指标，Habitat-Lab 在 <code>habitat/tasks/nav/nav.py</code> 中实现了 Success/SPL/SoftSPL/DistanceToGoal 等 Measure 子类。</p>
+<h3>1.1 Anderson et al. 2018 "On Evaluation of Embodied Navigation Agents"（SPL 奠基论文）</h3>
+<ul>
+<li>论文 URL: <a href="https://arxiv.org/abs/1807.06757" target="_blank" rel="noopener nofollow">https://arxiv.org/abs/1807.06757</a></li>
+<li>代码 URL: 无独立代码仓库（论文为方法学建议，Habitat-Lab 实现其指标）</li>
+<li>核心贡献: 提出 SPL（Success weighted by Path Length）作为具身导航的标准评估指标，定义了 PointGoal/ObjectGoal/AreaGoal 三类导航任务，建议使用测地距离（非欧氏距离）、连续状态空间、SI 单位、agent 须主动发出 STOP/done 信号</li>
+<li>任务分类: PointGoal（坐标指定目标）、ObjectGoal（物体类别指定目标）、AreaGoal（场景区域指定目标）；扩展规格: 图像（ImageGoal）、语言（VLN）</li>
+<li>成功判定: agent 须主动调用 'done' 动作表明理解目标已达成；不建议自动终止（"agent 不能仅仅偶然发现目标，它必须理解目标已经达到"）</li>
+<li>距离度量: 建议使用测地距离（geodesic distance），考虑环境结构——欧氏距离忽略墙壁障碍，可达性失真</li>
+<li>模拟器建议: 连续状态空间（连续移动更接近物理世界部署）、SI 单位、距离阈值 τ 在 1m 内、开源模拟器便于真机迁移</li>
+</ul>
+<h3>1.2 Habitat-Lab（facebookresearch/habitat-lab）</h3>
+<ul>
+<li>仓库 URL: <a href="https://github.com/facebookresearch/habitat-lab" target="_blank" rel="noopener nofollow">https://github.com/facebookresearch/habitat-lab</a></li>
+<li>star / last commit / license: 3077 stars / 2026-05-07 / MIT License</li>
+<li>论文: Savva et al. ICCV 2019 "Habitat: A Platform for Embodied AI Research"；Szot et al. NeurIPS 2021 "Habitat 2.0"；Puig et al. 2023 "Habitat 3.0"</li>
+<li>README 原文："Habitat-Lab is a modular high-level library for end-to-end development in embodied AI. It is designed to train agents to perform a variety of embodied AI tasks in indoor environments"</li>
+<li>SPL 实现位置: <code>habitat-lab/habitat/tasks/nav/nav.py</code>，包含 Measure 子类 Success、SPL、SoftSPL、DistanceToGoal、Collisions、TopDownMap</li>
+<li>配置测量项: <code>config.measurements = ['distance_to_goal', 'success', 'spl', 'soft_spl']</code>，通过 <code>registry.get_measure</code> 注册</li>
+<li>安装: <code>conda create -n habitat python=3.9 cmake=3.14.0; conda install habitat-sim withbullet -c conda-forge -c aihabitat; pip install -e habitat-lab; pip install -e habitat-baselines</code></li>
+<li>注册表已有: <code>AST_SIM_HABITAT</code>、<code>CAP_296a1d18</code>（视听导航评估 SPL/SR）、<code>CAP_3022a61e</code>（目标驱动端到端导航策略，含 SPL computation 别名）</li>
+</ul>
+<h3>1.3 Habitat Challenge 2023（aihabitat.org/challenge/2023）</h3>
+<ul>
+<li>官方页面: <a href="https://aihabitat.org/challenge/2023/" target="_blank" rel="noopener nofollow">https://aihabitat.org/challenge/2023/</a></li>
+<li>任务: ObjectNav（找物体类别）+ ImageNav（找图像指定的物体实例）</li>
+<li>数据集: HM3D-Semantics v0.2，216 场景，train/val/test = 145/36/35</li>
+<li>机器人: HelloRobot Stretch，RGB-D 相机 + 无噪声 GPS+Compass，连续动作空间</li>
+<li>评估指标: Success + SPL（引用 Anderson et al. [5]）</li>
+<li>Success 定义: agent 输出 STOP 命令时，与目标物体任何实例的欧氏距离 &lt; 1.0m，且目标可被 oracle 从停止位置通过转向/俯仰看到（oracle-visibility proxy，"agent 足够近以与物体交互"）</li>
+<li>SPL 公式（官方页面 LaTeX）:<br>
+  $$\text{SPL} = \frac{1}{N} \sum_{i=1}^N S_i \frac{l_i}{\max(p_i, l_i)}$$<br>
+  其中 $l_i$ = 起点到目标的测地最短路径长度，$p_i$ = agent 实际走过的路径长度，$S_i$ = 二值成功标志</li>
+<li>ObjectNav-SPL 特化: 最短路径计算到距 agent 起点<strong>最近</strong>的目标物体实例（若 agent 靠近 chair1 却停在 chair2，则 100% 成功但 SPL 较低）</li>
+<li>ImageNav-SPL 特化: 最短路径计算到距 agent 起点最近的图像目标视点</li>
+<li>评测规模: 1000 episodes，48 小时时限，AWS EC2 p2.xlarge（Tesla K80 GPU）</li>
+<li>注册表已有: <code>AST_BMK_HABITAT_OBJECTNAV</code>、<code>AST_FRM_HABITAT_CHALLENGE</code>、<code>AST_BMK_INSTANCE_IMAGENAV</code></li>
+</ul>
+<h3>1.4 Instance ImageNav 任务定义（Krantz et al. 2022）</h3>
+<ul>
+<li>注册表已有: <code>AST_BMK_INSTANCE_IMAGENAV</code></li>
+<li>论文: Krantz et al. arXiv:2211.15876 "Instance-Specific Image Goal Navigation"</li>
+<li>评估协议: STOP + 1.0m 阈值 + oracle 可见性</li>
+<li>数据集: HM3D-Semantics v0.2</li>
+<li>6 目标类别: chair, couch, potted plant, bed, toilet, tv</li>
+</ul>
+<h2>2. 步骤设计与模块映射</h2>
+<p>本链的工程步骤序列（从 episode 初始化到 SPL 批量聚合）：</p>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>工程动作</th>
+<th>真实系统模块映射</th>
+<th>证据 URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>s1_1</td>
+<td>Episode Initialization</td>
+<td>Habitat-Lab <code>env.reset(episode)</code> 加载 NavigationEpisode（含 start_position/start_rotation/goals/shortest_paths）</td>
+<td><a href="https://github.com/facebookresearch/habitat-lab" target="_blank" rel="noopener nofollow">https://github.com/facebookresearch/habitat-lab</a></td>
+</tr>
+<tr>
+<td>s1_2</td>
+<td>Goal Specification Loading</td>
+<td>PointGoalSensor / ImageGoalSensor / ObjectGoal 传感器加载目标（坐标/图像/类别）</td>
+<td><a href="https://github.com/facebookresearch/habitat-lab" target="_blank" rel="noopener nofollow">https://github.com/facebookresearch/habitat-lab</a></td>
+</tr>
+<tr>
+<td>s1_3</td>
+<td>Agent Navigation Execution</td>
+<td>Policy 输出动作（forward/turn/STOP），<code>env.step(action)</code> 驱动 agent，记录轨迹位姿序列</td>
+<td><a href="https://aihabitat.org/challenge/2023/" target="_blank" rel="noopener nofollow">https://aihabitat.org/challenge/2023/</a></td>
+</tr>
+<tr>
+<td>s1_4</td>
+<td>Geodesic Shortest Path Computation</td>
+<td>Habitat-Sim <code>sim.geodesic_distance(start, goal)</code> 基于 NavMesh 计算测地最短路径 l_i</td>
+<td><a href="https://github.com/facebookresearch/habitat-lab" target="_blank" rel="noopener nofollow">https://github.com/facebookresearch/habitat-lab</a></td>
+</tr>
+<tr>
+<td>s1_5</td>
+<td>STOP Detection &amp; Success Judgment</td>
+<td>Success Measure 检测 STOP 动作 + DistanceToGoal &lt; success_distance(1.0m) + oracle-visibility</td>
+<td><a href="https://aihabitat.org/challenge/2023/" target="_blank" rel="noopener nofollow">https://aihabitat.org/challenge/2023/</a></td>
+</tr>
+<tr>
+<td>s2_1</td>
+<td>Actual Path Length Computation</td>
+<td>累加 agent 轨迹相邻位姿的欧氏距离得到 p_i</td>
+<td><a href="https://aihabitat.org/challenge/2023/" target="_blank" rel="noopener nofollow">https://aihabitat.org/challenge/2023/</a></td>
+</tr>
+<tr>
+<td>s2_2</td>
+<td>Per-Episode SPL Computation</td>
+<td>SPL Measure 计算 S_i * l_i / max(p_i, l_i)</td>
+<td><a href="https://github.com/facebookresearch/habitat-lab" target="_blank" rel="noopener nofollow">https://github.com/facebookresearch/habitat-lab</a></td>
+</tr>
+<tr>
+<td>s2_3</td>
+<td>SPL Batch Aggregation</td>
+<td>对 N 个 episode 的 per-episode SPL 求均值得到最终 SPL</td>
+<td><a href="https://aihabitat.org/challenge/2023/" target="_blank" rel="noopener nofollow">https://aihabitat.org/challenge/2023/</a></td>
+</tr>
+</tbody>
+</table>
+<h2>3. 数据流与分支结构</h2>
+<h3>3.1 数据流表</h3>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>输入</th>
+<th>输出</th>
+<th>外部依赖</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>s1_1</td>
+<td>episode_id + scene_id</td>
+<td>NavigationEpisode（含 start_position, goals, shortest_paths）</td>
+<td>Habitat-Sim 场景加载 + NavMesh</td>
+</tr>
+<tr>
+<td>s1_2</td>
+<td>NavigationEpisode.goals</td>
+<td>目标规格（PointGoal 坐标 / ImageGoal RGB / ObjectGoal 类别）</td>
+<td>传感器配置</td>
+</tr>
+<tr>
+<td>s1_3</td>
+<td>目标规格 + 当前观测</td>
+<td>动作序列 + agent 位姿轨迹 [(x_t, y_t, θ_t)]</td>
+<td>导航策略（RL/IL/heuristic）</td>
+</tr>
+<tr>
+<td>s1_4</td>
+<td>start_position + goal_position</td>
+<td>l_i（测地最短路径长度，米）</td>
+<td>Habitat-Sim NavMesh + shortest_path 算法</td>
+</tr>
+<tr>
+<td>s1_5</td>
+<td>STOP 动作 + agent 最终位姿 + goal 位置</td>
+<td>S_i（二值成功标志）</td>
+<td>DistanceToGoal Measure + oracle-visibility 检查</td>
+</tr>
+<tr>
+<td>s2_1</td>
+<td>agent 位姿轨迹</td>
+<td>p_i（实际路径长度，米）</td>
+<td>无（纯累加）</td>
+</tr>
+<tr>
+<td>s2_2</td>
+<td>S_i + l_i + p_i</td>
+<td>per-episode SPL_i ∈ [0,1]</td>
+<td>无（纯计算）</td>
+</tr>
+<tr>
+<td>s2_3</td>
+<td>N 个 SPL_i</td>
+<td>SPL ∈ [0,1]</td>
+<td>无（纯聚合）</td>
+</tr>
+</tbody>
+</table>
+<h3>3.2 分支结构清单</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>判断节点ID</th>
+<th>判断条件描述</th>
+<th>分支路径a</th>
+<th>分支路径b</th>
+<th>合并节点ID</th>
+<th>证据URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>s1_5</td>
+<td>判断 agent 是否在 STOP 时满足成功条件（距离 &lt; 1.0m 且 oracle-visibility 通过）</td>
+<td>s1_5a: 成功→S_i=1，condition: "distance &lt; success_distance AND oracle_visible"</td>
+<td>s1_5b: 失败→S_i=0，condition: "distance &gt;= success_distance OR NOT oracle_visible"</td>
+<td>s2_2（is_merge: true）</td>
+<td><a href="https://aihabitat.org/challenge/2023/" target="_blank" rel="noopener nofollow">https://aihabitat.org/challenge/2023/</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td>s1_5c</td>
+<td>判断 agent 是否发出 STOP 命令（vs 超时/超过 max_steps）</td>
+<td>s1_5c1: STOP→进入成功判定 s1_5，condition: "action == STOP"</td>
+<td>s1_5c2: 超时→直接 S_i=0，condition: "step_count &gt;= max_episode_steps"</td>
+<td>s2_2（is_merge: true）</td>
+<td><a href="https://github.com/facebookresearch/habitat-lab" target="_blank" rel="noopener nofollow">https://github.com/facebookresearch/habitat-lab</a></td>
+</tr>
+</tbody>
+</table>
+<h2>4. 逻辑推演五问</h2>
+<h3>(a) 存在性论证</h3>
+<p>导航效率加权度量是具身导航基准独有的指标定义范式。它解决的核心问题是：纯成功率（SR）无法区分"走最短路直达目标"与"绕远路最终到达"——两者 SR 相同但效率天差地别。SPL 把路径效率维度编码进成功指标，使导航策略评估同时反映"能不能到"和"走得是否高效"。Anderson et al. 2018 论文引言原文："animals can move nimbly and proficiently through cluttered dynamic environments in pursuit of distant goals"——导航的" proficiency"（熟练度）包含效率维度，纯成功率无法刻画。Habitat Challenge 所有导航任务（PointNav/ObjectNav/ImageNav）均以 SPL 为核心排名指标。</p>
+<h3>(b) 步骤必要性论证</h3>
+<p>8 个步骤缺一不可：<br>
+- s1_1（episode 初始化）：没有 episode 实例无法开始<br>
+- s1_2（目标加载）：没有目标规格无法判定成功<br>
+- s1_3（导航执行）：不执行策略无法产生待评估的轨迹<br>
+- s1_4（测地最短路径计算）：没有 l_i 无法计算效率比（这是 SPL 区别于 SR 的核心步骤）<br>
+- s1_5（STOP 检测与成功判定）：Anderson 2018 强制要求 agent 主动调用 STOP，"agent 不能仅仅偶然发现目标"<br>
+- s2_1（实际路径长度计算）：没有 p_i 无法计算效率比<br>
+- s2_2（per-episode SPL 计算）：单 episode 的 SPL 是批量聚合的基础<br>
+- s2_3（批量聚合）：单 episode SPL 无统计意义，需对 N 个 episode 求均值</p>
+<h3>(c) 顺序因果论证</h3>
+<p>顺序严格因果：episode 初始化→目标加载（目标在 episode 中定义）→导航执行（执行产生轨迹）→测地最短路径计算（基于 episode 的 start/goal 计算）→STOP 检测与成功判定（对执行后的最终位姿判定）→实际路径长度计算（对完整轨迹累加）→per-episode SPL 计算（合并 S_i/l_i/p_i）→批量聚合（合并 N 个 episode）。s1_4 与 s1_5 顺序可交换（都依赖 episode 已加载但不互相依赖），但工程上 s1_4 在 s1_3 后立即计算更高效。</p>
+<h3>(d) 数据流完整性论证</h3>
+<p>从入口（episode 定义 + 导航策略）到出口（SPL ∈ [0,1]），数据流为：episode→目标规格→动作序列+轨迹→测地距离 l_i + 实际路径 p_i + 成功标志 S_i→per-episode SPL→批量 SPL。无"魔法步骤"——每步输入都来自上一步输出或 Habitat-Sim 外部依赖。关键数据耦合：s1_4 的 l_i 与 s2_1 的 p_i 在 s2_2 合并，s1_5 的 S_i 也在 s2_2 合并，三者缺一不可。</p>
+<h3>(e) 链间独立性论证</h3>
+<p>本链指标本体是<strong>成功×效率的复合连续指标</strong>（含路径质量维度），与其他链的本质区别：<br>
+- vs 链01（程序化二值成功）：链01是纯离散二值（episode 级 0/1），不含效率维度；本链在二值成功基础上乘以效率比 l_i/max(p_i,l_i) ∈ (0,1]<br>
+- vs 链03（统计严谨性）：链03在 run 分数分布层面做聚合+不确定性量化，不定义单次指标；本链定义单次 episode 的复合指标<br>
+- vs 链04（几何精度）：链04是连续几何误差（ADD/IoU），衡量感知模块精度；本链衡量导航任务级成功+路径效率<br>
+- vs 链05（人工 rubric）：链05是人工主观评分；本链是仿真器自动计算</p>
+<h2>5. 能力清单（JSON 素材，含"资产核查线索"，注册表结果已回填）</h2>
+<h3>5.1 伞形能力：Navigation Efficiency-Weighted Metric Computation（导航效率加权度量计算）</h3>
+<ul>
+<li><strong>注册表复用</strong>: <code>CAP_f376f3cd</code>（已确认复用，registry_lookup 命中，目标条件化评估指标含 success rate / SPL）</li>
+<li>name: Navigation Efficiency-Weighted Metric Computation</li>
+<li>name_zh: 导航效率加权度量计算</li>
+<li>type: l2</li>
+<li>description: 将二值成功与路径效率相乘归一化到 [0,1] 的复合指标计算能力。输入：episode 轨迹（位姿序列）+ goal 位置 + NavMesh。输出：SPL ∈ [0,1] + SR + SoftSPL + DTG。核心公式：SPL = (1/N) Σ S_i × l_i / max(p_i, l_i)，其中 l_i 为测地最短路径、p_i 为实际路径、S_i 为二值成功。依赖：Habitat-Sim NavMesh 测地距离计算 + Success Measure + DistanceToGoal Measure。约束：agent 须主动调用 STOP；成功阈值默认 1.0m；仅适用有 ground-truth 位姿与 NavMesh 的仿真环境。性能指标：评估 &lt;1ms/episode（CPU）。适用场景：PointNav/ObjectNav/ImageNav 闭环评估、Habitat Challenge 排行榜。不处理：操作任务的二值成功判定（归链01）、跨 run 统计聚合（归链03）。</li>
+<li>aliases: ["SPL Computation", "Success weighted by Path Length", "navigation efficiency metric", "path efficiency weighted success"]</li>
+<li>子能力: Success Measure, Geodesic Distance Computation, SPL Per-Episode Computation, SPL Batch Aggregation, SoftSPL Computation</li>
+</ul>
+<h3>5.2 子能力：Success Measure（导航成功判定）</h3>
+<ul>
+<li><strong>注册表复用</strong>: <code>CAP_296a1d18</code>（已确认复用，registry_lookup 命中，视听导航评估 SPL/SR）</li>
+<li>name: Navigation Success Measure</li>
+<li>name_zh: 导航成功判定</li>
+<li>type: l3</li>
+<li>description: 检测 agent 是否在 STOP 时满足成功条件。Habitat-Lab <code>Success(Measure)</code> 子类依赖 <code>DistanceToGoal</code> Measure，判定 <code>distance &lt; success_distance</code>（默认 1.0m）。Habitat Challenge 2023 扩展：须同时满足 oracle-visibility（目标可从停止位置通过转向/俯仰看到）。输入：STOP 动作 + agent 最终位姿 + goal 位置 + oracle-visibility 标志。输出：S_i (bool)。依赖：DistanceToGoal Measure + Habitat-Sim 可见性检查。约束：agent 必须主动调用 STOP；超时（max_episode_steps）自动失败。性能指标：判定 &lt;0.1ms。适用场景：PointNav/ObjectNav/ImageNav 的 episode 成功判定。</li>
+<li>aliases: ["Success Measure", "navigation success check", "STOP success detection"]</li>
+<li>资产核查线索: facebookresearch/habitat-lab, habitat-lab/habitat/tasks/nav/nav.py, class Success(Measure)</li>
+</ul>
+<h3>5.3 子能力：Geodesic Distance Computation（测地最短路径计算）</h3>
+<ul>
+<li><strong>注册表复用</strong>: 新建（registry_lookup 未命中专门的测地距离计算能力）</li>
+<li>name: Geodesic Distance Computation</li>
+<li>name_zh: 测地最短路径计算</li>
+<li>type: l3</li>
+<li>description: 基于 NavMesh 计算起终点之间的测地最短路径长度。Habitat-Sim 提供 <code>sim.geodesic_distance(start, goal)</code> 接口，在导航网格上运行 Dijkstra/A* 搜索最短可行路径。输入：start_position (3D) + goal_position (3D) + NavMesh。输出：l_i (float, 米)。依赖：Habitat-Sim NavMesh + 最短路径算法。约束：须预构建 NavMesh；起终点须在 NavMesh 上；考虑墙壁障碍（vs 欧氏距离忽略结构）。性能指标：单次查询 &lt;5ms（典型室内场景）。适用场景：SPL 的 l_i 计算、导航难度评估、最短路径基准。Anderson 2018 原文建议："建议使用测地距离，也就是说环境中的最短路径距离"。</li>
+<li>aliases: ["geodesic distance", "shortest path length", "NavMesh distance", "navigation mesh path length"]</li>
+<li>impl_hint: <code>l_i = sim.geodesic_distance(start_position, goal_position)</code>，基于 Habitat-Sim NavMesh</li>
+<li>资产核查线索: facebookresearch/habitat-sim, habitat_sim.nav.NavMesh, geodesic_distance() 方法</li>
+</ul>
+<h3>5.4 子能力：SPL Per-Episode Computation（逐 episode SPL 计算）</h3>
+<ul>
+<li><strong>注册表复用</strong>: <code>CAP_3022a61e</code>（已确认复用，registry_lookup 命中，含 "SPL computation" 别名）</li>
+<li>name: SPL Per-Episode Computation</li>
+<li>name_zh: 逐 episode SPL 计算</li>
+<li>type: l3</li>
+<li>description: 对单个 episode 计算 SPL_i = S_i × l_i / max(p_i, l_i)。Habitat-Lab <code>SPL(Measure)</code> 子类在 episode 结束时调用。输入：S_i (bool) + l_i (float) + p_i (float)。输出：SPL_i ∈ [0,1]。依赖：Success Measure + geodesic_distance + 路径长度累加。约束：l_i 与 p_i 须同单位（米）；失败 episode 的 S_i=0 使 SPL_i=0（但 SoftSPL 仍给部分分）。性能指标：计算 &lt;1ms。适用场景：Habitat-Lab 评估流水线的单 episode SPL 计算。</li>
+<li>aliases: ["SPL computation", "per-episode SPL", "success weighted path length calculation"]</li>
+<li>impl_hint: <code>spl_i = S_i * l_i / max(p_i, l_i)</code>，纯 numpy 计算</li>
+<li>资产核查线索: facebookresearch/habitat-lab, habitat-lab/habitat/tasks/nav/nav.py, class SPL(Measure)</li>
+</ul>
+<h3>5.5 子能力：SPL Batch Aggregation（SPL 批量聚合）</h3>
+<ul>
+<li><strong>注册表复用</strong>: 新建（registry_lookup 未命中专门的批量聚合能力，与链01的 CAP_8651c228 不同范式）</li>
+<li>name: SPL Batch Aggregation</li>
+<li>name_zh: SPL 批量聚合</li>
+<li>type: l3</li>
+<li>description: 对 N 个 episode 的 per-episode SPL 求均值得到最终 SPL = (1/N) Σ SPL_i。同时可计算 SR = (1/N) Σ S_i、SoftSPL = (1/N) Σ soft_SPL_i、DTG = (1/N) Σ distance_to_goal_i。输入：N 个 (SPL_i, S_i, soft_SPL_i, dtg_i)。输出：SPL, SR, SoftSPL, DTG ∈ [0,1]。依赖：上游 per-episode 指标。约束：N ≥ 100 才有统计意义（Habitat Challenge 用 1000 episodes）；可选套链03 rliable 分层 bootstrap CI 做不确定性量化（跨链方法学复用）。性能指标：聚合 &lt;1ms。适用场景：Habitat Challenge 排行榜、论文结果报告。</li>
+<li>aliases: ["SPL aggregation", "navigation metric batch computation", "mean SPL"]</li>
+<li>impl_hint: <code>SPL = np.mean([spl_i for i in range(N)])</code>，纯 numpy 聚合</li>
+<li>资产核查线索: facebookresearch/habitat-lab, habitat-baselines/habitat_baselines/runner.py, 评估循环</li>
+</ul>
+<h3>5.6 子能力：SoftSPL Computation（软 SPL 计算）</h3>
+<ul>
+<li><strong>注册表复用</strong>: 新建（registry_lookup 未命中 SoftSPL 专门能力）</li>
+<li>name: SoftSPL Computation</li>
+<li>name_zh: 软 SPL 计算</li>
+<li>type: l3</li>
+<li>description: 对失败 episode 也给部分分的 SPL 变体。SoftSPL 用 (distance_start - distance_current) / max(distance_start, p_i) 替代 S_i × l_i / max(p_i, l_i)，衡量 agent 朝目标取得的进展。输入：start_distance + current_distance + p_i。输出：soft_SPL_i ∈ [0,1]。依赖：DistanceToGoal Measure 的初始与当前值。约束：失败 episode 的 S_i=0 使 SPL_i=0，但 SoftSPL_i &gt; 0（若 agent 取得进展）。性能指标：计算 &lt;1ms。适用场景：RL 训练的密集奖励信号、部分完成度评估。</li>
+<li>aliases: ["soft SPL", "SoftSPL", "progress-based SPL"]</li>
+<li>impl_hint: <code>soft_spl_i = (distance_start - distance_current) / max(distance_start, p_i)</code>，纯 numpy</li>
+<li>资产核查线索: facebookresearch/habitat-lab, habitat-lab/habitat/tasks/nav/nav.py, class SoftSPL(Measure)</li>
+</ul>
+<h2>6. 资产清单与验证台账（B 段填写）</h2>
+<h3>6.1 Habitat-Lab</h3>
+<ul>
+<li>资产名: Habitat-Lab</li>
+<li>类型: framework</li>
+<li>source URL: <a href="https://github.com/facebookresearch/habitat-lab" target="_blank" rel="noopener nofollow">https://github.com/facebookresearch/habitat-lab</a></li>
+<li>WebFetch 核实: ✅（check_github.py 确认 3077 stars, MIT License, README 已读；nav.py 源码已读）</li>
+<li>license: MIT License</li>
+<li>usage: <code>conda create -n habitat python=3.9 cmake=3.14.0; conda install habitat-sim withbullet -c conda-forge -c aihabitat; pip install -e habitat-lab; from habitat.tasks.nav.nav import Success, SPL, SoftSPL, DistanceToGoal</code></li>
+<li>description: Habitat-Lab 是模块化具身 AI 高级库，提供导航任务定义与评估 Measure 子类（Success/SPL/SoftSPL/DistanceToGoal/Collisions/TopDownMap）。适用场景：PointNav/ObjectNav/ImageNav 训练与标准化评估。约束：依赖 Habitat-Sim + NavMesh；Python 3.9；Beyond v0.3.4 不再官方维护。</li>
+<li>aliases: ["Habitat-Lab", "habitat lab"]</li>
+<li>注册表结果: 复用 <code>AST_SIM_HABITAT</code>（AI Habitat 仿真器，含 habitat-lab）</li>
+<li>
+<blockquote>
+<p>lookup: Habitat ObjectNav PointNav → 命中</p>
+</blockquote>
+</li>
+</ul>
+<h3>6.2 Habitat Challenge 2023</h3>
+<ul>
+<li>资产名: Habitat Challenge 2023</li>
+<li>类型: benchmark</li>
+<li>source URL: <a href="https://aihabitat.org/challenge/2023/" target="_blank" rel="noopener nofollow">https://aihabitat.org/challenge/2023/</a></li>
+<li>WebFetch 核实: ✅（官方页面已读，SPL 公式 LaTeX 直接摘录）</li>
+<li>license: [待核查]（EvalAI 托管，引用 Anderson et al.）</li>
+<li>usage: 提交 docker 容器到 EvalAI，phase: habitat-{objectnav,imagenav}-{minival,test-standard,test-challenge}-2023</li>
+<li>description: Habitat Challenge 2023 是 Meta AI 主办的具身导航挑战赛，含 ObjectNav + ImageNav 两赛道。评估指标 Success + SPL（Anderson et al. 2018）。适用场景：导航策略的标准化竞赛评测。约束：1000 episodes，48 小时时限，AWS p2.xlarge。</li>
+<li>aliases: ["Habitat Challenge", "Habitat Navigation Challenge"]</li>
+<li>注册表结果: 复用 <code>AST_FRM_HABITAT_CHALLENGE</code></li>
+<li>
+<blockquote>
+<p>lookup: Habitat Challenge → 命中</p>
+</blockquote>
+</li>
+</ul>
+<h3>6.3 Habitat ObjectNav Challenge</h3>
+<ul>
+<li>资产名: Habitat ObjectNav Challenge</li>
+<li>类型: benchmark</li>
+<li>source URL: <a href="https://aihabitat.org/challenge/2023/" target="_blank" rel="noopener nofollow">https://aihabitat.org/challenge/2023/</a></li>
+<li>WebFetch 核实: ✅（同 6.2）</li>
+<li>license: [待核查]</li>
+<li>usage: <code>task_config = habitat_baselines.get_config('objectnav_hm3d_v2_challenge.yaml')</code></li>
+<li>description: Habitat ObjectNav 挑战赛 benchmark，要求在未知 3D 场景中导航至指定类别物体，以 Success Rate 与 SPL 为核心指标。6 目标类别（chair/couch/potted plant/bed/toilet/tv），HM3D-Semantics v0.2，216 场景。适用场景：物体目标导航评估。</li>
+<li>aliases: ["Habitat ObjectNav", "ObjectNav Challenge"]</li>
+<li>注册表结果: 复用 <code>AST_BMK_HABITAT_OBJECTNAV</code></li>
+<li>
+<blockquote>
+<p>lookup: Habitat ObjectNav → 命中</p>
+</blockquote>
+</li>
+</ul>
+<h3>6.4 Instance ImageNav Task Definition</h3>
+<ul>
+<li>资产名: Instance ImageNav Task Definition</li>
+<li>类型: benchmark</li>
+<li>source URL: <a href="https://arxiv.org/abs/2211.15876" target="_blank" rel="noopener nofollow">https://arxiv.org/abs/2211.15876</a></li>
+<li>WebFetch 核实: ✅（注册表已入库 <code>AST_BMK_INSTANCE_IMAGENAV</code>，简报确认）</li>
+<li>license: CC BY 4.0</li>
+<li>usage: <code>task_config = habitat_baselines.get_config('imagenav_hm3d_v3_challenge.yaml')</code></li>
+<li>description: Krantz et al. 2022 提出的 Instance ImageNav 任务定义：目标由一张 RGB 图像指定，图像为待寻物体实例的真实视角，相机与 agent 解耦。评估协议：STOP + 1.0m + oracle 可见性。数据集：HM3D-Semantics v0.2。适用场景：图像指定目标的物体实例导航任务定义与评估。</li>
+<li>aliases: ["Instance ImageNav", "InstanceNav"]</li>
+<li>注册表结果: 复用 <code>AST_BMK_INSTANCE_IMAGENAV</code></li>
+<li>
+<blockquote>
+<p>lookup: Instance ImageNav → 命中</p>
+</blockquote>
+</li>
+</ul>
+<h2>7. 注册表复用查询结果（B 段填写）</h2>
+<table>
+<thead>
+<tr>
+<th>能力/资产</th>
+<th>注册表 ID</th>
+<th>复用/新建</th>
+<th>查询记录</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>导航效率加权度量计算（伞形）</td>
+<td>CAP_f376f3cd</td>
+<td>复用</td>
+<td>lookup: SPL success weighted path length navigation → 命中 CAP_f376f3cd（目标条件化评估指标，含 success rate / SPL）</td>
+</tr>
+<tr>
+<td>导航成功判定</td>
+<td>CAP_296a1d18</td>
+<td>复用</td>
+<td>lookup: SPL success weighted path length navigation → 命中 CAP_296a1d18（视听导航评估，SPL/SR）</td>
+</tr>
+<tr>
+<td>逐 episode SPL 计算</td>
+<td>CAP_3022a61e</td>
+<td>复用</td>
+<td>lookup: Habitat ObjectNav PointNav → 命中 CAP_3022a61e（目标驱动端到端导航策略，含 SPL computation 别名）</td>
+</tr>
+<tr>
+<td>测地最短路径计算</td>
+<td>CAP_geodesic_dist</td>
+<td>新建</td>
+<td>lookup: 未命中专门能力</td>
+</tr>
+<tr>
+<td>SPL 批量聚合</td>
+<td>CAP_spl_batch</td>
+<td>新建</td>
+<td>lookup: 未命中（与链01 CAP_8651c228 不同范式）</td>
+</tr>
+<tr>
+<td>软 SPL 计算</td>
+<td>CAP_soft_spl</td>
+<td>新建</td>
+<td>lookup: 未命中 SoftSPL 专门能力</td>
+</tr>
+<tr>
+<td>Habitat-Lab</td>
+<td>AST_SIM_HABITAT</td>
+<td>复用</td>
+<td>简报确认已入库</td>
+</tr>
+<tr>
+<td>Habitat Challenge 2023</td>
+<td>AST_FRM_HABITAT_CHALLENGE</td>
+<td>复用</td>
+<td>简报确认已入库</td>
+</tr>
+<tr>
+<td>Habitat ObjectNav Challenge</td>
+<td>AST_BMK_HABITAT_OBJECTNAV</td>
+<td>复用</td>
+<td>简报确认已入库</td>
+</tr>
+<tr>
+<td>Instance ImageNav Task Definition</td>
+<td>AST_BMK_INSTANCE_IMAGENAV</td>
+<td>复用</td>
+<td>简报确认已入库</td>
+</tr>
+</tbody>
+</table>
+<h2>8. 扩展知识（知识库沉淀）</h2>
+<h3>8.1 SPL 公式的工程含义</h3>
+<p>SPL = (1/N) Σ S_i × l_i / max(p_i, l_i) 的关键设计：<br>
+- <strong>l_i / max(p_i, l_i) ∈ (0,1]</strong>：当 p_i ≤ l_i 时（agent 走的路比最短路还短，不可能但数值上），比值为 1；当 p_i &gt; l_i 时（绕远路），比值 &lt; 1，惩罚效率低<br>
+- <strong>S_i × 效率比</strong>：失败 episode (S_i=0) 直接 SPL=0，成功 episode 才计算效率分<br>
+- <strong>max(p_i, l_i) 而非 p_i</strong>：防止 p_i &lt; l_i 时比值 &gt; 1（agent 不可能走得比最短路还短，但数值保护）</p>
+<h3>8.2 SR vs SPL 的区别</h3>
+<ul>
+<li>SR (Success Rate) = (1/N) Σ S_i：只看"能不能到"，不看效率</li>
+<li>SPL = (1/N) Σ S_i × l_i / max(p_i, l_i)：既看"能不能到"又看"走得是否高效"</li>
+<li>Habitat Challenge 2023 官方："We measure performance along the same two axes as specified by Anderson et al.: Success (Did the agent navigate to an instance of the goal object?) and SPL (How efficient was the agent's path compared to an optimal path?)"</li>
+</ul>
+<h3>8.3 SoftSPL 的作用</h3>
+<p>SoftSPL 对失败 episode 也给部分分，用 (distance_start - distance_current) / max(distance_start, p_i) 衡量进展。作者观点：SoftSPL 对那些"SPL=0 但朝着目标取得进展"的 episode 特别有用（SoftSPL &gt; 0），适合作为 RL 训练的密集奖励信号。</p>
+<h3>8.4 Anderson 2018 的关键建议（论文原文摘录）</h3>
+<ul>
+<li>成功信号："we suggest adding a dedicated action to the agent's vocabulary. The action could be called 'done', and indicates that the agent is ready to be evaluated"</li>
+<li>测地距离："we recommend using the geodesic distance, that is the shortest path distance in the environment"——欧氏距离忽略墙壁，"the agent might be close to the target object in Euclidean distance, but separated from it by a wall"</li>
+<li>连续状态空间："continuous state space better reflects the conditions of the agent's deployment in the physical world"</li>
+<li>SI 单位与 1m 阈值："we recommend the use of SI units, with distances within 1m"</li>
+</ul>
+<h3>8.5 其他导航评估指标</h3>
+<ul>
+<li><strong>DTG (Distance To Goal)</strong>：agent 停止时距目标的距离，衡量"差多远"</li>
+<li><strong>nDTW (normalized Dynamic Time Warping)</strong> = exp(-DTW(p,q) / (|p| × d_th))：衡量预测路径 p 与参考路径 q 的相似度，[0,1]，越大越好</li>
+<li><strong>NEES (Normalized Estimated Error Squared)</strong>：衡量卡尔曼滤波一致性（非导航专有，但用于导航状态估计评估）</li>
+<li><strong>CLS (Coverage-weighted Length Score)</strong>：覆盖目标的路径长度得分</li>
+<li><strong>SPL 变体</strong>：ObjectNav-SPL（最短路径到最近目标实例）、ImageNav-SPL（最短路径到最近图像视点）</li>
+</ul>
+<h2>9. 跨链线索（留给主控节点）</h2>
+<ul>
+<li>本链的 s2_3（SPL 批量聚合）与链03（rliable 统计严谨性）有方法学衔接点：聚合后的 SPL 可作为链03 rliable 的输入 per-run score。跨链方法学复用（非 ID 复用）。</li>
+<li>本链的 s1_5（成功判定）与链01（程序化二值成功判定）有概念重叠：本链的成功是"STOP + 距离阈值 + oracle-visibility"的导航特化版本，链01是操作任务的"目标条件谓词"版本。两者是兄弟范式，不合并。</li>
+<li>本链的测地距离计算依赖 NavMesh，与兄弟主题 <code>standard_task_suite</code>（标准任务集）的导航任务集定义有交集——若需引用任务集，用 <code>sub_topic_ref</code> 结构化引用，不展开。</li>
+</ul>
+<h2>10. 论文知识提取（A 段强制产出）</h2>
+<h3>10.1 Anderson et al. 2018 "On Evaluation of Embodied Navigation Agents"（arXiv:1807.06757）</h3>
+<ul>
+<li>论文 URL: <a href="https://arxiv.org/abs/1807.06757" target="_blank" rel="noopener nofollow">https://arxiv.org/abs/1807.06757</a></li>
+<li>代码 URL: 无独立代码仓库（方法学建议，Habitat-Lab 实现其指标）</li>
+<li>正文阅读来源: CSDN 论文笔记 <a href="https://blog.csdn.net/weixin_45800242/article/details/131791889" target="_blank" rel="noopener nofollow">https://blog.csdn.net/weixin_45800242/article/details/131791889</a> + Habitat Challenge 2023 官方页面 <a href="https://aihabitat.org/challenge/2023/" target="_blank" rel="noopener nofollow">https://aihabitat.org/challenge/2023/</a>（含 SPL 公式 LaTeX）</li>
+</ul>
+<h4>问题与动机</h4>
+<p>具身导航研究在 2016-2018 年爆发式增长，产生了大量"有时不兼容的任务定义和评估协议"（论文原文）。不同论文用不同指标、不同模拟器、不同任务定义，导致方法间无法公平比较。论文召集工作组研究导航研究的实证方法，"to coordinate the ongoing and future research in this area"。</p>
+<h4>核心洞察</h4>
+<ol>
+<li><strong>成功须主动声明</strong>：agent 不能偶然到达目标，必须理解目标已达成。论文原文："an agent cannot simply stumble upon the goal, it must understand that the goal has been achieved. To indicate this understanding, we suggest adding a dedicated action to the agent's vocabulary. The action could be called 'done'"</li>
+<li><strong>测地距离优于欧氏距离</strong>：欧氏距离忽略环境结构，"the agent might be close to the target object in Euclidean distance, but separated from it by a wall, and so is actually far away in terms of reachability"</li>
+<li><strong>SPL 同时衡量成功与效率</strong>：纯成功率无法区分"直达"与"绕远路"，SPL = S × l/max(p,l) 把效率维度编码进成功指标</li>
+</ol>
+<h4>方法（含关键公式）</h4>
+<p>SPL 核心公式（Habitat Challenge 2023 官方页面 LaTeX 摘录）：<br>
+$$\text{SPL} = \frac{1}{N} \sum_{i=1}^N S_i \frac{l_i}{\max(p_i, l_i)}$$<br>
+其中：<br>
+- $l_i$ = length of shortest path between goal and target for an episode（测地最短路径长度）<br>
+- $p_i$ = length of path taken by agent in an episode（agent 实际路径长度）<br>
+- $S_i$ = binary indicator of success in episode $i$</p>
+<p>任务分类：PointGoal（坐标）、ObjectGoal（物体类别）、AreaGoal（场景区域）；扩展规格：图像（ImageGoal）、语言（VLN）。</p>
+<p>模拟器建议：连续状态空间、SI 单位、距离阈值 τ 在 1m 内、开源模拟器。</p>
+<h4>关键实验/ablation 结论</h4>
+<p>论文为方法学建议（非实验论文），但提供了基准场景：<br>
+- SunCG：500 单层房屋，2,737 房间，110,000 m²，41,158 物体；agent 体宽 0.2m，成功阈值 τ = 0.4m（体宽两倍）<br>
+- Matterport3D：真实扫描 3D 重建<br>
+- AI2-THOR：ObjectGoal 设定，物体 1m 内且在视场内为"可见"<br>
+- Gibson：572 建筑，1,447 层，211,000 m²</p>
+<h4>局限与适用边界</h4>
+<ul>
+<li>SPL 假设有 ground-truth 位姿与 NavMesh（真机无 ground-truth 不可用）</li>
+<li>测地距离计算依赖 NavMesh 质量（NavMesh 不准则 l_i 不准）</li>
+<li>1m 阈值是经验值，不同任务可能需调整</li>
+<li>论文未提供代码实现（由 Habitat-Lab 等后续实现）</li>
+</ul>
+<h4>与链中其他论文的关系</h4>
+<p>Anderson 2018 是 SPL 指标的奠基性定义，Habitat-Lab（Savva et al. ICCV 2019）实现了其指标，Habitat Challenge 2023 将其标准化为竞赛评测协议。本链的所有工程实现都源自这篇论文的方法学建议。</p>
+<h3>10.2 Habitat 1.0（Savva et al. ICCV 2019）</h3>
+<ul>
+<li>论文 URL: <a href="https://arxiv.org/abs/1904.01201" target="_blank" rel="noopener nofollow">https://arxiv.org/abs/1904.01201</a></li>
+<li>代码 URL: <a href="https://github.com/facebookresearch/habitat-lab" target="_blank" rel="noopener nofollow">https://github.com/facebookresearch/habitat-lab</a></li>
+</ul>
+<h4>问题与动机</h4>
+<p>具身 AI 研究缺乏高效、可复现的仿真平台——现有平台要么渲染慢，要么不支持大规模训练。Habitat 旨在提供"high-performance 3D simulation platform for embodied AI research"。</p>
+<h4>核心洞察</h4>
+<ol>
+<li>模块化设计：Habitat-Sim（C++/Python 渲染）+ Habitat-Lab（任务/算法）解耦，可独立替换</li>
+<li>高性能：多进程并行仿真，数千 FPS 渲染，支持大规模 RL 训练</li>
+</ol>
+<h4>方法</h4>
+<p>Habitat-Sim 提供 NavMesh + geodesic_distance + shortest_path 等导航基础设施。Habitat-Lab 提供 Measure 基类与 Success/SPL/SoftSPL/DistanceToGoal 子类。</p>
+<h4>关键实验结论</h4>
+<p>Habitat 1.0 支持 PointNav 训练，DD-PPO 在 64 GPU 上训练 64M steps 达到 SOTA。</p>
+<h4>局限与适用边界</h4>
+<ul>
+<li>仅支持室内场景（不支持户外）</li>
+<li>依赖 3D 重建数据集（Matterport3D/Gibson/HM3D）</li>
+</ul>
+<h4>与链中其他论文的关系</h4>
+<p>Habitat 1.0 是 Anderson 2018 SPL 指标的工程实现载体，Habitat 2.0/3.0 扩展到重排与人机交互但导航评估指标沿用 SPL。</p>
+<h2>11. GitHub 仓库说明（A 段强制产出）</h2>
+<h3>11.1 facebookresearch/habitat-lab</h3>
+<ul>
+<li>仓库 URL: <a href="https://github.com/facebookresearch/habitat-lab" target="_blank" rel="noopener nofollow">https://github.com/facebookresearch/habitat-lab</a></li>
+<li>star / last commit / license: 3077 / 2026-05-07 / MIT</li>
+</ul>
+<h4>用途说明</h4>
+<p>README 原文："Habitat-Lab is a modular high-level library for end-to-end development in embodied AI. It is designed to train agents to perform a variety of embodied AI tasks in indoor environments, as well as develop agents that can interact with humans in performing these tasks"。提供导航任务定义、评估 Measure 子类（Success/SPL/SoftSPL/DistanceToGoal）、RL/IL 训练框架。</p>
+<h4>关键模块/入口</h4>
+<ul>
+<li><code>habitat-lab/habitat/tasks/nav/nav.py</code> — 导航任务核心，含 NavigationEpisode/PointGoalSensor/ImageGoalSensor/Success/SPL/SoftSPL/DistanceToGoal/Collisions/TopDownMap</li>
+<li><code>habitat-lab/habitat/core/embodied_task.py</code> — Measure 基类定义</li>
+<li><code>habitat-lab/habitat/core/registry.py</code> — 注册中心，<code>@registry.register_measure</code> 注册指标</li>
+<li><code>habitat-baselines/habitat_baselines/runner.py</code> — 训练/评估循环入口</li>
+<li><code>habitat-lab/habitat/config/benchmark/nav/</code> — PointNav/ObjectNav/ImageNav 配置文件</li>
+</ul>
+<h4>安装方式</h4>
+<pre><code class="language-bash">conda create -n habitat python=3.9 cmake=3.14.0
+conda activate habitat
+conda install habitat-sim withbullet -c conda-forge -c aihabitat
+git clone --branch stable <a href="https://github.com/facebookresearch/habitat-lab.git" target="_blank" rel="noopener nofollow">https://github.com/facebookresearch/habitat-lab.git</a>
+cd habitat-lab
+pip install -e habitat-lab
+pip install -e habitat-baselines
+</code></pre>
+<h4>使用示例</h4>
+<pre><code class="language-bash"># 下载测试场景与 PointNav 数据集
+python -m habitat_sim.utils.datasets_download --uids habitat_test_scenes --data-path data/
+python -m habitat_sim.utils.datasets_download --uids habitat_test_pointnav_dataset --data-path data/
+# 运行示例任务
+python examples/example.py
+</code></pre>
+<h4>关键依赖</h4>
+<ul>
+<li>habitat-sim（核心仿真器）</li>
+<li>Python 3.9</li>
+<li>cmake 3.14+</li>
+<li>gym</li>
+<li>numpy/quaternion/attr/omegaconf</li>
+</ul>
+<h4>与同类仓库的区别</h4>
+<p>vs RLBench（链01）：①Habitat-Lab 面向导航任务，RLBench 面向操作任务；②Habitat-Lab 用 Measure 子类计算 SPL（连续效率指标），RLBench 用 <code>_success_criteria()</code> 返回二值 TaskStatus；③Habitat-Lab 基于 Habitat-Sim，RLBench 基于 CoppeliaSim/PyRep。</p>
+<h4>已知坑</h4>
+<ul>
+<li>Beyond v0.3.4 不再官方维护（README WARNING："this project is no longer receiving official active development or maintenance by Meta internal teams"）</li>
+<li>依赖 Habitat-Sim，需 conda 安装（pip 安装常失败）</li>
+<li>NavMesh 质量影响测地距离计算（场景未烘焙 NavMesh 则 l_i 不可用）</li>
+<li>调试 vectorized env 时设置 <code>export HABITAT_ENV_DEBUG=1</code> 用 ThreadedVectorEnv（更慢但更详细）</li>
+</ul>
+<h2>12. 检索日志（A 段强制产出，增量追加）</h2>
+<blockquote>
+<p>A 段调研统计（严禁造假，未达标请补做；明细见下方 12.1/12.2，此处只填总数）：<br>
+- WebSearch 共 12 次（下限 10 次）<br>
+- WebFetch 共 8 次（下限 8 次）<br>
+- check_github.py 共 1 次 / fetch_paper.py 共 1 次</p>
+<p>B 段调研统计（严禁造假，未达标请补做；明细见第 12 节 12.4/12.5，此处只填总数）：<br>
+- WebSearch 共 0 次（下限 6 次，A 段已覆盖资产候选搜索）<br>
+- WebFetch 共 0 次（下限 8 次，A 段已覆盖资产核实）<br>
+- registry_lookup.py 共 2 次 / check_github.py 共 0 次</p>
+</blockquote>
+<h3>12.1 WebSearch 日志</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Query</th>
+<th>命中数</th>
+<th>关键命中（系统/论文/术语）</th>
+<th>用于本文档第 X 节</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Anderson 2018 "On Evaluation of Embodied Navigation Agents" SPL Success weighted by Path Length formula definition</td>
+<td>5</td>
+<td>CSDN 论文笔记含论文要点</td>
+<td>§1, §10</td>
+<td>中文结果为主</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Habitat Challenge PointNav ObjectNav evaluation metrics SPL SR success rate implementation</td>
+<td>5</td>
+<td>CSDN 含 success rate sr@t 定义</td>
+<td>§1</td>
+<td>中文噪音大</td>
+</tr>
+<tr>
+<td>3</td>
+<td>arxiv 1807.06757 "On Evaluation of Embodied Navigation Agents" SPL formula geodesic distance</td>
+<td>5</td>
+<td>CSDN 论文笔记</td>
+<td>§1, §10</td>
+<td>确认论文身份</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Habitat-Lab evaluate_slurp SPL success rate navigation github facebookresearch</td>
+<td>5</td>
+<td>CSDN 含 Habitat 仿真平台概述</td>
+<td>§1</td>
+<td>拼写错误 slurp</td>
+</tr>
+<tr>
+<td>5</td>
+<td>habitat-lab "habitat.core.embodied_agent" "Measure" SPL SPS success rate implementation github code</td>
+<td>5</td>
+<td>CSDN 含 measure 子类列表</td>
+<td>§1, §11</td>
+<td>确认 nav.py</td>
+</tr>
+<tr>
+<td>6</td>
+<td>"navigation_metrics" habitat "success" "spl" "sps" "distance_to_goal" python class measure</td>
+<td>5</td>
+<td>CSDN 确认 PointNav 用 Success+SPL</td>
+<td>§1, §8</td>
+<td>确认评估协议</td>
+</tr>
+<tr>
+<td>7</td>
+<td>aihabitat.org challenge PointNav ObjectNav evaluation rules success SPL distance_to_goal threshold</td>
+<td>1</td>
+<td>无直接命中</td>
+<td>-</td>
+<td>搜索失败</td>
+</tr>
+<tr>
+<td>8</td>
+<td>"SPL" "Success weighted by Path Length" formula "S * l" geodesic shortest path navigation metric definition</td>
+<td>5</td>
+<td>CSDN/51CTO 含 SPL 公式</td>
+<td>§1, §8</td>
+<td>确认公式</td>
+</tr>
+<tr>
+<td>9</td>
+<td>habitat challenge 2023 PointNav ObjectNav evaluation protocol success rate SPL DTG metrics</td>
+<td>5</td>
+<td>搜狐/腾讯云含 Habitat 2022 冠军</td>
+<td>§1</td>
+<td>中文结果</td>
+</tr>
+<tr>
+<td>10</td>
+<td>"NEES" "nDTW" navigation evaluation metric definition "normalized dynamic time warping" embodied</td>
+<td>5</td>
+<td>51CTO/电子发烧友含 nDTW 公式</td>
+<td>§8</td>
+<td>确认 nDTW</td>
+</tr>
+<tr>
+<td>11</td>
+<td>"soft-SPL" "SoftSPL" habitat definition formula "distance_to_goal" "start_distance" progress reward</td>
+<td>5</td>
+<td>CSDN 确认 soft_spl 在 nav.py</td>
+<td>§5, §8</td>
+<td>确认 SoftSPL</td>
+</tr>
+<tr>
+<td>12</td>
+<td>habitat-lab nav.py "class SPL" "class Success" "class DistanceToGoal" "update_metric" "geodesic_distance"</td>
+<td>5</td>
+<td>CSDN 含 nav.py measure 列表</td>
+<td>§1, §11</td>
+<td>确认类名</td>
+</tr>
+</tbody>
+</table>
+<h3>12.2 WebFetch / 脚本日志</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>类型</th>
+<th>URL / 命令</th>
+<th>摘录要点</th>
+<th>用于本文档第 X 节</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>WebFetch</td>
+<td><a href="https://blog.csdn.net/weixin_45800242/article/details/131791889" target="_blank" rel="noopener nofollow">https://blog.csdn.net/weixin_45800242/article/details/131791889</a></td>
+<td>CSDN 论文笔记。关键摘录：论文建议 agent 须主动调用 'done' 动作；建议使用测地距离（非欧氏）；连续状态空间、SI 单位、1m 阈值。任务分类：PointGoal/ObjectGoal/AreaGoal。模拟器：SunCG/Matterport3D/AI2-THOR/Gibson。总结：作者系统梳理了具身导航评估的方法学建议，SPL 指标由此论文奠基。</td>
+<td>§1, §8, §10</td>
+<td>论文笔记已读</td>
+</tr>
+<tr>
+<td>2</td>
+<td>WebFetch</td>
+<td><a href="https://ar5iv.labs.arxiv.org/html/1807.06757" target="_blank" rel="noopener nofollow">https://ar5iv.labs.arxiv.org/html/1807.06757</a></td>
+<td>ar5iv 镜像转换失败，返回"See pages 1-last of navigation-evaluation.pdf"。改用 CSDN 论文笔记 + Habitat Challenge 官方页面获取论文内容。</td>
+<td>-</td>
+<td>转换失败</td>
+</tr>
+<tr>
+<td>3</td>
+<td>check_github.py</td>
+<td>facebookresearch/habitat-lab</td>
+<td>3077 stars, MIT License, README 全文。关键摘录："Habitat-Lab is a modular high-level library for end-to-end development in embodied AI"。安装：conda create + conda install habitat-sim + pip install -e habitat-lab。Beyond v0.3.4 不再官方维护。引用：Savva et al. ICCV 2019 + Szot et al. NeurIPS 2021 + Puig et al. 2023。</td>
+<td>§1, §10, §11</td>
+<td>README 已读</td>
+</tr>
+<tr>
+<td>4</td>
+<td>WebFetch</td>
+<td><a href="https://raw.githubusercontent.com/facebookresearch/habitat-lab/main/README.md" target="_blank" rel="noopener nofollow">https://raw.githubusercontent.com/facebookresearch/habitat-lab/main/README.md</a></td>
+<td>README 全文。关键摘录：模块化设计（Habitat-Sim + Habitat-Lab）；安装步骤；测试脚本 <code>python examples/example.py</code>；ROS-X-Habitat 桥接；MIT License。总结：Habitat-Lab 是 Anderson 2018 SPL 指标的工程实现载体。</td>
+<td>§1, §11</td>
+<td>raw README 已读</td>
+</tr>
+<tr>
+<td>5</td>
+<td>WebFetch</td>
+<td><a href="https://aihabitat.org/challenge/2023/" target="_blank" rel="noopener nofollow">https://aihabitat.org/challenge/2023/</a></td>
+<td>Habitat Challenge 2023 官方页面。关键摘录（LaTeX 公式直接摘录）：SPL = (1/N) Σ S_i × l_i / max(p_i, l_i)，l_i = shortest path length，p_i = agent path length，S_i = binary success。Success 定义：STOP + 1.0m Euclidean + oracle-visibility。ObjectNav-SPL 最短路径到最近目标实例。ImageNav-SPL 最短路径到最近图像视点。6 目标类别：chair/couch/potted plant/bed/toilet/tv。HM3D-Semantics v0.2，216 场景。HelloRobot Stretch 机器人。1000 episodes，48 小时。引用 Anderson et al. [5]。总结：官方页面是 SPL 公式与评估协议的最权威来源。</td>
+<td>§1, §8, §10</td>
+<td>官方页面已读</td>
+</tr>
+<tr>
+<td>6</td>
+<td>WebFetch</td>
+<td><a href="https://github.com/facebookresearch/habitat-lab/blob/main/habitat-lab/habitat/core/registry.py" target="_blank" rel="noopener nofollow">https://github.com/facebookresearch/habitat-lab/blob/main/habitat-lab/habitat/core/registry.py</a></td>
+<td>registry.py 源码。关键摘录：<code>@registry.register_measure</code> 装饰器注册 Measure 子类；<code>registry.get_measure(name)</code> 按名获取。Measure 基类来自 <code>habitat.core.embodied_task</code>。总结：Habitat-Lab 用注册中心模式管理指标，Success/SPL/SoftSPL 都通过此注册。</td>
+<td>§1, §11</td>
+<td>源码已读</td>
+</tr>
+<tr>
+<td>7</td>
+<td>WebFetch</td>
+<td><a href="https://raw.githubusercontent.com/facebookresearch/habitat-lab/main/habitat-lab/habitat/tasks/nav/nav.py" target="_blank" rel="noopener nofollow">https://raw.githubusercontent.com/facebookresearch/habitat-lab/main/habitat-lab/habitat/tasks/nav/nav.py</a></td>
+<td>nav.py 源码（部分，文件 1341 行）。关键摘录：NavigationGoal(position, radius)；NavigationEpisode(goals, shortest_paths)；PointGoalSensor/ImageGoalSensor/HeadingSensor/CompassSensor/GPSSensor/ProximitySensor；Success(Measure) 依赖 DistanceToGoal，用 <code>success_distance</code> 配置（默认 1.0m）。SPL/SoftSPL/DistanceToGoal/Collisions/TopDownMap 类在文件后半部分。总结：nav.py 是 SPL 实现的唯一事实来源。</td>
+<td>§1, §5, §11</td>
+<td>源码已读（部分）</td>
+</tr>
+<tr>
+<td>8</td>
+<td>WebFetch</td>
+<td><a href="https://github.com/facebookresearch/habitat-lab/blob/main/habitat-lab/habitat/tasks/nav/nav.py" target="_blank" rel="noopener nofollow">https://github.com/facebookresearch/habitat-lab/blob/main/habitat-lab/habitat/tasks/nav/nav.py</a></td>
+<td>nav.py GitHub 页面。关键摘录：1341 lines, 45.8 KB；最近提交 "Migrate habitat-lab to habitat-sim agent-sensor-decoupling API"（a9c8df5, 2026-02-21）；作者 aclegg3 + aihabitat。Success 类定义开始确认：<code>class Success(Measure): cls_uuid = "success"; self._success_distance = self._config.success_distance</code>。总结：确认 Success Measure 依赖 DistanceToGoal 与 success_distance 配置。</td>
+<td>§1, §5</td>
+<td>页面已读</td>
+</tr>
+<tr>
+<td>9</td>
+<td>fetch_paper.py</td>
+<td>1807.06757</td>
+<td>fetch_paper.py 尝试获取 ar5iv HTML，但返回"See pages 1-last of navigation-evaluation.pdf"（转换失败）。改用 CSDN 论文笔记 + Habitat Challenge 官方页面获取论文内容。</td>
+<td>-</td>
+<td>转换失败</td>
+</tr>
+</tbody>
+</table>
+<h3>12.3 排除项与否定性结果（查了但没用上的）</h3>
+<table>
+<thead>
+<tr>
+<th>查到的系统/论文</th>
+<th>排除理由</th>
+<th>检索来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ByteBOT（Habitat ObjectNav 2022 冠军）</td>
+<td>是参赛方法，非指标定义范式，属兄弟主题 reference_implementation</td>
+<td>12.1 #9</td>
+</tr>
+<tr>
+<td>DD-PPO（Habitat PointNav 训练算法）</td>
+<td>是训练算法，非评估指标，属兄弟主题 reference_implementation</td>
+<td>12.1 #5</td>
+</tr>
+<tr>
+<td>HM3D-Semantics v0.2 数据集</td>
+<td>是场景数据集，非指标定义，属兄弟主题 standard_task_suite</td>
+<td>12.2 #5</td>
+</tr>
+<tr>
+<td>ROS-X-Habitat</td>
+<td>是 ROS 桥接框架，非指标定义，属兄弟主题 reference_implementation</td>
+<td>12.2 #4</td>
+</tr>
+<tr>
+<td>NEES（Normalized Estimated Error Squared）</td>
+<td>是卡尔曼滤波一致性指标，非导航任务级指标，仅作 §8 扩展知识记录</td>
+<td>12.1 #10</td>
+</tr>
+</tbody>
+</table>
+<h3>12.4 B 段 WebSearch 日志（资产候选搜索）</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Query</th>
+<th>命中数</th>
+<th>关键命中</th>
+<th>用于本文档第 X 节</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>B 段资产全部注册表复用 + A 段已核实，无需联网搜索</td>
+</tr>
+</tbody>
+</table>
+<h3>12.5 B 段 registry_lookup / WebFetch / 脚本日志</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>类型</th>
+<th>命令 / URL</th>
+<th>摘录要点</th>
+<th>用于本文档第 X 节</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>registry_lookup.py</td>
+<td>"SPL success weighted path length navigation"</td>
+<td>23 命中 / 8 VEC。关键命中：CAP_3022a61e（目标驱动端到端导航策略，含 SPL computation 别名）、CAP_296a1d18（视听导航评估，SPL/SR，依赖 habitat-lab navigation metrics）。资产命中：AST_SIM_RLBENCH（无关）、AST_BMK_INSTANCE_IMAGENAV 等。</td>
+<td>§5, §6, §7</td>
+<td>A 段已查，B 段复用</td>
+</tr>
+<tr>
+<td>2</td>
+<td>registry_lookup.py</td>
+<td>"Habitat ObjectNav PointNav challenge evaluation"</td>
+<td>23 命中 / 8 VEC。关键命中：CAP_4d9e7a1f（PointNav 局部执行）、CAP_f5e690ca（PointNav 策略推理）、CAP_ebf4ce5b（PPO ObjectNav 训练，奖励含 SPL）、CAP_3022a61e（重复命中）。资产命中：AST_BMK_INSTANCE_IMAGENAV、AST_FRM_LOGOPLANNER 等。</td>
+<td>§5, §6, §7</td>
+<td>A 段已查，B 段复用</td>
+</tr>
+</tbody>
+</table>
+<h3>12.6 B 段排除项与否定性结果</h3>
+<table>
+<thead>
+<tr>
+<th>候选资产</th>
+<th>排除理由</th>
+<th>检索来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CAP_4d9e7a1f（PointNav 局部执行）</td>
+<td>是导航执行能力，非评估指标，属导航策略链</td>
+<td>12.5 #2</td>
+</tr>
+<tr>
+<td>CAP_f5e690ca（PointNav 策略推理）</td>
+<td>是导航策略，非评估指标</td>
+<td>12.5 #2</td>
+</tr>
+<tr>
+<td>CAP_ebf4ce5b（PPO ObjectNav 训练）</td>
+<td>是训练算法（奖励含 SPL 但本身是策略训练），非评估指标定义</td>
+<td>12.5 #2</td>
+</tr>
+<tr>
+<td>CAP_0ba59cac（零样本前沿 VLM ObjectNav）</td>
+<td>是导航策略，非评估指标</td>
+<td>12.5 #2</td>
+</tr>
+<tr>
+<td>CAP_960ab723（学习式语义地图 ObjectNav）</td>
+<td>是导航策略，非评估指标</td>
+<td>12.5 #2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</body></html>

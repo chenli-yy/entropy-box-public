@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>箱熵 · 图谱是怎么建出来的</title>
+<style>
+:root {
+  --bg:#000; --surface:#0e0e10; --card:#141416; --card-2:#1c1c1e;
+  --border:#2a2a2d; --border-soft:#202023; --border-strong:#3a3a3e;
+  --text:#ebebf0; --bright:#fff; --muted:#98989f; --dim:#6c6c70; --faint:#48484a;
+  --accent:#0a84ff; --accent-2:#5e5ce6; --accent-light:#409cff;
+  --amber:#fbbf24; --green:#30d158; --red:#ff453a; --cyan:#64d2ff;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  font-size:15px; line-height:1.7; -webkit-font-smoothing:antialiased;
+}
+a { color:var(--accent); }
+.wrap { max-width:1120px; margin:0 auto; padding:0 32px; }
+.sec { padding:64px 0; border-top:.5px solid var(--border-soft); }
+.sec:first-of-type { border-top:none; }
+
+/* ---------- 滚动淡入 ---------- */
+.rv { opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease; }
+.rv.in { opacity:1; transform:none; }
+
+/* ---------- 章节标题 ---------- */
+.eyebrow {
+  font-size:11px; font-weight:700; letter-spacing:2.4px; text-transform:uppercase;
+  color:var(--accent-light); margin-bottom:10px;
+}
+.sec h2 { font-size:26px; font-weight:700; color:var(--bright); margin:0 0 10px; letter-spacing:-.3px; }
+.sec .lede { font-size:14.5px; color:var(--muted); margin:0 0 30px; max-width:760px; line-height:1.8; }
+.sec .lede strong { color:var(--text); font-weight:600; }
+
+/* ---------- HERO ---------- */
+.hero { position:relative; overflow:hidden; padding:76px 0 54px; }
+.hero::before {
+  content:''; position:absolute; inset:-40% -20% auto -20%; height:640px;
+  background:
+    radial-gradient(46% 52% at 22% 8%, rgba(10,132,255,.22) 0%, transparent 62%),
+    radial-gradient(38% 46% at 78% 4%, rgba(94,92,230,.18) 0%, transparent 60%);
+  pointer-events:none;
+}
+.hero::after {
+  content:''; position:absolute; inset:0;
+  background:repeating-linear-gradient(0deg, rgba(255,255,255,.014) 0 1px, transparent 1px 34px);
+  pointer-events:none;
+}
+.hero-in { position:relative; z-index:1; }
+.hero h1 {
+  font-size:42px; line-height:1.22; font-weight:740; color:var(--bright);
+  margin:0 0 16px; letter-spacing:-1px; max-width:820px;
+}
+.hero h1 em { font-style:normal; color:var(--accent-light); }
+.hero-sub { font-size:16px; color:var(--muted); max-width:730px; margin:0 0 34px; line-height:1.85; }
+.hero-sub strong { color:var(--text); font-weight:600; }
+
+/* 数据墙 */
+/* auto-fit：4 张 / 5 张（--deep 模式多一张检索次数卡）都能自动排匀 */
+.stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:10px; }
+.stat {
+  background:linear-gradient(180deg, var(--card) 0%, rgba(20,20,22,.5) 100%);
+  border:.5px solid var(--border); border-radius:14px; padding:18px 16px 15px;
+  position:relative; overflow:hidden;
+}
+.stat::after {
+  content:''; position:absolute; left:16px; right:16px; top:0; height:1px;
+  background:linear-gradient(90deg, transparent, rgba(10,132,255,.55), transparent);
+}
+.stat-n {
+  font-size:29px; font-weight:730; color:var(--bright); line-height:1.12;
+  letter-spacing:-.8px; font-variant-numeric:tabular-nums;
+}
+.stat-n span { font-size:15px; font-weight:600; color:var(--muted); margin-left:3px; letter-spacing:0; }
+.stat-l { font-size:11.5px; color:var(--muted); margin-top:7px; line-height:1.5; }
+
+/* ---------- 流水线 ---------- */
+.flow { display:grid; grid-template-columns:repeat(5,1fr); gap:0; align-items:stretch; }
+.node { position:relative; padding:0 7px; }
+.node-in {
+  height:100%; background:var(--card); border:.5px solid var(--border);
+  border-radius:14px; padding:16px 15px 15px; transition:all .22s ease;
+}
+.node:hover .node-in { border-color:var(--accent); transform:translateY(-3px); background:var(--card-2); }
+.node:not(:last-child)::after {
+  content:''; position:absolute; right:-6px; top:38px; width:12px; height:12px;
+  border-top:1.5px solid var(--border-strong); border-right:1.5px solid var(--border-strong);
+  transform:rotate(45deg); z-index:2;
+}
+.node-top { display:flex; align-items:center; gap:8px; margin-bottom:9px; }
+.node-num {
+  font-family:ui-monospace,Menlo,Consolas,monospace; font-size:11px; font-weight:700;
+  color:var(--accent); background:rgba(10,132,255,.13);
+  border:1px solid rgba(10,132,255,.3); border-radius:6px; padding:2px 7px;
+}
+.node-name { font-size:14px; font-weight:660; color:var(--bright); }
+.node-desc { font-size:12.5px; color:var(--muted); line-height:1.65; }
+.node-gate {
+  margin-top:11px; padding-top:9px; border-top:.5px solid var(--border-soft);
+  font-size:11px; color:var(--amber); display:flex; align-items:center; gap:5px;
+}
+.node-gate.g-none { color:var(--dim); }
+.node-gate b { font-family:ui-monospace,Menlo,Consolas,monospace; font-weight:600; }
+
+/* ---------- 取证 ---------- */
+.eg { display:grid; grid-template-columns:290px 1fr; gap:22px; align-items:start; }
+.eg-rules {
+  background:linear-gradient(180deg, rgba(251,191,36,.07), rgba(251,191,36,.02));
+  border:1px solid rgba(251,191,36,.26); border-radius:16px; padding:20px;
+}
+.eg-rules h3 { margin:0 0 6px; font-size:15px; font-weight:680; color:var(--amber); }
+.eg-rules p { font-size:12.5px; color:var(--muted); margin:0 0 15px; line-height:1.7; }
+.quota { display:flex; flex-direction:column; gap:8px; }
+.quota-row {
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  background:rgba(0,0,0,.32); border:.5px solid var(--border); border-radius:10px;
+  padding:9px 12px;
+}
+.quota-k { font-size:12.5px; color:var(--text); font-family:ui-monospace,Menlo,Consolas,monospace; }
+.quota-v { font-size:12.5px; font-weight:700; color:var(--amber); white-space:nowrap; }
+.eg-hard {
+  margin-top:15px; font-size:12px; line-height:1.7; color:var(--muted);
+  border-top:.5px solid rgba(251,191,36,.2); padding-top:12px;
+}
+.eg-hard b { color:var(--amber); }
+
+.eg-log { min-width:0; }
+.log-head { display:flex; align-items:baseline; gap:10px; margin-bottom:10px; flex-wrap:wrap; }
+.log-head h3 { margin:0; font-size:15px; font-weight:660; color:var(--bright); }
+.log-head span { font-size:12px; color:var(--dim); }
+.log-box {
+  background:var(--surface); border:.5px solid var(--border); border-radius:14px;
+  overflow:hidden;
+}
+.log-bar {
+  display:flex; align-items:center; gap:7px; padding:9px 14px;
+  border-bottom:.5px solid var(--border); background:var(--card);
+  font-family:ui-monospace,Menlo,Consolas,monospace; font-size:11.5px; color:var(--dim);
+}
+.dot { width:9px; height:9px; border-radius:50%; }
+.log-scroll { overflow-x:auto; }
+table.log { border-collapse:collapse; width:100%; font-size:12px; min-width:660px; }
+table.log th {
+  text-align:left; padding:8px 12px; color:var(--muted); font-weight:600;
+  background:rgba(255,255,255,.025); border-bottom:.5px solid var(--border); white-space:nowrap;
+}
+table.log td { padding:8px 12px; border-bottom:.5px solid var(--border-soft); vertical-align:top; color:var(--text); }
+table.log tr:last-child td { border-bottom:none; }
+table.log td.q { color:var(--cyan); font-family:ui-monospace,Menlo,Consolas,monospace; font-size:11.5px; line-height:1.6; }
+table.log td.n, table.log td.s { white-space:nowrap; color:var(--muted); }
+table.log tr.fail td { background:rgba(255,69,58,.07); }
+table.log tr.fail td.n, table.log tr.fail td.q { color:#ff8a80; }
+.log-foot {
+  padding:10px 14px; border-top:.5px solid var(--border); background:var(--card);
+  font-size:11.5px; color:var(--muted); line-height:1.65;
+}
+.log-foot b { color:var(--text); }
+
+/* ---------- 录屏 ---------- */
+.scope {
+  display:flex; gap:12px; align-items:flex-start;
+  background:rgba(251,191,36,.06); border:1px solid rgba(251,191,36,.26);
+  border-radius:14px; padding:14px 16px; margin-bottom:16px;
+  font-size:13px; line-height:1.8; color:var(--muted);
+}
+.scope-ic { color:var(--amber); font-size:15px; line-height:1.5; }
+.scope b { color:var(--amber); }
+.scope strong { color:var(--text); }
+.scope ol { margin:4px 0 0; padding-left:18px; }
+.scope li { margin:2px 0; }
+#video-slot {
+  position:relative; width:100%; aspect-ratio:1920/1040;
+  border-radius:16px; overflow:hidden; border:.5px solid var(--border); background:#08090b;
+}
+.ph {
+  position:absolute; inset:0; cursor:pointer;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;
+  background:
+    radial-gradient(120% 80% at 50% 0%, rgba(10,132,255,.15) 0%, transparent 64%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.02) 0 1px, transparent 1px 30px), #08090b;
+}
+.ph:hover .play { transform:scale(1.08); box-shadow:0 10px 34px rgba(10,132,255,.45); }
+.play {
+  width:70px; height:70px; border-radius:50%; background:var(--accent); color:#fff;
+  display:flex; align-items:center; justify-content:center; font-size:26px; padding-left:6px;
+  box-shadow:0 8px 26px rgba(10,132,255,.3); transition:all .22s ease;
+}
+.ph-t { font-size:15px; font-weight:600; color:var(--bright); }
+.ph-b {
+  font-size:11.5px; color:var(--muted); border:.5px solid var(--border);
+  border-radius:999px; padding:4px 13px; background:rgba(255,255,255,.03);
+}
+.loading {
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  font-size:13px; color:var(--muted); background:rgba(8,9,11,.8); z-index:2;
+}
+
+/* ---------- 材料 ---------- */
+.mats { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+.mat {
+  display:flex; gap:14px; padding:16px 18px; text-decoration:none;
+  background:var(--card); border:.5px solid var(--border); border-radius:14px;
+  transition:all .2s ease;
+}
+.mat:hover { border-color:var(--accent); background:var(--card-2); transform:translateY(-2px); }
+.mat-ic {
+  width:40px; height:40px; flex-shrink:0; border-radius:11px;
+  background:rgba(10,132,255,.11); border:.5px solid rgba(10,132,255,.26);
+  display:flex; align-items:center; justify-content:center; font-size:17px;
+}
+.mat-b { min-width:0; flex:1; }
+.mat-t { font-size:14px; font-weight:640; color:var(--bright); margin-bottom:3px; }
+.mat-d { font-size:12.5px; color:var(--muted); line-height:1.6; }
+.mat-m {
+  margin-top:8px; font-family:ui-monospace,Menlo,Consolas,monospace;
+  font-size:10.5px; color:var(--faint); letter-spacing:.2px;
+}
+.mats-sub { grid-column:1/-1; font-size:13px; color:var(--muted); margin:16px 0 2px; }
+.chips { grid-column:1/-1; display:flex; flex-wrap:wrap; gap:8px; }
+.chips a {
+  font-size:12.5px; text-decoration:none; color:var(--muted);
+  background:var(--card); border:.5px solid var(--border); border-radius:999px;
+  padding:7px 15px; transition:all .18s ease;
+}
+.chips a:hover { color:var(--accent); border-color:var(--accent); background:var(--card-2); }
+
+/* ---------- 页脚 ---------- */
+.foot { padding:34px 0 70px; border-top:.5px solid var(--border-soft); }
+.foot p { font-size:12.5px; color:var(--dim); line-height:1.85; margin:0; max-width:820px; }
+.foot code {
+  font-family:ui-monospace,Menlo,Consolas,monospace; font-size:11.5px;
+  background:var(--card); border:.5px solid var(--border); border-radius:5px;
+  padding:1px 6px; color:var(--muted);
+}
+
+@media (max-width:1000px) {
+  .flow { grid-template-columns:repeat(2,1fr); gap:10px; }
+  .node { padding:0; }
+  .node:not(:last-child)::after { display:none; }
+  .eg { grid-template-columns:1fr; }
+  .mats { grid-template-columns:1fr; }
+}
+@media (max-width:640px) {
+  .wrap { padding:0 18px; }
+  .hero h1 { font-size:29px; letter-spacing:-.5px; }
+  .hero { padding:44px 0 34px; }
+  .sec { padding:44px 0; }
+  .flow { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="wrap hero-in">
+    <div class="eyebrow">Behind the graph</div>
+    <h1>图谱里的每一条，<br>都能查到<em>是谁、在哪、搜了几次</em>查出来的。</h1>
+    <p class="hero-sub">这不是让大模型写一段介绍。每个主题都由一条 <strong>Agent 编排流水线</strong>产出：先规划检索、再逐条技术链取证、每篇调研文档<strong>强制附检索日志</strong>、机械校验不过直接打回、入库还要过全局查重闸门。下面是这条流水线的样子，以及它留下的证据。</p>
+
+    <!-- STATS:BEGIN 由 pipeline/render/build_showcase_stats.py 生成，勿手改 -->
+    <div class="stats rv">
+      <div class="stat"><div class="stat-n" data-to="1497">0</div><div class="stat-l">L2 主题结构化产物<br>JSON + MD 双份</div></div>
+      <div class="stat"><div class="stat-n" data-to="4853">0</div><div class="stat-l">分链深度调研文档<br>每篇附完整检索台账</div></div>
+      <div class="stat"><div class="stat-n" data-to="21929">0</div><div class="stat-l">能力层级关系节点<br>全局去重后入库</div></div>
+      <div class="stat"><div class="stat-n" data-to="787">0</div><div class="stat-l">组查重嫌疑逐条裁决<br>725 判独立 &middot; 32 判合并</div></div>
+    </div>
+    <!-- STATS:END -->
+  </div>
+</section>
+
+<!-- ============ 流水线 ============ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="eyebrow">Pipeline</div>
+    <h2>五个环节，三道闸门</h2>
+    <p class="lede">闸门是<strong>机械的</strong>——脚本判定，不通过就 <code style="font-family:ui-monospace,monospace">exit 1</code>，产物不进库，不存在"差不多就先放过"。</p>
+
+    <div class="flow rv">
+      <div class="node"><div class="node-in">
+        <div class="node-top"><span class="node-num">01</span><span class="node-name">编排</span></div>
+        <div class="node-desc">主题分批派发，断点可续跑。失败的落账等人工复核，不静默跳过。</div>
+        <div class="node-gate g-none">&#9675; 无闸门</div>
+      </div></div>
+      <div class="node"><div class="node-in">
+        <div class="node-top"><span class="node-num">02</span><span class="node-name">规划</span></div>
+        <div class="node-desc">种子词 + 领域语义扩展 + Stop Rule，先规划再检索，不搜一次就下结论。</div>
+        <div class="node-gate g-none">&#9675; 无闸门</div>
+      </div></div>
+      <div class="node"><div class="node-in">
+        <div class="node-top"><span class="node-num">03</span><span class="node-name">取证</span></div>
+        <div class="node-desc">一条技术链一篇文档，文末强制附检索日志：每条 query 登记命中数与用途。</div>
+        <div class="node-gate">&#9679; 闸门 <b>检索量下限</b></div>
+      </div></div>
+      <div class="node"><div class="node-in">
+        <div class="node-top"><span class="node-num">04</span><span class="node-name">校验</span></div>
+        <div class="node-desc">分链验收 + 结构校验：九节齐全、图环检测、双向一致性、引用闭包。</div>
+        <div class="node-gate">&#9679; 闸门 <b>exit 1</b></div>
+      </div></div>
+      <div class="node"><div class="node-in">
+        <div class="node-top"><span class="node-num">05</span><span class="node-name">入库</span></div>
+        <div class="node-desc">全局注册表代理键 + 嵌入双视图余弦查重，同一件事全库只有一个条目。</div>
+        <div class="node-gate">&#9679; 闸门 <b>查重裁决</b></div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 取证 ============ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="eyebrow">Evidence</div>
+    <h2>"不是编的"，是这么被强制的</h2>
+    <p class="lede">Agent 天然会把话说圆。所以我们不靠自觉，靠<strong>可数的硬指标</strong>：写完文档必须交出检索台账，条数不够就打回重跑。</p>
+
+    <div class="eg rv">
+      <div class="eg-rules">
+        <h3>单篇文档的硬下限</h3>
+        <p>写在 Agent Prompt 里，由脚本机械验收。</p>
+        <div class="quota">
+          <div class="quota-row"><span class="quota-k">WebSearch</span><span class="quota-v">&ge; 10 次</span></div>
+          <div class="quota-row"><span class="quota-k">WebFetch</span><span class="quota-v">&ge; 8 次</span></div>
+          <div class="quota-row"><span class="quota-k">check_github.py</span><span class="quota-v">核验仓库存活</span></div>
+          <div class="quota-row"><span class="quota-k">fetch_paper.py</span><span class="quota-v">取论文原文</span></div>
+        </div>
+        <div class="eg-hard"><b>严禁凭空，未达标不许事后补日志</b>——直接打回重跑。每条检索还要写清用在正文第几节，让结论和来源一一对得上。</div>
+      </div>
+
+      <div class="eg-log">
+        <div class="log-head">
+          <h3>真实台账实样</h3>
+          <span>摘自 chain_02 导航效率加权度量 · 该篇共 12 次 WebSearch / 8 次 WebFetch</span>
+        </div>
+        <div class="log-box">
+          <div class="log-bar">
+            <span class="dot" style="background:#ff5f57"></span>
+            <span class="dot" style="background:#febc2e"></span>
+            <span class="dot" style="background:#28c840"></span>
+            <span style="margin-left:6px">chain_02_navigation_efficiency_weighted.md &mdash; § 12.1 WebSearch 日志</span>
+          </div>
+          <div class="log-scroll">
+            <table class="log">
+              <thead><tr><th>#</th><th>Query</th><th>命中</th><th>关键命中</th><th>用于</th><th>备注</th></tr></thead>
+              <tbody>
+                <tr><td class="n">1</td><td class="q">Anderson 2018 "On Evaluation of Embodied Navigation Agents" SPL formula definition</td><td class="n">5</td><td>论文要点笔记</td><td class="s">§1, §10</td><td class="s">中文结果为主</td></tr>
+                <tr><td class="n">3</td><td class="q">arxiv 1807.06757 SPL formula geodesic distance</td><td class="n">5</td><td>论文笔记</td><td class="s">§1, §10</td><td class="s">确认论文身份</td></tr>
+                <tr class="fail"><td class="n">7</td><td class="q">aihabitat.org challenge PointNav ObjectNav evaluation rules success SPL threshold</td><td class="n">1</td><td>无直接命中</td><td class="s">&mdash;</td><td class="s">搜索失败</td></tr>
+                <tr><td class="n">8</td><td class="q">"SPL" "Success weighted by Path Length" formula "S * l" geodesic shortest path</td><td class="n">5</td><td>含 SPL 公式</td><td class="s">§1, §8</td><td class="s">确认公式</td></tr>
+                <tr><td class="n">11</td><td class="q">"soft-SPL" habitat definition formula "distance_to_goal" "start_distance"</td><td class="n">5</td><td>确认 soft_spl 在 nav.py</td><td class="s">§5, §8</td><td class="s">确认 SoftSPL</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="log-foot">注意第 7 行：<b>那次搜索什么也没搜到，照样登记在册</b>。台账记的是过程，不是战果——能看见失败，才说明没有事后美化。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 录屏 ============ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="eyebrow">Recording</div>
+    <h2>跑起来是什么样</h2>
+    <p class="lede">85 秒，无剪辑无加速。</p>
+
+    <div class="scope rv">
+      <span class="scope-ic">&#9888;</span>
+      <div>
+        <b>先说清楚这段录屏只是三个片面：</b>
+        <ol>
+          <li>工作流的入口文档（batch 启动 prompt）</li>
+          <li>一次断点续跑的前端效果</li>
+          <li>单个话题里<strong>其中一条</strong>工作链的调研汇总文件</li>
+        </ol>
+        完整流水线比这复杂得多，调研过程的 raw data 与大量中间文档都<strong>没有</strong>出现在画面里。
+      </div>
+    </div>
+
+    <div id="video-slot" class="rv">
+      <div class="ph" onclick="loadVideo()">
+        <div class="play">&#9654;</div>
+        <div class="ph-t">点击播放</div>
+        <div class="ph-b">&#128274; 点击后才开始传输，不点不占流量 &middot; 8.4 MB</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 材料 ============ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="eyebrow">Raw materials</div>
+    <h2>原件在这，自己翻</h2>
+    <p class="lede">录屏里出现的那几份文件，原文直出、未做删改。已<strong>冻结快照</strong>，后续流水线怎么改都不会动这里的版本。</p>
+
+    <div class="mats rv">
+      <a class="mat" href="docs/batch_orchestrator_prompt.html" target="_blank" rel="noopener">
+        <div class="mat-ic">&#9881;&#65039;</div>
+        <div class="mat-b">
+          <div class="mat-t">Batch Orchestrator 启动 Prompt</div>
+          <div class="mat-d">录屏左侧那份 · 批量生成的编排入口，规定了无人值守铁律与 Phase 0–4 执行流程</div>
+          <div class="mat-m">agent_prompt_batch_orchestrator.md &middot; 17.4 KB &middot; sha256 3539e103</div>
+        </div>
+      </a>
+      <a class="mat" href="docs/evaluation_metric_definition.html" target="_blank" rel="noopener">
+        <div class="mat-ic">&#128203;</div>
+        <div class="mat-b">
+          <div class="mat-t">主检索文档 · evaluation_metric_definition</div>
+          <div class="mat-d">单个主题的全链调研汇总：广度扫描 → 候选链识别 → 红队评审 → 单链质量门控</div>
+          <div class="mat-m">evaluation_metric_definition.md &middot; 26.8 KB &middot; sha256 fe7ef6e2</div>
+        </div>
+      </a>
+
+      <div class="mats-sub">该主题下的 5 篇分链深度调研 —— 文末「12. 检索日志」即上文那份台账的完整版：</div>
+      <div class="chips">
+        <a href="docs/chain_01_programmatic_binary_success.html" target="_blank" rel="noopener">链 01 · 程序化二值成功判定</a>
+        <a href="docs/chain_02_navigation_efficiency_weighted.html" target="_blank" rel="noopener">链 02 · 导航效率加权度量</a>
+        <a href="docs/chain_03_few_shot_rl_statistical_rigor.html" target="_blank" rel="noopener">链 03 · 少样本 RL 统计严谨性</a>
+        <a href="docs/chain_04_geometric_precision_metric.html" target="_blank" rel="noopener">链 04 · 几何精度度量</a>
+        <a href="docs/chain_05_human_rated_rubric_metric.html" target="_blank" rel="noopener">链 05 · 人为评分量表体系</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap foot">
+  <p>展示页用的原始 markdown 已冻结在 <code>docs/_src/</code>，附 <code>manifest.json</code> 记录源路径、快照时间与 sha256；渲染只读快照，源文件后续改动不影响本页。检索日志实样取自 chain_02 第 12.1 节，为版面做了截断，完整表格见原件。</p>
+</div>
+
+<script>
+// 数字滚动
+function countUp(el) {
+  var to = parseInt(el.getAttribute('data-to'), 10);
+  if (isNaN(to)) { return; }
+  var suffix = el.querySelector('span');
+  var sfx = suffix ? suffix.outerHTML : '';
+  var dur = 1100, t0 = null;
+  function step(ts) {
+    if (!t0) t0 = ts;
+    var p = Math.min(1, (ts - t0) / dur);
+    var eased = 1 - Math.pow(1 - p, 3);
+    el.innerHTML = Math.round(to * eased).toLocaleString('en-US') + sfx;
+    if (p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+// 滚动淡入 + 首次进入时触发数字动画
+(function () {
+  var items = document.querySelectorAll('.rv');
+  function reveal(el) {
+    if (el.classList.contains('in')) return;
+    el.classList.add('in');
+    var nums = el.querySelectorAll('.stat-n');
+    for (var k = 0; k < nums.length; k++) countUp(nums[k]);
+  }
+  function revealAll() {
+    for (var i = 0; i < items.length; i++) reveal(items[i]);
+  }
+  if (!('IntersectionObserver' in window)) {
+    revealAll();
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      reveal(e.target);
+      io.unobserve(e.target);
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  for (var n = 0; n < items.length; n++) io.observe(items[n]);
+  // iframe 内嵌时 IntersectionObserver 可能不触发（父容器 display 切换时机问题），
+  // 1.5 秒后兜底强制显示所有未激活的 .rv 元素
+  setTimeout(function() {
+    var remaining = document.querySelectorAll('.rv:not(.in)');
+    if (remaining.length) revealAll();
+  }, 1500);
+})();
+
+// 录屏懒加载：点击前页面不请求任何视频字节
+var videoLoaded = false;
+function loadVideo() {
+  if (videoLoaded) return;
+  var slot = document.getElementById('video-slot');
+  if (!slot) return;
+  videoLoaded = true;
+
+  var tip = document.createElement('div');
+  tip.className = 'loading';
+  tip.id = 'v-loading';
+  tip.textContent = '正在加载录屏…（8.4 MB，首帧就绪即可播放）';
+
+  var v = document.createElement('video');
+  v.id = 'demo-video';
+  v.controls = true; v.autoplay = true; v.playsInline = true;
+  v.setAttribute('playsinline', '');
+  v.setAttribute('preload', 'auto');
+  v.setAttribute('controlsList', 'nodownload');
+  v.style.cssText = 'width:100%;height:100%;display:block;background:#000';
+  v.poster = '../media/pipeline_demo_poster.jpg';
+  v.src = '../media/pipeline_demo.mp4';
+
+  function done() {
+    var el = document.getElementById('v-loading');
+    if (el && el.parentNode) el.parentNode.removeChild(el);
+  }
+  v.addEventListener('loadeddata', done);
+  v.addEventListener('canplay', done);
+  v.addEventListener('error', function () {
+    done();
+    slot.innerHTML = '<div class="loading" style="flex-direction:column;gap:8px;text-align:center;padding:24px">'
+      + '<div>录屏加载失败</div><div style="font-size:12px">可能是网络中断，或该部署未挂载 assets/ 静态资源</div></div>';
+    videoLoaded = false;
+  });
+
+  slot.innerHTML = '';
+  slot.appendChild(v);
+  slot.appendChild(tip);
+  try { v.play(); } catch (e) {}
+}
+
+// 父页面关闭子页面时暂停播放
+window.addEventListener('message', function (e) {
+  if (e && e.data === 'pause-demo') {
+    var v = document.getElementById('demo-video');
+    if (v) { try { v.pause(); } catch (err) {} }
+  }
+});
+</script>
+</body>
+</html>

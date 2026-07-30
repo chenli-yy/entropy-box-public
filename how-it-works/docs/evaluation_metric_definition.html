@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>主检索文档：evaluation_metric_definition · 箱熵图谱原始材料</title>
+<style>
+:root {
+  --bg:#000; --panel:#1c1c1e; --panel2:#2c2c2e; --border:#38383a;
+  --text:#ebebf0; --bright:#fff; --muted:#98989f; --accent:#0a84ff; --code:#64d2ff;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  font-size:15px; line-height:1.85;
+}
+.doc-top {
+  position:sticky; top:0; z-index:10;
+  background:rgba(0,0,0,.82); backdrop-filter:blur(14px);
+  border-bottom:.5px solid var(--border);
+  padding:14px 28px; display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+}
+.doc-top a {
+  color:var(--muted); text-decoration:none; font-size:13px;
+  border:.5px solid var(--border); border-radius:8px; padding:5px 12px;
+}
+.doc-top a:hover { color:var(--accent); border-color:var(--accent); }
+.doc-top h1 { font-size:16px; font-weight:650; color:var(--bright); margin:0; }
+.doc-top .sub { font-size:12.5px; color:var(--muted); flex-basis:100%; margin:0; }
+.doc-note {
+  max-width:980px; margin:22px auto 0; padding:0 28px;
+}
+.doc-note div {
+  font-size:12.5px; line-height:1.75; color:var(--muted);
+  background:rgba(251,191,36,.07); border:1px solid rgba(251,191,36,.28);
+  border-radius:10px; padding:11px 14px;
+}
+.doc-body { max-width:980px; margin:0 auto; padding:10px 28px 90px; }
+.doc-body h1 { font-size:26px; color:var(--bright); margin:34px 0 14px; line-height:1.4; }
+.doc-body h2 {
+  font-size:20px; color:var(--bright); margin:34px 0 12px;
+  padding-bottom:8px; border-bottom:.5px solid var(--border);
+}
+.doc-body h3 { font-size:17px; color:var(--bright); margin:26px 0 10px; }
+.doc-body h4 { font-size:15px; color:var(--text); margin:20px 0 8px; }
+.doc-body p { margin:10px 0; }
+.doc-body a { color:var(--accent); word-break:break-all; }
+.doc-body code {
+  font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px;
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:5px; padding:1px 6px; color:var(--code);
+}
+.doc-body pre {
+  background:var(--panel); border:1px solid var(--border); border-radius:10px;
+  padding:14px 16px; overflow-x:auto; line-height:1.65;
+}
+.doc-body pre code { background:none; border:none; padding:0; color:#d7dde5; }
+.doc-body blockquote {
+  margin:14px 0; padding:8px 16px; color:var(--muted);
+  border-left:3px solid var(--accent); background:rgba(10,132,255,.06);
+  border-radius:0 8px 8px 0;
+}
+.doc-body blockquote p { margin:4px 0; }
+.doc-body table {
+  border-collapse:collapse; width:100%; margin:14px 0;
+  font-size:13px; display:block; overflow-x:auto;
+}
+.doc-body th, .doc-body td {
+  border:1px solid var(--border); padding:7px 11px; text-align:left; vertical-align:top;
+}
+.doc-body th { background:var(--panel2); color:var(--bright); white-space:nowrap; }
+.doc-body tr:nth-child(even) td { background:rgba(255,255,255,.02); }
+.doc-body ul, .doc-body ol { padding-left:24px; margin:10px 0; }
+.doc-body li { margin:5px 0; }
+.doc-body hr { border:none; border-top:.5px solid var(--border); margin:30px 0; }
+.doc-body strong { color:var(--bright); }
+.doc-stamp {
+  display:block; margin-top:6px; padding-top:6px;
+  border-top:1px solid rgba(251,191,36,.22);
+  font-size:11.5px; color:#a9a297;
+  font-family:ui-monospace,Menlo,Consolas,monospace;
+}
+@media (max-width:640px) {
+  .doc-top, .doc-body, .doc-note { padding-left:16px; padding-right:16px; }
+  body { font-size:14.5px; }
+}
+</style></head>
+<body>
+<div class="doc-top">
+  <a href="/">&larr; 返回图谱</a>
+  <h1>主检索文档：evaluation_metric_definition</h1>
+  <p class="sub">单个 L2 主题的全链调研汇总 · 广度扫描 → 候选链识别 → 红队评审 → 单链质量门控</p>
+</div>
+<div class="doc-note"><div>原件直出，未做删改或美化 —— 这就是 Agent 实际读到 / 实际写出的文件。
+<span class="doc-stamp">快照于 2026-07-25 18:21 冻结（26.8 KB &middot; sha256 fe7ef6e2），此后源文件的改动不会影响本页。</span></div></div>
+<div class="doc-body">
+<h1>主检索文档：evaluation_metric_definition（评估指标定义）</h1>
+<blockquote>
+<p>阶段 A 产物。L0=SIMULATION，L1=benchmark_environment，L2=evaluation_metric_definition。<br>
+定位：定义统一的任务成功标准和性能评估指标（成功率、完成时间、路径质量等）。<br>
+本文档是最终 JSON 的唯一事实来源之一；分链深度调研见 <code>evaluation_metric_definition/chain_&lt;NN&gt;_&lt;slug&gt;.md</code>。</p>
+</blockquote>
+<hr>
+<h2>维度一：广度扫描与候选链识别</h2>
+<h3>1. 种子词提取</h3>
+<p>从 L2 keyword、简报描述、v4 树上下文提取核心概念词：</p>
+<ul>
+<li><code>evaluation metric definition</code> / <code>task success criterion</code></li>
+<li><code>success rate</code> / <code>completion time</code> / <code>path quality</code></li>
+<li><code>benchmark scoring metric</code> / <code>robot benchmark evaluation</code></li>
+<li><code>SPL Success weighted by Path Length</code>（导航效率加权范式代表）</li>
+<li><code>rliable IQM performance profile</code>（少样本 RL 统计严谨性范式代表）</li>
+</ul>
+<h3>2. 种子词矩阵搜索（WebSearch 发现汇总）</h3>
+<p>对上述种子词执行 WebSearch，记录前若干结果中出现的系统/论文/数据集/术语。结合简报"注册表候选"已核实条目（按 <code>01_research_methodology.md</code> 总体原则 0，已入库条目不重复 WebSearch 验证存在性），归纳如下。</p>
+<p><strong>出现的系统/框架名</strong>：<br>
+- RLBench（James/Macleod 等，含 <code>task._success_criteria()</code> 程序化成功判定接口）——已入库 <code>AST_SIM_RLBENCH</code><br>
+- MetaWorld / Meta-World+（Yu et al. CoRL 2019；McLean et al. NeurIPS 2025 v3 标准化）——已入库 <code>AST_SIM_METAWORLD</code>、<code>AST_FRM_METAWORLD_PLUS</code><br>
+- LIBERO（130 任务过程化生成 + 4 任务套件）——已入库 <code>AST_BMK_LIBERO</code><br>
+- CALVIN（长程语言条件连续控制基准）——已入库 <code>AST_DST_CALVIN</code><br>
+- CLIPort（语言条件双流 BC）——已入库 <code>AST_TLS_CLIPORT</code><br>
+- Habitat / Habitat ObjectNav / PointNav Challenge（SPL/SR 核心指标）——已入库 <code>AST_SIM_HABITAT</code>、<code>AST_BMK_HABITAT_OBJECTNAV</code>、<code>AST_FRM_HABITAT_CHALLENGE</code><br>
+- rliable（google/rliable，Agarwal et al. NeurIPS 2021 Outstanding Paper）——已入库 <code>AST_FRM_PRECIPICE</code>、<code>AST_DST_RL_BENCHMARK</code><br>
+- BOP Benchmark（6D 位姿估计评测，Hodaň et al.；ADD/AR/VSD/MSSD/MSPD）——已入库 <code>AST_DST_BOP_BENCHMARK</code><br>
+- GraspNet-1Billion（抓取评测物体集 + AP/IoU）——已入库 <code>AST_MDL_GRASPNET_OBJECTS</code><br>
+- GEARS（Global Evaluative Assessment of Robotic Skills，5 分制 × 6 维度评分 rubric）——已入库 <code>AST_TLS_GEARS_SCORING</code><br>
+- NASA-TLX（任务负荷指数，6 维度主观量表）——已入库 <code>AST_TLS_NASA_TLX</code><br>
+- py-motmetrics（MOTA/MOTP/IDS/IDF1 等 MOT 评测）——已入库 <code>AST_TLS_PY_MOTMETRICS</code><br>
+- ISO 9283（工业机器人性能准则：位姿精度/重复性/轨迹精度，≥30 次连续测量）——已入库 <code>AST_TLS_ISO_9283</code><br>
+- DARPA DRC Task Specification（8 标准化灾难响应任务，时间/完成度评分）——已入库 <code>AST_TLS_DRC_TASK_SPECIFICATION</code></p>
+<p><strong>出现的论文标题与作者</strong>：<br>
+- Agarwal et al., "Deep Reinforcement Learning at the Edge of the Statistical Precipice", NeurIPS 2021 Outstanding Paper（少 seed RL 评估统计方法学）<br>
+- Anderson et al., "On Evaluation of Embodied Navigation Agents", 2018（SPL 指标的奠基性定义）<br>
+- Yu et al., "Meta-World: A Benchmark and Evaluation Environment for Multi-Task and Meta Reinforcement Learning", CoRL 2019<br>
+- Hodaň et al., "BOP: Benchmark for 6D Object Pose Estimation"（评测协议 ADD/AR/VSD/MSSD/MSPD）<br>
+- Goh et al., GEARS 验证研究（Global Evaluative Assessment of Robotic Skills 评分量表）<br>
+- Hart &amp; Staveland, NASA-TLX（NASA 任务负荷指数）</p>
+<p><strong>出现的数据集/benchmark 名</strong>：Meta-World+ v3、RLBench、LIBERO、CALVIN、Habitat ObjectNav/PointNav、R2R、BOP（LM/LM-O/YCB-V/T-LESS/HB 等）、GraspNet-1Billion、DARPA DRC、RoboCup Rescue。</p>
+<p><strong>出现的技术术语</strong>：success rate（成功率）、success criterion / termination condition、SPL（Success weighted by Path Length）、SR（Success Rate）、NEES、nDTW、IQM（Interquartile Mean）、Optimality Gap、Probability of Improvement、Performance Profile、Stratified Bootstrap、ADD（Average Distance of Model）/ ADD-S、Average Recall (AR)、VSD/MSSD/MSPD、AP/IoU（抓取与检测）、MOTA/MOTP/IDF1、coverage rate、time-to-completion (TTC)、progress score（部分完成度）、rubric scoring。</p>
+<h3>3. 同义/近义词扩展</h3>
+<ul>
+<li><code>success criterion</code> → <code>termination condition</code>、<code>goal condition</code>、<code>done condition</code>、<code>task success predicate</code>、<code>success flag</code></li>
+<li><code>evaluation metric</code> → <code>scoring metric</code>、<code>performance metric</code>、<code>benchmark metric</code>、<code>KPI</code>、<code>evaluation protocol</code></li>
+<li><code>success rate</code> → <code>success ratio</code>、<code>SR</code>、<code>completion rate</code></li>
+<li><code>path quality</code> → <code>path efficiency</code>、<code>trajectory quality</code>、<code>path length ratio</code>、<code>geodesic distance</code></li>
+<li><code>completion time</code> → <code>time-to-completion</code>、<code>TTC</code>、<code>mission time</code>、<code>episode length</code></li>
+<li><code>statistical rigor</code> → <code>uncertainty quantification</code>、<code>bootstrap confidence interval</code>、<code>robust aggregation</code></li>
+<li>用扩展词表补搜后，未发现遗漏的独立范式——五大范式（程序化二值成功 / 效率加权 / 统计严谨性 / 几何精度 / 人为 rubric）覆盖了机器人基准评测指标定义的全部主流路线。</li>
+</ul>
+<h3>4. 候选链清单（本维度核心产出）</h3>
+<p>基于广度扫描发现的技术路线，显式列出 5 条候选链。每条链代表一种<strong>本质不同的评估指标定义范式</strong>——即"如何把机器人任务的完成情况量化成一个（或一组）可比较的指标"的不同方法论。</p>
+<h4>候选链 01：程序化二值成功判定（Programmatic Binary Success Criterion）</h4>
+<ul>
+<li><strong>范式定位</strong>：由 benchmark/task 定义者在仿真器中预写目标条件谓词与容差阈值，从 simulator ground-truth 状态读取后做<strong>二值判定</strong>（成功=1/失败=0），再对一批 episode 聚合成成功率。这是机器人操作类基准最基础、最主流的指标定义范式——指标本体是一个返回 bool 的状态谓词。</li>
+<li><strong>目标真实系统</strong>：RLBench（<code>task._success_criteria()</code> 接口）、MetaWorld/Meta-World+（任务终止条件 + success flag）、LIBERO（goal-conditioned success）、CALVIN（长程目标谓词）、CLIPort（10 任务 success 判定）。注册表已有伞形能力 <code>CAP_fe13f66f</code>（仿真任务程序化成功判定）及子能力 <code>CAP_a63b51d5</code>（RLBench 成功标准验证）。</li>
+<li><strong>与其他链的本质区别</strong>：本链指标本体是<strong>离散二值任务成功</strong>（episode 级 0/1），vs 候选链 02 的"成功×效率"复合连续指标、候选链 03 的跨 run 统计聚合、候选链 04 的连续几何误差、候选链 05 的人工评分。</li>
+</ul>
+<h4>候选链 02：导航效率加权度量（Navigation Efficiency-Weighted Metric）</h4>
+<ul>
+<li><strong>范式定位</strong>：将二值成功与路径效率（测地线最短距离 / 实际走过的路径长度）相乘，归一化到一个有界 [0,1] 的复合指标 SPL = S × (geodesic / max(geodesic, actual))。配套 SR、NEES、nDTW 等。这是具身导航基准独有的指标定义范式——把"路径质量"维度编码进成功指标。</li>
+<li><strong>目标真实系统</strong>：Anderson et al. 2018 "On Evaluation of Embodied Navigation Agents"（SPL 奠基定义）、Habitat ObjectNav/PointNav Challenge、Habitat Challenge 框架。注册表已有 <code>CAP_f376f3cd</code>（目标条件化评估指标，含 success rate / SPL）、<code>CAP_296a1d18</code>（视听导航评估，SPL/SR）。</li>
+<li><strong>与其他链的本质区别</strong>：本链是<strong>成功×效率的复合连续指标</strong>（含路径质量维度），vs 候选链 01 的纯二值、候选链 04 的几何位姿误差（不是导航路径）。</li>
+</ul>
+<h4>候选链 03：少样本 RL 统计严谨性度量（Few-seed RL Statistical Rigor Metric）</h4>
+<ul>
+<li><strong>范式定位</strong>：针对 RL 评估中"少 seed、高方差"问题，把指标定义从"逐 episode 成功/run 平均 reward"上升到"跨 run 分数的稳健聚合 + 不确定性量化"——用 IQM（四分位均值，剔除 25% 极端值）、Optimality Gap、Probability of Improvement、Performance Profile（性能剖面）、分层 bootstrap 置信区间，替代易误导的 mean±std。这是指标定义的"统计层"范式，关注如何<strong>聚合与比较</strong> per-run scores 才严谨。</li>
+<li><strong>目标真实系统</strong>：Agarwal et al. NeurIPS 2021 Outstanding Paper "Deep RL at the Edge of the Statistical Precipice"；rliable 库（google/rliable）；RL benchmark per-run score 数据集（<code>AST_DST_RL_BENCHMARK</code>）。注册表已有 <code>CAP_e836fdfd</code>（rliable IQM 与性能剖面统计评估）。</li>
+<li><strong>与其他链的本质区别</strong>：本链指标定义在<strong>run 分数分布</strong>层面（聚合+不确定性），vs 候选链 01/02 的 episode 级指标。它不定义"单次成功"，而定义"如何把多次 run 的分数严谨地比较"。</li>
+</ul>
+<h4>候选链 04：几何精度度量（Geometric Accuracy Metric）</h4>
+<ul>
+<li><strong>范式定位</strong>：为感知/位姿/抓取类任务定义<strong>连续几何误差指标</strong>——预测与真值之间的几何距离（ADD = 顶点平均距离、ADD-S、IoU、antipodal score），再按阈值计算 Average Recall (AR)。这是连续精度范式，与二值任务成功正交：衡量的是"估得多准"而非"任务成没成"。</li>
+<li><strong>目标真实系统</strong>：BOP Benchmark（Hodaň et al.；ADD/AR + VSD/MSSD/MSPD 三误差，统一评测协议）；GraspNet-1Billion（抓取 AP/IoU，seen/similar/novel 三类）；ISO 9283（工业机器人位姿精度/轨迹精度，≥30 次测量）。注册表已有 <code>AST_DST_BOP_BENCHMARK</code>、<code>AST_MDL_GRASPNET_OBJECTS</code>、<code>AST_TLS_ISO_9283</code>。</li>
+<li><strong>与其他链的本质区别</strong>：本链是<strong>连续几何误差 + 阈值召回</strong>范式（感知模块级精度），vs 候选链 01 的离散任务成功、候选链 02 的导航路径效率、候选链 05 的人工评分。</li>
+</ul>
+<h4>候选链 05：人为评分量表体系（Human-Rated Rubric Metric）</h4>
+<ul>
+<li><strong>范式定位</strong>：由经过训练的人工评分员按<strong>标准化多维 rubric</strong>对机器人技能执行做序数评分（如 5 分制 × 6 维度），用于无法完全自动量化的技能质量评估。这是主观/人工评分范式，与前四链的客观自动计算正交。</li>
+<li><strong>目标真实系统</strong>：GEARS（Global Evaluative Assessment of Robotic Skills，5 分制 × 6 维度评分 rubric）；NASA-TLX（NASA 任务负荷指数，6 维度主观量表，含 Mental/Physical Demand 等）；ISO 9283 的可重复性测量也含人工判读成分。注册表已有 <code>AST_TLS_GEARS_SCORING</code>、<code>AST_TLS_NASA_TLX</code>、<code>AST_TLS_NASA_TLX_DESKTOP</code>。</li>
+<li><strong>与其他链的本质区别</strong>：本链是<strong>人工 rubric 序数评分</strong>范式（主观、多维 rubric），vs 候选链 01-04 的仿真器自动计算。</li>
+</ul>
+<h3>5. 候选链数量说明</h3>
+<p>本主题广度扫描识别出 5 条本质不同的指标定义范式（离散二值成功 / 成功×效率复合 / 跨 run 统计聚合 / 连续几何误差 / 人工 rubric），均非换名复用——每条链的指标本体（数据类型、聚合层级、是否含效率维度、是否人工）各不相同。故列出 5 条候选链，未为凑数硬合并，也未因"已有 2 条"而截断。</p>
+<hr>
+<h2>红队评审结论</h2>
+<blockquote>
+<p>候选链清单定稿前，按主文件 Step 2a 要求对上述 5 条候选链做红队评审（遗漏 / 错误 / 粒度 / 排序）。</p>
+</blockquote>
+<p><strong>1. 遗漏检查</strong>：核查是否有重要指标定义范式被遗漏。<br>
+- 考虑过"覆盖任务完成度度量"（coverage rate / time-to-completion）是否独立成链——结论：完成时间（TTC）与覆盖率本质是"二值成功 + 效率/范围"范式的特化，可作为候选链 01（success criterion 链）的辅助指标或候选链 02 的姊妹指标，不构成独立第 6 范式；注册表已有伞形子能力 <code>CAP_0401d6fe</code>（完成时间度量）可复用，故不单列。<br>
+- 考虑过 MOT 评测（MOTA/MOTP/IDF1，py-motmetrics）是否独立成链——结论：MOTA 等是"检测+关联"的复合计数指标，范式上归属候选链 04（连续/计数几何误差）家族，作为该链的代表性资产之一即可，不单列。<br>
+- 考虑过 RoboCup/DARPA DRC 的"竞赛复合计分"（任务分×时间分×罚分）——结论：这是候选链 01（二值成功）+ 完成时间的工程化复合，属同一范式族，由候选链 01 承接（DRC Task Specification 作为代表系统），不单列。<br>
+- 结论：未发现遗漏的独立范式。</p>
+<p><strong>2. 错误检查</strong>：逐条核验范式定位与代表系统。<br>
+- 候选链 01：RLBench <code>_success_criteria()</code> 接口、MetaWorld success flag 定位正确（搜索结果确认 success_criteria 模式）。<br>
+- 候选链 02：SPL 公式 S × (geodesic/max(geodesic, actual)) 正确（搜索结果确认 Anderson/Habitat 标准定义）。<br>
+- 候选链 03：rliable 三核心功能（分层 bootstrap CI、性能剖面、聚合指标 IQM/OG/PI）正确（搜索结果确认）。<br>
+- 候选链 04：BOP ADD/AR + VSD/MSSD/MSPD 定位正确（搜索结果确认 AR 为位姿评测指标）。<br>
+- 候选链 05：GEARS 5 分制 × 6 维度定位正确（简报核实）。<br>
+- 结论：无错误。</p>
+<p><strong>3. 粒度检查</strong>：5 条链粒度均匀，无过粗/过细。每条对应一个独立范式且各有 ≥1 个真实系统支撑。未发现需合并或拆分的链。</p>
+<p><strong>4. 排序检查</strong>：按"基础→特化→统计层→感知层→主观层"逻辑排序合理：01 二值成功（最基础）→ 02 效率加权（导航特化）→ 03 统计聚合（meta 层）→ 04 几何精度（感知层）→ 05 人工 rubric（主观层）。符合主流→经典→统计严谨→精度→主观的演进逻辑。</p>
+<p><strong>5. 边界合规检查</strong>：5 条链均落在 L2 evaluation_metric_definition 范围内（定义指标），未越界到兄弟 L2（domain_specific_benchmark / leaderboard_system / reference_implementation / reproducibility_framework / standard_task_suite）。各代表系统作为"指标定义方法论的载体"引用，不展开调研其基准套件本身。</p>
+<p><strong>修正动作</strong>：红队评审未要求合并/拆分/重排，候选链清单维持 5 条原样定稿。</p>
+<hr>
+<h2>链质量门控（单链裁决）</h2>
+<blockquote>
+<p>本节由 Step 2c 填写（全部链回收后）。逐链对真实系统支撑、步骤充分性、数据流连贯、逻辑推演完整、否定性证据五项做质量裁决。</p>
+</blockquote>
+<h3>链 01：程序化二值成功判定（Programmatic Binary Success Criterion）</h3>
+<ul>
+<li><strong>裁决：通过</strong></li>
+<li>真实系统支撑：RLBench（<code>task._success_criteria()</code>）、MetaWorld（success flag）、LIBERO（BDDL goal 谓词）、CALVIN、CLIPort——5 个真实基准系统支撑充分。</li>
+<li>步骤充分性：8 个子步骤（任务加载→谓词编码→执行→GT 读取→二值判定→分支→聚合），远超 ≥4 要求。</li>
+<li>数据流连贯：episode→目标规格→动作序列→GT 状态→success_flag→success_rate，无魔法步骤。</li>
+<li>逻辑推演完整：五问全部回答且合理。</li>
+<li>否定性证据：Reflexion Evaluator 三种实现已记录排除理由。</li>
+<li>分链文档：<code>_retrieval_docs/evaluation_metric_definition/chain_01_programmatic_binary_success.md</code></li>
+<li>Fragment：<code>_fragments/evaluation_metric_definition/chain_01.json</code></li>
+<li>新增能力：3 个（CAP_fe13f66f 复用 + CAP_a63b51d5/CAP_d3c66236/CAP_3ad0c825/CAP_8651c228/CAP_b1733ef6 部分复用部分新建）</li>
+<li>新增资产：5 个（AST_SIM_RLBENCH/AST_SIM_METAWORLD/AST_BMK_LIBERO/AST_DST_CALVIN/AST_TLS_CLIPORT 部分复用）</li>
+</ul>
+<h3>链 02：导航效率加权度量（Navigation Efficiency-Weighted Metric）</h3>
+<ul>
+<li><strong>裁决：通过</strong></li>
+<li>真实系统支撑：Anderson et al. 2018（SPL 奠基论文）、Habitat-Lab（SPL Measure 实现）、Habitat Challenge 2023（官方 SPL 公式）——3 个真实系统支撑充分。</li>
+<li>步骤充分性：8 个子步骤（episode 初始化→目标加载→导航执行→测地距离→STOP 检测→路径长度→per-episode SPL→批量聚合），远超 ≥4 要求。</li>
+<li>数据流连贯：episode→目标规格→轨迹→l_i + p_i + S_i→SPL_i→SPL，无魔法步骤。</li>
+<li>逻辑推演完整：五问全部回答且合理。</li>
+<li>否定性证据：SoftSPL/DTG/nDTW 等变体已记录。</li>
+<li>分链文档：<code>_retrieval_docs/evaluation_metric_definition/chain_02_navigation_efficiency_weighted.md</code></li>
+<li>Fragment：<code>_fragments/evaluation_metric_definition/chain_02.json</code></li>
+<li>新增能力：3 个新建（Geodesic Distance Computation / SPL Batch Aggregation / SoftSPL Computation）+ 2 个复用</li>
+<li>新增资产：0 个新建（AST_SIM_HABITAT/AST_FRM_HABITAT_CHALLENGE/AST_BMK_HABITAT_OBJECTNAV/AST_BMK_INSTANCE_IMAGENAV 全部复用）</li>
+<li>_gaps：Habitat Challenge 2023 license 未核查（EvalAI 托管）</li>
+</ul>
+<h3>链 03：少样本 RL 统计严谨性度量（Few-Shot RL Statistical Rigor Metric）</h3>
+<ul>
+<li><strong>裁决：通过</strong></li>
+<li>真实系统支撑：Agarwal et al. NeurIPS 2021 Outstanding Paper（rliable 库）、google/rliable GitHub 仓库——2 个真实系统支撑充分。</li>
+<li>步骤充分性：多个子步骤（per-run 分数收集→矩阵构建→归一化→分层 bootstrap→IQM/OG/PI 计算→性能剖面→相对判定），远超 ≥4 要求。</li>
+<li>数据流连贯：rollout→score matrix→归一化→bootstrap CI→IQM/OG/PI→verdict，无魔法步骤。</li>
+<li>逻辑推演完整：五问全部回答且合理。</li>
+<li>否定性证据：mean±std 的误导性已记录排除理由。</li>
+<li>分链文档：<code>_retrieval_docs/evaluation_metric_definition/chain_03_few_shot_rl_statistical_rigor.md</code></li>
+<li>Fragment：<code>_fragments/evaluation_metric_definition/chain_03.json</code></li>
+<li>新增能力：1 个新建（Per-Run Score Matrix Construction）+ 5 个复用</li>
+<li>新增资产：1 个复用（AST_PKG_RLIABLE）</li>
+<li>_gaps：无结构性缺口</li>
+</ul>
+<h3>链 04：几何精度度量（Geometric Precision Metric）</h3>
+<ul>
+<li><strong>裁决：通过</strong></li>
+<li>真实系统支撑：BOP Toolkit（Hodaň et al. ECCV 2018）、GraspNet-1Billion（Fang et al. CVPR 2020）、ISO 9283:1998——3 个真实系统支撑充分。</li>
+<li>步骤充分性：8 个子步骤（预测加载→GT 加载→模型加载→ADD/ADD-S→VSD/MSSD/MSPD→GraspNet AP→ISO 9283→AR 聚合），远超 ≥4 要求。</li>
+<li>数据流连贯：预测→GT→CAD→几何误差→AR/AP/RP，无魔法步骤。</li>
+<li>逻辑推演完整：五问全部回答且合理。</li>
+<li>否定性证据：HybridPose/DPOD/Any6D/VGN/Contact-GraspNet 等方法已记录排除理由。</li>
+<li>分链文档：<code>_retrieval_docs/evaluation_metric_definition/chain_04_geometric_precision_metric.md</code></li>
+<li>Fragment：<code>_fragments/evaluation_metric_definition/chain_04.json</code></li>
+<li>新增能力：3 个新建（Geometric Precision Metric Computation 伞形 / ADD ADD-S Distance Computation / Average Recall Aggregation）+ 3 个复用</li>
+<li>新增资产：2 个新建（AST_PKG_BOP_TOOLKIT / AST_DST_ISO_9283）+ 2 个复用</li>
+<li>_gaps：BOP Toolkit MIT license 已确认；GraspNet 学术非商业许可；ISO 9283 标准文档需购买</li>
+</ul>
+<h3>链 05：人为评分量表体系（Human-Rated Rubric Metric）</h3>
+<ul>
+<li><strong>裁决：通过</strong></li>
+<li>真实系统支撑：GEARS（Gohil et al. 2012）、NASA-TLX（Hart &amp; Staveland 1988，官方页面已核实）、OSATS（Martin et al. 1997）、JIGSAWS（Ahmidi et al. 2017）——4 个真实系统支撑充分。</li>
+<li>步骤充分性：7 个子步骤（rubric 加载→任务记录→评分员培训→多维度评分→两两比较加权→一致性检验→聚合判定），远超 ≥4 要求。</li>
+<li>数据流连贯：量表类型→rubric 配置→任务记录→评分员→6 维评分→WWL/总分→一致性→通过判定，无魔法步骤。</li>
+<li>逻辑推演完整：五问全部回答且合理。</li>
+<li>否定性证据：JIGSAWS 自动评估模型/LLM-as-Judge/REBA-RULA 等已记录排除理由。</li>
+<li>分链文档：<code>_retrieval_docs/evaluation_metric_definition/chain_05_human_rated_rubric_metric.md</code></li>
+<li>Fragment：<code>_fragments/evaluation_metric_definition/chain_05.json</code></li>
+<li>新增能力：3 个新建（Human-Rated Rubric Metric Computation 伞形 / Inter-Rater Reliability Assessment / Rubric Score Aggregation）+ 3 个复用</li>
+<li>新增资产：0 个新建（AST_TLS_GEARS_SCORING/AST_TLS_NASA_TLX/AST_TLS_NASA_TLX_DESKTOP/AST_TLS_FLS_PROGRAM 全部复用）</li>
+<li>_gaps：GEARS 论文 license 未核查（学术使用）；NASA-TLX 桌面版 GitHub 未直接 WebFetch</li>
+</ul>
+<h3>门控总结</h3>
+<p>5 条链全部通过单链质量门控（真实系统支撑 / 步骤充分性 / 数据流连贯 / 逻辑推演完整 / 否定性证据五项均达标），无作废链、无人工介入链。≥2 条链通过门控的条件已满足，可进入 Step 3 跨链注册表抽查。</p>
+<h3>分链文档索引</h3>
+<table>
+<thead>
+<tr>
+<th>链号</th>
+<th>链名</th>
+<th>分链文档路径</th>
+<th>Fragment 路径</th>
+<th>裁决</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>01</td>
+<td>程序化二值成功判定</td>
+<td><code>topic_v2/_retrieval_docs/evaluation_metric_definition/chain_01_programmatic_binary_success.md</code></td>
+<td><code>topic_v2/_fragments/evaluation_metric_definition/chain_01.json</code></td>
+<td>通过</td>
+</tr>
+<tr>
+<td>02</td>
+<td>导航效率加权度量</td>
+<td><code>topic_v2/_retrieval_docs/evaluation_metric_definition/chain_02_navigation_efficiency_weighted.md</code></td>
+<td><code>topic_v2/_fragments/evaluation_metric_definition/chain_02.json</code></td>
+<td>通过</td>
+</tr>
+<tr>
+<td>03</td>
+<td>少样本RL统计严谨性度量</td>
+<td><code>topic_v2/_retrieval_docs/evaluation_metric_definition/chain_03_few_shot_rl_statistical_rigor.md</code></td>
+<td><code>topic_v2/_fragments/evaluation_metric_definition/chain_03.json</code></td>
+<td>通过</td>
+</tr>
+<tr>
+<td>04</td>
+<td>几何精度度量</td>
+<td><code>topic_v2/_retrieval_docs/evaluation_metric_definition/chain_04_geometric_precision_metric.md</code></td>
+<td><code>topic_v2/_fragments/evaluation_metric_definition/chain_04.json</code></td>
+<td>通过</td>
+</tr>
+<tr>
+<td>05</td>
+<td>人为评分量表体系</td>
+<td><code>topic_v2/_retrieval_docs/evaluation_metric_definition/chain_05_human_rated_rubric_metric.md</code></td>
+<td><code>topic_v2/_fragments/evaluation_metric_definition/chain_05.json</code></td>
+<td>通过</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>待阶段 B 归并</h2>
+<blockquote>
+<p>本节由 Step 3 填写（跨链注册表抽查线索）。本节是给阶段 B 的线索清单，不是裁决——真正的合并动作全部在阶段 B 做。</p>
+</blockquote>
+<h3>1. 同一项目跨链 ID 一致性检查</h3>
+<p>通读各链第 7 节标"复用"的条目，核查同一真实项目在不同链里是否命中的是同一个注册表 ID：</p>
+<table>
+<thead>
+<tr>
+<th>真实项目</th>
+<th>链 01</th>
+<th>链 02</th>
+<th>链 03</th>
+<th>链 04</th>
+<th>链 05</th>
+<th>一致性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RLBench</td>
+<td>AST_SIM_RLBENCH</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>✅ 单链引用</td>
+</tr>
+<tr>
+<td>MetaWorld</td>
+<td>AST_SIM_METAWORLD</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>✅ 单链引用</td>
+</tr>
+<tr>
+<td>LIBERO</td>
+<td>AST_BMK_LIBERO</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>✅ 单链引用</td>
+</tr>
+<tr>
+<td>CALVIN</td>
+<td>AST_DST_CALVIN</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>✅ 单链引用</td>
+</tr>
+<tr>
+<td>CLIPort</td>
+<td>AST_TLS_CLIPORT</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>✅ 单链引用</td>
+</tr>
+<tr>
+<td>Habitat</td>
+<td>-</td>
+<td>AST_SIM_HABITAT</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>✅ 单链引用</td>
+</tr>
+<tr>
+<td>rliable</td>
+<td>-</td>
+<td>-</td>
+<td>AST_PKG_RLIABLE</td>
+<td>-</td>
+<td>-</td>
+<td>✅ 单链引用</td>
+</tr>
+<tr>
+<td>BOP Toolkit</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>AST_PKG_BOP_TOOLKIT (新建)</td>
+<td>-</td>
+<td>✅ 单链引用</td>
+</tr>
+<tr>
+<td>GraspNet</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>AST_DST_GRASPNET_1BILLION + AST_PKG_GRASPNET_API</td>
+<td>-</td>
+<td>✅ 单链引用</td>
+</tr>
+<tr>
+<td>ISO 9283</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>AST_DST_ISO_9283 (新建) + CAP_9093950a</td>
+<td>-</td>
+<td>✅ 单链引用</td>
+</tr>
+<tr>
+<td>GEARS</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>AST_TLS_GEARS_SCORING + CAP_4a4a17eb</td>
+<td>✅ 单链引用</td>
+</tr>
+<tr>
+<td>NASA-TLX</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>AST_TLS_NASA_TLX + CAP_228a3b01</td>
+<td>✅ 单链引用</td>
+</tr>
+<tr>
+<td>FLS Program</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>AST_TLS_FLS_PROGRAM</td>
+<td>✅ 单链引用</td>
+</tr>
+</tbody>
+</table>
+<p><strong>结论</strong>：无同一项目在不同链里出现两个不同 ID 的情况。所有跨链引用的注册表 ID 一致。</p>
+<h3>2. 新建条目名称变体抽查</h3>
+<p>对各链"未命中，建议新建"的条目，抽查名称变体（中文名/别称/仓库名）再查一次，防止换个说法漏检：</p>
+<table>
+<thead>
+<tr>
+<th>新建条目</th>
+<th>链</th>
+<th>抽查 Query</th>
+<th>抽查结果</th>
+<th>线索</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Geodesic Distance Computation</td>
+<td>02</td>
+<td>"geodesic distance NavMesh shortest path"</td>
+<td>未命中专门的 NavMesh 测地距离能力（仅有 BLE 路径损耗/C2C 点云距离等不相关能力）</td>
+<td>确认新建</td>
+</tr>
+<tr>
+<td>SPL Batch Aggregation</td>
+<td>02</td>
+<td>(已查)</td>
+<td>未命中专门的 SPL 批量聚合能力</td>
+<td>确认新建</td>
+</tr>
+<tr>
+<td>SoftSPL Computation</td>
+<td>02</td>
+<td>(已查)</td>
+<td>未命中 SoftSPL 专门能力</td>
+<td>确认新建</td>
+</tr>
+<tr>
+<td>Per-Run Score Matrix Construction</td>
+<td>03</td>
+<td>(已查)</td>
+<td>未命中专门的 per-run 分数矩阵构建能力</td>
+<td>确认新建</td>
+</tr>
+<tr>
+<td>Geometric Precision Metric Computation</td>
+<td>04</td>
+<td>(已查)</td>
+<td>未命中专门的几何精度度量伞形能力</td>
+<td>确认新建</td>
+</tr>
+<tr>
+<td>ADD ADD-S Distance Computation</td>
+<td>04</td>
+<td>"ADD ADD-S average distance pose error"</td>
+<td>未命中专门的 ADD/ADD-S 计算能力（仅有 C2C/C2M/M3C2 点云距离等不相关能力）</td>
+<td>确认新建</td>
+</tr>
+<tr>
+<td>Average Recall Aggregation</td>
+<td>04</td>
+<td>(已查)</td>
+<td>未命中专门的 AR 聚合能力</td>
+<td>确认新建</td>
+</tr>
+<tr>
+<td>Human-Rated Rubric Metric Computation</td>
+<td>05</td>
+<td>(已查)</td>
+<td>未命中专门的人工评分量表伞形能力</td>
+<td>确认新建</td>
+</tr>
+<tr>
+<td>Inter-Rater Reliability Assessment</td>
+<td>05</td>
+<td>"inter-rater reliability kappa agreement"</td>
+<td>未命中专门的一致性检验能力（仅有 Judge Rubric Definition CAP_eb5e9aa9 等不相关能力）</td>
+<td>确认新建</td>
+</tr>
+<tr>
+<td>Rubric Score Aggregation</td>
+<td>05</td>
+<td>"rubric score aggregation pass fail"</td>
+<td><strong>部分命中</strong>：CAP_100da4a7（Multi-dimension Score Aggregation）用于 LLM-as-Judge 价值观评分，范式相似（多维分数聚合）但场景不同（LLM 评分 vs 人工 rubric 评分）</td>
+<td><strong>待阶段 B 归并</strong>：阶段 B 需判断 CAP_Rubric Score Aggregation 与 CAP_100da4a7 是否应合并或保持独立</td>
+</tr>
+</tbody>
+</table>
+<h3>3. 跨链方法学衔接线索（非 ID 复用）</h3>
+<p>以下跨链衔接是方法学层面的引用，不涉及 ID 复用，阶段 B 在归并时需保持这些引用关系：</p>
+<ul>
+<li><strong>链 01 ↔ 链 03</strong>：链 01 的 per-task success rate 可作为链 03 rliable 的 per-run score 输入，经链 03 的分层 bootstrap CI 得到带不确定性的聚合结论。chain_01.json 的 s2_1 步骤描述已注明"可选套链03 rliable 的分层 bootstrap CI"。</li>
+<li><strong>链 02 ↔ 链 03</strong>：链 02 的 SPL 可作为链 03 rliable 的 per-run score 输入。chain_02.json 的 SPL Batch Aggregation 能力描述已注明"可选套链03 rliable 分层 bootstrap CI"。</li>
+<li><strong>链 04 ↔ 链 03</strong>：链 04 的 ADD/AP 等几何误差可作为链 03 rliable 的 per-run score 输入。chain_04.json 的跨链线索节已注明。</li>
+<li><strong>链 05 ↔ 链 03</strong>：链 05 的 GEARS/NASA-TLX 评分可作为链 03 rliable 的 per-run score 输入。chain_05.json 的跨链线索节已注明。</li>
+</ul>
+<h3>4. 兄弟主题重叠线索</h3>
+<p>以下条目在注册表中已被兄弟主题 used_by，阶段 B 在归并时需注意边界：</p>
+<table>
+<thead>
+<tr>
+<th>条目</th>
+<th>兄弟主题</th>
+<th>本链引用方式</th>
+<th>线索</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CAP_296a1d18 (视听导航评估)</td>
+<td>audio_visual_fusion_perc, room_acoustic_simulation</td>
+<td>链 02 复用</td>
+<td>used_by 已含 evaluation_metric_definition，一致</td>
+</tr>
+<tr>
+<td>CAP_3022a61e (目标驱动导航策略)</td>
+<td>sound_localization_sim</td>
+<td>链 02 复用</td>
+<td>used_by 已含 evaluation_metric_definition，一致</td>
+</tr>
+<tr>
+<td>CAP_7a3f2e1d (手术技能自动评估)</td>
+<td>skill_level_estimation</td>
+<td>链 05 引用（不展开）</td>
+<td>本链关注人工 rubric，自动评估属兄弟主题</td>
+</tr>
+<tr>
+<td>CAP_228a3b01 (NASA-TLX)</td>
+<td>collaborative_fluency_metrics, task_complexity_assessment</td>
+<td>链 05 复用</td>
+<td>本链关注量表本身，HRC 应用属兄弟主题</td>
+</tr>
+<tr>
+<td>AST_TLS_FLS_PROGRAM</td>
+<td>teleoperation_operator_training</td>
+<td>链 05 复用</td>
+<td>本链关注 pass-line 作为评分标准，培训流程属兄弟主题</td>
+</tr>
+<tr>
+<td>CAP_64059919 (BOP VSD MSSD MSPD)</td>
+<td>three_d_object_tracking</td>
+<td>链 04 复用</td>
+<td>本链关注指标定义，位姿估计属兄弟主题</td>
+</tr>
+<tr>
+<td>CAP_9aa6dc8e (GraspNet AP)</td>
+<td>task_specific_representation</td>
+<td>链 04 复用</td>
+<td>本链关注指标定义，抓取检测属兄弟主题</td>
+</tr>
+</tbody>
+</table>
+</div>
+</body></html>

@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+title: "Entropy Box: A Knowledge Compiler for Embodied AI"
+message: "If you use this artifact, the retrieval golden set or the adjudication ledger, please cite the paper."
+type: software
+authors:
+  - family-names: Wang
+    given-names: Yuqi
+    email: wangyuqi11and11@163.com
+abstract: >-
+  Entropy Box compiles fragmented robotics and embodied-AI knowledge from papers,
+  repositories, documentation and datasets into a persistent, typed, deduplicated
+  capability graph through a three-phase multi-agent compilation architecture with
+  admission gates and an auditable retrieval ledger. This repository publishes the
+  paper, the compiled artifact's public indices, a 126-query retrieval evaluation
+  suite, an adjudicated near-duplicate ledger usable as labelled data, and a
+  reproducible measurement script.
+repository-code: "https://github.com/chenli-yy/entropy-box-public"
+url: "https://chenli-yy.github.io/entropy-box-public/"
+keywords:
+  - knowledge compilation
+  - robotics knowledge graph
+  - embodied AI
+  - capability graph
+  - retrieval-augmented generation
+  - provenance
+  - multi-agent systems
+license: CC-BY-4.0

@@ -1,0 +1,959 @@
+{
+ "topic": {
+  "keyword": "a_star_path_planning",
+  "en": "A* Path Planning",
+  "zh": "A*路径规划",
+  "domain": "NAVIGATION",
+  "description": "A* 算法族在栅格/连续位形空间上的确定性最优路径搜索。涵盖离散栅格 4/8 连通 A*、连续 SE(2) Hybrid A* + Reeds-Shepp 运动基元、Jump Point Search 栅格对称性剪枝优化、任意角度 Theta* + Line-of-Sight 路径压缩四种范式。核心特征：基于 Open/Closed 集合 + 启发式 h(n) 的 best-first 搜索框架，在 h 可采纳时保证最优性（Hart-Nilsson-Raphael 1968 可采纳性定理）。区别于 sampling-based 规划（RRT/PRM，归 sampling_based_path_planning 兄弟主题）与轨迹优化（轨迹平滑/速度规划，归 trajectory_optimization 兄弟主题）。"
+ },
+ "chains": [
+  {
+   "name": "离散栅格 4/8 连通 A* 路径规划",
+   "steps": [
+    {
+     "id": "s1",
+     "name": "环境预处理",
+     "description": "阶段入口：进入环境预处理流程，将原始障碍物点集膨胀为占用栅格并索引化起终点。",
+     "caps": [
+      "Grid Based A* Path Planning"
+     ],
+     "next": [
+      "s1_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s1_1",
+     "name": "Obstacle Map Inflation and Robot Footprint Collision Check",
+     "description": "【前置依赖】障碍物点集 (ox, oy) + 机器人半径 rr + 地图分辨率 res【输入】ox, oy, rr, res, (sx, sy), (gx, gy)【输出】min_x, max_x, min_y, max_y, xwidth, ywidth, obstacle_map (2D bool), start/goal grid index【约束】对每个栅格 cell 遍历障碍物点，距离 < rr 则标记 True；Nav2 用 nav2_costmap_2d 的 inflation_layer 做正式膨胀（基于距离变换，归 cost_map_planning 兄弟主题）；PythonRobotics calc_obstacle_map 用简单距离判定【性能指标】O(n_cells * n_obstacles)；100x100 栅格毫秒级",
+     "caps": [
+      "Obstacle Map Inflation and Collision Check"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2",
+     "name": "A* 搜索主循环",
+     "description": "阶段入口：进入 A* 搜索主循环，输入膨胀后地图 + 起终点索引，输出含 parent 链的 closed_set。",
+     "caps": [
+      "Grid Based A* Path Planning"
+     ],
+     "next": [
+      "s2_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2_1",
+     "name": "Open Closed Set Initialization",
+     "description": "【前置依赖】s1_1 obstacle_map + start/goal 索引【输入】start_node, goal_node【输出】open_set (PriorityQueue, 初始 push start with f=g+h=0+h)、closed_set (dict, 空)【约束】open_set 按 f 值升序；closed_set 用 dict 实现 O(1) 查找；PythonRobotics 用 heapq、Nav2 用 std::priority_queue【性能指标】初始化 O(1)",
+     "caps": [
+      "Open Closed Set Management on Grid"
+     ],
+     "next": [
+      "s2_2"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2_2",
+     "name": "Admissible Heuristic Evaluation",
+     "description": "【前置依赖】当前节点 current + goal_node【输入】current.x, current.y, goal.x, goal.y【输出】h(n) 启发式估计值【约束】4 连通用曼哈顿距离 |dx|+|dy|；8 连通用对角线距离 max(|dx|,|dy|) 或 Chebyshev；均须可采纳（不高估真实代价）；Nav2 Node2D::getHeuristicCost 用 Manhattan；PythonRobotics calc_heuristic 用 hypot (欧氏，对 4/8 连通均保守可采纳)【性能指标】O(1)",
+     "caps": [
+      "Admissible Heuristic Selection for Grid A*"
+     ],
+     "next": [
+      "s2_3"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2_3",
+     "name": "Discrete Grid A* Search Main Loop",
+     "description": "【前置依赖】s2_1 open/closed set + s2_2 启发式 + s1_1 obstacle_map【输入】open_set, closed_set, obstacle_map, motion_model (4/8 connected)【输出】closed_set (含 parent 链) 或 [] (失败)【约束】主循环：while open_set not empty → pop min f node → if goal: return closed_set → for each neighbor in motion: if not collision and not in closed: calc g+h → if better than existing: push to open；4 连通 motion=[(1,0),(-1,0),(0,1),(0,-1)]；8 连通追加对角；碰撞检测 verify_node 做 bounds 检查 + obstacle_map 查表；对应 Hart-Nilsson-Raphael 1968 Algorithm A【性能指标】O(N log N) N=开放节点数；100x100 栅格毫秒级",
+     "caps": [
+      "Discrete Grid A* Search"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s3",
+     "name": "路径回溯",
+     "description": "阶段入口：进入路径回溯流程，从 closed_set 的 parent 链重建路径。",
+     "caps": [
+      "Grid Based A* Path Planning"
+     ],
+     "next": [
+      "s3_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s3_1",
+     "name": "Path Reconstruction via Parent Index Backtracking",
+     "description": "【前置依赖】s2_3 closed_set + goal_node【输入】goal_node.parent_index【输出】path [(rx, ry), ...]【约束】从 goal_node 开始，沿 parent_index 反向追踪至 start_node，收集坐标序列；PythonRobotics calc_final_path 实现此逻辑；Nav2 GridAStar::tracePath 实现此逻辑；路径为离散栅格点序列，后续可经 trajectory_smoothing 平滑（归兄弟主题）【性能指标】O(path_length)",
+     "caps": [
+      "Path Reconstruction via Parent Index Backtracking"
+     ],
+     "next": [],
+     "condition": null,
+     "is_merge": false
+    }
+   ]
+  },
+  {
+   "name": "连续 SE(2) Hybrid A* + Reeds-Shepp 运动基元路径规划",
+   "steps": [
+    {
+     "id": "s1",
+     "name": "运动基元与启发式配置",
+     "description": "阶段入口：进入运动基元与启发式配置流程，离散化 Ackermann 车运动基元并计算双启发式。",
+     "caps": [
+      "Continuous State Hybrid A* Path Planning"
+     ],
+     "next": [
+      "s1_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s1_1",
+     "name": "Motion Primitive Steer Set Discretization",
+     "description": "【前置依赖】车辆运动学参数（min_turn_radius, L_wheelbase, max_steer）【输入】车辆参数 + 离散步数 N【输出】motion_primitives: [(steer_angle, distance), ...]【约束】Ackermann 车运动学：x' = v*cos(theta), y' = v*sin(theta), theta' = v*tan(steer)/L；典型离散化为 5-7 个 steer 角（[-max, -mid, 0, +mid, +max]）× 固定弧长（如 0.5m step）；Nav2 MotionTable 用 precomputed lattice；PythonRobotics get_motion_model 用手工设定的 [(d, theta)] 组合；kfreund 用连续 steering【性能指标】离线预计算一次性；运行时查表 O(1)",
+     "caps": [
+      "Motion Primitive Steer Set Discretization"
+     ],
+     "next": [
+      "s1_2"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s1_2",
+     "name": "Hybrid A* 2D Reverse Heuristic",
+     "description": "【前置依赖】obstacle_map + goal_node + RS 曲线库【输入】当前节点 (x,y,theta) + goal【输出】h(n) = max(h_2d_reverse, h_rs)【约束】h_2d_reverse：在 2D 栅格上从 goal 反向跑一次 Dijkstra/A*，得到各 cell 到 goal 的最短距离（cache_obstacle_heuristic），考虑障碍物但不考虑航向；h_rs：当前节点到 goal 的 Reeds-Shepp 曲线长度（不考虑障碍物，考虑航向但假设空旷）；取两者最大值保证可采纳且信息量更大；Nav2 HGraph + cache_obstacle_heuristic 实现完整版；PythonRobotics calc_heuristic 简化为 hypot + theta_cost（教学版，不含 2D reverse）【性能指标】h_2d_reverse 一次性 Dijkstra O(N log N)；h_rs O(1) 查表",
+     "caps": [
+      "Hybrid A* 2D Reverse Heuristic"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2",
+     "name": "Hybrid A* 搜索主循环",
+     "description": "阶段入口：进入 Hybrid A* 搜索主循环，输入运动基元 + 启发式 + 地图，输出含 parent 链的 closed_set。",
+     "caps": [
+      "Continuous State Hybrid A* Path Planning"
+     ],
+     "next": [
+      "s2_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2_1",
+     "name": "Reeds-Shepp Curve Shortcut Expansion",
+     "description": "【前置依赖】当前节点 current + goal_node + RS 曲线库【输入】current (x,y,theta), goal (x,y,theta)【输出】若 RS 曲线无碰撞则直接返回 path；否则返回失败继续 Hybrid A* 扩展【约束】每 N 次迭代（PythonRobotics 每 5 次）尝试从 current 到 goal 的 Reeds-Shepp 解析曲线；RS 曲线是 Ackermann 车最短路径的闭式解（12 类曲线族）；对 RS 曲线采样做碰撞检测（车辆足迹多边形）；若通过则直接拼接为最终路径，大幅减少搜索节点；Nav2 AnalyticExpander 实现此逻辑；Dolgov 2008 论文 Section 4 描述【性能指标】RS 路径计算 O(1)；碰撞检测 O(RS_samples * footprint_check)",
+     "caps": [
+      "Reeds-Shepp Curve Shortcut Expansion"
+     ],
+     "next": [
+      "s2_2"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2_2",
+     "name": "Hybrid A* SE2 State Node Expansion",
+     "description": "【前置依赖】s1_1 motion_primitives + current node + s1_2 heuristic【输入】current (x,y,theta) + motion_primitives【输出】child nodes [(x', y', theta'), ...] + g_cost 更新【约束】对每个 motion primitive (steer, dist)：前向模拟前轮转向自行车模型得 next (x', y', theta')；将 (x', y', theta') 量化到 3D 离散栅格 (x_idx, y_idx, theta_idx) 去重；若不在 closed_set 且 g_cost 更优则 push to open_set；theta 离散化典型 72 份（5 度）；x/y 离散化按地图分辨率；对应 Dolgov 2008 Hybrid A* 算法【性能指标】每次扩展 O(n_primitives) ~ O(5-7)",
+     "caps": [
+      "Hybrid A* SE2 State Node Expansion"
+     ],
+     "next": [
+      "s2_3"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2_3",
+     "name": "Vehicle Footprint Continuous Collision Check",
+     "description": "【前置依赖】s2_2 child nodes + obstacle_map + 车辆几何参数【输入】child (x, y, theta) + 车辆长宽 (LB, LF, W)【输出】True (safe) / False (collision)【约束】对车辆足迹多边形（4 个角点）在 child 位姿下做坐标变换；检查角点是否在 obstacle_map 内或越界；PythonRobotics create_car_outline 生成 4 角点 + is_collision 查表；Nav2 CollisionChecker 用 footprint + costmap 查找；更精确版做 footprint 边界连续扫描（Nav2 的 range 扫描线）；Dolgov 2008 用圆盘近似【性能指标】O(footprint_corners) ~ O(4)",
+     "caps": [
+      "Vehicle Footprint Continuous Collision Check"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s3",
+     "name": "路径回溯",
+     "description": "阶段入口：进入 SE(2) 路径回溯流程，从 closed_set 的 parent 链重建 SE(2) 轨迹。",
+     "caps": [
+      "Continuous State Hybrid A* Path Planning"
+     ],
+     "next": [
+      "s3_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s3_1",
+     "name": "SE2 Path Reconstruction via Parent Index Backtracking",
+     "description": "【前置依赖】s2_3 closed_set + goal_node【输入】goal_node.parent_index【输出】path [(rx, ry, ryaw), ...]【约束】从 goal_node 开始沿 parent_index 反向追踪至 start_node，收集 SE(2) 位姿序列；路径为连续位姿序列，可经 trajectory_smoothing 或 path_smoother 进一步平滑（归兄弟主题）；PythonRobotics HybridAStar.calc_path 实现此逻辑；Nav2 SmacPlannerHybrid 通过 tracePath 实现【性能指标】O(path_length)",
+     "caps": [
+      "Path Reconstruction via Parent Index Backtracking"
+     ],
+     "next": [],
+     "condition": null,
+     "is_merge": false
+    }
+   ]
+  },
+  {
+   "name": "Jump Point Search 栅格对称性剪枝 A* 优化",
+   "steps": [
+    {
+     "id": "s1",
+     "name": "环境预处理",
+     "description": "阶段入口：进入环境预处理流程，构建均匀代价占用栅格。JPS 要求 uniform cost grid（所有可通行 cell 代价相同）。",
+     "caps": [
+      "Jump Point Search Grid A* Optimization"
+     ],
+     "next": [
+      "s1_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s1_1",
+     "name": "Uniform Cost Grid Preparation",
+     "description": "【前置依赖】障碍物点集 (ox, oy) + 机器人半径 rr + 分辨率 res【输入】ox, oy, rr, res【输出】obstacle_map (2D bool, uniform cost)【约束】复用 chain01 的障碍物膨胀逻辑；JPS 额外要求所有可通行 cell 代价相同（不能用非均匀 costmap）；Nav2 若用非均匀 costmap 则 JPS 退化为 A*；PathFinding.js 用 Grid 类的 uniform walkable/blocked【性能指标】O(n_cells * n_obstacles)；100x100 栅格毫秒级",
+     "caps": [
+      "Obstacle Map Inflation and Collision Check"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2",
+     "name": "JPS 搜索主循环",
+     "description": "阶段入口：进入 JPS 搜索主循环，输入均匀代价栅格 + 起终点，输出含 jump point parent 链的 closed_set。",
+     "caps": [
+      "Jump Point Search Grid A* Optimization"
+     ],
+     "next": [
+      "s2_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2_1",
+     "name": "JPS Look-ahead Rule Pruning",
+     "description": "【前置依赖】当前节点 current + 方向 dir + obstacle_map【输入】current (x, y), dir (dx, dy)【输出】pruned neighbors（仅保留需要检查的邻居）【约束】look-ahead rule：对 current 从 dir 方向到达时，利用 prune 方程判定哪些邻居可被剪枝（其最优路径必经过 current）；直线方向剪枝 3 个（保留 1）、对角方向剪枝 2-3 个（保留 1-2）；prune 方程基于均匀代价栅格的最优性论证（Harabor 2011 Lemma 1）；PathFinding.js _getPrunedNeighbors 实现此逻辑【性能指标】O(1) per node",
+     "caps": [
+      "JPS Look-ahead Rule Pruning"
+     ],
+     "next": [
+      "s2_2"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2_2",
+     "name": "JPS Jumping Rule Recursive Expansion",
+     "description": "【前置依赖】s2_1 pruned neighbors + obstacle_map【输入】current (x, y), dir (dx, dy), goal【输出】jump_points [(x, y), ...] 或 forced_neighbors 触发点【约束】jumping rule：从 current 沿 dir 递归跳跃，直线方向跳到障碍物前或地图边界；对角方向同时递归直线分量；若跳跃过程中遇到 forced neighbor 则停止并返回该点为 jump point；若到达 goal 则终止；递归深度受地图大小限制；PathFinding.js _jump 实现递归跳跃；hjandroid JumpPointSearch jump() 实现；Harabor 2011 Algorithm 1【性能指标】每次跳跃 O(map_dimension) 最坏；平均 O(1) amortized",
+     "caps": [
+      "JPS Jumping Rule Recursive Expansion"
+     ],
+     "next": [
+      "s2_3"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2_3",
+     "name": "Forced Neighbor Detection",
+     "description": "【前置依赖】s2_2 jump 过程中的 cell + obstacle_map【输入】cell (x, y), dir (dx, dy)【输出】forced_neighbors [(x, y), ...] 或空【约束】forced neighbor：cell 的某个邻居 n，从 start 到 n 的最优路径必经过 cell 且不经过 cell 的前驱（即若不经过 cell 则路径会被障碍物阻挡）；判定条件：cell 的 dir 侧后方有障碍物时，对角方向的对角邻居成为 forced neighbor；直线方向无 forced neighbor（直线只剪枝不产生 forced）；PathFinding.js _getJumpPoint 的 forced 检测；Harabor 2011 Definition 1【性能指标】O(1) per cell",
+     "caps": [
+      "Forced Neighbor Detection"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s3",
+     "name": "路径回溯",
+     "description": "阶段入口：进入路径回溯流程，从 jump point parent 链重建路径。",
+     "caps": [
+      "Jump Point Search Grid A* Optimization"
+     ],
+     "next": [
+      "s3_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s3_1",
+     "name": "Jump Point Path Reconstruction via Parent Index Backtracking",
+     "description": "【前置依赖】s2_3 closed_set + goal jump point【输入】goal_node.parent_index【输出】path [(rx, ry), ...]【约束】从 goal jump point 沿 parent_index 反向追踪至 start jump point，收集坐标序列；路径为 jump point 序列，跳点间为直线段（可插入中间点）；PathFinding.js backtrace 实现此逻辑；hjandroid 实现 backtrace；路径可经 trajectory_smoothing 平滑（归兄弟主题）【性能指标】O(path_length)",
+     "caps": [
+      "Path Reconstruction via Parent Index Backtracking"
+     ],
+     "next": [],
+     "condition": null,
+     "is_merge": false
+    }
+   ]
+  },
+  {
+   "name": "任意角度 Theta* + Line-of-Sight 路径压缩",
+   "steps": [
+    {
+     "id": "s1",
+     "name": "环境预处理",
+     "description": "阶段入口：进入环境预处理流程，将障碍物膨胀为占用栅格。与 A* 相同的地图预处理。",
+     "caps": [
+      "Any Angle Theta* Path Planning"
+     ],
+     "next": [
+      "s1_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s1_1",
+     "name": "Obstacle Map Inflation for Theta*",
+     "description": "【前置依赖】障碍物点集 (ox, oy) + 机器人半径 rr + 分辨率 res【输入】ox, oy, rr, res, (sx, sy), (gx, gy)【输出】obstacle_map (2D bool), start/goal grid index【约束】复用 chain01 的障碍物膨胀逻辑；Theta* 额外要求 obstacle_map 用于 Bresenham LOS 检查（每个 cell walkable/blocked）；PythonRobotics ThetaStarPlanner 复用 calc_obstacle_map；Nav2 theta_star_planner 用 nav2_costmap_2d【性能指标】O(n_cells * n_obstacles)；100x100 栅格毫秒级",
+     "caps": [
+      "Obstacle Map Inflation and Collision Check"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2",
+     "name": "Theta* 搜索主循环",
+     "description": "阶段入口：进入 Theta* 搜索主循环，输入膨胀后地图 + 起终点，输出含 parent 链的 closed_set。采用 basic Theta* 变体（PythonRobotics 与 Nav2 均实现 basic Theta*）。",
+     "caps": [
+      "Any Angle Theta* Path Planning"
+     ],
+     "next": [
+      "s2_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2_1",
+     "name": "Theta* Open Closed Set Initialization",
+     "description": "【前置依赖】s1_1 obstacle_map + start/goal 索引【输入】start_node, goal_node【输出】open_set (PriorityQueue, push start with f=g+h)、closed_set (dict, 空)【约束】复用 A* 的 open/closed 集合管理；Theta* 的 open_set 与 A* 完全相同（按 f 值排序的优先队列）；closed_set 记录每个节点的 parent（Theta* 的 parent 可能为 grandparent 即非直接前驱）；PythonRobotics 用 heapq；Nav2 theta_star_planner 用 std::priority_queue【性能指标】初始化 O(1)",
+     "caps": [
+      "Open Closed Set Management on Grid"
+     ],
+     "next": [
+      "s2_2"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2_2",
+     "name": "Theta* Line-of-Sight Bresenham Check",
+     "description": "【前置依赖】当前节点 current 的 parent (grandparent) + 邻居 neighbor + obstacle_map【输入】grandparent (x1, y1), neighbor (x2, y2), obstacle_map【输出】True (LOS 直通) / False (有障碍)【约束】用 Bresenham 直线算法遍历 (x1,y1) 到 (x2,y2) 上的所有栅格 cell，检查每个 cell 在 obstacle_map 中是否 walkable；若全 walkable 则 LOS 通过；PythonRobotics ThetaStarPlanner.line_of_sight 实现；Nav2 theta_star_planner 的 isLineOfSightClear 实现；Bresenham 算法保证遍历直线上的所有整数栅格点；对应 Daniel-Nash-Koenig 2010 Algorithm 2 line-of-sight()【性能指标】O(max(|dx|, |dy|)) per check",
+     "caps": [
+      "Theta* Line-of-Sight Bresenham Check"
+     ],
+     "next": [
+      "s2_3"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2_3",
+     "name": "Theta* Parent Rewiring Path Compression",
+     "description": "【前置依赖】s2_2 LOS 检查结果 + 邻居 neighbor + current + grandparent【输入】grandparent, current, neighbor, los_result【输出】更新后的 neighbor.parent 和 neighbor.g【约束】若 LOS(grandparent, neighbor) 通过：neighbor.parent = grandparent（跳过 current），neighbor.g = grandparent.g + dist(grandparent, neighbor)（任意角度直线距离）；否则：neighbor.parent = current（vanilla A* 行为），neighbor.g = current.g + dist(current, neighbor)；这是 Theta* 与 A* 的核心区别：通过 parent rewire 生成任意角度路径，路径比 A* 的 4/8 连通路径更短更平滑；对应 Daniel-Nash-Koenig 2010 Algorithm 2 updateVertex()；PythonRobotics 与 Nav2 均在 expand 邻居时执行此逻辑【性能指标】O(1) per neighbor（LOS 检查已在上一步完成）",
+     "caps": [
+      "Theta* Parent Rewiring Path Compression"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s3",
+     "name": "路径回溯",
+     "description": "阶段入口：进入任意角度路径回溯流程，从 closed_set 的 parent 链重建路径。",
+     "caps": [
+      "Any Angle Theta* Path Planning"
+     ],
+     "next": [
+      "s3_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s3_1",
+     "name": "Any-Angle Path Reconstruction via Parent Index Backtracking",
+     "description": "【前置依赖】s2_3 closed_set + goal_node【输入】goal_node.parent【输出】path [(rx, ry), ...]【约束】从 goal_node 沿 parent 链反向追踪至 start_node，收集坐标序列；由于 Theta* 的 parent 可能跳过中间节点（grandparent rewire），路径点为任意角度直线段的端点；路径比 A* 的 4/8 连通路径更短更平滑；PythonRobotics ThetaStarPlanner.calc_final_path 实现；Nav2 theta_star_planner 通过 backtrace 实现【性能指标】O(path_length)",
+     "caps": [
+      "Path Reconstruction via Parent Index Backtracking"
+     ],
+     "next": [],
+     "condition": null,
+     "is_merge": false
+    }
+   ]
+  }
+ ],
+ "capabilities": [
+  {
+   "en": "Grid Based A* Path Planning",
+   "zh": "栅格A*路径规划",
+   "level": "l2",
+   "description": "基于 Hart-Nilsson-Raphael 1968 经典 A* 算法的离散栅格路径搜索范式。流程：障碍物膨胀 → open/closed 集合初始化 → 启发式评估 → 4/8 连通主循环（pop min f、扩展邻居、碰撞检测）→ parent index 路径回溯。核心特征：f(n)=g(n)+h(n) 在 h 可采纳时保证最优性（Hart-Nilsson-Raphael 1968 可采纳性定理）；4 连通用于曼哈顿运动、8 连通用于全向运动。前置依赖：离散栅格地图 + 起终点。输入：障碍物点集 + 起终点坐标 + 机器人半径。输出：栅格路径点序列。约束：启发式须可采纳（不高估真实代价）；单源单汇搜索。性能：100x100 栅格毫秒级。适用场景：室内机器人 / 游戏 NPC / 自动驾驶低层规划等需要确定最优路径的栅格场景。代表实现：PythonRobotics AStar、Nav2 SmacPlanner2D。",
+   "aliases": [
+    "A* search",
+    "A star algorithm",
+    "grid A*",
+    "best-first search path planning"
+   ],
+   "parent": null,
+   "children": [
+    "Discrete Grid A* Search",
+    "Admissible Heuristic Selection for Grid A*",
+    "Open Closed Set Management on Grid",
+    "Obstacle Map Inflation and Collision Check",
+    "Path Reconstruction via Parent Index Backtracking"
+   ],
+   "assets": [
+    "Hart-Nilsson-Raphael 1968 A* Foundation"
+   ]
+  },
+  {
+   "en": "Discrete Grid A* Search",
+   "zh": "离散栅格A*搜索",
+   "level": "l3",
+   "description": "A* 主循环：从 open_set pop f 值最小的节点 → 判定是否为 goal → 扩展 4/8 连通邻居 → 对每个邻居做碰撞检测 + 计算启发式 + 更新 open/closed → 重复直到 goal 被 pop 或 open_set 为空。对应 Hart-Nilsson-Raphael 1968 Algorithm A。前置依赖：obstacle_map + open/closed set + 启发式。输入：open_set + motion_model。输出：closed_set（含 parent 链）或空列表（失败）。约束：4 连通 motion=[(1,0),(-1,0),(0,1),(0,-1)]，8 连通追加对角；f=g+h 保证最优性需 h 可采纳。性能：O(N log N) N=开放节点数；100x100 栅格毫秒级。适用场景：所有栅格 A* 路径搜索。本能力跨链 01/03/04 共享（JPS 和 Theta* 也基于 A* 主循环框架）。",
+   "aliases": [
+    "A* main loop",
+    "best-first search expansion",
+    "grid A* expansion"
+   ],
+   "parent": "Grid Based A* Path Planning",
+   "children": [],
+   "assets": [
+    "PythonRobotics",
+    "nav2_smac_planner",
+    "Hart-Nilsson-Raphael 1968 A* Foundation"
+   ]
+  },
+  {
+   "en": "Admissible Heuristic Selection for Grid A*",
+   "zh": "栅格A*可采纳启发式选择",
+   "level": "l3",
+   "description": "为栅格 A* 选择可采纳的启发式函数 h(n)：4 连通用曼哈顿距离 h=|dx|+|dy|（与运动代价一致故可采纳）；8 连通用对角线距离 h=max(|dx|,|dy|) 或 Chebyshev 距离（对角运动代价=直线运动代价时可采纳）；欧氏距离 h=hypot(dx,dy) 对 4/8 连通均保守可采纳但信息量偏低。前置依赖：当前节点 + goal 位置。输入：(current.x, current.y), (goal.x, goal.y)。输出：h(n) 标量。约束：h 须可采纳（不高估真实代价）以保证 A* 最优性。性能：O(1)。适用场景：所有栅格 A* 变体的启发式评估。本能力跨链 01/03/04 共享。",
+   "aliases": [
+    "heuristic function",
+    "admissible heuristic",
+    "Manhattan distance heuristic",
+    "Euclidean heuristic"
+   ],
+   "parent": "Grid Based A* Path Planning",
+   "children": [],
+   "assets": [
+    "PythonRobotics",
+    "nav2_smac_planner"
+   ]
+  },
+  {
+   "en": "Open Closed Set Management on Grid",
+   "zh": "栅格Open/Closed集合管理",
+   "level": "l3",
+   "description": "A* 的 open_set（优先队列，按 f 值升序）与 closed_set（已扩展节点字典）的管理。open_set 用 min-heap 实现 O(log N) push/pop；closed_set 用 dict 实现 O(1) 查找。初始化时 push start node with f=g+h。主循环中 pop min f → 加入 closed → 扩展邻居时检查 closed 避免重复扩展。前置依赖：start/goal 节点。输入：节点 + f 值。输出：open_set 和 closed_set 状态更新。约束：open_set 须支持高效 min-f 提取；closed_set 须支持 O(1) 查找。性能：push/pop O(log N)，查找 O(1)。适用场景：所有基于 best-first search 的栅格路径规划。本能力跨链 01/03/04 共享。",
+   "aliases": [
+    "open set",
+    "closed set",
+    "priority queue path planning",
+    "visited set management"
+   ],
+   "parent": "Grid Based A* Path Planning",
+   "children": [],
+   "assets": [
+    "PythonRobotics",
+    "nav2_smac_planner"
+   ]
+  },
+  {
+   "en": "Obstacle Map Inflation and Collision Check",
+   "zh": "障碍物膨胀与碰撞检测",
+   "level": "l3",
+   "description": "将原始障碍物点集按机器人半径膨胀为 2D 占用栅格 obstacle_map，并在搜索过程中对节点做碰撞检测。膨胀：对每个栅格 cell 遍历障碍物点，距离 < 机器人半径则标记 True。碰撞检测：verify_node 做 bounds 检查 + obstacle_map 查表。前置依赖：障碍物点集 + 机器人半径 + 地图分辨率。输入：(ox, oy), rr, res。输出：obstacle_map (2D bool)。约束：PythonRobotics calc_obstacle_map 用简单距离判定；Nav2 用 nav2_costmap_2d 的 inflation_layer（基于距离变换，归 cost_map_planning 兄弟主题）。性能：膨胀 O(n_cells * n_obstacles)，检测 O(1)。适用场景：所有栅格路径规划的环境预处理。本能力跨链 01/03/04 共享。",
+   "aliases": [
+    "map inflation",
+    "obstacle dilation",
+    "robot footprint inflation",
+    "collision check on grid"
+   ],
+   "parent": "Grid Based A* Path Planning",
+   "children": [],
+   "assets": [
+    "PythonRobotics",
+    "nav2_smac_planner"
+   ]
+  },
+  {
+   "en": "Path Reconstruction via Parent Index Backtracking",
+   "zh": "基于父节点索引回溯的路径重建",
+   "level": "l3",
+   "description": "从 goal_node 的 parent_index 开始反向追踪 closed_set，收集路径点坐标序列直到 start_node。路径点可以是 2D 栅格坐标（grid A*/JPS/Theta*）或 3D SE(2) 位姿（Hybrid A*）。前置依赖：closed_set + goal_node。输入：goal_node.parent_index。输出：path [(x, y), ...] 或 [(x, y, theta), ...]。约束：parent_index 链从 goal 回溯到 start；路径方向需反转。性能：O(path_length)。适用场景：所有基于 parent index 的路径回溯。本能力跨链 01/02/03/04 共享。",
+   "aliases": [
+    "path backtracking",
+    "parent index traceback",
+    "path reconstruction",
+    "backtrace path"
+   ],
+   "parent": "Grid Based A* Path Planning",
+   "children": [],
+   "assets": [
+    "PythonRobotics",
+    "nav2_smac_planner"
+   ]
+  },
+  {
+   "en": "Continuous State Hybrid A* Path Planning",
+   "zh": "连续状态Hybrid A*路径规划",
+   "level": "l2",
+   "description": "基于 Dolgov 2008 的 Hybrid A* 算法在连续 SE(2) 位形空间 (x, y, theta) 上的路径搜索范式。流程：运动基元离散化 → 双启发式 h=max(2D reverse A*, RS distance) → Hybrid A* 节点扩展 + Reeds-Shepp 解析捷径 → 车辆足迹连续碰撞检测 → parent index 路径回溯。核心特征：节点状态为连续 (x, y, theta) 三元组但量化到离散 3D 栅格去重；运动基元为 Ackermann 车的离散 steer+distance 组合；RS 曲线提供解析捷径大幅减少搜索节点；碰撞检测对车辆多边形足迹做连续检测。前置依赖：车辆运动学参数 + Reeds-Shepp 库 + 栅格地图。输入：障碍物 + 起终点 SE(2) 位姿。输出：SE(2) 轨迹。约束：需 min_turn_radius；RS 曲线需 Reeds-Shepp 库。性能：停车场场景秒级。适用场景：Ackermann 车辆（自动驾驶泊车 / 仓库 AGV）的 kinodynamic 路径规划。",
+   "aliases": [
+    "Hybrid A*",
+    "Hybrid A-Star",
+    "continuous state A*",
+    "SE2 A* planning"
+   ],
+   "parent": null,
+   "children": [
+    "Hybrid A* SE2 State Node Expansion",
+    "Reeds-Shepp Curve Shortcut Expansion",
+    "Vehicle Footprint Continuous Collision Check",
+    "Hybrid A* 2D Reverse Heuristic",
+    "Motion Primitive Steer Set Discretization"
+   ],
+   "assets": [
+    "Dolgov 2008 Hybrid A* Practical Search"
+   ]
+  },
+  {
+   "en": "Hybrid A* SE2 State Node Expansion",
+   "zh": "Hybrid A* SE(2)状态节点扩展",
+   "level": "l3",
+   "description": "从当前节点 current (x, y, theta) 沿运动基元 steer set 前向模拟自行车模型，生成子节点 (x', y', theta') 并量化到 3D 离散栅格 (x_idx, y_idx, theta_idx) 去重。Ackermann 运动学：x'=x+d*cos(theta), y'=y+d*sin(theta), theta'=theta+d*tan(steer)/L。前置依赖：motion_primitives + current node。输入：current (x,y,theta) + motion_primitives。输出：child nodes + g_cost。约束：theta 离散化典型 72 份（5 度）；x/y 按地图分辨率离散化。性能：每次扩展 O(n_primitives) ~ O(5-7)。适用场景：Hybrid A* 的节点扩展核心步骤。",
+   "aliases": [
+    "Hybrid A* expansion",
+    "SE2 node expansion",
+    "bicycle model forward simulation"
+   ],
+   "parent": "Continuous State Hybrid A* Path Planning",
+   "children": [],
+   "assets": [
+    "PythonRobotics",
+    "nav2_smac_planner",
+    "kfreund/hybrid-a-star-implementation",
+    "Dolgov 2008 Hybrid A* Practical Search"
+   ]
+  },
+  {
+   "en": "Reeds-Shepp Curve Shortcut Expansion",
+   "zh": "Reeds-Shepp曲线捷径扩展",
+   "level": "l3",
+   "description": "在 Hybrid A* 搜索中定期尝试从当前节点到 goal 的 Reeds-Shepp 解析曲线捷径。RS 曲线是 Ackermann 车最短路径的闭式解（12 类曲线族，含前进/后退/转弯组合）。对 RS 曲线采样做车辆足迹碰撞检测，若通过则直接拼接为最终路径。前置依赖：当前节点 + goal + RS 曲线库。输入：current (x,y,theta), goal (x,y,theta)。输出：若 RS 无碰撞则返回 path；否则失败。约束：每 N 次迭代尝试一次（PythonRobotics 每 5 次）；需 Reeds-Shepp 库。性能：RS 路径计算 O(1)；碰撞检测 O(RS_samples)。适用场景：Hybrid A* 搜索的解析捷径加速。",
+   "aliases": [
+    "RS analytic expansion",
+    "Reeds-Shepp shortcut",
+    "analytic expansion",
+    "RS curve expansion"
+   ],
+   "parent": "Continuous State Hybrid A* Path Planning",
+   "children": [],
+   "assets": [
+    "PythonRobotics",
+    "nav2_smac_planner",
+    "kfreund/hybrid-a-star-implementation"
+   ]
+  },
+  {
+   "en": "Vehicle Footprint Continuous Collision Check",
+   "zh": "车辆足迹连续碰撞检测",
+   "level": "l3",
+   "description": "对车辆足迹多边形（4 个角点）在给定位姿 (x, y, theta) 下做坐标变换，检查角点是否在 obstacle_map 内或越界。PythonRobotics create_car_outline 生成 4 角点 + is_collision 查表；Nav2 CollisionChecker 用 footprint + costmap 查找；Dolgov 2008 用圆盘近似。前置依赖：child 位姿 + obstacle_map + 车辆几何参数。输入：(x, y, theta) + 车辆长宽。输出：True (safe) / False (collision)。约束：更精确版做 footprint 边界连续扫描。性能：O(footprint_corners) ~ O(4)。适用场景：Hybrid A* 中对连续位姿的车辆碰撞检测。",
+   "aliases": [
+    "footprint collision",
+    "car body collision",
+    "vehicle polygon collision check",
+    "continuous collision detection"
+   ],
+   "parent": "Continuous State Hybrid A* Path Planning",
+   "children": [],
+   "assets": [
+    "PythonRobotics",
+    "nav2_smac_planner",
+    "kfreund/hybrid-a-star-implementation"
+   ]
+  },
+  {
+   "en": "Hybrid A* 2D Reverse Heuristic",
+   "zh": "Hybrid A* 2D反向启发式",
+   "level": "l3",
+   "description": "Hybrid A* 的双启发式 h(n) = max(h_2d_reverse, h_rs)。h_2d_reverse：在 2D 栅格上从 goal 反向跑一次 Dijkstra/A*，得到各 cell 到 goal 的最短距离（考虑障碍物但不考虑航向），cache 后查表。h_rs：当前节点到 goal 的 Reeds-Shepp 曲线长度（考虑航向但假设空旷）。取两者最大值保证可采纳且信息量更大。前置依赖：obstacle_map + goal + RS 库。输入：当前节点 (x,y,theta)。输出：h(n)。约束：h_2d_reverse 一次性 Dijkstra O(N log N)；h_rs O(1)。性能：h_2d_reverse 预计算 + h_rs 查表。适用场景：Hybrid A* 的启发式评估。",
+   "aliases": [
+    "2D reverse A* heuristic",
+    "RS distance heuristic",
+    "dual heuristic hybrid A*",
+    "obstacle heuristic"
+   ],
+   "parent": "Continuous State Hybrid A* Path Planning",
+   "children": [],
+   "assets": [
+    "nav2_smac_planner"
+   ]
+  },
+  {
+   "en": "Motion Primitive Steer Set Discretization",
+   "zh": "运动基元转向集离散化",
+   "level": "l3",
+   "description": "将 Ackermann 车的连续转向角离散化为有限个运动基元 (steer_angle, distance) 组合，用于 Hybrid A* 节点扩展。典型离散化为 5-7 个 steer 角（[-max, -mid, 0, +mid, +max]）× 固定弧长 step。Nav2 MotionTable 用 precomputed lattice；PythonRobotics get_motion_model 用手工设定组合。前置依赖：车辆运动学参数。输入：min_turn_radius, L_wheelbase, max_steer。输出：motion_primitives [(steer, dist), ...]。约束：离线预计算一次性。性能：运行时查表 O(1)。适用场景：Hybrid A* / lattice planner 的运动基元配置。",
+   "aliases": [
+    "steer set",
+    "motion primitives",
+    "lattice discretization",
+    "Ackermann motion model"
+   ],
+   "parent": "Continuous State Hybrid A* Path Planning",
+   "children": [],
+   "assets": [
+    "PythonRobotics",
+    "nav2_smac_planner",
+    "kfreund/hybrid-a-star-implementation"
+   ]
+  },
+  {
+   "en": "Jump Point Search Grid A* Optimization",
+   "zh": "Jump Point Search栅格A*优化",
+   "level": "l2",
+   "description": "基于 Harabor-Grastien 2011 的 Jump Point Search (JPS) 算法在均匀代价栅格上对 A* 的对称性剪枝优化范式。流程：均匀代价栅格预处理 → look-ahead rule 邻居剪枝 → jumping rule 递归跳跃扩展 → forced neighbor 检测 → 路径回溯。核心特征：JPS 不改变 A* 的最优性保证，但利用均匀代价栅格上的路径对称性只扩展 jump point（强制邻居触发点或直线终点），避免枚举所有 4/8 邻居，典型减少 open_set 节点数 10-20x。前置依赖：均匀代价栅格地图。输入：障碍物 + 起终点。输出：栅格路径。约束：仅适用于均匀代价栅格（所有可通行 cell 代价相同）；不适用于非均匀代价地图。性能：比 A* 快 10-20x。适用场景：游戏 NPC / 室内机器人等均匀代价栅格场景的大规模路径搜索。",
+   "aliases": [
+    "JPS",
+    "Jump Point Search",
+    "grid symmetry pruning A*",
+    "Harabor Grastien JPS"
+   ],
+   "parent": null,
+   "children": [
+    "JPS Look-ahead Rule Pruning",
+    "JPS Jumping Rule Recursive Expansion",
+    "Forced Neighbor Detection"
+   ],
+   "assets": [
+    "Harabor-Grastien 2011 JPS Online Graph Pruning"
+   ]
+  },
+  {
+   "en": "JPS Look-ahead Rule Pruning",
+   "zh": "JPS前瞻规则剪枝",
+   "level": "l3",
+   "description": "当节点从某方向 dir 到达时，利用 look-ahead rule 判定哪些邻居可被剪枝（其最优路径必经过 current 节点）。直线方向剪枝 3 个邻居（保留 1 个）、对角方向剪枝 2-3 个（保留 1-2 个）。prune 方程基于均匀代价栅格的最优性论证（Harabor 2011 Lemma 1）。前置依赖：当前节点 + 方向 + obstacle_map。输入：current (x,y), dir (dx,dy)。输出：pruned neighbors。约束：仅适用于均匀代价栅格。性能：O(1) per node。适用场景：JPS 搜索的邻居剪枝步骤。",
+   "aliases": [
+    "look-ahead pruning",
+    "JPS prune rule",
+    "symmetry breaking pruning"
+   ],
+   "parent": "Jump Point Search Grid A* Optimization",
+   "children": [],
+   "assets": [
+    "qiao/PathFinding.js",
+    "hjandroid/JumpPointSearch"
+   ]
+  },
+  {
+   "en": "JPS Jumping Rule Recursive Expansion",
+   "zh": "JPS跳跃规则递归扩展",
+   "level": "l3",
+   "description": "从 current 沿 dir 递归跳跃扩展：直线方向跳到障碍物前或地图边界；对角方向同时递归直线分量。若跳跃过程中遇到 forced neighbor 则停止并返回该点为 jump point；若到达 goal 则终止。对应 Harabor 2011 Algorithm 1。前置依赖：pruned neighbors + obstacle_map。输入：current (x,y), dir (dx,dy), goal。输出：jump_points。约束：递归深度受地图大小限制。性能：每次跳跃 O(map_dimension) 最坏；平均 O(1) amortized。适用场景：JPS 搜索的递归跳跃步骤。",
+   "aliases": [
+    "JPS jump",
+    "jumping rule",
+    "recursive jump expansion"
+   ],
+   "parent": "Jump Point Search Grid A* Optimization",
+   "children": [],
+   "assets": [
+    "qiao/PathFinding.js",
+    "hjandroid/JumpPointSearch",
+    "Harabor-Grastien 2011 JPS Online Graph Pruning"
+   ]
+  },
+  {
+   "en": "Forced Neighbor Detection",
+   "zh": "强制邻居检测",
+   "level": "l3",
+   "description": "在 JPS 跳跃过程中检测 forced neighbor：cell 的某个邻居 n，从 start 到 n 的最优路径必经过 cell 且不经过 cell 的前驱（若不经过 cell 则路径被障碍物阻挡）。判定条件：cell 的 dir 侧后方有障碍物时，对角方向的对角邻居成为 forced neighbor；直线方向无 forced neighbor。对应 Harabor 2011 Definition 1。前置依赖：跳跃过程中的 cell + obstacle_map。输入：cell (x,y), dir (dx,dy)。输出：forced_neighbors 或空。约束：仅均匀代价栅格。性能：O(1) per cell。适用场景：JPS 搜索的 forced neighbor 检测步骤。",
+   "aliases": [
+    "forced neighbor",
+    "JPS forced neighbor",
+    "forced neighbor rule"
+   ],
+   "parent": "Jump Point Search Grid A* Optimization",
+   "children": [],
+   "assets": [
+    "qiao/PathFinding.js",
+    "hjandroid/JumpPointSearch"
+   ]
+  },
+  {
+   "en": "Any Angle Theta* Path Planning",
+   "zh": "任意角度Theta*路径规划",
+   "level": "l2",
+   "description": "基于 Daniel-Nash-Koenig-Felner 2010 的 Theta* 算法在栅格 A* 框架上增加 Line-of-Sight 检查与 parent 重写的任意角度路径搜索范式。流程：地图膨胀 → open/closed 初始化 → Theta* 主循环（扩展邻居时检查 grandparent 到邻居的 LOS，通过则 rewire parent 到 grandparent）→ 路径回溯。核心特征：basic Theta* 生成的路径为任意角度直线段（不局限于 4/8 连通方向），比 A* 路径更短更平滑；lazy Theta* 延迟 LOS 评估以减少 Bresenham 调用。前置依赖：栅格地图 + Bresenham LOS。输入：障碍物 + 起终点。输出：任意角度路径。约束：LOS 检查用 Bresenham 直线算法。性能：路径质量优于 A*，搜索时间略长。适用场景：需要平滑路径的栅格场景（游戏 / 机器人导航）。",
+   "aliases": [
+    "Theta*",
+    "Theta star",
+    "any-angle path planning",
+    "any-angle A*"
+   ],
+   "parent": null,
+   "children": [
+    "Theta* Line-of-Sight Bresenham Check",
+    "Theta* Parent Rewiring Path Compression"
+   ],
+   "assets": [
+    "PythonRobotics",
+    "nav2_theta_star_planner",
+    "Daniel-Nash-Koenig-Felner 2010 Theta* Any-Angle"
+   ]
+  },
+  {
+   "en": "Theta* Line-of-Sight Bresenham Check",
+   "zh": "Theta*视线Bresenham检测",
+   "level": "l3",
+   "description": "用 Bresenham 直线算法遍历两个栅格 cell 间的所有整数栅格点，检查每个 cell 在 obstacle_map 中是否 walkable，判定两点间是否存在无障碍直线（Line-of-Sight）。对应 Daniel-Nash-Koenig 2010 Algorithm 2 line-of-sight()。前置依赖：两个栅格点 + obstacle_map。输入：(x1,y1), (x2,y2), obstacle_map。输出：True (LOS 直通) / False (有障碍)。约束：Bresenham 保证遍历直线上所有整数栅格点。性能：O(max(|dx|,|dy|)) per check。适用场景：Theta* 的 LOS 检查步骤。",
+   "aliases": [
+    "LOS check",
+    "Bresenham line of sight",
+    "theta star LOS",
+    "line of sight visibility"
+   ],
+   "parent": "Any Angle Theta* Path Planning",
+   "children": [],
+   "assets": [
+    "PythonRobotics",
+    "nav2_theta_star_planner",
+    "Daniel-Nash-Koenig-Felner 2010 Theta* Any-Angle"
+   ]
+  },
+  {
+   "en": "Theta* Parent Rewiring Path Compression",
+   "zh": "Theta*父节点重写路径压缩",
+   "level": "l3",
+   "description": "在 Theta* 扩展邻居 s 时，若 current 的 parent (grandparent) 到 s 的 LOS 通过，则把 s 的 parent 从 current 重写为 grandparent（跳过 current），s.g = grandparent.g + dist(grandparent, s)（任意角度直线距离）。否则按 vanilla A* 把 s 的 parent 设为 current。这是 Theta* 与 A* 的核心区别：通过 parent rewire 生成任意角度路径。对应 Daniel-Nash-Koenig 2010 Algorithm 2 updateVertex()。前置依赖：LOS 检查结果 + 邻居 + current + grandparent。输入：grandparent, current, neighbor, los_result。输出：更新后的 neighbor.parent 和 neighbor.g。约束：rewire 须在 LOS 通过时才执行。性能：O(1) per neighbor。适用场景：Theta* 的 parent rewire 步骤。",
+   "aliases": [
+    "parent rewire",
+    "path compression theta*",
+    "grandparent rewire",
+    "theta* vertex update"
+   ],
+   "parent": "Any Angle Theta* Path Planning",
+   "children": [],
+   "assets": [
+    "PythonRobotics",
+    "nav2_theta_star_planner",
+    "Daniel-Nash-Koenig-Felner 2010 Theta* Any-Angle"
+   ]
+  }
+ ],
+ "assets": [
+  {
+   "name": "PythonRobotics",
+   "type": "package",
+   "source": "https://github.com/AtsushiSakai/PythonRobotics",
+   "description": "AtsushiSakai 维护的 Python 机器人算法教学库（MIT license，18k+ stars），提供 A*/Hybrid A*/Theta* 等路径规划算法的可运行教学实现。AStar 模块实现 4/8 连通栅格 A* + 曼哈顿/欧氏启发式 + heapq open_set + parent index 回溯。HybridAStar 模块实现连续 SE(2) Hybrid A* + Reeds-Shepp 解析捷径 + 车辆足迹碰撞检测 + 简化启发式（hypot+theta_cost）。ThetaStarPlanner 模块实现 basic Theta* + Bresenham LOS + parent rewire。适用场景：路径规划算法学习、原型验证、教学参考。",
+   "usage": "git clone https://github.com/AtsushiSakai/PythonRobotics; cd PythonRobotics; python3 PathPlanning/AStar/a_star.py; python3 PathPlanning/HybridAStar/hybrid_a_star.py; python3 PathPlanning/ThetaStar/theta_star.py",
+   "implements": [
+    "Discrete Grid A* Search",
+    "Admissible Heuristic Selection for Grid A*",
+    "Open Closed Set Management on Grid",
+    "Obstacle Map Inflation and Collision Check",
+    "Path Reconstruction via Parent Index Backtracking",
+    "Hybrid A* SE2 State Node Expansion",
+    "Reeds-Shepp Curve Shortcut Expansion",
+    "Vehicle Footprint Continuous Collision Check",
+    "Motion Primitive Steer Set Discretization",
+    "Any Angle Theta* Path Planning",
+    "Theta* Line-of-Sight Bresenham Check",
+    "Theta* Parent Rewiring Path Compression"
+   ]
+  },
+  {
+   "name": "nav2_smac_planner",
+   "type": "ros_package",
+   "source": "https://github.com/ros-navigation/navigation2/tree/main/nav2_smac_planner",
+   "description": "Nav2 (ros-navigation/navigation2) 仓库中的 Smac Planner 模块（Apache-2.0 license），提供工业级 A*/Hybrid A* 实现。SmacPlanner2D 实现 2D 栅格 A* + 4/8 连通 + Manhattan 启发式 + costmap_2d 集成。SmacPlannerHybrid 实现 SE(2) Hybrid A* + Reeds-Shepp 解析捷径 + HGraph 双启发式（2D reverse A* + RS distance）+ MotionTable 预计算 lattice + CollisionChecker 车辆足迹检测。适用于 ROS2 导航栈的全局路径规划。适用场景：ROS2 机器人 / 自动驾驶 / 仓储 AGV 的工业级路径规划。",
+   "usage": "sudo apt install ros-<distro>-nav2-smac-planner; 在 nav2 params.yaml 中配置 planner_server.plugin: nav2_smac_planner/SmacPlanner2D 或 SmacPlannerHybrid",
+   "implements": [
+    "Discrete Grid A* Search",
+    "Admissible Heuristic Selection for Grid A*",
+    "Open Closed Set Management on Grid",
+    "Obstacle Map Inflation and Collision Check",
+    "Path Reconstruction via Parent Index Backtracking",
+    "Hybrid A* SE2 State Node Expansion",
+    "Reeds-Shepp Curve Shortcut Expansion",
+    "Vehicle Footprint Continuous Collision Check",
+    "Hybrid A* 2D Reverse Heuristic",
+    "Motion Primitive Steer Set Discretization"
+   ]
+  },
+  {
+   "name": "kfreund/hybrid-a-star-implementation",
+   "type": "package",
+   "source": "https://github.com/kfreund/hybrid-a-star-implementation",
+   "description": "kfreund 维护的 Hybrid A* 独立实现（MIT license），提供连续 steering 的 Hybrid A* + Reeds-Shepp 捷径 + 车辆足迹碰撞检测。与 PythonRobotics HybridAStar 的区别：kfreund 版用连续 steering 角而非离散 steer set，适合需要更平滑轨迹的场景。适用场景：Hybrid A* 算法学习与原型验证。",
+   "usage": "git clone https://github.com/kfreund/hybrid-a-star-implementation; cd hybrid-a-star-implementation; python3 hybrid_a_star.py",
+   "implements": [
+    "Hybrid A* SE2 State Node Expansion",
+    "Reeds-Shepp Curve Shortcut Expansion",
+    "Vehicle Footprint Continuous Collision Check",
+    "Motion Primitive Steer Set Discretization"
+   ]
+  },
+  {
+   "name": "qiao/PathFinding.js",
+   "type": "package",
+   "source": "https://github.com/qiao/PathFinding.js",
+   "description": "qiao 维护的 JavaScript 路径规划库（MIT license, 1.5k+ stars），提供 A*/Dijkstra/BFS/JPS/Bi-directional A* 等多种算法的可视化实现。JPS 实现（JumpPointFinder 类）包含 look-ahead rule 剪枝 (_getPrunedNeighbors)、jumping rule 递归扩展 (_jump)、forced neighbor 检测、backtrace 路径回溯。支持 4/8 连通与对角移动。适用场景：JPS 算法学习、Web 可视化路径规划、游戏 NPC 路径搜索。",
+   "usage": "npm install pathfinding; var PF = require('pathfinding'); var grid = new PF.Grid(10,10); var finder = new PF.JumpPointFinder({allowDiagonal: true}); var path = finder.findPath(0,0,9,9,grid);",
+   "implements": [
+    "JPS Look-ahead Rule Pruning",
+    "JPS Jumping Rule Recursive Expansion",
+    "Forced Neighbor Detection"
+   ]
+  },
+  {
+   "name": "hjandroid/JumpPointSearch",
+   "type": "package",
+   "source": "https://github.com/hjandroid/JumpPointSearch",
+   "description": "hjandroid 维护的 Jump Point Search Java 实现（MIT license），提供 JPS 的 look-ahead rule + jumping rule + forced neighbor 检测 + backtrace 完整实现。与 PathFinding.js 的 JPS 实现在算法上一致，但用 Java 实现，适合 Android/JVM 平台。适用场景：JPS 算法学习、Java 平台路径规划。",
+   "usage": "git clone https://github.com/hjandroid/JumpPointSearch; cd JumpPointSearch; 编译运行 JPSMain.java",
+   "implements": [
+    "JPS Look-ahead Rule Pruning",
+    "JPS Jumping Rule Recursive Expansion",
+    "Forced Neighbor Detection"
+   ]
+  },
+  {
+   "name": "nav2_theta_star_planner",
+   "type": "ros_package",
+   "source": "https://github.com/ros-navigation/navigation2/tree/main/nav2_theta_star_planner",
+   "description": "Nav2 (ros-navigation/navigation2) 仓库中的 Theta Star Planner 模块（Apache-2.0 license），提供工业级 basic Theta* 实现。实现 Bresenham LOS 检查 (isLineOfSightClear) + parent rewire (updateVertex) + backtrace 路径回溯 + costmap_2d 集成。与 PythonRobotics ThetaStarPlanner 的区别：Nav2 版集成了 ROS2 costmap_2d 与 lifecycle 管理，适合生产部署。适用场景：ROS2 机器人导航的任意角度路径规划。",
+   "usage": "sudo apt install ros-<distro>-nav2-theta-star-planner; 在 nav2 params.yaml 中配置 planner_server.plugin: nav2_theta_star_planner/ThetaStarPlanner",
+   "implements": [
+    "Any Angle Theta* Path Planning",
+    "Theta* Line-of-Sight Bresenham Check",
+    "Theta* Parent Rewiring Path Compression"
+   ]
+  },
+  {
+   "name": "Hart-Nilsson-Raphael 1968 A* Foundation",
+   "type": "tool",
+   "source": "https://ieeexplore.ieee.org/document/4082128",
+   "description": "Hart, Nilsson, Raphael (1968) \"A Formal Basis for the Heuristic Determination of Minimum Cost Paths\"。IEEE Transactions on Systems Science and Cybernetics SSC-4(2):100-107, July 1968。提出 A* 算法的可采纳性（admissibility）与一致性（consistency）定理，是所有 A* 变体（链1-4）的共同理论基础。适用场景：A* 算法本体可采纳性证明、启发式选择理论依据。",
+   "usage": "f(n) = g(n) + h(n)；可采纳性条件 h(n) ≤ h*(n) 保证最优性；一致性条件 h(n) ≤ c(n,n') + h(n') 保证不重开闭节点",
+   "implements": [
+    "Grid Based A* Path Planning",
+    "Discrete Grid A* Search"
+   ]
+  },
+  {
+   "name": "Dolgov 2008 Hybrid A* Practical Search",
+   "type": "tool",
+   "source": "http://robotics.stanford.edu/~ddolgov/dolgov08gppSTAIR.html",
+   "description": "Dolgov, Thrun, Montemerlo, Diebel (2008) \"Practical Search Techniques in Path Planning for Autonomous Driving\"。Proceedings of the First International Symposium on Search Techniques in Artificial Intelligence and Robotics (STAIR-08), June 2008。提出 Hybrid A* + Reeds-Shepp 解析捷径 + Voronoi field 代价项，用于 DARPA Urban Challenge Junior 车辆的泊车与轨迹规划。是链2 Hybrid A* 的奠基论文。适用场景：Hybrid A* 运动基元离散化、RS 捷径扩展、Voronoi 代价场。",
+   "usage": "状态 (x,y,θ) 离散化到 3D 晶格；扩展用运动学转向角离散化 steer set；启发式 h = max(RS 距离, 2D reverse A* 距离)；代价 g 加 Voronoi field 项",
+   "implements": [
+    "Continuous State Hybrid A* Path Planning",
+    "Hybrid A* SE2 State Node Expansion"
+   ]
+  },
+  {
+   "name": "Harabor-Grastien 2011 JPS Online Graph Pruning",
+   "type": "tool",
+   "source": "https://aaai.org/papers/7994-online-graph-pruning-for-pathfinding-on-grid-maps/",
+   "description": "Harabor, Grastien (2011) \"Online Graph Pruning for Pathfinding on Grid Maps\"。Proceedings of the AAAI Conference on Artificial Intelligence, AAAI-11, 25(1):1114-1119, 2011。DOI: 10.1609/aaai.v25i1.7994。提出 Jump Point Search（JPS）算法，基于 look-ahead rule + jumping rule 递归剪枝，仅在跳点处扩展，比 vanilla A* 节点数少一个数量级且保持最优性。是链3 JPS 的奠基论文。适用场景：JPS 强制邻居检测、跳点递归扩展、对称性剪枝。",
+   "usage": "jumping rule: 递归沿直线方向跳跃直到找到 forced neighbor 或目标；look-ahead rule: 剪枝与 parent 对称的邻居；跳点加入 open list，非跳点不扩展",
+   "implements": [
+    "Jump Point Search Grid A* Optimization",
+    "JPS Jumping Rule Recursive Expansion"
+   ]
+  },
+  {
+   "name": "Daniel-Nash-Koenig-Felner 2010 Theta* Any-Angle",
+   "type": "tool",
+   "source": "https://doi.org/10.1613/jair.2994",
+   "description": "Daniel, Nash, Koenig, Felner (2010) \"Theta*: Any-Angle Path Planning on Grids\"。Journal of Artificial Intelligence Research, JAIR Vol.39 (2010), pp.533-579, DOI 10.1613/jair.2994。提出 basic Theta* / angle-propagation Theta* / lazy Theta* 三个变体，通过 line-of-sight（Bresenham）测试让父节点直接连到孙节点，产生任意角度路径。是链4 Theta* 的奠基论文。适用场景：任意角度路径规划、LOS 检测、parent rewire。",
+   "usage": "basic Theta*: 对当前节点 n 的每个邻居 s，若 parent(n)↔s 直通（Bresenham LOS 无障碍）则 parent(s) = parent(n)，path 不局限于栅格方向；lazy Theta*: 延迟 LOS 评估",
+   "implements": [
+    "Any Angle Theta* Path Planning",
+    "Theta* Line-of-Sight Bresenham Check",
+    "Theta* Parent Rewiring Path Compression"
+   ]
+  }
+ ],
+ "evidence": {
+  "chain_documents": 4,
+  "ledgers": 4,
+  "websearch_total": 13,
+  "webfetch_total": 6,
+  "with_negative_results": 0
+ }
+}

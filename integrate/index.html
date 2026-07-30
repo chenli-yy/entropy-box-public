@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Query it from your agent — Entropy Box</title>
+<link rel="stylesheet" href="../case-study/cs.css">
+<style>
+pre{background:var(--panel2);border:1px solid var(--line);border-radius:8px;
+  padding:14px 16px;overflow-x:auto;font-size:13px;margin:12px 0;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.step{counter-increment:s;position:relative;padding-left:40px;margin:0 0 30px}
+.step::before{content:counter(s);position:absolute;left:0;top:-2px;width:26px;height:26px;
+  border-radius:50%;background:rgba(88,166,255,.13);border:1px solid rgba(88,166,255,.34);
+  color:var(--accent);font-size:13px;font-weight:650;display:flex;align-items:center;
+  justify-content:center}
+#steps{counter-reset:s}
+.warn{background:rgba(210,153,34,.07);border:1px solid rgba(210,153,34,.28);
+  border-radius:8px;padding:13px 16px;color:#E8D5A8;font-size:13px;margin:18px 0}
+table.cap{width:100%;border-collapse:collapse;font-size:13.5px;margin:14px 0 0}
+table.cap th,table.cap td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);
+  vertical-align:top}
+table.cap th{color:var(--faint);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+.yes{color:var(--green)}.no{color:var(--faint)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="crumb"><a href="../">Entropy Box</a> / Integrate</div>
+  <h1>Query the artifact from your agent</h1>
+  <p class="lede">A read-only retrieval endpoint over the evidence corpus is open. No
+  registration, no API key, no client software to install. Three ways in, in
+  increasing order of setup cost &mdash; most agents need only the first.</p>
+</header>
+
+<div class="warn">
+  <strong>Scope, stated up front.</strong> The open endpoint serves
+  <em>concept-level evidence retrieval</em>: vector plus keyword search over the
+  research corpus, suited to questions about a specific algorithm, library or
+  framework. Complex task decomposition, cross-topic chain assembly and node-level
+  graph queries are implemented and usable through the web interface, but are
+  <em>not</em> yet exposed as an API. See the capability table at the bottom.
+</div>
+
+<div id="steps">
+
+<div class="step">
+<h2 style="margin-top:0">Plain HTTP<span class="n">recommended</span></h2>
+<p class="sub">Tell your agent about this endpoint and it will construct the request
+itself. Nothing to install.</p>
+<pre>POST &lt;api-base&gt;/api/evidence/search
+Content-Type: application/json
+
+{
+  "query":  "&lt;a concept, algorithm, library or framework name&gt;",
+  "topic":  null,
+  "top_k":  10,
+  "mode":   "hybrid",
+  "rerank": true
+}</pre>
+<p class="sub">Verify from a shell:</p>
+<pre>curl -X POST "$ENTROPY_BOX_API/api/evidence/search" \
+  -H "Content-Type: application/json" \
+  -d '{"query": "Reeds-Shepp curve shortcut expansion", "top_k": 5,
+       "mode": "hybrid", "rerank": true}'</pre>
+<p class="sub">Responses are de-identified &mdash; no internal paths or surrogate
+identifiers &mdash; so they can be quoted to an end user directly.</p>
+</div>
+
+<div class="step">
+<h2>Agent Skill declaration</h2>
+<p class="sub">For any agent runtime that consumes a skill or custom-tool manifest.
+Same endpoint, wrapped in a declaration.</p>
+<pre>name: embody-ai-knowledge-base
+description: >-
+  Query the Entropy Box embodied-AI research corpus — topic graph, engineering
+  paradigms, open-source assets, algorithm selection. Suited to concept-level
+  questions about a named algorithm, library or framework (e.g. "yolov6",
+  "Reeds-Shepp", "MoveIt servo"). Not suited to multi-topic comparative
+  reasoning.
+endpoint: POST &lt;api-base&gt;/api/evidence/search
+payload:
+  query:  "&lt;algorithm / library / concept name, or a simple question&gt;"
+  top_k:  10
+  mode:   "hybrid"
+  rerank: true</pre>
+</div>
+
+<div class="step">
+<h2>MCP stdio server</h2>
+<p class="sub">If your client speaks MCP over stdio rather than raw HTTP, this small
+server wraps the same endpoint.</p>
+<pre>pip install mcp
+curl -o evidence_search_server.py &lt;api-base&gt;/mcp/evidence_search_server.py</pre>
+<p class="sub">Then register it, replacing the path with wherever you saved the file:</p>
+<pre>{
+  "mcpServers": {
+    "entropy-box-search": {
+      "command": "python",
+      "args": ["/absolute/path/to/evidence_search_server.py"],
+      "env": { "EVIDENCE_API_BASE": "&lt;api-base&gt;" }
+    }
+  }
+}</pre>
+</div>
+
+</div>
+
+<h2>What is exposed, and what is not</h2>
+<table class="cap">
+<tr><th>Capability</th><th>Open API</th><th>Web interface</th><th>Notes</th></tr>
+<tr><td>Concept-level evidence retrieval</td><td class="yes">yes</td><td class="yes">yes</td>
+    <td>Hybrid lexical + dense, optional cross-encoder rerank.</td></tr>
+<tr><td>Graph node lookup (topics / capabilities / assets)</td><td class="no">not yet</td>
+    <td class="yes">yes</td><td>Returns matched nodes and their graph neighbourhood.</td></tr>
+<tr><td>Complex task decomposition</td><td class="no">not yet</td><td class="yes">yes</td>
+    <td>Decomposes a natural-language goal into sub-queries before recall.</td></tr>
+<tr><td>Cross-topic chain assembly with gap annotation</td><td class="no">not yet</td>
+    <td class="yes">yes</td>
+    <td>Composes an executable chain and labels each node <em>owned</em> or <em>gap</em>.
+        See the <a href="../#demo">recording</a>.</td></tr>
+<tr><td>Bulk download of names, taxonomy, golden set, ledger</td><td class="yes">yes</td>
+    <td class="yes">yes</td><td>Static files, CC BY 4.0 &mdash; <a href="../#data">open data</a>.</td></tr>
+</table>
+
+<h2>Offline alternative</h2>
+<p class="sub">If you would rather not depend on a live service, the published data
+files cover a good deal on their own: bilingual capability and asset indices, the
+three-level taxonomy, the 126-query retrieval golden set, the adjudicated duplicate
+ledger, and nine topics reproduced in full with their task-chain diagrams. All under
+CC BY 4.0.</p>
+<p class="sub"><a href="../#data">Browse the open data &rarr;</a></p>
+
+<footer>
+  The current API base URL is listed on the project site. &nbsp;·&nbsp;
+  <a href="../">back to index</a>
+</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Case studies — nine compiled topics in full — Entropy Box</title>
+<link rel="stylesheet" href="cs.css">
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="crumb"><a href="../">Entropy Box</a> / Case studies</div>
+  <h1>Nine compiled topics, in full</h1>
+  <p class="lede">Aggregate counts are easy to publish and hard to trust. These nine
+  topics are reproduced completely &mdash; every task chain and step, every capability
+  with its full description, every implementing repository, the task-chain diagram,
+  and a summary of the retrieval ledgers the record was built from. Together they are
+  a fraction of a percent of the artifact, published so the structure can be
+  inspected rather than taken on trust.</p>
+  <div class="stat" id="agg"></div>
+</header>
+
+<div class="note">
+  <strong>On language.</strong> Capability and asset <em>names</em> are bilingual
+  (English + Chinese). Capability <em>descriptions</em> are in Chinese, which is the
+  source language of the compiled corpus. We publish them as they are rather than
+  machine-translating them, because the descriptions carry the engineering detail
+  &mdash; inputs, outputs, constraints, performance envelopes &mdash; that a
+  translation pass would blur.
+</div>
+
+<p id="err"></p>
+<div id="list"></div>
+
+<footer>
+  <a href="index.json">index.json</a> &nbsp;·&nbsp;
+  <a href="../how-it-works/">how the graph is built</a> &nbsp;·&nbsp;
+  <a href="../graph/capability-network.html">full capability network</a> &nbsp;·&nbsp;
+  <a href="../">back to index</a>
+</footer>
+</div>
+
+<script>
+function esc(s){return (s==null?'':String(s)).replace(/[&<>"]/g,function(c){
+  return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function fmt(n){return (n==null||isNaN(n))?'—':Number(n).toLocaleString('en-US');}
+
+fetch('index.json').then(function(r){return r.json();}).then(function(d){
+  var t=d.topics||[];
+  var sum=function(k){return t.reduce(function(a,x){return a+(x[k]||0);},0);};
+  var agg=[['topics',t.length],['task chains',sum('chains')],['steps',sum('steps')],
+           ['capabilities',sum('capabilities')],['assets',sum('assets')],
+           ['branch points',sum('branches')],['merge points',sum('merges')],
+           ['research ledgers',sum('ledgers')]];
+  document.getElementById('agg').innerHTML = agg.map(function(a){
+    return '<div><div class="v">'+fmt(a[1])+'</div><div class="k">'+a[0]+'</div></div>';}).join('');
+
+  document.getElementById('list').innerHTML = t.map(function(x){
+    var grounded = x.assets ? Math.round(100*x.assets_with_source/x.assets) : 0;
+    var chips=[
+      ['chains',x.chains],['steps',x.steps],['capabilities',x.capabilities],
+      ['assets',x.assets]
+    ].map(function(c){return '<span class="chip"><b>'+c[1]+'</b> '+c[0]+'</span>';}).join('');
+    var struct = (x.branches||x.merges)
+      ? '<span class="chip ok"><b>'+x.branches+'</b> branch · <b>'+x.merges+'</b> merge</span>'
+      : '<span class="chip flat">linear chains only</span>';
+    var evid = x.ledgers
+      ? '<span class="chip ev"><b>'+x.ledgers+'</b> ledgers · <b>'+x.websearch+'</b> searches · <b>'+
+        x.webfetch+'</b> fetches'+(x.negative_results?' · <b>'+x.negative_results+'</b> with negative results':'')+'</span>'
+      : '';
+    return '<a class="row" href="topic.html?t='+encodeURIComponent(x.keyword)+'">'+
+      '<div class="rhd">'+
+        '<div><span class="en">'+esc(x.en)+'</span>'+
+        (x.zh?'<span class="zh">'+esc(x.zh)+'</span>':'')+'</div>'+
+        '<span class="dom">'+esc(x.domain||'')+'</span>'+
+      '</div>'+
+      '<div class="chips">'+chips+struct+evid+
+        '<span class="chip'+(grounded===100?' ok':'')+'"><b>'+grounded+'%</b> assets with a repository</span>'+
+      '</div></a>';
+  }).join('');
+}).catch(function(e){
+  document.getElementById('err').textContent =
+    'Could not load index.json ('+e.message+'). If you opened this from disk, serve the folder over HTTP.';
+});
+</script>
+</body>
+</html>

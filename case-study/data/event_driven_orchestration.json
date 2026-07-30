@@ -1,0 +1,1810 @@
+{
+ "topic": {
+  "keyword": "event_driven_orchestration",
+  "en": "Event-driven Orchestration",
+  "zh": "事件驱动编排",
+  "domain": "REASONING_AGENT",
+  "description": "基于事件触发机制协调智能体执行流程，智能体在特定事件发生时自动激活或切换状态。本主题覆盖四大范式：持久化事件溯源工作流执行（Temporal/AWS Step Functions，事件=引擎内部状态日志用于重放恢复）、外部事件触发流水线编排（Airflow/Argo Events/Dagster/Prefect，事件=外部触发信号启动 DAG）、CEP/ECA 规则驱动智能体响应（Flink CEP/Drools/Keep，事件=流中被模式匹配的项）、中断/交接驱动 LLM 智能体控制流（LangGraph/AutoGen/Anthropic PTC，事件=中断/交接信号重定向实时推理）。核心问题：事件如何驱动智能体执行流程的推进/激活/切换。约束：不同范式的事件语义本质不同，不可混用。"
+ },
+ "chains": [
+  {
+   "name": "Chain 01: Durable Event-Sourced Workflow Execution",
+   "steps": [
+    {
+     "id": "s1",
+     "name": "工作流定义与部署",
+     "description": "定义确定性工作流代码或声明式状态机并部署到执行引擎。",
+     "caps": [
+      "Workflow Execution And Persistence"
+     ],
+     "next": [
+      "s1_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s1_1",
+     "name": "Engine Select",
+     "description": "判断：选择工作流引擎实现——Temporal（代码定义）或 AWS Step Functions（声明式状态机）。",
+     "caps": [
+      "Workflow Execution And Persistence"
+     ],
+     "next": [
+      "s1_1a",
+      "s1_1b"
+     ],
+     "condition": "选择工作流引擎",
+     "is_merge": false
+    },
+    {
+     "id": "s1_1a",
+     "name": "Temporal Define",
+     "description": "条件：Temporal 引擎。用 @workflow.defn/@workflow.run 声明确定性 Workflow，禁止 threading/randomness/network IO/system time。",
+     "caps": [
+      "Temporal Deterministic Workflow"
+     ],
+     "next": [
+      "s1_2"
+     ],
+     "condition": "engine == temporal",
+     "is_merge": false
+    },
+    {
+     "id": "s1_1b",
+     "name": "ASL Declare",
+     "description": "条件：AWS Step Functions 引擎。声明 ASL 状态机（8 种状态类型）并用 InputPath/ResultPath/OutputPath 过滤状态间数据。",
+     "caps": [
+      "ASL State Machine Declaration",
+      "ASL Data Path Filtering"
+     ],
+     "next": [
+      "s1_2"
+     ],
+     "condition": "engine == step_functions",
+     "is_merge": false
+    },
+    {
+     "id": "s1_2",
+     "name": "Deploy Workflow",
+     "description": "合并：部署工作流到执行引擎——Temporal Worker 注册 Task Queue，Step Functions 部署状态机。",
+     "caps": [
+      "Workflow Execution And Persistence"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": "",
+     "is_merge": true
+    },
+    {
+     "id": "s2",
+     "name": "事件溯源状态推进",
+     "description": "工作流执行过程中将状态变更以不可变事件持久化到 Event History。",
+     "caps": [
+      "Event Sourced State Advancement"
+     ],
+     "next": [
+      "s2_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2_1",
+     "name": "Command Record",
+     "description": "Workflow 发出 Commands（ScheduleActivityTask/StartTimer 等），Temporal Service 转换为 Events 持久化到 Event History。",
+     "caps": [
+      "Event History Command Recording"
+     ],
+     "next": [
+      "s2_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2_2",
+     "name": "State Persist",
+     "description": "事件溯源持久化，崩溃后可从 Event History 重放恢复执行进度。工作流代码必须确定性确保重放一致性。",
+     "caps": [
+      "Event-Sourced Execution Recovery"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3",
+     "name": "Activity 任务调度与执行",
+     "description": "将外部副作用任务通过 Task Queue 调度分发到 Worker 执行。",
+     "caps": [
+      "Activity Task Scheduling And Execution"
+     ],
+     "next": [
+      "s3_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3_1",
+     "name": "Task Dispatch",
+     "description": "Matching Service 将 Activity Task 路由到 Task Queue，Activity Worker 拉取执行。Activity 与 Workflow 严格分离。",
+     "caps": [
+      "Activity Task Dispatch"
+     ],
+     "next": [
+      "s3_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3_2",
+     "name": "Retry And Heartbeat",
+     "description": "为 Activity 配置 RetryPolicy（initial_interval/backoff_coefficient/maximum_attempts）+ heartbeat 进度跟踪。heartbeat 超时默认 10s。",
+     "caps": [
+      "Activity Retry Policy Setup",
+      "Activity Heartbeat Progress Tracking"
+     ],
+     "next": [
+      "s3_3"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3_3",
+     "name": "Idempotency Guard",
+     "description": "设计幂等键机制（Workflow Run ID + Activity ID + attempt），业务侧维护去重表确保重试时副作用不重复执行。",
+     "caps": [
+      "Activity Idempotency Design"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4",
+     "name": "崩溃恢复与错误处理",
+     "description": "Worker 崩溃后从 Event History 重放恢复，活动失败时执行 Saga 补偿。",
+     "caps": [
+      "Workflow Error Handling"
+     ],
+     "next": [
+      "s4_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4_1",
+     "name": "Replay Recovery",
+     "description": "Worker 崩溃后重启时从 Event History 重放所有历史事件，恢复到中断前精确状态。Event History 是状态恢复的 Single Source of Truth。",
+     "caps": [
+      "Event History Replay"
+     ],
+     "next": [
+      "s4_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4_2",
+     "name": "Saga Compensate",
+     "description": "活动失败时逆序执行补偿动作恢复最终一致性。补偿不保证强一致性，只保证最终一致性。",
+     "caps": [
+      "Saga Compensation Recovery"
+     ],
+     "next": [],
+     "condition": "",
+     "is_merge": false
+    }
+   ]
+  },
+  {
+   "name": "Chain 02: External-Event-Triggered Pipeline Orchestration",
+   "steps": [
+    {
+     "id": "s1",
+     "name": "外部事件探测与接入",
+     "description": "通过 Sensor 或 EventSource 持续探测外部事件源。",
+     "caps": [
+      "External Event Sensing"
+     ],
+     "next": [
+      "s1_1",
+      "s1_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s1_1",
+     "name": "Sensor Probe",
+     "description": "Airflow Sensor（poke/reschedule/deferrable 三模式）或 Dagster @sensor 持续探测外部条件，事件满足后触发下游。",
+     "caps": [
+      "Sensor Event-Driven Triggering"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s1_2",
+     "name": "EventSource Setup",
+     "description": "Argo Events EventSource CRD 定义外部事件源（Webhook/GitHub/S3/Kafka），Controller 监听并发布到 EventBus。",
+     "caps": [
+      "Argo Events EventSource Listening"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2",
+     "name": "触发条件求值",
+     "description": "对探测到的事件进行条件求值，判断是否满足触发条件。",
+     "caps": [
+      "Trigger Condition Gating"
+     ],
+     "next": [
+      "s2_1",
+      "s2_2"
+     ],
+     "condition": "",
+     "is_merge": true
+    },
+    {
+     "id": "s2_1",
+     "name": "Dependency Check",
+     "description": "Argo LifecycleHook 基于条件表达式触发，或 Argo Sensor dependencies + conditions 求值多事件依赖。",
+     "caps": [
+      "LifecycleHook Conditional Trigger"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2_2",
+     "name": "Trigger Rule",
+     "description": "Airflow Trigger Rule（all_success/one_failed/all_done）将上游任务状态传播至下游，决定下游跳过或执行。",
+     "caps": [
+      "Trigger Rule Propagation"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3",
+     "name": "流水线触发与动态分支",
+     "description": "条件满足后触发 DAG/Workflow 执行，支持条件分支、动态映射与分区回填。",
+     "caps": [
+      "Pipeline Trigger Execution"
+     ],
+     "next": [
+      "s3_1",
+      "s3_2",
+      "s3_3"
+     ],
+     "condition": "",
+     "is_merge": true
+    },
+    {
+     "id": "s3_1",
+     "name": "Branch Select",
+     "description": "Airflow BranchPythonOperator 根据上下文字段返回下游 task_id，调度器按返回值跳转。",
+     "caps": [
+      "Airflow BranchPythonOperator"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3_2",
+     "name": "Dynamic Map",
+     "description": "Airflow .expand()/.partial() 运行时动态生成 task 实例（map-reduce），基于上游 XCom 结果决定下游 task 数量。",
+     "caps": [
+      "Dynamic Task Mapping"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3_3",
+     "name": "Partition Backfill",
+     "description": "Dagster PartitionDefinition 将 asset 按时间分片，backfill 批量回填历史分区。单分区数据量应可控（< 10GB）。",
+     "caps": [
+      "Dagster Partitioned Asset Backfill"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4",
+     "name": "部署触发与回调",
+     "description": "流水线执行后通过部署触发器或回调函数通知下游。",
+     "caps": [
+      "Execution Callback Propagation"
+     ],
+     "next": [
+      "s4_1",
+      "s4_2"
+     ],
+     "condition": "",
+     "is_merge": true
+    },
+    {
+     "id": "s4_1",
+     "name": "Deploy Trigger",
+     "description": "Prefect Deployment 将 @flow 部署为可触发执行单元，通过 trigger 字段配置自动触发规则。",
+     "caps": [
+      "Prefect Deployment Auto Trigger"
+     ],
+     "next": [],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4_2",
+     "name": "Callback Exec",
+     "description": "Airflow Callbacks（on_success/on_failure/on_retry）在 TaskInstance/DagRun 状态转换时触发回调函数实现告警。",
+     "caps": [
+      "Callback and Alert Execution"
+     ],
+     "next": [],
+     "condition": "",
+     "is_merge": false
+    }
+   ]
+  },
+  {
+   "name": "Chain 03: CEP/ECA Rule-Driven Agent Response",
+   "steps": [
+    {
+     "id": "s1",
+     "name": "多源事件接入",
+     "description": "连接监控系统拉取告警或订阅事件流，解析为标准化事件。",
+     "caps": [
+      "AI Alert Processing"
+     ],
+     "next": [
+      "s1_1",
+      "s1_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s1_1",
+     "name": "Provider Connect",
+     "description": "Keep Multi-Provider Connector 连接 Prometheus/Datadog/Grafana/CloudWatch 等监控系统，自动拉取或接收告警推送。",
+     "caps": [
+      "Multi-Provider Connector"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s1_2",
+     "name": "Event Stream Parse",
+     "description": "Flink CEP DataStream source 订阅事件流，配置 watermark 控制事件时间语义与乱序容忍。watermark 间隔通常 1-5 秒。",
+     "caps": [
+      "CEP Event Stream Ingestion"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2",
+     "name": "模式匹配与规则求值",
+     "description": "判断：选择规则引擎——Flink CEP 流式模式匹配或 Drools DRL 规则条件匹配。",
+     "caps": [
+      "Event Trigger Gating"
+     ],
+     "next": [
+      "s2_1",
+      "s2_3a"
+     ],
+     "condition": "选择规则引擎",
+     "is_merge": true
+    },
+    {
+     "id": "s2_1",
+     "name": "Pattern Spec",
+     "description": "用 Flink Pattern DSL 定义带时序约束的复杂事件模式（begin/next/followedBy/within/times），编译为 Flink Pattern 对象。",
+     "caps": [
+      "Temporal Pattern Specification"
+     ],
+     "next": [
+      "s2_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2_2",
+     "name": "Pattern Match",
+     "description": "Flink CEP.pattern 将 Pattern 编译为 NFA，在事件流上运行模式匹配，输出匹配的事件序列。",
+     "caps": [
+      "CEP Pattern Matching"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2_3a",
+     "name": "DRL Rule Eval",
+     "description": "条件：Drools 引擎。DRL when 条件匹配 + Rete 算法高效匹配 + Agenda 按 salience 优先级解决冲突。",
+     "caps": [
+      "Drools DRL Rule Evaluation"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": "engine == drools",
+     "is_merge": false
+    },
+    {
+     "id": "s3",
+     "name": "匹配事件输出与分发",
+     "description": "合并：将 CEP/ECA 匹配的复杂事件派发到下游 sink，配置流式语义保障。",
+     "caps": [
+      "Matched Event Output And Dispatch"
+     ],
+     "next": [
+      "s3_1",
+      "s3_2"
+     ],
+     "condition": "",
+     "is_merge": true
+    },
+    {
+     "id": "s3_1",
+     "name": "Complex Event Emit",
+     "description": "CEP select/flatSelect 输出匹配复杂事件，按下游需求派发到 Kafka topic / 数据库 / 告警系统。可按 pattern_name 分流。",
+     "caps": [
+      "Matched Complex Event Emission"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3_2",
+     "name": "Streaming Guarantee",
+     "description": "配置 checkpoint 容错（30-120 秒）、allowed lateness、state backend（heap/RocksDB），保障 exactly-once 语义。checkpoint 影响 5-10% 吞吐。",
+     "caps": [
+      "Streaming Semantics Guarantees"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4",
+     "name": "自动化响应执行",
+     "description": "触发自动化响应工作流或规则动作执行。",
+     "caps": [
+      "Incident Orchestration"
+     ],
+     "next": [
+      "s4_1",
+      "s4_2"
+     ],
+     "condition": "",
+     "is_merge": true
+    },
+    {
+     "id": "s4_1",
+     "name": "Workflow Auto",
+     "description": "Keep YAML 声明式工作流引擎，Trigger + Steps + Actions 驱动自动化响应（发通知/创建工单/调 API）。步骤超时默认 300s。",
+     "caps": [
+      "Workflow Automation"
+     ],
+     "next": [],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4_2",
+     "name": "DRL Action Fire",
+     "description": "Drools DRL then 子句执行规则动作（insert/modify/delete fact + 调用外部服务），支持 salience 优先级和 no-loop 防递归。",
+     "caps": [
+      "Drools Rule Action Execution"
+     ],
+     "next": [],
+     "condition": "",
+     "is_merge": false
+    }
+   ]
+  },
+  {
+   "name": "Chain 04: Interrupt/Handoff-Driven LLM Agent Control Flow",
+   "steps": [
+    {
+     "id": "s1",
+     "name": "控制流图定义",
+     "description": "定义 LangGraph StateGraph 有状态图与条件路由。",
+     "caps": [
+      "Dynamic Fan-out And Tool Execution"
+     ],
+     "next": [
+      "s1_1",
+      "s1_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s1_1",
+     "name": "Graph Define",
+     "description": "LangGraph StateGraph + add_node + add_edge 定义任务委派图，agent 节点定义与工具集。图结构须无孤立节点。",
+     "caps": [
+      "Task Delegation Graph Definition"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s1_2",
+     "name": "Conditional Edge",
+     "description": "LangGraph add_conditional_edges(route_fn, path_map) 声明条件路由，route_fn(state) 返回单值，引擎按 path_map 跳转。",
+     "caps": [
+      "LangGraph Conditional Edges"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2",
+     "name": "中断与暂停恢复",
+     "description": "LLM 推理过程中通过中断信号暂停执行，等待外部输入后恢复。",
+     "caps": [
+      "Agent Interrupt And Pause Control"
+     ],
+     "next": [
+      "s2_1",
+      "s2_2"
+     ],
+     "condition": "",
+     "is_merge": true
+    },
+    {
+     "id": "s2_1",
+     "name": "Interrupt Inject",
+     "description": "LangGraph interrupt() / AutoGen ExternalTermination 注入中断/控制信号，使 Agent 可被外部打断（消息优先级抢占/安全暂停）。",
+     "caps": [
+      "Agent Interrupt Handling"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2_2",
+     "name": "Human Loop Pause",
+     "description": "LangGraph interrupt() 在指定节点暂停，state 持久化到 checkpointer，外部输入通过 Command(resume=value) 恢复，thread_id 定位持久化状态。支持多轮 human-in-the-loop 循环。",
+     "caps": [
+      "LangGraph Interrupt Pause Resume"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3",
+     "name": "交接与动态重路由",
+     "description": "多 Agent 协作中通过交接信号转移控制权，Pregel 协调并行执行。",
+     "caps": [
+      "Agent Handoff And Rerouting"
+     ],
+     "next": [
+      "s3_1",
+      "s3_2"
+     ],
+     "condition": "",
+     "is_merge": true
+    },
+    {
+     "id": "s3_1",
+     "name": "Handoff Transfer",
+     "description": "AutoGen Swarm HandoffMessage(target, context) 显式信号 Agent 间转移，控制权从当前 Agent 转移到目标 Agent。",
+     "caps": [
+      "Handoff Message Transfer Between Agents"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3_2",
+     "name": "Parallel Coord",
+     "description": "LangGraph Pregel super-step 模型协调多个 worker agent 并行执行，同一 super-step 内并行，跨 super-step 串行。",
+     "caps": [
+      "Parallel Agent Execution Coordination"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4",
+     "name": "降级恢复与工具编排",
+     "description": "主 Agent 失败后降级恢复，配置重试策略，PTC 编排工具调用。",
+     "caps": [
+      "Agent Fallback And Tool Orchestration"
+     ],
+     "next": [
+      "s4_1",
+      "s4_2",
+      "s4_3"
+     ],
+     "condition": "",
+     "is_merge": true
+    },
+    {
+     "id": "s4_1",
+     "name": "Backup Delegate",
+     "description": "备份 agent 节点接收降级路由传来的任务与错误上下文，执行委派任务并返回结果。备份 agent 的能力集须覆盖原任务的备选执行路径。",
+     "caps": [
+      "Backup Agent Delegation Execution"
+     ],
+     "next": [],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4_2",
+     "name": "Retry Policy",
+     "description": "LangGraph RetryPolicy 配置 max_attempts/retry（断言函数）/backoff_factor/backoff_delay/jitter，节点失败按策略重试。retry 断言须纯函数。",
+     "caps": [
+      "LangGraph RetryPolicy Configuration"
+     ],
+     "next": [],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4_3",
+     "name": "PTC Code Exec",
+     "description": "Anthropic PTC 将自然语言 prompt 转换为可执行代码，通过 tool_use 定义工具，模型按需调用工具并处理结果。stop_reason 驱动控制流决策。",
+     "caps": [
+      "Anthropic PTC Code Orchestration"
+     ],
+     "next": [],
+     "condition": "",
+     "is_merge": false
+    }
+   ]
+  }
+ ],
+ "capabilities": [
+  {
+   "en": "Workflow Execution And Persistence",
+   "zh": "工作流执行与持久化",
+   "level": "l2",
+   "description": "Temporal 确定性工作流执行与事件溯源持久化。Workflow 代码即工作流，Activity 执行副作用，event log 持久化支持崩溃恢复 replay。输入：Workflow+Activity 定义。输出：执行结果+event log。约束：Workflow 内禁止 threading/randomness/network IO/system time。适用场景：长事务、微服务编排、崩溃恢复。",
+   "aliases": [
+    "Durable Execution",
+    "Temporal Workflow Execution",
+    "Workflow Engine",
+    "事件溯源工作流执行"
+   ],
+   "parent": null,
+   "children": [
+    "Temporal Deterministic Workflow",
+    "ASL State Machine Declaration",
+    "ASL Data Path Filtering"
+   ],
+   "assets": [
+    "Temporal",
+    "AWS Step Functions",
+    "Temporal CLI"
+   ]
+  },
+  {
+   "en": "Event Sourced State Advancement",
+   "zh": "事件溯源状态推进",
+   "level": "l2",
+   "description": "工作流执行过程中将每次状态变更以不可变事件追加写入持久存储（Event History），支持崩溃后从事件历史重放恢复执行进度。输入：Workflow 代码生成的 Commands。输出：持久化的 Event History 事件序列。约束：Commands 是 Workflow 的调度意图，Events 是 Service 确认后的不可变记录。性能指标：Event History 追加写入 O(1)。适用场景：长运行工作流的状态持久化与崩溃恢复。不包含：外部事件触发（属链02）。",
+   "aliases": [],
+   "parent": null,
+   "children": [
+    "Event History Command Recording",
+    "Event-Sourced Execution Recovery"
+   ],
+   "assets": [
+    "Temporal"
+   ]
+  },
+  {
+   "en": "Activity Task Scheduling And Execution",
+   "zh": "Activity 任务调度与执行",
+   "level": "l2",
+   "description": "将工作流的外部副作用任务（Activity）从确定性编排逻辑中分离，通过 Task Queue 调度分发到 Worker 执行，支持重试策略、心跳跟踪与幂等性设计。输入：Activity 定义 + Task Queue 配置。输出：Activity 执行结果写入 Event History。约束：Activity 与 Workflow 严格分离，Activity 执行 at-least-once 语义。性能指标：heartbeat 超时默认 10s。适用场景：工作流中外部副作用的隔离执行。不包含：外部事件触发（属链02）。",
+   "aliases": [],
+   "parent": null,
+   "children": [
+    "Activity Task Dispatch",
+    "Activity Retry Policy Setup",
+    "Activity Heartbeat Progress Tracking",
+    "Activity Idempotency Design"
+   ],
+   "assets": [
+    "Temporal"
+   ]
+  },
+  {
+   "en": "Workflow Error Handling",
+   "zh": "工作流错误处理",
+   "level": "l2",
+   "description": "工作流执行过程中各步骤失败时的处置策略总称，涵盖重试、跳过、补偿回滚与降级四大处置方向。输入：任务/活动/状态的执行异常与上下文。输出：处置决策与执行。约束：处置策略需在编码期声明。适用场景：分布式工作流编排。",
+   "aliases": [
+    "Error Handling",
+    "Workflow Error Recovery",
+    "Workflow Failure Handling",
+    "工作流异常处理"
+   ],
+   "parent": null,
+   "children": [
+    "Event History Replay",
+    "Saga Compensation Recovery"
+   ],
+   "assets": [
+    "Temporal",
+    "AWS Step Functions"
+   ]
+  },
+  {
+   "en": "Temporal Deterministic Workflow",
+   "zh": "Temporal 确定性工作流",
+   "level": "l3",
+   "description": "用 @workflow.defn/@workflow.run 声明确定性 Workflow，禁止 threading/randomness/network IO/system time；replay-safe API（workflow.logger/random/uuid4/now/unsafe.is_replaying）。输入：Workflow 定义。输出：Workflow 执行结果。约束：replay 时必须产生相同结果。适用场景：Temporal 工作流执行。",
+   "aliases": [
+    "Temporal Workflow",
+    "确定性工作流"
+   ],
+   "parent": "Workflow Execution And Persistence",
+   "children": [],
+   "assets": [
+    "Temporal"
+   ]
+  },
+  {
+   "en": "ASL State Machine Declaration",
+   "zh": "ASL 状态机声明",
+   "level": "l3",
+   "description": "声明 ASL 状态机：8 种状态类型（Task/Choice/Wait/Succeed/Fail/Parallel/Map/Pass），顶层字段 States/StartAt/QueryLanguage/Comment/Version/TimeoutSeconds。输入：工作流逻辑。输出：ASL state machine JSON。约束：StartAt 必须指向 States 中的状态。适用场景：AWS Step Functions 状态机声明。",
+   "aliases": [
+    "ASL Declaration",
+    "Amazon States Language",
+    "Amazon States Language Declaration"
+   ],
+   "parent": "Workflow Execution And Persistence",
+   "children": [],
+   "assets": [
+    "AWS Step Functions"
+   ]
+  },
+  {
+   "en": "ASL Data Path Filtering",
+   "zh": "ASL 数据路径过滤",
+   "level": "l3",
+   "description": "用 InputPath/ResultPath/OutputPath/Parameters 过滤状态间数据，Assign 声明状态机变量。支持 JSONPath 与 JSONata 两种查询语言。输入：state input。输出：filtered state data。约束：JSONata 支持复杂表达式。适用场景：Step Functions 状态间数据过滤。",
+   "aliases": [
+    "ASL Data Filtering",
+    "InputPath ResultPath OutputPath"
+   ],
+   "parent": "Workflow Execution And Persistence",
+   "children": [],
+   "assets": [
+    "AWS Step Functions"
+   ]
+  },
+  {
+   "en": "Event History Command Recording",
+   "zh": "事件历史命令记录",
+   "level": "l3",
+   "description": "Workflow Execution 发出 Commands（ScheduleActivityTask/StartTimer/CompleteTimer 等），Temporal Service 将 Commands 转换为 Events 持久化到 Event History。输入：Workflow 代码生成的 Commands。输出：持久化的 Event History 事件序列。约束：Commands 是 Workflow 的调度意图，Events 是 Service 确认后的不可变记录。适用场景：长运行工作流的状态持久化与崩溃恢复。",
+   "aliases": [
+    "Command to Event History",
+    "Event History Persistence"
+   ],
+   "parent": "Event Sourced State Advancement",
+   "children": [],
+   "assets": [
+    "Temporal"
+   ]
+  },
+  {
+   "en": "Event-Sourced Execution Recovery",
+   "zh": "事件溯源执行恢复",
+   "level": "l3",
+   "description": "通过事件溯源将工作流每次状态变更以不可变事件追加写入持久存储，支持崩溃后从事件历史重放恢复执行进度。工作流代码必须是确定性的（不依赖系统时间/随机数），确保重放一致性。输入：工作流状态变更事件。输出：持久化事件历史。适用场景：Temporal 长时程工作流崩溃恢复。",
+   "aliases": [
+    "Deterministic Replay",
+    "Durable Execution",
+    "Event Sourced Workflow Replay",
+    "Event Sourcing",
+    "Event Sourcing Recovery",
+    "History Replay",
+    "Journal Replay Recovery",
+    "Log-Based State Reconstruction",
+    "Replay Execution",
+    "WAL-Based State Reconstruction"
+   ],
+   "parent": "Event Sourced State Advancement",
+   "children": [],
+   "assets": [
+    "Temporal"
+   ]
+  },
+  {
+   "en": "Activity Task Dispatch",
+   "zh": "Activity 任务调度分发",
+   "level": "l3",
+   "description": "Matching Service 将 Activity Task 路由到对应的 Activity Task Queue，Activity Worker 拉取执行。Activity 与 Workflow 严格分离：Workflow 纯编排（确定性），Activity 执行外部副作用（at-least-once 语义）。输入：Activity Task（含参数）。输出：Activity 结果写入 Event History。",
+   "aliases": [
+    "Activity Dispatch",
+    "Task Queue"
+   ],
+   "parent": "Activity Task Scheduling And Execution",
+   "children": [],
+   "assets": [
+    "Temporal"
+   ]
+  },
+  {
+   "en": "Activity Retry Policy Setup",
+   "zh": "活动重试策略配置",
+   "level": "l3",
+   "description": "为工作流活动声明 RetryPolicy，配置 initial_interval/backoff_coefficient/maximum_interval/maximum_attempts/non_retryable_error_types。退避间隔计算为 interval = min(initial * coefficient^attempt, max_interval)。输入：活动定义与错误类型列表。输出：RetryPolicy 配置。性能指标：退避系数通常 2.0。",
+   "aliases": [
+    "Activity Retry",
+    "Activity Retry Setup",
+    "Retry Policy",
+    "RetryPolicy Configuration",
+    "Temporal Activity RetryOptions",
+    "Workflow Activity Retry"
+   ],
+   "parent": "Activity Task Scheduling And Execution",
+   "children": [],
+   "assets": [
+    "Temporal"
+   ]
+  },
+  {
+   "en": "Activity Heartbeat Progress Tracking",
+   "zh": "Activity 心跳进度跟踪",
+   "level": "l3",
+   "description": "为 Activity 配置 3 种超时（schedule_to_close/start_to_close/schedule_to_start）+ Heartbeat 进度跟踪。Activity 执行中 heartbeat(details) 上报进度，超时则 workflow 重试或补偿。输入：Activity 定义+超时配置。输出：Activity 执行结果+heartbeat log。约束：heartbeat 超时默认 10s。适用场景：Temporal Activity 进度跟踪。",
+   "aliases": [
+    "Activity Heartbeat",
+    "Activity Progress",
+    "Heartbeat Tracking",
+    "心跳跟踪"
+   ],
+   "parent": "Activity Task Scheduling And Execution",
+   "children": [],
+   "assets": [
+    "Temporal"
+   ]
+  },
+  {
+   "en": "Activity Idempotency Design",
+   "zh": "活动幂等性设计",
+   "level": "l3",
+   "description": "为工作流活动设计幂等键机制，确保重试时副作用不重复执行。幂等键由 Workflow Run ID + Activity ID + attempt 序号组合，业务侧维护去重表（Redis SETNX 或数据库唯一约束）。输入：活动调用参数与执行上下文。输出：幂等的活动执行结果。约束：幂等键须全局唯一且确定性。适用场景：扣款、下单、库存扣减等有副作用的操作。",
+   "aliases": [
+    "Idempotency Key",
+    "Activity Deduplication"
+   ],
+   "parent": "Activity Task Scheduling And Execution",
+   "children": [],
+   "assets": [
+    "Temporal"
+   ]
+  },
+  {
+   "en": "Event History Replay",
+   "zh": "事件历史重放恢复",
+   "level": "l3",
+   "description": "Worker 崩溃后重启时，从 Event History 重放所有历史事件，将 Workflow 代码恢复到中断前精确状态。Event History 为有序事件日志，作为状态恢复的 Single Source of Truth。输入：完整 Event History。输出：恢复后的 Workflow 执行状态。",
+   "aliases": [],
+   "parent": "Workflow Error Handling",
+   "children": [],
+   "assets": [
+    "Temporal"
+   ]
+  },
+  {
+   "en": "Saga Compensation Recovery",
+   "zh": "Saga 补偿恢复",
+   "level": "l3",
+   "description": "基于持久化执行引擎与事件溯源的 Saga 补偿模式，工作流状态以不可变事件持久化，活动失败时逆序执行补偿动作恢复一致性。输入：活动执行异常与补偿列表。输出：补偿完成或人工兜底。约束：补偿不保证强一致性，只保证最终一致性。适用场景：跨服务长事务。",
+   "aliases": [
+    "Compensating Transaction",
+    "Compensation Rollback",
+    "Compensation Rollback Pattern",
+    "Saga Compensation",
+    "Saga Pattern",
+    "Saga 补偿"
+   ],
+   "parent": "Workflow Error Handling",
+   "children": [],
+   "assets": [
+    "Temporal"
+   ]
+  },
+  {
+   "en": "External Event Sensing",
+   "zh": "外部事件探测与接入",
+   "level": "l2",
+   "description": "通过 Sensor（Airflow poke/reschedule/deferrable 三模式、Dagster @sensor yield RunRequest）或 EventSource（Argo Events Webhook/GitHub/S3/Kafka 监听）持续探测外部事件源，事件满足后触发下游流水线。输入：外部事件源（文件/API/MQ/Webhook）。输出：标准化事件信号。约束：poke mode 占 worker slot，长 sensor 需用 reschedule 或 Deferrable。性能指标：Deferrable 模式不占 worker slot。适用场景：上游数据就绪等待、跨 DAG 依赖、外部 Webhook 触发。不包含：引擎内部状态推进日志（属链01）。",
+   "aliases": [],
+   "parent": null,
+   "children": [
+    "Sensor Event-Driven Triggering",
+    "Argo Events EventSource Listening"
+   ],
+   "assets": [
+    "Apache Airflow",
+    "Argo Events"
+   ]
+  },
+  {
+   "en": "Trigger Condition Gating",
+   "zh": "触发条件求值",
+   "level": "l2",
+   "description": "对探测到的外部事件进行条件求值，判断是否满足触发条件。Argo Events Sensor 通过 dependencies + conditions 定义触发条件；Airflow 通过 Trigger Rule 传播上游状态。输入：事件信号 + 条件表达式。输出：触发决策（是/否）。约束：Argo Sensor dependencies 需指定 eventTypeName 和 EventBus。适用场景：多事件依赖触发、条件组合判断。不包含：事件探测（属 s1）。",
+   "aliases": [],
+   "parent": null,
+   "children": [
+    "LifecycleHook Conditional Trigger",
+    "Trigger Rule Propagation"
+   ],
+   "assets": [
+    "Argo Events"
+   ]
+  },
+  {
+   "en": "Pipeline Trigger Execution",
+   "zh": "流水线触发与动态分支",
+   "level": "l2",
+   "description": "条件满足后触发 DAG/Workflow 执行，支持条件分支（BranchPythonOperator）、动态任务映射（.expand() map-reduce）、分区回填（PartitionDefinition + backfill）。输入：触发决策 + DAG 定义。输出：DAG 运行结果。约束：动态映射的 task 共享同一 task_id 前缀。适用场景：数据流水线的条件分支、运行时动态并行、历史分区回填。",
+   "aliases": [],
+   "parent": null,
+   "children": [
+    "Airflow BranchPythonOperator",
+    "Dynamic Task Mapping",
+    "Dagster Partitioned Asset Backfill"
+   ],
+   "assets": [
+    "Apache Airflow"
+   ]
+  },
+  {
+   "en": "Execution Callback Propagation",
+   "zh": "部署触发与回调传播",
+   "level": "l2",
+   "description": "流水线执行后通过部署触发器（Prefect Deployment trigger）自动触发后续 flow run，或通过回调函数（Airflow Callbacks）在状态转换时通知下游。输入：执行结果 + 回调配置。输出：自动触发的新 run 或告警通知。约束：Prefect deployment trigger 需指定 flow 名称和触发条件。适用场景：流水线后的自动级联触发与失败告警。",
+   "aliases": [],
+   "parent": null,
+   "children": [
+    "Prefect Deployment Auto Trigger",
+    "Callback and Alert Execution"
+   ],
+   "assets": [
+    "Apache Airflow",
+    "Prefect"
+   ]
+  },
+  {
+   "en": "Sensor Event-Driven Triggering",
+   "zh": "Sensor 事件驱动触发",
+   "level": "l3",
+   "description": "通过 Sensor 持续探测外部事件（文件/API/MQ/外部 DAG），事件满足后触发下游任务。Airflow 提供 poke/reschedule/Deferrable 三种模式；Dagster 用 @sensor 装饰器 yield RunRequest 实现事件驱动。输入：外部事件源。输出：下游 TaskInstance/RunRequest 调度。约束：poke mode 占 worker slot，长 sensor 需用 reschedule 或 Deferrable。适用场景：上游数据就绪等待、跨 DAG 依赖。",
+   "aliases": [
+    "Airflow Sensor",
+    "Dagster Sensor",
+    "External Event Triggering"
+   ],
+   "parent": "External Event Sensing",
+   "children": [],
+   "assets": [
+    "Apache Airflow",
+    "Dagster"
+   ]
+  },
+  {
+   "en": "Argo Events EventSource Listening",
+   "zh": "Argo Events EventSource 事件监听",
+   "level": "l3",
+   "description": "Argo Events EventSource CRD 定义外部事件源（Webhook/GitHub/Slack/S3/Kafka/NATS/Calendar），EventSource Controller 监听外部事件并发布到 EventBus（JetStream/Redis Stream/Kafka）。输入：EventSource CRD 定义。输出：发布到 EventBus 的事件流。约束：每个 EventSource 需指定 eventTypeName 和 EventBus 引用。性能指标：EventBus 横向扩展线性。适用场景：K8s 环境下的外部事件接入。不包含：触发条件求值（属 s2）。",
+   "aliases": [],
+   "parent": "External Event Sensing",
+   "children": [],
+   "assets": [
+    "Argo Events"
+   ]
+  },
+  {
+   "en": "LifecycleHook Conditional Trigger",
+   "zh": "LifecycleHook 条件触发",
+   "level": "l3",
+   "description": "基于 workflow.status/steps.status 条件表达式触发 LifecycleHook（v3.3+）或 exit handler。Hook 在执行期并行触发一次，exit handler 在工作流终态触发（清理/通知）。输入：workflow.status/steps.status。输出：触发指定 template/http。约束：Hook 执行期不可用 outputs。适用场景：状态变更通知、清理任务、失败告警。",
+   "aliases": [
+    "Argo LifecycleHook",
+    "Exit Handler"
+   ],
+   "parent": "Trigger Condition Gating",
+   "children": [],
+   "assets": [
+    "Argo Workflows"
+   ]
+  },
+  {
+   "en": "Trigger Rule Propagation",
+   "zh": "触发规则传播",
+   "level": "l3",
+   "description": "在 DAG 执行中按触发规则（all_success/one_failed/all_done/none_skipped）将上游任务状态传播至下游，决定下游跳过或执行。输入：上游任务状态。输出：下游任务执行决策。适用场景：DAG 工作流条件传播。",
+   "aliases": [
+    "Airflow Trigger Rule",
+    "Airflow Trigger Rules",
+    "Airflow TriggerRule",
+    "DAG Branching",
+    "DAG State Propagation",
+    "Failure State Propagation",
+    "Trigger Rule",
+    "触发规则"
+   ],
+   "parent": "Trigger Condition Gating",
+   "children": [],
+   "assets": [
+    "Apache Airflow"
+   ]
+  },
+  {
+   "en": "Airflow BranchPythonOperator",
+   "zh": "Airflow BranchPythonOperator 条件分支",
+   "level": "l3",
+   "description": "Airflow BranchPythonOperator(python_callable) 在上游 task 完成后执行 python_callable，读上下文字段返回下游 task_id（字符串），Airflow 调度器按返回值跳转到对应 task。输入：上下文字段 + python_callable。输出：下游 task_id。约束：python_callable 返回字符串（task_id）；返回 None 或不存在 task_id 时跳过下游。适用场景：Airflow DAG 条件分支。",
+   "aliases": [],
+   "parent": "Pipeline Trigger Execution",
+   "children": [],
+   "assets": [
+    "Apache Airflow"
+   ]
+  },
+  {
+   "en": "Dynamic Task Mapping",
+   "zh": "动态任务映射",
+   "level": "l3",
+   "description": "Airflow .expand()/.partial() 运行时动态生成 task 实例（map-reduce 模式），基于上游 XCom 结果决定下游 task 数量。输入：上游 XCom list。输出：N 个并行 task 实例。约束：映射的 task 共享同一 task_id 前缀。适用场景：Airflow 运行时动态并行。",
+   "aliases": [
+    "Airflow Dynamic Mapping",
+    "动态映射"
+   ],
+   "parent": "Pipeline Trigger Execution",
+   "children": [],
+   "assets": [
+    "Apache Airflow"
+   ]
+  },
+  {
+   "en": "Dagster Partitioned Asset Backfill",
+   "zh": "Dagster 分区资产与回填",
+   "level": "l3",
+   "description": "使用 Dagster PartitionDefinition 将 asset 按时间（daily/hourly）或类别分片，每个 partition 独立物化与追踪。支持 backfill 批量回填历史分区、schedule 定时触发新分区、sensor 事件驱动触发。输入：partition config + 时间范围。输出：按分区物化的数据切片。约束：单分区数据量应可控（< 10GB）。",
+   "aliases": [],
+   "parent": "Pipeline Trigger Execution",
+   "children": [],
+   "assets": [
+    "Dagster"
+   ]
+  },
+  {
+   "en": "Prefect Deployment Auto Trigger",
+   "zh": "Prefect 部署自动触发",
+   "level": "l3",
+   "description": "Prefect Deployment 将 @flow 函数部署为可触发的执行单元，通过 trigger 字段配置自动触发规则（schedule/event-based/parameterized），支持条件化触发后续 flow run。输入：flow 定义 + trigger 配置。输出：自动触发的 flow run。约束：trigger 需指定 flow 名称和触发条件。性能指标：deployment 创建后即刻可触发。适用场景：流水线后的自动级联触发。",
+   "aliases": [],
+   "parent": "Execution Callback Propagation",
+   "children": [],
+   "assets": [
+    "Prefect"
+   ]
+  },
+  {
+   "en": "Callback and Alert Execution",
+   "zh": "回调与告警执行",
+   "level": "l3",
+   "description": "在工作流定义中注册 Callbacks，当 TaskInstance/DagRun 状态转换时触发用户定义的回调函数实现告警。支持 on_success/on_failure/on_retry/on_execute/on_skipped 等回调以及 state change hooks 和 Automations event triggers。输入：工作流定义中的 Callback 配置 + 状态转换事件。输出：回调执行结果与告警通知。依赖：工作流定义中已注册 Callback 函数。适用场景：工作流执行失败告警、SLA 违规通知。",
+   "aliases": [
+    "Workflow Callback Execution",
+    "State Change Hook"
+   ],
+   "parent": "Execution Callback Propagation",
+   "children": [],
+   "assets": [
+    "Apache Airflow"
+   ]
+  },
+  {
+   "en": "AI Alert Processing",
+   "zh": "AI 告警智能处理",
+   "level": "l2",
+   "description": "基于 ML 和规则的告警去重、富化、关联、降噪四阶段处理。去重基于 fingerprint；富化通过 Workflow 查询外部上下文；关联使用 AI 模型合并相关告警；降噪过滤低价值告警。输入：原始告警流。输出：智能处理后的告警 + 关联组。适用场景：多源告警的智能降噪和关联。",
+   "aliases": [
+    "AI-Powered Alert Management",
+    "AIOps Alert Processing",
+    "Keep AIOps",
+    "智能告警处理"
+   ],
+   "parent": null,
+   "children": [
+    "Multi-Provider Connector",
+    "CEP Event Stream Ingestion"
+   ],
+   "assets": [
+    "Keep"
+   ]
+  },
+  {
+   "en": "Event Trigger Gating",
+   "zh": "事件触发门控",
+   "level": "l2",
+   "description": "基于行为指标与任务事件，使用阈值门控规则判断是否触发自动化调用或撤销。输入：行为指标向量 + 事件标记。输出：触发事件（invoke/revoke/none）。约束：阈值需根据操作者基线校准；hysteresis 窗口避免抖动。适用场景：所有事件触发 AA 系统。",
+   "aliases": [
+    "Event Gating",
+    "Event-based Gating",
+    "Threshold Gating",
+    "Trigger Detection",
+    "threshold gating",
+    "阈值门控"
+   ],
+   "parent": null,
+   "children": [
+    "Temporal Pattern Specification",
+    "CEP Pattern Matching",
+    "Drools DRL Rule Evaluation"
+   ],
+   "assets": [
+    "Flink CEP"
+   ]
+  },
+  {
+   "en": "Matched Event Output And Dispatch",
+   "zh": "匹配事件输出与分发",
+   "level": "l2",
+   "description": "将 CEP/ECA 匹配到的复杂事件按下游需求派发到 Kafka topic / 数据库 / 告警系统 / 决策引擎，并配置流式语义保障（checkpoint 容错、allowed lateness、state backend）确保 exactly-once 语义。输入：DataStream<MatchedComplexEvent> + sink 配置。输出：写入 sink 的复杂事件流 + 容错配置。约束：sink 需支持 exactly-once（Kafka 0.11+）；下游消费者需处理事件去重。性能指标：checkpoint 影响 5-10% 吞吐；RocksDB 比 heap 慢 2-5x 但支持 TB 级状态。适用场景：CEP 匹配结果的多下游消费派发与容错保障。",
+   "aliases": [],
+   "parent": null,
+   "children": [
+    "Matched Complex Event Emission",
+    "Streaming Semantics Guarantees"
+   ],
+   "assets": [
+    "Flink CEP"
+   ]
+  },
+  {
+   "en": "Incident Orchestration",
+   "zh": "事件编排响应",
+   "level": "l2",
+   "description": "将关联告警分组为 Incident，通过 YAML Workflow 驱动自动化响应（创建工单/自动修复/升级通知），支持 LLM 自动摘要。输入：处理后的告警 + Workflow 定义。输出：Incident + 响应动作。约束：Workflow 步骤超时默认 300s。适用场景：告警事件的自动化闭环处理。",
+   "aliases": [
+    "Incident Automation",
+    "Incident Management",
+    "Keep Workflow",
+    "事件管理"
+   ],
+   "parent": null,
+   "children": [
+    "Workflow Automation",
+    "Drools Rule Action Execution"
+   ],
+   "assets": [
+    "Keep"
+   ]
+  },
+  {
+   "en": "Multi-Provider Connector",
+   "zh": "多 Provider 连接器",
+   "level": "l3",
+   "description": "连接各类监控系统（Prometheus/Datadog/Grafana/CloudWatch/Zabbix 等），自动拉取或接收告警推送。支持 API key 认证和双向 webhook 集成。输入：Provider 特定凭证。输出：标准化告警事件。适用场景：多监控系统告警的统一接入。",
+   "aliases": [
+    "Alert Provider Integration",
+    "Keep Multi-Source",
+    "Provider Integration",
+    "告警源连接器"
+   ],
+   "parent": "AI Alert Processing",
+   "children": [],
+   "assets": [
+    "Keep"
+   ]
+  },
+  {
+   "en": "CEP Event Stream Ingestion",
+   "zh": "CEP 事件流接入",
+   "level": "l3",
+   "description": "订阅事件流源（Kafka topic/MQ），解析为统一事件元组（timestamp, event_type, payload），配置 watermark 控制事件时间语义与乱序容忍。输入：事件流源配置（Kafka topic + 消费组）。输出：标准化事件元组流。约束：watermark 间隔需根据乱序程度设置（通常 1-5 秒）。性能指标：Flink source 吞吐受 Kafka 分区数限制。适用场景：CEP 模式匹配的事件源接入。不包含：模式匹配（属 s2）。",
+   "aliases": [],
+   "parent": "AI Alert Processing",
+   "children": [],
+   "assets": [
+    "Flink CEP"
+   ]
+  },
+  {
+   "en": "Temporal Pattern Specification",
+   "zh": "时序 Pattern 规则定义",
+   "level": "l3",
+   "description": "用 Flink Pattern DSL 定义带时序约束（序列/并行/计数/时间窗/否定）的复杂事件模式。输入：模式规则描述（事件类型序列 + 时序约束 + 时间窗 + 计数量词）。输出：Flink Pattern<Event, Event> 对象，可被 CEP.pattern 使用。约束：pattern 必须有起始 begin；next 严格紧邻、followedBy 允许中间事件、followedByAny 非确定性；within 指定窗口；times/timesOrMore/oneOrMore 计数。性能指标：pattern 编译为 NFA 是 O(|pattern|) 一次性成本。适用场景：将业务/工程时序模式形式化为 Flink CEP pattern。",
+   "aliases": [
+    "pattern specification",
+    "CEP pattern definition",
+    "Flink Pattern DSL"
+   ],
+   "parent": "Event Trigger Gating",
+   "children": [],
+   "assets": [
+    "Flink CEP"
+   ]
+  },
+  {
+   "en": "CEP Pattern Matching",
+   "zh": "CEP 模式匹配",
+   "level": "l3",
+   "description": "使用 Flink CEP 或 Kafka Streams Processor API 检测事件序列模式，如'连续 N 次超时'或'先降级再恢复'。输入：事件流 + 模式定义。输出：匹配的事件序列。约束：状态大小需控制，避免反压。适用场景：复杂事件序列的实时检测。",
+   "aliases": [
+    "CEP",
+    "CEP Pattern Matching",
+    "Complex Event Processing",
+    "Streaming Alert Evaluation",
+    "Window Aggregation",
+    "complex event processing",
+    "online event pattern recognition",
+    "streaming pattern matching",
+    "复杂事件处理"
+   ],
+   "parent": "Event Trigger Gating",
+   "children": [],
+   "assets": [
+    "Flink CEP"
+   ]
+  },
+  {
+   "en": "Drools DRL Rule Evaluation",
+   "zh": "Drools DRL 规则条件求值",
+   "level": "l3",
+   "description": "使用 Drools DRL（Drools Rule Language）定义业务规则，rule name when $condition then $action end。Fact 插入 KIE Session 后，规则引擎按 Rete 算法匹配 when 条件，Agenda 按 salience 优先级和 activation-group 互斥策略解决冲突，激活匹配规则。输入：Fact 对象 + DRL 规则集。输出：匹配的规则列表（激活的 Agenda）。约束：规则条件须为纯函数（不依赖外部状态）；salience 高的规则先执行。性能指标：Rete 网络构建 O(|rules| * |conditions|) 一次性成本，匹配 O(1) per fact。适用场景：业务规则的声明式条件求值（ECA 中的 Condition 环节）。不包含：规则动作执行（属 s4_2）。",
+   "aliases": [],
+   "parent": "Event Trigger Gating",
+   "children": [],
+   "assets": [
+    "Drools"
+   ]
+  },
+  {
+   "en": "Matched Complex Event Emission",
+   "zh": "匹配复杂事件输出与下游派发",
+   "level": "l3",
+   "description": "把匹配的复杂事件按下游需求派发到 Kafka topic / 数据库 / 告警系统 / 决策引擎。输入：DataStream<MatchedComplexEvent> + sink 配置（Kafka topic / Jdbc sink / 自定义 sink）。输出：写入 sink 的复杂事件流；可分流到多个 sink。约束：sink 需支持 exactly-once（Kafka 0.11+）；下游消费者需处理事件去重；可按 pattern_name 分流到不同 topic。性能指标：sink 吞吐受下游限制；Kafka sink 横向扩展线性。适用场景：CEP 匹配结果的多下游消费派发。",
+   "aliases": [
+    "complex event output",
+    "matched event sink",
+    "CEP event emission"
+   ],
+   "parent": "Matched Event Output And Dispatch",
+   "children": [],
+   "assets": [
+    "Flink CEP"
+   ]
+  },
+  {
+   "en": "Streaming Semantics Guarantees",
+   "zh": "流式语义保障",
+   "level": "l3",
+   "description": "配置 checkpoint 容错、allowed lateness、state backend、背压处理，保障 CEP job 在故障/乱序/背压下的正确性。输入：Flink job config + checkpoint interval + allowedLateness + state backend 类型（heap/RocksDB）。输出：配置好的 Flink Job，支持 exactly-once 容错；迟到事件按策略处理（丢弃/重新触发）。约束：checkpoint interval 通常 30-120 秒；RocksDB state backend 适合大状态；allowedLateness 控制 watermark 后容忍时长。性能指标：checkpoint 影响 5-10% 吞吐；RocksDB 比 heap 慢 2-5x 但支持 TB 级状态。适用场景：生产级 Flink CEP job 的容错与语义保障配置。",
+   "aliases": [
+    "streaming semantics",
+    "exactly-once CEP",
+    "checkpoint configuration",
+    "late event handling"
+   ],
+   "parent": "Matched Event Output And Dispatch",
+   "children": [],
+   "assets": [
+    "Flink CEP"
+   ]
+  },
+  {
+   "en": "Workflow Automation",
+   "zh": "工作流自动化",
+   "level": "l3",
+   "description": "YAML 声明式工作流引擎，支持 Trigger（告警触发/定时/手动）、Steps（条件判断/数据查询/动作执行）、Actions（发通知/创建工单/调 API）。输入：Workflow YAML + 触发事件。输出：自动化执行结果。约束：步骤超时默认 300s。适用场景：告警响应的自动化编排。",
+   "aliases": [
+    "Alert Automation",
+    "告警自动化"
+   ],
+   "parent": "Incident Orchestration",
+   "children": [],
+   "assets": [
+    "Keep"
+   ]
+  },
+  {
+   "en": "Drools Rule Action Execution",
+   "zh": "Drools 规则动作执行",
+   "level": "l3",
+   "description": "Drools DRL then 子句执行规则动作，包括 insert/modify/delete fact（推理链）、调用外部服务（HTTP/RPC）、设置全局变量。匹配规则按 Agenda 激活顺序执行，支持 salience 优先级和 no-loop 防递归。输入：匹配规则 + fact 上下文。输出：规则动作执行结果（fact 变更 + 外部调用结果）。约束：then 子句中不应有耗时阻塞操作；no-loop 防止规则递归触发。性能指标：action 执行同步阻塞。适用场景：业务规则的条件触发动作执行（ECA 中的 Action 环节）。不包含：规则条件求值（属 s2_3）。",
+   "aliases": [],
+   "parent": "Incident Orchestration",
+   "children": [],
+   "assets": [
+    "Drools"
+   ]
+  },
+  {
+   "en": "Dynamic Fan-out And Tool Execution",
+   "zh": "动态扇出与工具执行",
+   "level": "l2",
+   "description": "LangGraph 运行时动态扇出（Send API map-reduce）与 ToolNode 工具执行。Send API 通过 conditional edge route_fn 返回 [Send(node, state), ...] 实现运行时动态扇出；ToolNode 并发执行多个工具；Command API 同时更新 state+跳转。输入：compiled StateGraph+用户输入。输出：State 更新。约束：Pregel super-step 并行；Reducer 合并并行结果。适用场景：动态分支、并行工具调用、map-reduce。",
+   "aliases": [
+    "LangGraph Dynamic Execution",
+    "Send API Fan-out"
+   ],
+   "parent": null,
+   "children": [
+    "Task Delegation Graph Definition",
+    "LangGraph Conditional Edges"
+   ],
+   "assets": [
+    "LangGraph"
+   ]
+  },
+  {
+   "en": "Agent Interrupt And Pause Control",
+   "zh": "智能体中断与暂停恢复",
+   "level": "l2",
+   "description": "LLM 推理过程中通过中断信号暂停执行，等待外部输入后恢复。LangGraph interrupt() 在指定节点暂停，配合 checkpointer + thread_id 持久化状态，外部输入通过 Command(resume=value) 恢复执行；AutoGen ExternalTermination 终止当前 Agent。输入：外部中断信号 + 暂停点位置。输出：Agent 状态变更（暂停/终止/恢复）。约束：interrupt() 需配合 checkpointer 使用；恢复时 thread_id 须一致。适用场景：human-in-the-loop 人工审核、安全暂停、消息优先级抢占。不包含：Agent 间控制权转移（属 s3）。",
+   "aliases": [],
+   "parent": null,
+   "children": [
+    "Agent Interrupt Handling",
+    "LangGraph Interrupt Pause Resume"
+   ],
+   "assets": [
+    "LangGraph"
+   ]
+  },
+  {
+   "en": "Agent Handoff And Rerouting",
+   "zh": "智能体交接与动态重路由",
+   "level": "l2",
+   "description": "多 Agent 协作中通过交接信号转移控制权，AutoGen Swarm HandoffMessage(target, context) 显式转移；LangGraph Pregel super-step 模型协调并行 Agent 执行。输入：target_agent + context（交接上下文）。输出：control transfer to target agent / 并行子结果。约束：Handoff 后目标 Agent 须能处理传递的上下文；Pregel 同一 super-step 内并行、跨 super-step 串行。适用场景：多 Agent 协作中的显式交接与并行协调。",
+   "aliases": [],
+   "parent": null,
+   "children": [
+    "Handoff Message Transfer Between Agents",
+    "Parallel Agent Execution Coordination"
+   ],
+   "assets": [
+    "LangGraph",
+    "AutoGen"
+   ]
+  },
+  {
+   "en": "Agent Fallback And Tool Orchestration",
+   "zh": "智能体降级恢复与工具编排",
+   "level": "l2",
+   "description": "LLM 推理失败后的降级恢复与工具编排机制。备份 agent 节点接收降级路由执行委派任务；LangGraph RetryPolicy 配置节点级重试；Anthropic PTC 将自然语言 prompt 转换为可执行代码并编排工具调用。输入：task + error_context / node 定义 + retry 参数 / prompt + tool 定义。输出：backup_result / 带 retry 的 node / 可执行代码 + 工具调用结果。约束：备份 agent 的能力集须覆盖原任务的备选执行路径；retry 断言须纯函数；PTC 工具定义须含 name/description/input_schema。适用场景：主 agent 失败后的自动备份接管、节点级容错重试、自然语言到代码的编排。",
+   "aliases": [],
+   "parent": null,
+   "children": [
+    "Backup Agent Delegation Execution",
+    "LangGraph RetryPolicy Configuration",
+    "Anthropic PTC Code Orchestration"
+   ],
+   "assets": [
+    "LangGraph",
+    "AutoGen",
+    "Anthropic PTC"
+   ]
+  },
+  {
+   "en": "Task Delegation Graph Definition",
+   "zh": "任务委派图定义",
+   "level": "l3",
+   "description": "定义任务委派状态图：LangGraph StateGraph+add_node+add_edge；AWS Step Functions ASL StartAt+States；Temporal @workflow.defn。输入：agent 节点定义与工具集。输出：任务委派图定义。约束：图结构须无孤立节点。适用场景：声明式 agent 工作流编排。",
+   "aliases": [
+    "Agent Workflow Graph Definition",
+    "Graph Definition",
+    "State Graph Definition",
+    "Task Graph Definition",
+    "Workflow Graph"
+   ],
+   "parent": "Dynamic Fan-out And Tool Execution",
+   "children": [],
+   "assets": [
+    "LangGraph"
+   ]
+  },
+  {
+   "en": "LangGraph Conditional Edges",
+   "zh": "LangGraph 条件边单值路由",
+   "level": "l3",
+   "description": "LangGraph add_conditional_edges(source, route_fn, path_map, then) 声明条件路由：source 节点退出时调用 route_fn(state) 返回单值，引擎按 path_map[返回值] 跳转到对应节点。then 字段可选指定汇聚节点。输入：state + route_fn + path_map。输出：目标节点。约束：route_fn 返回单值（非 list）；返回 list 用 Send API 属并行执行兄弟主题 workflow_parallel_execution。适用场景：LangGraph agent 条件路由。",
+   "aliases": [],
+   "parent": "Dynamic Fan-out And Tool Execution",
+   "children": [],
+   "assets": [
+    "LangGraph"
+   ]
+  },
+  {
+   "en": "Agent Interrupt Handling",
+   "zh": "Agent 中断处理",
+   "level": "l3",
+   "description": "在 LLM 推理过程中通过消息队列心跳机制注入中断/控制信号，使 Agent 可被外部打断（如消息优先级抢占、安全暂停）或主动结束当前轮次返回用户。输入：外部中断信号。输出：Agent 状态变更。适用场景：LangGraph step_timeout 熔断、AutoGen ExternalTermination。",
+   "aliases": [
+    "Agent Interrupt",
+    "External Termination Signal",
+    "Interrupt Handling",
+    "heart_beat_pause",
+    "message_queue_interrupt",
+    "中断处理"
+   ],
+   "parent": "Agent Interrupt And Pause Control",
+   "children": [],
+   "assets": [
+    "LangGraph",
+    "AutoGen"
+   ]
+  },
+  {
+   "en": "LangGraph Interrupt Pause Resume",
+   "zh": "LangGraph 中断暂停与恢复",
+   "level": "l3",
+   "description": "LangGraph interrupt() 在指定节点暂停 Workflow 执行，将当前 state 持久化到 checkpointer（MemorySaver/SqliteSaver/PostgresSaver），外部输入通过 Command(resume=value) 恢复执行，恢复时通过 thread_id 定位持久化状态。支持多轮 human-in-the-loop 循环（多次 interrupt + resume）。输入：interrupt() 暂停点 + thread_id + 外部输入值。输出：Command(resume=value) 恢复后的执行结果。约束：checkpointer 须配置；thread_id 须全局唯一且一致；interrupt() 返回值即为 resume 传入值。性能指标：checkpointer 持久化 O(1) per interrupt。适用场景：人工审核循环、用户补充信息、安全确认。不包含：Agent 间交接（属 s3）。",
+   "aliases": [],
+   "parent": "Agent Interrupt And Pause Control",
+   "children": [],
+   "assets": [
+    "LangGraph"
+   ]
+  },
+  {
+   "en": "Handoff Message Transfer Between Agents",
+   "zh": "Agent 间 Handoff 消息传递",
+   "level": "l3",
+   "description": "Swarm 模式通过 HandoffMessage(target, context) 显式信号 agent 间转移，控制权从当前 agent 转移到目标 agent。输入：target_agent + context。输出：control transfer to target。约束：Handoff 后目标 agent 须能处理传递的上下文。适用场景：AutoGen Swarm 显式 agent 转移。",
+   "aliases": [
+    "Swarm Handoff",
+    "Agent Handoff Signal"
+   ],
+   "parent": "Agent Handoff And Rerouting",
+   "children": [],
+   "assets": [
+    "AutoGen"
+   ]
+  },
+  {
+   "en": "Parallel Agent Execution Coordination",
+   "zh": "并行 Agent 执行协调",
+   "level": "l3",
+   "description": "协调多个 worker agent 的并行执行，管理并发同步与状态隔离。基于 Pregel super-step 模型，同一 super-step 内并行，跨 super-step 串行。输入：N 个 worker 实例及各自子任务。输出：N 个子结果。约束：需管理并发同步。适用场景：LangGraph Pregel 引擎，AutoGen GroupChat。",
+   "aliases": [
+    "parallel agent scheduling",
+    "concurrent agent execution"
+   ],
+   "parent": "Agent Handoff And Rerouting",
+   "children": [],
+   "assets": [
+    "LangGraph",
+    "AutoGen"
+   ]
+  },
+  {
+   "en": "Backup Agent Delegation Execution",
+   "zh": "备份智能体委派执行",
+   "level": "l3",
+   "description": "备份 agent 节点（独立的 agent subgraph/Lambda/Activity）接收降级路由传来的任务与错误上下文，执行委派任务并返回结果。LangGraph: create_react_agent(model, tools=backup_toolset)；AWS Step Functions: Task 状态调备份 Lambda；Temporal: execute_activity(backup, ...)。前置依赖：备份 agent 节点已声明、降级路由已触发。输入：task + error_context。输出：backup_result。约束：备份 agent 的能力集须覆盖原任务的备选执行路径。适用场景：主 agent 失败后的自动备份接管。",
+   "aliases": [
+    "Backup Agent Execution",
+    "Backup Subgraph Invocation",
+    "Fallback Agent Execution",
+    "备份 Agent 执行"
+   ],
+   "parent": "Agent Fallback And Tool Orchestration",
+   "children": [],
+   "assets": [
+    "LangGraph",
+    "AutoGen"
+   ]
+  },
+  {
+   "en": "LangGraph RetryPolicy Configuration",
+   "zh": "LangGraph RetryPolicy 配置",
+   "level": "l3",
+   "description": "为 node 挂载 RetryPolicy 配置 max_attempts/retry（断言函数）/backoff_factor/backoff_delay/jitter，节点失败按策略重试。输入：node 定义+retry 参数。输出：带 retry 的 node。约束：retry 断言须纯函数。适用场景：LangGraph 节点级重试。",
+   "aliases": [
+    "LangGraph RetryPolicy",
+    "节点重试配置"
+   ],
+   "parent": "Agent Fallback And Tool Orchestration",
+   "children": [],
+   "assets": [
+    "LangGraph"
+   ]
+  },
+  {
+   "en": "Anthropic PTC Code Orchestration",
+   "zh": "Anthropic PTC 代码编排",
+   "level": "l3",
+   "description": "Anthropic PTC（Prompt-to-Code）将自然语言 prompt 转换为可执行代码（Python/JavaScript），通过 tool_use 字段定义工具（name/description/input_schema），模型按需调用工具并处理结果。支持串行和并行工具调用编排，stop_reason（end_turn/tool_use/max_tokens）驱动控制流决策。输入：prompt + tool 定义（name/description/input_schema）。输出：可执行代码 + 工具调用结果。约束：tool 定义须含 name/description/input_schema；input_schema 须为 JSON Schema。性能指标：tool_use 每次调用增加 1 个 API round-trip。适用场景：自然语言到可执行代码的编排、工具调用编排。不包含：LangGraph 图定义（属 s1）。",
+   "aliases": [],
+   "parent": "Agent Fallback And Tool Orchestration",
+   "children": [],
+   "assets": [
+    "Anthropic PTC"
+   ]
+  }
+ ],
+ "assets": [
+  {
+   "name": "Temporal",
+   "type": "framework",
+   "source": "https://github.com/temporalio/temporal",
+   "description": "分布式持久化工作流编排引擎，Workflow=业务逻辑（deterministic，可持久化状态），Activity=外部副作用任务（at-least-once）。核心机制：Activity RetryPolicy、Workflow except ActivityError 降级、Saga 补偿模式、事件溯源恢复。适用场景：跨进程长时程工作流与多机器人云端协同。约束：Workflow 内禁止 threading/randomness/network IO/system time。",
+   "usage": "from temporalio.common import RetryPolicy; RetryPolicy(initial_interval=timedelta(seconds=10), backoff_coefficient=3.0, maximum_interval=timedelta(minutes=5), maximum_attempts=20, non_retryable_error_types=['InvalidInput'])",
+   "implements": [
+    "Workflow Execution And Persistence",
+    "Temporal Deterministic Workflow",
+    "Event History Command Recording",
+    "Event-Sourced Execution Recovery",
+    "Activity Task Dispatch",
+    "Activity Retry Policy Setup",
+    "Activity Heartbeat Progress Tracking",
+    "Activity Idempotency Design",
+    "Workflow Error Handling",
+    "Event History Replay",
+    "Saga Compensation Recovery",
+    "Event Sourced State Advancement",
+    "Activity Task Scheduling And Execution"
+   ]
+  },
+  {
+   "name": "AWS Step Functions",
+   "type": "framework",
+   "source": "https://docs.aws.amazon.com/step-functions/latest/dg/concepts-error-handling.html",
+   "description": "AWS 托管无服务器状态机服务，使用 ASL 声明 Task/Choice/Parallel/Map 状态。核心机制：Retry[]/Catch[] 字段错误处理、InputPath/ResultPath/OutputPath 数据路径过滤。适用场景：云原生无服务器工作流编排。约束：需 AWS 账户，状态机执行按转换次数计费。",
+   "usage": "ASL: {\"Retry\": [{\"ErrorEquals\": [\"States.Timeout\"], \"IntervalSeconds\": 3, \"MaxAttempts\": 3, \"BackoffRate\": 2.0}]}",
+   "implements": [
+    "ASL State Machine Declaration",
+    "ASL Data Path Filtering",
+    "Workflow Error Handling",
+    "Workflow Execution And Persistence"
+   ]
+  },
+  {
+   "name": "Temporal CLI",
+   "type": "tool",
+   "source": "https://github.com/temporalio/cli",
+   "description": "Temporal 命令行工具，用于与 Temporal Server 交互。支持启动 Worker、管理 Workflow Execution。适用场景：本地开发与生产部署。约束：需连接 Temporal Server。",
+   "usage": "temporal worker start --task-queue my-queue",
+   "implements": [
+    "Workflow Execution And Persistence"
+   ]
+  },
+  {
+   "name": "Apache Airflow",
+   "type": "framework",
+   "source": "https://github.com/apache/airflow",
+   "description": "社区最广泛使用的数据流水线编排平台。核心机制：Sensor（poke/reschedule/deferrable）、Trigger Rule、BranchPythonOperator、Dynamic Task Mapping、Callbacks。适用场景：数据 ETL 流水线、跨 DAG 依赖、外部事件触发。约束：Sensor poke mode 占 worker slot。",
+   "usage": "from airflow.sensors.filesystem import FileSensor; FileSensor(task_id='wait', filepath='/data/input.csv', mode='reschedule')",
+   "implements": [
+    "Sensor Event-Driven Triggering",
+    "Trigger Rule Propagation",
+    "Airflow BranchPythonOperator",
+    "Dynamic Task Mapping",
+    "Callback and Alert Execution",
+    "External Event Sensing",
+    "Pipeline Trigger Execution",
+    "Execution Callback Propagation"
+   ]
+  },
+  {
+   "name": "Argo Workflows",
+   "type": "framework",
+   "source": "https://github.com/argoproj/argo-workflows",
+   "description": "K8s 原生工作流引擎，支持 DAG/Steps 模板、LifecycleHook（v3.3+）、exit handler。适用场景：K8s 环境下的 CI/CD、批处理作业编排。约束：需 K8s 集群。",
+   "usage": "apiVersion: argoproj.io/v1alpha1\nkind: Workflow\nspec:\n  entrypoint: main",
+   "implements": [
+    "LifecycleHook Conditional Trigger"
+   ]
+  },
+  {
+   "name": "Argo Events",
+   "type": "framework",
+   "source": "https://github.com/argoproj/argo-events",
+   "description": "K8s 原生事件依赖管理器，三层架构 EventSource→Sensor→Trigger。核心机制：EventSource 监听外部事件、Sensor 条件求值、Trigger 创建下游资源。适用场景：K8s 环境下的外部事件驱动工作流触发。约束：EventBus 需单独部署。",
+   "usage": "apiVersion: argoproj.io/v1alpha1\nkind: EventSource\nspec:\n  webhook:\n    example:\n      port: 12000",
+   "implements": [
+    "External Event Sensing",
+    "Trigger Condition Gating",
+    "Argo Events EventSource Listening"
+   ]
+  },
+  {
+   "name": "Dagster",
+   "type": "framework",
+   "source": "https://github.com/dagster-io/dagster",
+   "description": "数据编排平台，支持 @sensor 事件驱动触发、PartitionDefinition 分区物化、backfill 历史回填。适用场景：数据资产分区管理、事件驱动数据管道。约束：单分区数据量应可控（< 10GB）。",
+   "usage": "from dagster import sensor, RunRequest\n@sensor(job=my_job)\ndef my_sensor(context):\n    yield RunRequest(run_key=context.cursor)",
+   "implements": [
+    "Sensor Event-Driven Triggering",
+    "Dagster Partitioned Asset Backfill"
+   ]
+  },
+  {
+   "name": "Prefect",
+   "type": "framework",
+   "source": "https://github.com/PrefectHQ/prefect",
+   "description": "数据流编排框架，支持 Deployments 部署触发、@flow/@task 声明式定义。适用场景：数据流的部署化管理与自动触发。约束：需 Prefect Server 或 Prefect Cloud。",
+   "usage": "from prefect import flow, deploy\n@flow\ndef my_flow():\n    pass\ndeploy(my_flow, name='my-deployment')",
+   "implements": [
+    "Prefect Deployment Auto Trigger",
+    "Execution Callback Propagation"
+   ]
+  },
+  {
+   "name": "Flink CEP",
+   "type": "framework",
+   "source": "https://github.com/apache/flink",
+   "description": "Apache Flink 复杂事件处理库，支持 Pattern DSL 声明式定义时序模式、CEP.pattern 编译 NFA 匹配、select/flatSelect 输出复杂事件、checkpoint 容错保障 exactly-once。适用场景：实时事件流复杂模式检测。约束：大状态 CEP job 需用 RocksDB state backend。",
+   "usage": "from pyflink.cep import CEP, Pattern\npattern = Pattern.begin('start').where(lambda e: e['type']=='timeout').times(3).within('10s')\nmatched = CEP.pattern(data_stream, pattern).select(select_fn)",
+   "implements": [
+    "CEP Event Stream Ingestion",
+    "Temporal Pattern Specification",
+    "CEP Pattern Matching",
+    "Event Trigger Gating",
+    "Matched Complex Event Emission",
+    "Streaming Semantics Guarantees",
+    "Matched Event Output And Dispatch"
+   ]
+  },
+  {
+   "name": "Drools",
+   "type": "framework",
+   "source": "https://github.com/kiegroup/drools",
+   "description": "业界主流业务规则引擎，支持 DRL 声明式规则（when/then）、KIE Session 事实推理、Rete 算法高效匹配、Agenda 冲突解决。适用场景：业务规则的声明式条件求值与动作执行（ECA 模式）。约束：Python 集成需通过 wrapper。",
+   "usage": "from drools.rule import Rule\nrule = Rule(name=\"temp_check\", condition=\"Temperature(value > 80)\", action=\"print('Overheating!')\")",
+   "implements": [
+    "Drools DRL Rule Evaluation",
+    "Drools Rule Action Execution"
+   ]
+  },
+  {
+   "name": "Keep",
+   "type": "framework",
+   "source": "https://github.com/keephq/keep",
+   "description": "AIOps 开源告警管理平台，支持 Multi-Provider Connector 多源告警接入、AI Alert Processing 智能去重/富化/关联/降噪、Incident Orchestration 事件编排响应、Workflow Automation YAML 工作流自动化。适用场景：多源告警的智能处理与自动化响应闭环。约束：Workflow 步骤超时默认 300s。",
+   "usage": "workflow:\n  id: alert-escalation\n  triggers:\n    - type: alert\n  steps:\n    - name: check-severity\n      if: \"{{ alert.severity == 'critical' }}\"\n      action: create-ticket",
+   "implements": [
+    "AI Alert Processing",
+    "Multi-Provider Connector",
+    "Incident Orchestration",
+    "Workflow Automation"
+   ]
+  },
+  {
+   "name": "LangGraph",
+   "type": "framework",
+   "source": "https://github.com/langchain-ai/langgraph",
+   "description": "LangChain 出品的有状态多智能体编排框架，支持 StateGraph 有状态图、interrupt() 中断暂停、add_conditional_edges 条件路由、checkpointer 状态持久化、RetryPolicy 节点重试、Send API 动态扇出。适用场景：human-in-the-loop、多 Agent 协作、动态控制流。约束：interrupt() 必须配合 checkpointer 使用。",
+   "usage": "from langgraph.graph import StateGraph\ngraph = StateGraph(State)\ngraph.add_node('agent', agent_node)\ngraph.add_conditional_edges('agent', route_fn, {'continue': 'tool', 'review': 'human'})\napp = graph.compile(checkpointer=MemorySaver())",
+   "implements": [
+    "Dynamic Fan-out And Tool Execution",
+    "Task Delegation Graph Definition",
+    "LangGraph Conditional Edges",
+    "Agent Interrupt Handling",
+    "LangGraph Interrupt Pause Resume",
+    "Parallel Agent Execution Coordination",
+    "LangGraph RetryPolicy Configuration",
+    "Backup Agent Delegation Execution",
+    "Agent Interrupt And Pause Control",
+    "Agent Handoff And Rerouting",
+    "Agent Fallback And Tool Orchestration"
+   ]
+  },
+  {
+   "name": "AutoGen",
+   "type": "framework",
+   "source": "https://github.com/microsoft/autogen",
+   "description": "Microsoft 多智能体对话框架，支持 GroupChat 群组对话、Swarm HandoffMessage 交接、ExternalTermination 外部终止、ConversableAgent 可对话 Agent。适用场景：多 Agent 协作对话、显式交接控制。约束：Swarm 模式为 0.4+ 新特性。",
+   "usage": "from autogen import ConversableAgent, GroupChat\nfrom autogen.agentchat.contrib.swarm_agent import SwarmAgent",
+   "implements": [
+    "Agent Interrupt Handling",
+    "Handoff Message Transfer Between Agents",
+    "Parallel Agent Execution Coordination",
+    "Backup Agent Delegation Execution",
+    "Agent Handoff And Rerouting",
+    "Agent Fallback And Tool Orchestration"
+   ]
+  },
+  {
+   "name": "Anthropic PTC",
+   "type": "framework",
+   "source": "https://docs.anthropic.com/en/docs/build-with-claude/tool-use",
+   "description": "Anthropic Claude API 代码编排能力，支持 tool_use 工具调用、stop_reason 控制流决策、串行/并行工具调用编排。适用场景：自然语言到可执行代码的编排、工具调用编排。约束：tool_use 每次调用增加 1 个 API round-trip。",
+   "usage": "import anthropic\nclient = anthropic.Anthropic()\ntools = [{'name': 'get_weather', 'description': 'Get weather', 'input_schema': {'type': 'object', 'properties': {'city': {'type': 'string'}}}}]\nresponse = client.messages.create(model='claude-3-5-sonnet-20241022', max_tokens=1024, tools=tools, messages=[...])",
+   "implements": [
+    "Anthropic PTC Code Orchestration",
+    "Agent Fallback And Tool Orchestration"
+   ]
+  }
+ ],
+ "evidence": {
+  "chain_documents": 4,
+  "ledgers": 4,
+  "websearch_total": 48,
+  "webfetch_total": 40,
+  "with_negative_results": 4
+ }
+}

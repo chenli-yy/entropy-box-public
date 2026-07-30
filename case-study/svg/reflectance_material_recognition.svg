@@ -1,0 +1,601 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="824" height="5516"
+ viewBox="0 0 824 5516"
+ shape-rendering="geometricPrecision" text-rendering="optimizeLegibility">
+<!--SV-THEME--><style>/* 一份 SVG 两种主题 */@media (prefers-color-scheme: light){[fill="#0B0D16"]{fill:#F6F3EC}[stroke="#0B0D16"]{stroke:#F6F3EC}[fill="#0D1D28"]{fill:#E4F1F8}[stroke="#0D1D28"]{stroke:#E4F1F8}[fill="#0D1F2C"]{fill:#E4F3F8}[stroke="#0D1F2C"]{stroke:#E4F3F8}[fill="#0E2019"]{fill:#E3F5EC}[stroke="#0E2019"]{stroke:#E3F5EC}[fill="#12162A"]{fill:#EFEBE2}[stroke="#12162A"]{stroke:#EFEBE2}[fill="#151A2B"]{fill:#FFFFFF}[stroke="#151A2B"]{stroke:#FFFFFF}[fill="#161A26"]{fill:#F0EEE8}[stroke="#161A26"]{stroke:#F0EEE8}[fill="#1A1430"]{fill:#EFEAFB}[stroke="#1A1430"]{stroke:#EFEAFB}[fill="#231A0C"]{fill:#FAF2DF}[stroke="#231A0C"]{stroke:#FAF2DF}[fill="#2A0F1E"]{fill:#FBE6EF}[stroke="#2A0F1E"]{stroke:#FBE6EF}[fill="#2A3050"]{fill:#DFD8CC}[stroke="#2A3050"]{stroke:#DFD8CC}[fill="#39406A"]{fill:#C7BDAD}[stroke="#39406A"]{stroke:#C7BDAD}[fill="#3FC5E8"]{fill:#0E6E8C}[stroke="#3FC5E8"]{stroke:#0E6E8C}[fill="#3FD6E8"]{fill:#0E6E8C}[stroke="#3FD6E8"]{stroke:#0E6E8C}[fill="#4FA8FF"]{fill:#1668A8}[stroke="#4FA8FF"]{stroke:#1668A8}[fill="#4FB3E8"]{fill:#1668A8}[stroke="#4FB3E8"]{stroke:#1668A8}[fill="#4FC08D"]{fill:#1F7A55}[stroke="#4FC08D"]{stroke:#1F7A55}[fill="#5C6480"]{fill:#8A8378}[stroke="#5C6480"]{stroke:#8A8378}[fill="#5FD08A"]{fill:#1F7A55}[stroke="#5FD08A"]{stroke:#1F7A55}[fill="#6E7796"]{fill:#A9A196}[stroke="#6E7796"]{stroke:#A9A196}[fill="#6FD3A6"]{fill:#166344}[stroke="#6FD3A6"]{stroke:#166344}[fill="#7A87A8"]{fill:#5A637C}[stroke="#7A87A8"]{stroke:#5A637C}[fill="#7B8BFF"]{fill:#3A46B0}[stroke="#7B8BFF"]{stroke:#3A46B0}[fill="#8A93B0"]{fill:#7B7368}[stroke="#8A93B0"]{stroke:#7B7368}[fill="#8FA3B8"]{fill:#4E5F70}[stroke="#8FA3B8"]{stroke:#4E5F70}[fill="#9B87FF"]{fill:#5B3FD4}[stroke="#9B87FF"]{stroke:#5B3FD4}[fill="#A9B0C8"]{fill:#5A5349}[stroke="#A9B0C8"]{stroke:#5A5349}[fill="#B08D7A"]{fill:#6D5546}[stroke="#B08D7A"]{stroke:#6D5546}[fill="#B98BFF"]{fill:#5B3FD4}[stroke="#B98BFF"]{stroke:#5B3FD4}[fill="#D6DAE8"]{fill:#2E2A25}[stroke="#D6DAE8"]{stroke:#2E2A25}[fill="#E8A33D"]{fill:#9A6C0B}[stroke="#E8A33D"]{stroke:#9A6C0B}[fill="#EDE7DD"]{fill:#191714}[stroke="#EDE7DD"]{stroke:#191714}[fill="#FF5FA8"]{fill:#B02063}[stroke="#FF5FA8"]{stroke:#B02063}[fill="#FF6B6B"]{fill:#C0392B}[stroke="#FF6B6B"]{stroke:#C0392B}[fill="#FF8FC2"]{fill:#8F1B4E}[stroke="#FF8FC2"]{stroke:#8F1B4E}[fill="#FFB03D"]{fill:#9A6C0B}[stroke="#FFB03D"]{stroke:#9A6C0B}}html[data-theme="light"] [fill="#0B0D16"]{fill:#F6F3EC}html[data-theme="light"] [stroke="#0B0D16"]{stroke:#F6F3EC}html[data-theme="light"] [fill="#0D1D28"]{fill:#E4F1F8}html[data-theme="light"] [stroke="#0D1D28"]{stroke:#E4F1F8}html[data-theme="light"] [fill="#0D1F2C"]{fill:#E4F3F8}html[data-theme="light"] [stroke="#0D1F2C"]{stroke:#E4F3F8}html[data-theme="light"] [fill="#0E2019"]{fill:#E3F5EC}html[data-theme="light"] [stroke="#0E2019"]{stroke:#E3F5EC}html[data-theme="light"] [fill="#12162A"]{fill:#EFEBE2}html[data-theme="light"] [stroke="#12162A"]{stroke:#EFEBE2}html[data-theme="light"] [fill="#151A2B"]{fill:#FFFFFF}html[data-theme="light"] [stroke="#151A2B"]{stroke:#FFFFFF}html[data-theme="light"] [fill="#161A26"]{fill:#F0EEE8}html[data-theme="light"] [stroke="#161A26"]{stroke:#F0EEE8}html[data-theme="light"] [fill="#1A1430"]{fill:#EFEAFB}html[data-theme="light"] [stroke="#1A1430"]{stroke:#EFEAFB}html[data-theme="light"] [fill="#231A0C"]{fill:#FAF2DF}html[data-theme="light"] [stroke="#231A0C"]{stroke:#FAF2DF}html[data-theme="light"] [fill="#2A0F1E"]{fill:#FBE6EF}html[data-theme="light"] [stroke="#2A0F1E"]{stroke:#FBE6EF}html[data-theme="light"] [fill="#2A3050"]{fill:#DFD8CC}html[data-theme="light"] [stroke="#2A3050"]{stroke:#DFD8CC}html[data-theme="light"] [fill="#39406A"]{fill:#C7BDAD}html[data-theme="light"] [stroke="#39406A"]{stroke:#C7BDAD}html[data-theme="light"] [fill="#3FC5E8"]{fill:#0E6E8C}html[data-theme="light"] [stroke="#3FC5E8"]{stroke:#0E6E8C}html[data-theme="light"] [fill="#3FD6E8"]{fill:#0E6E8C}html[data-theme="light"] [stroke="#3FD6E8"]{stroke:#0E6E8C}html[data-theme="light"] [fill="#4FA8FF"]{fill:#1668A8}html[data-theme="light"] [stroke="#4FA8FF"]{stroke:#1668A8}html[data-theme="light"] [fill="#4FB3E8"]{fill:#1668A8}html[data-theme="light"] [stroke="#4FB3E8"]{stroke:#1668A8}html[data-theme="light"] [fill="#4FC08D"]{fill:#1F7A55}html[data-theme="light"] [stroke="#4FC08D"]{stroke:#1F7A55}html[data-theme="light"] [fill="#5C6480"]{fill:#8A8378}html[data-theme="light"] [stroke="#5C6480"]{stroke:#8A8378}html[data-theme="light"] [fill="#5FD08A"]{fill:#1F7A55}html[data-theme="light"] [stroke="#5FD08A"]{stroke:#1F7A55}html[data-theme="light"] [fill="#6E7796"]{fill:#A9A196}html[data-theme="light"] [stroke="#6E7796"]{stroke:#A9A196}html[data-theme="light"] [fill="#6FD3A6"]{fill:#166344}html[data-theme="light"] [stroke="#6FD3A6"]{stroke:#166344}html[data-theme="light"] [fill="#7A87A8"]{fill:#5A637C}html[data-theme="light"] [stroke="#7A87A8"]{stroke:#5A637C}html[data-theme="light"] [fill="#7B8BFF"]{fill:#3A46B0}html[data-theme="light"] [stroke="#7B8BFF"]{stroke:#3A46B0}html[data-theme="light"] [fill="#8A93B0"]{fill:#7B7368}html[data-theme="light"] [stroke="#8A93B0"]{stroke:#7B7368}html[data-theme="light"] [fill="#8FA3B8"]{fill:#4E5F70}html[data-theme="light"] [stroke="#8FA3B8"]{stroke:#4E5F70}html[data-theme="light"] [fill="#9B87FF"]{fill:#5B3FD4}html[data-theme="light"] [stroke="#9B87FF"]{stroke:#5B3FD4}html[data-theme="light"] [fill="#A9B0C8"]{fill:#5A5349}html[data-theme="light"] [stroke="#A9B0C8"]{stroke:#5A5349}html[data-theme="light"] [fill="#B08D7A"]{fill:#6D5546}html[data-theme="light"] [stroke="#B08D7A"]{stroke:#6D5546}html[data-theme="light"] [fill="#B98BFF"]{fill:#5B3FD4}html[data-theme="light"] [stroke="#B98BFF"]{stroke:#5B3FD4}html[data-theme="light"] [fill="#D6DAE8"]{fill:#2E2A25}html[data-theme="light"] [stroke="#D6DAE8"]{stroke:#2E2A25}html[data-theme="light"] [fill="#E8A33D"]{fill:#9A6C0B}html[data-theme="light"] [stroke="#E8A33D"]{stroke:#9A6C0B}html[data-theme="light"] [fill="#EDE7DD"]{fill:#191714}html[data-theme="light"] [stroke="#EDE7DD"]{stroke:#191714}html[data-theme="light"] [fill="#FF5FA8"]{fill:#B02063}html[data-theme="light"] [stroke="#FF5FA8"]{stroke:#B02063}html[data-theme="light"] [fill="#FF6B6B"]{fill:#C0392B}html[data-theme="light"] [stroke="#FF6B6B"]{stroke:#C0392B}html[data-theme="light"] [fill="#FF8FC2"]{fill:#8F1B4E}html[data-theme="light"] [stroke="#FF8FC2"]{stroke:#8F1B4E}html[data-theme="light"] [fill="#FFB03D"]{fill:#9A6C0B}html[data-theme="light"] [stroke="#FFB03D"]{stroke:#9A6C0B}</style>
+<defs>
+  <marker id="arr" markerWidth="12" markerHeight="9" refX="10" refY="4.5" orient="auto">
+    <polygon points="0 0,12 4.5,0 9" fill="#5C6480"/>
+  </marker>
+  <marker id="arr-gray" markerWidth="12" markerHeight="9" refX="10" refY="4.5" orient="auto">
+    <polygon points="0 0,12 4.5,0 9" fill="#39406A"/>
+  </marker>
+</defs>
+<rect width="100%" height="100%" fill="#0B0D16" rx="0"/>
+<rect x="0.0" y="0.0" width="824.0" height="100.0" rx="0" fill="#101528" stroke="none" stroke-width="0"/>
+  <text x="412.0" y="52.0" font-size="20" fill="#EDE7DD" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="412.0" dy="0">反射率材质识别  (Reflectance Material Recognition)</tspan></text>
+  <rect x="118.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.5"/>
+  <text x="140.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="140.0" dy="0">阶段</tspan></text>
+  <rect x="202.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#231A0C" stroke="#E8A33D" stroke-width="1.5"/>
+  <text x="224.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="224.0" dy="0">步骤</tspan></text>
+  <rect x="286.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#0D1D28" stroke="#4FB3E8" stroke-width="1.5"/>
+  <text x="308.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="308.0" dy="0">子链</tspan></text>
+  <rect x="370.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="1.5"/>
+  <text x="392.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="392.0" dy="0">判断</tspan></text>
+  <rect x="454.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#1A1430" stroke="#9B87FF" stroke-width="1.5"/>
+  <text x="476.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="476.0" dy="0">分支</tspan></text>
+  <rect x="538.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#0E2019" stroke="#4FC08D" stroke-width="1.5"/>
+  <text x="560.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="560.0" dy="0">合并</tspan></text>
+  <rect x="622.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#161A26" stroke="#7A87A8" stroke-width="1.5"/>
+  <text x="644.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="644.0" dy="0">编码</tspan></text>
+  <rect x="36.0" y="164.0" width="516.0" height="1112.0" rx="8" fill="#151A2B" stroke="#2A3050" stroke-width="2.0"/>
+  <rect x="36.0" y="164.0" width="516.0" height="48.0" rx="8" fill="#16223A" stroke="none" stroke-width="0"/>
+  <rect x="36.0" y="188.0" width="516.0" height="24.0" rx="0" fill="#16223A" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="189.0" font-size="15" fill="#7FD9F0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">任务链 1: polarization_fresnel_material</tspan></text>
+  <rect x="56.0" y="232.0" width="476.0" height="100.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="232.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="252.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="253.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s1 — Polarization Image Acquisition</tspan></text>
+  <rect x="56.0" y="348.0" width="476.0" height="100.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="348.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="368.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="369.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s2 — Stokes Compute</tspan></text>
+  <rect x="56.0" y="464.0" width="476.0" height="100.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="464.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="484.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="485.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s3 — DoP AoP Derive</tspan></text>
+  <rect x="56.0" y="580.0" width="476.0" height="272.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="580.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="600.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="601.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s4 — Fresnel Ratio Estimate</tspan></text>
+  <rect x="56.0" y="868.0" width="476.0" height="272.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="868.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="888.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="889.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s5 — Material Classify</tspan></text>
+  <rect x="56.0" y="1156.0" width="476.0" height="100.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="1156.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="1176.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="1177.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s6 — Result Emit</tspan></text>
+  <rect x="36.0" y="1308.0" width="516.0" height="880.0" rx="8" fill="#151A2B" stroke="#2A3050" stroke-width="2.0"/>
+  <rect x="36.0" y="1308.0" width="516.0" height="48.0" rx="8" fill="#16223A" stroke="none" stroke-width="0"/>
+  <rect x="36.0" y="1332.0" width="516.0" height="24.0" rx="0" fill="#16223A" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="1333.0" font-size="15" fill="#7FD9F0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">任务链 2: photometric_stereo_material</tspan></text>
+  <rect x="56.0" y="1376.0" width="476.0" height="100.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="1376.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="1396.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="1397.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s1 — Multi-light Image Capture</tspan></text>
+  <rect x="56.0" y="1492.0" width="476.0" height="272.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="1492.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="1512.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="1513.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s2 — Normal Albedo Solve</tspan></text>
+  <rect x="56.0" y="1780.0" width="476.0" height="272.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="1780.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="1800.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="1801.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s3 — Material Classify PS</tspan></text>
+  <rect x="56.0" y="2068.0" width="476.0" height="100.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="2068.0" width="476.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="2088.0" width="476.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="294.0" y="2089.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="294.0" dy="0">s4 — Result Emit PS</tspan></text>
+  <rect x="36.0" y="2220.0" width="752.0" height="1052.0" rx="8" fill="#151A2B" stroke="#2A3050" stroke-width="2.0"/>
+  <rect x="36.0" y="2220.0" width="752.0" height="48.0" rx="8" fill="#16223A" stroke="none" stroke-width="0"/>
+  <rect x="36.0" y="2244.0" width="752.0" height="24.0" rx="0" fill="#16223A" stroke="none" stroke-width="0"/>
+  <text x="412.0" y="2245.0" font-size="15" fill="#7FD9F0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="412.0" dy="0">任务链 3: brdf_svbrdf_clustering</tspan></text>
+  <rect x="56.0" y="2288.0" width="712.0" height="272.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="2288.0" width="712.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="2308.0" width="712.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="412.0" y="2309.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="412.0" dy="0">s1 — BRDF Data Acquisition</tspan></text>
+  <rect x="56.0" y="2576.0" width="712.0" height="272.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="2576.0" width="712.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="2596.0" width="712.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="412.0" y="2597.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="412.0" dy="0">s2 — BRDF Feature Extraction</tspan></text>
+  <rect x="56.0" y="2864.0" width="712.0" height="272.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="2864.0" width="712.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="2884.0" width="712.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="412.0" y="2885.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="412.0" dy="0">s3 — BRDF Classification</tspan></text>
+  <rect x="56.0" y="3152.0" width="712.0" height="100.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="3152.0" width="712.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="3172.0" width="712.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="412.0" y="3173.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="412.0" dy="0">s4 — Result Emit BRDF</tspan></text>
+  <rect x="36.0" y="3304.0" width="752.0" height="1052.0" rx="8" fill="#151A2B" stroke="#2A3050" stroke-width="2.0"/>
+  <rect x="36.0" y="3304.0" width="752.0" height="48.0" rx="8" fill="#16223A" stroke="none" stroke-width="0"/>
+  <rect x="36.0" y="3328.0" width="752.0" height="24.0" rx="0" fill="#16223A" stroke="none" stroke-width="0"/>
+  <text x="412.0" y="3329.0" font-size="15" fill="#7FD9F0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="412.0" dy="0">任务链 4: hyperspectral_spectral_signature</tspan></text>
+  <rect x="56.0" y="3372.0" width="712.0" height="272.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="3372.0" width="712.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="3392.0" width="712.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="412.0" y="3393.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="412.0" dy="0">s1 — Hyperspectral Image Capture</tspan></text>
+  <rect x="56.0" y="3660.0" width="712.0" height="272.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="3660.0" width="712.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="3680.0" width="712.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="412.0" y="3681.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="412.0" dy="0">s2 — Spectral Feature Extraction</tspan></text>
+  <rect x="56.0" y="3948.0" width="712.0" height="272.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="3948.0" width="712.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="3968.0" width="712.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="412.0" y="3969.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="412.0" dy="0">s3 — Spectral Material Classification</tspan></text>
+  <rect x="56.0" y="4236.0" width="712.0" height="100.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="4236.0" width="712.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="4256.0" width="712.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="412.0" y="4257.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="412.0" dy="0">s4 — Result Emit HS</tspan></text>
+  <rect x="36.0" y="4388.0" width="752.0" height="1052.0" rx="8" fill="#151A2B" stroke="#2A3050" stroke-width="2.0"/>
+  <rect x="36.0" y="4388.0" width="752.0" height="48.0" rx="8" fill="#16223A" stroke="none" stroke-width="0"/>
+  <rect x="36.0" y="4412.0" width="752.0" height="24.0" rx="0" fill="#16223A" stroke="none" stroke-width="0"/>
+  <text x="412.0" y="4413.0" font-size="15" fill="#7FD9F0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="412.0" dy="0">任务链 5: tof_lidar_intensity</tspan></text>
+  <rect x="56.0" y="4456.0" width="712.0" height="272.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="4456.0" width="712.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="4476.0" width="712.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="412.0" y="4477.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="412.0" dy="0">s1 — ToF LiDAR Intensity Capture</tspan></text>
+  <rect x="56.0" y="4744.0" width="712.0" height="272.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="4744.0" width="712.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="4764.0" width="712.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="412.0" y="4765.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="412.0" dy="0">s2 — Intensity Feature Extraction</tspan></text>
+  <rect x="56.0" y="5032.0" width="712.0" height="272.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="5032.0" width="712.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="5052.0" width="712.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="412.0" y="5053.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="412.0" dy="0">s3 — ToF Material Classification</tspan></text>
+  <rect x="56.0" y="5320.0" width="712.0" height="100.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="5320.0" width="712.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="5340.0" width="712.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="412.0" y="5341.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="412.0" dy="0">s4 — Result Emit ToF</tspan></text>
+  <line x1="294.0" y1="272.0" x2="294.0" y2="348.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="294.0" y1="388.0" x2="294.0" y2="464.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="294.0" y1="504.0" x2="274.0" y2="640.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 740.0 L 274.0 754.0 L 156.0 754.0 L 156.0 768.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 740.0 L 274.0 754.0 L 392.0 754.0 L 392.0 768.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 832.0 L 156.0 880.0 L 274.0 880.0 L 274.0 928.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 832.0 L 392.0 880.0 L 274.0 880.0 L 274.0 928.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 1028.0 L 274.0 1042.0 L 156.0 1042.0 L 156.0 1056.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 1028.0 L 274.0 1042.0 L 392.0 1042.0 L 392.0 1056.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 1120.0 L 156.0 1138.0 L 294.0 1138.0 L 294.0 1156.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 1120.0 L 392.0 1138.0 L 294.0 1138.0 L 294.0 1156.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="294.0" y1="1416.0" x2="274.0" y2="1552.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 1652.0 L 274.0 1666.0 L 156.0 1666.0 L 156.0 1680.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 1652.0 L 274.0 1666.0 L 392.0 1666.0 L 392.0 1680.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 1744.0 L 156.0 1792.0 L 274.0 1792.0 L 274.0 1840.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 1744.0 L 392.0 1792.0 L 274.0 1792.0 L 274.0 1840.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 1940.0 L 274.0 1954.0 L 156.0 1954.0 L 156.0 1968.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 1940.0 L 274.0 1954.0 L 392.0 1954.0 L 392.0 1968.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 2032.0 L 156.0 2050.0 L 294.0 2050.0 L 294.0 2068.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 2032.0 L 392.0 2050.0 L 294.0 2050.0 L 294.0 2068.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 2448.0 L 274.0 2462.0 L 156.0 2462.0 L 156.0 2476.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 2448.0 L 274.0 2462.0 L 392.0 2462.0 L 392.0 2476.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 2540.0 L 156.0 2588.0 L 392.0 2588.0 L 392.0 2636.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="392.0" y1="2540.0" x2="392.0" y2="2636.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 2736.0 L 392.0 2750.0 L 156.0 2750.0 L 156.0 2764.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="392.0" y1="2736.0" x2="392.0" y2="2764.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 2736.0 L 392.0 2750.0 L 628.0 2750.0 L 628.0 2764.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 2828.0 L 156.0 2876.0 L 392.0 2876.0 L 392.0 2924.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="392.0" y1="2828.0" x2="392.0" y2="2924.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 628.0 2828.0 L 628.0 2876.0 L 392.0 2876.0 L 392.0 2924.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 3024.0 L 392.0 3038.0 L 156.0 3038.0 L 156.0 3052.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="392.0" y1="3024.0" x2="392.0" y2="3052.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 3024.0 L 392.0 3038.0 L 628.0 3038.0 L 628.0 3052.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 3116.0 L 156.0 3134.0 L 412.0 3134.0 L 412.0 3152.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="392.0" y1="3116.0" x2="412.0" y2="3152.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 628.0 3116.0 L 628.0 3134.0 L 412.0 3134.0 L 412.0 3152.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 3532.0 L 274.0 3546.0 L 156.0 3546.0 L 156.0 3560.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 3532.0 L 274.0 3546.0 L 392.0 3546.0 L 392.0 3560.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 3624.0 L 156.0 3672.0 L 392.0 3672.0 L 392.0 3720.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="392.0" y1="3624.0" x2="392.0" y2="3720.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 3820.0 L 392.0 3834.0 L 156.0 3834.0 L 156.0 3848.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="392.0" y1="3820.0" x2="392.0" y2="3848.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 3820.0 L 392.0 3834.0 L 628.0 3834.0 L 628.0 3848.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 3912.0 L 156.0 3960.0 L 392.0 3960.0 L 392.0 4008.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="392.0" y1="3912.0" x2="392.0" y2="4008.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 628.0 3912.0 L 628.0 3960.0 L 392.0 3960.0 L 392.0 4008.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 4108.0 L 392.0 4122.0 L 156.0 4122.0 L 156.0 4136.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="392.0" y1="4108.0" x2="392.0" y2="4136.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 4108.0 L 392.0 4122.0 L 628.0 4122.0 L 628.0 4136.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 4200.0 L 156.0 4218.0 L 412.0 4218.0 L 412.0 4236.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="392.0" y1="4200.0" x2="412.0" y2="4236.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 628.0 4200.0 L 628.0 4218.0 L 412.0 4218.0 L 412.0 4236.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 4616.0 L 274.0 4630.0 L 156.0 4630.0 L 156.0 4644.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 4616.0 L 274.0 4630.0 L 392.0 4630.0 L 392.0 4644.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 4708.0 L 156.0 4756.0 L 392.0 4756.0 L 392.0 4804.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="392.0" y1="4708.0" x2="392.0" y2="4804.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 4904.0 L 392.0 4918.0 L 156.0 4918.0 L 156.0 4932.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="392.0" y1="4904.0" x2="392.0" y2="4932.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 4904.0 L 392.0 4918.0 L 628.0 4918.0 L 628.0 4932.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 4996.0 L 156.0 5044.0 L 274.0 5044.0 L 274.0 5092.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 4996.0 L 392.0 5044.0 L 274.0 5044.0 L 274.0 5092.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 628.0 4996.0 L 628.0 5044.0 L 274.0 5044.0 L 274.0 5092.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 5192.0 L 274.0 5206.0 L 156.0 5206.0 L 156.0 5220.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 5192.0 L 274.0 5206.0 L 392.0 5206.0 L 392.0 5220.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 5284.0 L 156.0 5302.0 L 412.0 5302.0 L 412.0 5320.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="392.0" y1="5284.0" x2="412.0" y2="5320.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <g class="step-node" data-sid="s4_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Incident Angle Prior
+判断：是否具备入射角先验或镜面法线估计
+CAP_2d81afc3</title>
+  <polygon points="274.0,640.0 354.0,690.0 274.0,740.0 194.0,690.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="274.0" y="681.2" font-size="13" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">Fresnel反射率</tspan><tspan x="274.0" dy="17.6">比估计</tspan></text>
+  <rect x="252.0" y="630.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="274.0" y="638.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Fresnel Formula Compute
+条件：具备入射角先验→直接用Fresnel公式计算ρ。基于Fresnel公式R_s = |(n1*cosθi - n2*cosθt)/(n1*cosθi + n2*cosθt)|^2, R_p = |(n1*cosθt - n2*cosθi)/(n1*cosθt + n2*cosθi)|^2，估计反射率比ρ = R_s/R_p。
+CAP_2d81afc3</title>
+  <rect x="56.0" y="768.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="799.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">Fresnel反射率比估计</tspan></text>
+  <rect x="62.0" y="772.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="783.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>RMCW Coherent Rx Ratio
+条件：不具备入射角先验→走RMCW相干接收通道读s/p比。RMCW偏振分集相干接收器单shot同时采集s/p偏振分量强度，直接计算ρ = I_s / I_p，无需入射角先验。
+CAP_2d81afc3</title>
+  <rect x="292.0" y="768.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="799.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">Fresnel反射率比估计</tspan></text>
+  <rect x="298.0" y="772.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="783.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>DoP Threshold Judge
+判断：DoP是否高于介质判别阈值（如0.3）
+CAP_03b28723</title>
+  <polygon points="274.0,928.0 354.0,978.0 274.0,1028.0 194.0,978.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="274.0" y="978.0" font-size="13" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">偏振材质分类</tspan></text>
+  <rect x="252.0" y="918.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="274.0" y="926.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Dielectric Classify
+条件：DoP高→介质类（塑料/玻璃/水）。介质镜面反射DoP通常&gt;0.3，结合Fresnel比ρ与RGB特征进一步细分类别（塑料/玻璃/陶瓷/水等）。
+CAP_03b28723</title>
+  <rect x="56.0" y="1056.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="1087.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">偏振材质分类</tspan></text>
+  <rect x="62.0" y="1060.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="1071.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Metal Subclassify
+条件：DoP低→金属类，需进一步用ρ与RGB细分金属子类。金属DoP通常&lt;0.1（复折射率虚部主导），结合Fresnel比ρ≈1与颜色/光谱特征细分铝/铜/钢/涂层金属等。
+CAP_03b28723</title>
+  <rect x="292.0" y="1056.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="1087.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">偏振材质分类</tspan></text>
+  <rect x="298.0" y="1060.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="1071.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>BRDF Model Select
+判断：是否使用非Lambertian BRDF模型
+CAP_f3ee2197</title>
+  <polygon points="274.0,1552.0 354.0,1602.0 274.0,1652.0 194.0,1602.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="274.0" y="1593.2" font-size="13" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">法线与反照率估</tspan><tspan x="274.0" dy="17.6">计</tspan></text>
+  <rect x="252.0" y="1542.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="274.0" y="1550.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Lambertian LSQR
+条件：Lambertian假设-&gt;最小二乘直接求解法线与反照率。快速且对漫反射材质准确。
+CAP_f3ee2197</title>
+  <rect x="56.0" y="1680.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="1711.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">法线与反照率估计</tspan></text>
+  <rect x="62.0" y="1684.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="1695.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Non-Lambertian RANSAC
+条件：非Lambertian-&gt;RANSAC迭代+Oren-Nayar/Torrance-Sparrow模型，剔除镜面outlier后拟合。精度更高但慢。
+CAP_f3ee2197</title>
+  <rect x="292.0" y="1680.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="1711.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">法线与反照率估计</tspan></text>
+  <rect x="298.0" y="1684.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="1695.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Specular Level Check
+判断：表面镜面反射强度（非Lambertian残差）是否高于阈值
+CAP_092eef7a</title>
+  <polygon points="274.0,1840.0 354.0,1890.0 274.0,1940.0 194.0,1890.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="274.0" y="1881.2" font-size="13" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">光度立体材质分</tspan><tspan x="274.0" dy="17.6">类</tspan></text>
+  <rect x="252.0" y="1830.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="274.0" y="1838.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Diffuse Dominant Classify
+条件：漫反射主导-&gt;用反照率+法线曲率特征分类（织物/石材/纸张等）。
+CAP_092eef7a</title>
+  <rect x="56.0" y="1968.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="1999.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">光度立体材质分类</tspan></text>
+  <rect x="62.0" y="1972.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="1983.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Specular BRDF Classify
+条件：镜面主导-&gt;用BRDF参数（粗糙度/镜面强度）+反照率分类（金属/塑料漆面/玻璃等）。
+CAP_092eef7a</title>
+  <rect x="292.0" y="1968.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="1999.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">光度立体材质分类</tspan></text>
+  <rect x="298.0" y="1972.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="1983.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Acquisition Method
+判断：BRDF数据采集方式
+CAP_a868176d</title>
+  <polygon points="274.0,2348.0 354.0,2398.0 274.0,2448.0 194.0,2398.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="274.0" y="2398.0" font-size="13" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">BRDF数据采集</tspan></text>
+  <rect x="252.0" y="2338.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="274.0" y="2346.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Gonioreflectometer Scan
+条件：实验室测量仪-&gt;高精度逐角度扫描，获取密集BRDF采样。精度高但慢（小时级）。
+CAP_a868176d</title>
+  <rect x="56.0" y="2476.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="2507.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">BRDF数据采集</tspan></text>
+  <rect x="62.0" y="2480.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="2491.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Image-based Inversion
+条件：图像估计-&gt;多视角+多光照图像反演BRDF参数。快但精度较低。
+CAP_a868176d</title>
+  <rect x="292.0" y="2476.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="2507.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">BRDF数据采集</tspan></text>
+  <rect x="298.0" y="2480.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="2491.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Feature Type
+判断：特征提取方法
+CAP_c3dd279e</title>
+  <polygon points="392.0,2636.0 472.0,2686.0 392.0,2736.0 312.0,2686.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="392.0" y="2686.0" font-size="13" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">BRDF特征提取</tspan></text>
+  <rect x="370.0" y="2626.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="392.0" y="2634.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Parametric Model Fit
+条件：参数化模型-&gt;拟合Cook-Torrance/Oren-Nayar/Ward模型参数作为特征。物理可解释。
+CAP_c3dd279e</title>
+  <rect x="56.0" y="2764.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="2795.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">BRDF特征提取</tspan></text>
+  <rect x="62.0" y="2768.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="2779.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Statistical Features
+条件：统计特征-&gt;反射率直方图、镜面峰宽、albedo等统计量。简单快速。
+CAP_c3dd279e</title>
+  <rect x="292.0" y="2764.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="2795.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">BRDF特征提取</tspan></text>
+  <rect x="298.0" y="2768.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="2779.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1c" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Dimensionality Reduction
+条件：降维-&gt;PCA/自编码器将高维BRDF压缩为低维embedding。信息保留多。
+CAP_c3dd279e</title>
+  <rect x="528.0" y="2764.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="628.0" y="2795.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="628.0" dy="0">BRDF特征提取</tspan></text>
+  <rect x="534.0" y="2768.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="551.0" y="2779.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="551.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Task Type
+判断：任务类型（监督分类/无监督聚类/检索）
+CAP_2b96d3c7</title>
+  <polygon points="392.0,2924.0 472.0,2974.0 392.0,3024.0 312.0,2974.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="392.0" y="2974.0" font-size="13" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">BRDF聚类/分类</tspan></text>
+  <rect x="370.0" y="2914.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="392.0" y="2922.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Supervised Classification
+条件：监督分类-&gt;SVM/Random Forest对已知类别分类。需标注训练集。
+CAP_2b96d3c7</title>
+  <rect x="56.0" y="3052.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="3083.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">BRDF聚类/分类</tspan></text>
+  <rect x="62.0" y="3056.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="3067.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Unsupervised Clustering
+条件：无监督聚类-&gt;K-Means/层次聚类发现材质群组。无需标注。
+CAP_2b96d3c7</title>
+  <rect x="292.0" y="3052.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="3083.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">BRDF聚类/分类</tspan></text>
+  <rect x="298.0" y="3056.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="3067.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1c" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Nearest Neighbor Retrieval
+条件：最近邻检索-&gt;在BRDF数据库中KNN查询匹配材质。需参考数据库。
+CAP_2b96d3c7</title>
+  <rect x="528.0" y="3052.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="628.0" y="3083.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="628.0" dy="0">BRDF聚类/分类</tspan></text>
+  <rect x="534.0" y="3056.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="551.0" y="3067.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="551.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Capture Mode
+判断：高光谱采集模式
+CAP_5f188420</title>
+  <polygon points="274.0,3432.0 354.0,3482.0 274.0,3532.0 194.0,3482.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="274.0" y="3482.0" font-size="13" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">高光谱图像采集</tspan></text>
+  <rect x="252.0" y="3422.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="274.0" y="3430.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Pushbroom Scan
+条件：推扫式-&gt;线阵+光栅，运动平台逐行扫描。光谱分辨率高，需运动平台。
+CAP_5f188420</title>
+  <rect x="56.0" y="3560.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="3591.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">高光谱图像采集</tspan></text>
+  <rect x="62.0" y="3564.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="3575.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Snapshot LCTF
+条件：快照式-&gt;LCTF电控调谐+面阵相机，逐波段拍摄。灵活但速度慢（每个波段一次曝光）。
+CAP_5f188420</title>
+  <rect x="292.0" y="3560.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="3591.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">高光谱图像采集</tspan></text>
+  <rect x="298.0" y="3564.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="3575.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Feature Method
+判断：特征提取方法
+CAP_3e508380</title>
+  <polygon points="392.0,3720.0 472.0,3770.0 392.0,3820.0 312.0,3770.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="392.0" y="3770.0" font-size="13" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">光谱特征提取</tspan></text>
+  <rect x="370.0" y="3710.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="392.0" y="3718.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Spectral Indices
+条件：光谱指数-&gt;NDVI/红边位置等物理指数。可解释性强，特征维度低。
+CAP_3e508380</title>
+  <rect x="56.0" y="3848.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="3879.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">光谱特征提取</tspan></text>
+  <rect x="62.0" y="3852.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="3863.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>DR PCA MNF
+条件：降维-&gt;PCA/MNF将数百波段压缩到低维。信息保留多。
+CAP_3e508380</title>
+  <rect x="292.0" y="3848.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="3879.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">光谱特征提取</tspan></text>
+  <rect x="298.0" y="3852.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="3863.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1c" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Full Spectrum
+条件：全光谱-&gt;完整反射率曲线作为特征。信息最全但维度高。
+CAP_3e508380</title>
+  <rect x="528.0" y="3848.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="628.0" y="3879.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="628.0" dy="0">光谱特征提取</tspan></text>
+  <rect x="534.0" y="3852.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="551.0" y="3863.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="551.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Classification Method
+判断：分类方法
+CAP_aa9d29a4</title>
+  <polygon points="392.0,4008.0 472.0,4058.0 392.0,4108.0 312.0,4058.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="392.0" y="4058.0" font-size="13" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">高光谱材质分类</tspan></text>
+  <rect x="370.0" y="3998.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="392.0" y="4006.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>ML Classifier
+条件：传统机器学习-&gt;SVM/Random Forest/MLP。需标注样本。
+CAP_aa9d29a4</title>
+  <rect x="56.0" y="4136.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="4167.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">高光谱材质分类</tspan></text>
+  <rect x="62.0" y="4140.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="4151.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Deep Learning 1D
+条件：深度学习-&gt;1D-CNN/Transformer直接处理光谱曲线。大数据集性能优。
+CAP_aa9d29a4</title>
+  <rect x="292.0" y="4136.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="4167.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">高光谱材质分类</tspan></text>
+  <rect x="298.0" y="4140.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="4151.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1c" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Spectral Matching
+条件：光谱匹配-&gt;SAM/MF与参考光谱库比对。无需训练，需参考库。
+CAP_aa9d29a4</title>
+  <rect x="528.0" y="4136.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="628.0" y="4167.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="628.0" dy="0">高光谱材质分类</tspan></text>
+  <rect x="534.0" y="4140.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="551.0" y="4151.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="551.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Sensor Type
+判断：传感器类型
+CAP_bb2a7e98</title>
+  <polygon points="274.0,4516.0 354.0,4566.0 274.0,4616.0 194.0,4566.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="274.0" y="4557.2" font-size="13" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">ToF/LiDAR强度</tspan><tspan x="274.0" dy="17.6">采集</tspan></text>
+  <rect x="252.0" y="4506.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="274.0" y="4514.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>iToF Camera
+条件：iToF相机-&gt;AMCW调制，相位差测深度+IR强度。低成本，室内适用。
+CAP_bb2a7e98</title>
+  <rect x="56.0" y="4644.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="4675.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">ToF/LiDAR强度采集</tspan></text>
+  <rect x="62.0" y="4648.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="4659.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>FMCW LiDAR
+条件：FMCW LiDAR-&gt;相干接收，深度+速度+强度。远距离，抗干扰强。
+CAP_bb2a7e98</title>
+  <rect x="292.0" y="4644.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="4675.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">ToF/LiDAR强度采集</tspan></text>
+  <rect x="298.0" y="4648.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="4659.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Feature Type
+判断：特征类型
+CAP_e3e6c767</title>
+  <polygon points="392.0,4804.0 472.0,4854.0 392.0,4904.0 312.0,4854.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="392.0" y="4854.0" font-size="13" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">强度特征提取</tspan></text>
+  <rect x="370.0" y="4794.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="392.0" y="4802.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Statistical Features
+条件：统计特征-&gt;强度直方图均值/方差/分位数+距离/角度归一化。简单通用。
+CAP_e3e6c767</title>
+  <rect x="56.0" y="4932.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="4963.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">强度特征提取</tspan></text>
+  <rect x="62.0" y="4936.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="4947.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Temporal Features
+条件：时域特征-&gt;LiDAR脉冲波形的峰值/脉宽/上升沿/下降沿。需全波形硬件。
+CAP_e3e6c767</title>
+  <rect x="292.0" y="4932.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="4963.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">强度特征提取</tspan></text>
+  <rect x="298.0" y="4936.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="4947.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1c" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Multi-wavelength
+条件：多波长-&gt;不同波长反射率比。需多波长LiDAR硬件，区分度高。
+CAP_e3e6c767</title>
+  <rect x="528.0" y="4932.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="628.0" y="4963.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="628.0" dy="0">强度特征提取</tspan></text>
+  <rect x="534.0" y="4936.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="551.0" y="4947.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="551.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Classifier Type
+判断：分类器类型
+CAP_bb2a7e98</title>
+  <polygon points="274.0,5092.0 354.0,5142.0 274.0,5192.0 194.0,5142.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="274.0" y="5133.2" font-size="13" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">ToF/LiDAR强度</tspan><tspan x="274.0" dy="17.6">采集</tspan></text>
+  <rect x="252.0" y="5082.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="274.0" y="5090.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Traditional ML
+条件：传统ML-&gt;SVM/Random Forest/XGBoost对特征向量分类。小样本快。
+CAP_bb2a7e98</title>
+  <rect x="56.0" y="5220.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="5251.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">ToF/LiDAR强度采集</tspan></text>
+  <rect x="62.0" y="5224.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="5235.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Point Cloud Deep Learning
+条件：点云深度学习-&gt;PointNet/RandLA-Net直接处理带强度点云。大数据集性能优。
+CAP_bb2a7e98</title>
+  <rect x="292.0" y="5220.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="5251.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">ToF/LiDAR强度采集</tspan></text>
+  <rect x="298.0" y="5224.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="5235.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  </g>
+</svg>

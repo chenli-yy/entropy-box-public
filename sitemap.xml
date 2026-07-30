@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://chenli-yy.github.io/entropy-box-public/</loc><priority>1.0</priority></url>
+  <url><loc>https://chenli-yy.github.io/entropy-box-public/case-study/</loc><priority>0.9</priority></url>
+  <url><loc>https://chenli-yy.github.io/entropy-box-public/how-it-works/</loc><priority>0.9</priority></url>
+  <url><loc>https://chenli-yy.github.io/entropy-box-public/integrate/</loc><priority>0.8</priority></url>
+  <url><loc>https://chenli-yy.github.io/entropy-box-public/graph/capability-network.html</loc><priority>0.7</priority></url>
+  <url><loc>https://chenli-yy.github.io/entropy-box-public/graph/topic-graph.html</loc><priority>0.7</priority></url>
+  <url><loc>https://chenli-yy.github.io/entropy-box-public/case-study/topic.html?t=a_star_path_planning</loc><priority>0.6</priority></url>
+  <url><loc>https://chenli-yy.github.io/entropy-box-public/case-study/topic.html?t=proxemic_navigation</loc><priority>0.6</priority></url>
+  <url><loc>https://chenli-yy.github.io/entropy-box-public/case-study/topic.html?t=region_partition_coordination</loc><priority>0.6</priority></url>
+  <url><loc>https://chenli-yy.github.io/entropy-box-public/case-study/topic.html?t=reflectance_material_recognition</loc><priority>0.6</priority></url>
+</urlset>

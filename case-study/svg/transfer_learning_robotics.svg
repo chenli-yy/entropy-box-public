@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1060" height="4408"
+ viewBox="0 0 1060 4408"
+ shape-rendering="geometricPrecision" text-rendering="optimizeLegibility">
+<!--SV-THEME--><style>/* 一份 SVG 两种主题 */@media (prefers-color-scheme: light){[fill="#0B0D16"]{fill:#F6F3EC}[stroke="#0B0D16"]{stroke:#F6F3EC}[fill="#0D1D28"]{fill:#E4F1F8}[stroke="#0D1D28"]{stroke:#E4F1F8}[fill="#0D1F2C"]{fill:#E4F3F8}[stroke="#0D1F2C"]{stroke:#E4F3F8}[fill="#0E2019"]{fill:#E3F5EC}[stroke="#0E2019"]{stroke:#E3F5EC}[fill="#12162A"]{fill:#EFEBE2}[stroke="#12162A"]{stroke:#EFEBE2}[fill="#151A2B"]{fill:#FFFFFF}[stroke="#151A2B"]{stroke:#FFFFFF}[fill="#161A26"]{fill:#F0EEE8}[stroke="#161A26"]{stroke:#F0EEE8}[fill="#1A1430"]{fill:#EFEAFB}[stroke="#1A1430"]{stroke:#EFEAFB}[fill="#231A0C"]{fill:#FAF2DF}[stroke="#231A0C"]{stroke:#FAF2DF}[fill="#2A0F1E"]{fill:#FBE6EF}[stroke="#2A0F1E"]{stroke:#FBE6EF}[fill="#2A3050"]{fill:#DFD8CC}[stroke="#2A3050"]{stroke:#DFD8CC}[fill="#39406A"]{fill:#C7BDAD}[stroke="#39406A"]{stroke:#C7BDAD}[fill="#3FC5E8"]{fill:#0E6E8C}[stroke="#3FC5E8"]{stroke:#0E6E8C}[fill="#3FD6E8"]{fill:#0E6E8C}[stroke="#3FD6E8"]{stroke:#0E6E8C}[fill="#4FA8FF"]{fill:#1668A8}[stroke="#4FA8FF"]{stroke:#1668A8}[fill="#4FB3E8"]{fill:#1668A8}[stroke="#4FB3E8"]{stroke:#1668A8}[fill="#4FC08D"]{fill:#1F7A55}[stroke="#4FC08D"]{stroke:#1F7A55}[fill="#5C6480"]{fill:#8A8378}[stroke="#5C6480"]{stroke:#8A8378}[fill="#5FD08A"]{fill:#1F7A55}[stroke="#5FD08A"]{stroke:#1F7A55}[fill="#6E7796"]{fill:#A9A196}[stroke="#6E7796"]{stroke:#A9A196}[fill="#6FD3A6"]{fill:#166344}[stroke="#6FD3A6"]{stroke:#166344}[fill="#7A87A8"]{fill:#5A637C}[stroke="#7A87A8"]{stroke:#5A637C}[fill="#7B8BFF"]{fill:#3A46B0}[stroke="#7B8BFF"]{stroke:#3A46B0}[fill="#8A93B0"]{fill:#7B7368}[stroke="#8A93B0"]{stroke:#7B7368}[fill="#8FA3B8"]{fill:#4E5F70}[stroke="#8FA3B8"]{stroke:#4E5F70}[fill="#9B87FF"]{fill:#5B3FD4}[stroke="#9B87FF"]{stroke:#5B3FD4}[fill="#A9B0C8"]{fill:#5A5349}[stroke="#A9B0C8"]{stroke:#5A5349}[fill="#B08D7A"]{fill:#6D5546}[stroke="#B08D7A"]{stroke:#6D5546}[fill="#B98BFF"]{fill:#5B3FD4}[stroke="#B98BFF"]{stroke:#5B3FD4}[fill="#D6DAE8"]{fill:#2E2A25}[stroke="#D6DAE8"]{stroke:#2E2A25}[fill="#E8A33D"]{fill:#9A6C0B}[stroke="#E8A33D"]{stroke:#9A6C0B}[fill="#EDE7DD"]{fill:#191714}[stroke="#EDE7DD"]{stroke:#191714}[fill="#FF5FA8"]{fill:#B02063}[stroke="#FF5FA8"]{stroke:#B02063}[fill="#FF6B6B"]{fill:#C0392B}[stroke="#FF6B6B"]{stroke:#C0392B}[fill="#FF8FC2"]{fill:#8F1B4E}[stroke="#FF8FC2"]{stroke:#8F1B4E}[fill="#FFB03D"]{fill:#9A6C0B}[stroke="#FFB03D"]{stroke:#9A6C0B}}html[data-theme="light"] [fill="#0B0D16"]{fill:#F6F3EC}html[data-theme="light"] [stroke="#0B0D16"]{stroke:#F6F3EC}html[data-theme="light"] [fill="#0D1D28"]{fill:#E4F1F8}html[data-theme="light"] [stroke="#0D1D28"]{stroke:#E4F1F8}html[data-theme="light"] [fill="#0D1F2C"]{fill:#E4F3F8}html[data-theme="light"] [stroke="#0D1F2C"]{stroke:#E4F3F8}html[data-theme="light"] [fill="#0E2019"]{fill:#E3F5EC}html[data-theme="light"] [stroke="#0E2019"]{stroke:#E3F5EC}html[data-theme="light"] [fill="#12162A"]{fill:#EFEBE2}html[data-theme="light"] [stroke="#12162A"]{stroke:#EFEBE2}html[data-theme="light"] [fill="#151A2B"]{fill:#FFFFFF}html[data-theme="light"] [stroke="#151A2B"]{stroke:#FFFFFF}html[data-theme="light"] [fill="#161A26"]{fill:#F0EEE8}html[data-theme="light"] [stroke="#161A26"]{stroke:#F0EEE8}html[data-theme="light"] [fill="#1A1430"]{fill:#EFEAFB}html[data-theme="light"] [stroke="#1A1430"]{stroke:#EFEAFB}html[data-theme="light"] [fill="#231A0C"]{fill:#FAF2DF}html[data-theme="light"] [stroke="#231A0C"]{stroke:#FAF2DF}html[data-theme="light"] [fill="#2A0F1E"]{fill:#FBE6EF}html[data-theme="light"] [stroke="#2A0F1E"]{stroke:#FBE6EF}html[data-theme="light"] [fill="#2A3050"]{fill:#DFD8CC}html[data-theme="light"] [stroke="#2A3050"]{stroke:#DFD8CC}html[data-theme="light"] [fill="#39406A"]{fill:#C7BDAD}html[data-theme="light"] [stroke="#39406A"]{stroke:#C7BDAD}html[data-theme="light"] [fill="#3FC5E8"]{fill:#0E6E8C}html[data-theme="light"] [stroke="#3FC5E8"]{stroke:#0E6E8C}html[data-theme="light"] [fill="#3FD6E8"]{fill:#0E6E8C}html[data-theme="light"] [stroke="#3FD6E8"]{stroke:#0E6E8C}html[data-theme="light"] [fill="#4FA8FF"]{fill:#1668A8}html[data-theme="light"] [stroke="#4FA8FF"]{stroke:#1668A8}html[data-theme="light"] [fill="#4FB3E8"]{fill:#1668A8}html[data-theme="light"] [stroke="#4FB3E8"]{stroke:#1668A8}html[data-theme="light"] [fill="#4FC08D"]{fill:#1F7A55}html[data-theme="light"] [stroke="#4FC08D"]{stroke:#1F7A55}html[data-theme="light"] [fill="#5C6480"]{fill:#8A8378}html[data-theme="light"] [stroke="#5C6480"]{stroke:#8A8378}html[data-theme="light"] [fill="#5FD08A"]{fill:#1F7A55}html[data-theme="light"] [stroke="#5FD08A"]{stroke:#1F7A55}html[data-theme="light"] [fill="#6E7796"]{fill:#A9A196}html[data-theme="light"] [stroke="#6E7796"]{stroke:#A9A196}html[data-theme="light"] [fill="#6FD3A6"]{fill:#166344}html[data-theme="light"] [stroke="#6FD3A6"]{stroke:#166344}html[data-theme="light"] [fill="#7A87A8"]{fill:#5A637C}html[data-theme="light"] [stroke="#7A87A8"]{stroke:#5A637C}html[data-theme="light"] [fill="#7B8BFF"]{fill:#3A46B0}html[data-theme="light"] [stroke="#7B8BFF"]{stroke:#3A46B0}html[data-theme="light"] [fill="#8A93B0"]{fill:#7B7368}html[data-theme="light"] [stroke="#8A93B0"]{stroke:#7B7368}html[data-theme="light"] [fill="#8FA3B8"]{fill:#4E5F70}html[data-theme="light"] [stroke="#8FA3B8"]{stroke:#4E5F70}html[data-theme="light"] [fill="#9B87FF"]{fill:#5B3FD4}html[data-theme="light"] [stroke="#9B87FF"]{stroke:#5B3FD4}html[data-theme="light"] [fill="#A9B0C8"]{fill:#5A5349}html[data-theme="light"] [stroke="#A9B0C8"]{stroke:#5A5349}html[data-theme="light"] [fill="#B08D7A"]{fill:#6D5546}html[data-theme="light"] [stroke="#B08D7A"]{stroke:#6D5546}html[data-theme="light"] [fill="#B98BFF"]{fill:#5B3FD4}html[data-theme="light"] [stroke="#B98BFF"]{stroke:#5B3FD4}html[data-theme="light"] [fill="#D6DAE8"]{fill:#2E2A25}html[data-theme="light"] [stroke="#D6DAE8"]{stroke:#2E2A25}html[data-theme="light"] [fill="#E8A33D"]{fill:#9A6C0B}html[data-theme="light"] [stroke="#E8A33D"]{stroke:#9A6C0B}html[data-theme="light"] [fill="#EDE7DD"]{fill:#191714}html[data-theme="light"] [stroke="#EDE7DD"]{stroke:#191714}html[data-theme="light"] [fill="#FF5FA8"]{fill:#B02063}html[data-theme="light"] [stroke="#FF5FA8"]{stroke:#B02063}html[data-theme="light"] [fill="#FF6B6B"]{fill:#C0392B}html[data-theme="light"] [stroke="#FF6B6B"]{stroke:#C0392B}html[data-theme="light"] [fill="#FF8FC2"]{fill:#8F1B4E}html[data-theme="light"] [stroke="#FF8FC2"]{stroke:#8F1B4E}html[data-theme="light"] [fill="#FFB03D"]{fill:#9A6C0B}html[data-theme="light"] [stroke="#FFB03D"]{stroke:#9A6C0B}</style>
+<defs>
+  <marker id="arr" markerWidth="12" markerHeight="9" refX="10" refY="4.5" orient="auto">
+    <polygon points="0 0,12 4.5,0 9" fill="#5C6480"/>
+  </marker>
+  <marker id="arr-gray" markerWidth="12" markerHeight="9" refX="10" refY="4.5" orient="auto">
+    <polygon points="0 0,12 4.5,0 9" fill="#39406A"/>
+  </marker>
+</defs>
+<rect width="100%" height="100%" fill="#0B0D16" rx="0"/>
+<rect x="0.0" y="0.0" width="1060.0" height="100.0" rx="0" fill="#101528" stroke="none" stroke-width="0"/>
+  <text x="530.0" y="52.0" font-size="20" fill="#EDE7DD" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="530.0" dy="0">机器人迁移学习  (Transfer Learning for Robotics)</tspan></text>
+  <rect x="236.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.5"/>
+  <text x="258.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="258.0" dy="0">阶段</tspan></text>
+  <rect x="320.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#231A0C" stroke="#E8A33D" stroke-width="1.5"/>
+  <text x="342.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="342.0" dy="0">步骤</tspan></text>
+  <rect x="404.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#0D1D28" stroke="#4FB3E8" stroke-width="1.5"/>
+  <text x="426.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="426.0" dy="0">子链</tspan></text>
+  <rect x="488.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="1.5"/>
+  <text x="510.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="510.0" dy="0">判断</tspan></text>
+  <rect x="572.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#1A1430" stroke="#9B87FF" stroke-width="1.5"/>
+  <text x="594.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="594.0" dy="0">分支</tspan></text>
+  <rect x="656.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#0E2019" stroke="#4FC08D" stroke-width="1.5"/>
+  <text x="678.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="678.0" dy="0">合并</tspan></text>
+  <rect x="740.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#161A26" stroke="#7A87A8" stroke-width="1.5"/>
+  <text x="762.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="762.0" dy="0">编码</tspan></text>
+  <rect x="36.0" y="164.0" width="576.0" height="920.0" rx="8" fill="#151A2B" stroke="#2A3050" stroke-width="2.0"/>
+  <rect x="36.0" y="164.0" width="576.0" height="48.0" rx="8" fill="#16223A" stroke="none" stroke-width="0"/>
+  <rect x="36.0" y="188.0" width="576.0" height="24.0" rx="0" fill="#16223A" stroke="none" stroke-width="0"/>
+  <text x="324.0" y="189.0" font-size="15" fill="#7FD9F0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="324.0" dy="0">任务链 1: Sim-to-Real Policy Transfer</tspan></text>
+  <rect x="56.0" y="232.0" width="536.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="232.0" width="536.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="252.0" width="536.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="324.0" y="253.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="324.0" dy="0">s1 — 仿真环境搭建与域随机化配置</tspan></text>
+  <rect x="56.0" y="404.0" width="536.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="404.0" width="536.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="424.0" width="536.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="324.0" y="425.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="324.0" dy="0">s2 — 执行器网络辨识与策略训练</tspan></text>
+  <rect x="56.0" y="576.0" width="536.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="576.0" width="536.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="596.0" width="536.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="324.0" y="597.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="324.0" dy="0">s3 — 策略导出与部署前准备</tspan></text>
+  <rect x="56.0" y="748.0" width="536.0" height="144.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="748.0" width="536.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="768.0" width="536.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="324.0" y="769.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="324.0" dy="0">s4 — 真实机器人在线自适应</tspan></text>
+  <rect x="56.0" y="908.0" width="536.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="908.0" width="536.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="928.0" width="536.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="324.0" y="929.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="324.0" dy="0">s5 — 真机部署与迭代</tspan></text>
+  <rect x="36.0" y="1116.0" width="576.0" height="1012.0" rx="8" fill="#151A2B" stroke="#2A3050" stroke-width="2.0"/>
+  <rect x="36.0" y="1116.0" width="576.0" height="48.0" rx="8" fill="#16223A" stroke="none" stroke-width="0"/>
+  <rect x="36.0" y="1140.0" width="576.0" height="24.0" rx="0" fill="#16223A" stroke="none" stroke-width="0"/>
+  <text x="324.0" y="1141.0" font-size="15" fill="#7FD9F0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="324.0" dy="0">任务链 2: Cross-Embodiment Policy Pretraining Transfer</tspan></text>
+  <rect x="56.0" y="1184.0" width="536.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="1184.0" width="536.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="1204.0" width="536.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="324.0" y="1205.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="324.0" dy="0">s1 — 多本体数据聚合与标准化</tspan></text>
+  <rect x="56.0" y="1356.0" width="536.0" height="236.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="1356.0" width="536.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="1376.0" width="536.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="324.0" y="1377.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="324.0" dy="0">s2 — 统一动作空间设计或本体条件化</tspan></text>
+  <rect x="56.0" y="1608.0" width="536.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="1608.0" width="536.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="1628.0" width="536.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="324.0" y="1629.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="324.0" dy="0">s3 — 大规模多本体预训练</tspan></text>
+  <rect x="56.0" y="1780.0" width="536.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="1780.0" width="536.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="1800.0" width="536.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="324.0" y="1801.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="324.0" dy="0">s4 — 目标机器人数据采集与微调</tspan></text>
+  <rect x="56.0" y="1952.0" width="536.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="1952.0" width="536.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="1972.0" width="536.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="324.0" y="1973.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="324.0" dy="0">s5 — 部署到目标机器人</tspan></text>
+  <rect x="36.0" y="2160.0" width="752.0" height="1000.0" rx="8" fill="#151A2B" stroke="#2A3050" stroke-width="2.0"/>
+  <rect x="36.0" y="2160.0" width="752.0" height="48.0" rx="8" fill="#16223A" stroke="none" stroke-width="0"/>
+  <rect x="36.0" y="2184.0" width="752.0" height="24.0" rx="0" fill="#16223A" stroke="none" stroke-width="0"/>
+  <text x="412.0" y="2185.0" font-size="15" fill="#7FD9F0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="412.0" dy="0">任务链 3: Visual Representation Pretraining Transfer</tspan></text>
+  <rect x="56.0" y="2228.0" width="712.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="2228.0" width="712.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="2248.0" width="712.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="412.0" y="2249.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="412.0" dy="0">s1 — 视频预训练数据准备</tspan></text>
+  <rect x="56.0" y="2400.0" width="712.0" height="144.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="2400.0" width="712.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="2420.0" width="712.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="412.0" y="2421.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="412.0" dy="0">s2 — 视觉表征预训练</tspan></text>
+  <rect x="56.0" y="2560.0" width="712.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="2560.0" width="712.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="2580.0" width="712.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="412.0" y="2581.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="412.0" dy="0">s3 — 表征加载与冻结</tspan></text>
+  <rect x="56.0" y="2732.0" width="712.0" height="236.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="2732.0" width="712.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="2752.0" width="712.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="412.0" y="2753.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="412.0" dy="0">s4 — 下游策略学习</tspan></text>
+  <rect x="56.0" y="2984.0" width="712.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="2984.0" width="712.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="3004.0" width="712.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="412.0" y="3005.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="412.0" dy="0">s5 — 真实机器人部署</tspan></text>
+  <rect x="36.0" y="3192.0" width="988.0" height="1140.0" rx="8" fill="#151A2B" stroke="#2A3050" stroke-width="2.0"/>
+  <rect x="36.0" y="3192.0" width="988.0" height="48.0" rx="8" fill="#16223A" stroke="none" stroke-width="0"/>
+  <rect x="36.0" y="3216.0" width="988.0" height="24.0" rx="0" fill="#16223A" stroke="none" stroke-width="0"/>
+  <text x="530.0" y="3217.0" font-size="15" fill="#7FD9F0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="530.0" dy="0">任务链 4: Same-Embodiment Multi-Task Policy Pretraining Transfer</tspan></text>
+  <rect x="56.0" y="3260.0" width="948.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="3260.0" width="948.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="3280.0" width="948.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="530.0" y="3281.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="530.0" dy="0">s1 — 多任务演示数据收集与标准化</tspan></text>
+  <rect x="56.0" y="3432.0" width="948.0" height="364.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="3432.0" width="948.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="3452.0" width="948.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="530.0" y="3453.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="530.0" dy="0">s2 — 多任务条件化策略预训练</tspan></text>
+  <rect x="56.0" y="3812.0" width="948.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="3812.0" width="948.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="3832.0" width="948.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="530.0" y="3833.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="530.0" dy="0">s3 — 零样本/少样本迁移评估</tspan></text>
+  <rect x="56.0" y="3984.0" width="948.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="3984.0" width="948.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="4004.0" width="948.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="530.0" y="4005.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="530.0" dy="0">s4 — 异构数据吸收与扩展</tspan></text>
+  <rect x="56.0" y="4156.0" width="948.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="4156.0" width="948.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="4176.0" width="948.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="530.0" y="4177.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="530.0" dy="0">s5 — 真机部署与持续改进</tspan></text>
+  <line x1="287.0" y1="330.0" x2="321.0" y2="330.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 437.0 368.0 L 437.0 416.0 L 171.0 416.0 L 171.0 464.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="502.0" x2="321.0" y2="502.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 437.0 540.0 L 437.0 588.0 L 171.0 588.0 L 171.0 636.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="674.0" x2="321.0" y2="674.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 437.0 712.0 L 437.0 760.0 L 156.0 760.0 L 156.0 808.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="156.0" y1="872.0" x2="171.0" y2="968.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 872.0 L 392.0 920.0 L 171.0 920.0 L 171.0 968.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="1006.0" x2="321.0" y2="1006.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="1282.0" x2="321.0" y2="1282.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 437.0 1320.0 L 437.0 1368.0 L 156.0 1368.0 L 156.0 1416.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 1480.0 L 156.0 1494.0 L 274.0 1494.0 L 274.0 1508.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 1480.0 L 392.0 1494.0 L 274.0 1494.0 L 274.0 1508.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 1572.0 L 274.0 1620.0 L 171.0 1620.0 L 171.0 1668.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="1706.0" x2="321.0" y2="1706.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 437.0 1744.0 L 437.0 1792.0 L 171.0 1792.0 L 171.0 1840.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="1878.0" x2="321.0" y2="1878.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 437.0 1916.0 L 437.0 1964.0 L 171.0 1964.0 L 171.0 2012.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="2050.0" x2="321.0" y2="2050.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="2326.0" x2="321.0" y2="2326.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 437.0 2364.0 L 437.0 2412.0 L 156.0 2412.0 L 156.0 2460.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="156.0" y1="2524.0" x2="171.0" y2="2620.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 2524.0 L 392.0 2572.0 L 171.0 2572.0 L 171.0 2620.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 628.0 2524.0 L 628.0 2572.0 L 171.0 2572.0 L 171.0 2620.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="2658.0" x2="321.0" y2="2658.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 437.0 2696.0 L 437.0 2744.0 L 156.0 2744.0 L 156.0 2792.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 2856.0 L 156.0 2870.0 L 274.0 2870.0 L 274.0 2884.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 2856.0 L 392.0 2870.0 L 274.0 2870.0 L 274.0 2884.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 2948.0 L 274.0 2996.0 L 171.0 2996.0 L 171.0 3044.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="3082.0" x2="321.0" y2="3082.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="3358.0" x2="321.0" y2="3358.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="553.0" y1="3358.0" x2="587.0" y2="3358.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 703.0 3396.0 L 703.0 3444.0 L 510.0 3444.0 L 510.0 3492.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 510.0 3592.0 L 510.0 3606.0 L 156.0 3606.0 L 156.0 3620.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 510.0 3592.0 L 510.0 3606.0 L 392.0 3606.0 L 392.0 3620.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 510.0 3592.0 L 510.0 3606.0 L 628.0 3606.0 L 628.0 3620.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 510.0 3592.0 L 510.0 3606.0 L 864.0 3606.0 L 864.0 3620.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 3684.0 L 156.0 3698.0 L 510.0 3698.0 L 510.0 3712.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 3684.0 L 392.0 3698.0 L 510.0 3698.0 L 510.0 3712.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 628.0 3684.0 L 628.0 3698.0 L 510.0 3698.0 L 510.0 3712.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 864.0 3684.0 L 864.0 3698.0 L 510.0 3698.0 L 510.0 3712.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 510.0 3776.0 L 510.0 3824.0 L 171.0 3824.0 L 171.0 3872.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="3910.0" x2="321.0" y2="3910.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="553.0" y1="3910.0" x2="587.0" y2="3910.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 703.0 3948.0 L 703.0 3996.0 L 171.0 3996.0 L 171.0 4044.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="4082.0" x2="321.0" y2="4082.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="553.0" y1="4082.0" x2="587.0" y2="4082.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 703.0 4120.0 L 703.0 4168.0 L 171.0 4168.0 L 171.0 4216.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="4254.0" x2="321.0" y2="4254.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <g class="step-node" data-sid="s1_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>仿真场景搭建
+用 legged_gym task_config / Isaac Lab 搭建仿真环境，配置机器人 URDF、地形、控制频率。输入：URDF + 任务规格；输出：可训练的仿真环境实例。约束：仿真器需支持大规模并行（Isaac Gym 4096 robots）。
+CAP_7bb6ce5e</title>
+  <rect x="56.0" y="292.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="324.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">仿真场景搭建</tspan></text>
+  <text x="171.0" y="358.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="171.0" dy="0">仿真到真实策略迁移训练</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>域随机化配置
+配置摩擦/质量/控制增益/外力/恢复系数等物理参数随机化范围。输入：真实参数估计范围；输出：随机化配置文件。约束：范围过宽导致训练困难，过窄无法覆盖真实变异。
+CAP_7bb6ce5e</title>
+  <rect x="322.0" y="292.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="324.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">域随机化配置</tspan></text>
+  <text x="437.0" y="358.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="437.0" dy="0">仿真到真实策略迁移训练</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>执行器网络辨识
+用真实机器人阶跃响应数据训练 actuator network（raisim），嵌入仿真器缩小动力学 gap。输入：真实机器人阶跃响应数据；输出：执行器网络权重。约束：辨识精度影响迁移效果。
+CAP_0ebc29c3</title>
+  <rect x="56.0" y="464.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="496.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">执行器网络辨识</tspan></text>
+  <text x="171.0" y="530.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="171.0" dy="0">执行器网络系统辨识</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>大规模并行 PPO 训练
+用 rsl_rl 在 legged_gym 中 4096 robots 并行 PPO 训练，可选地形课程。输入：仿真环境 + 随机化配置；输出：训练好的策略权重。约束：legged_gym 20 分钟训练 4096 robots。
+CAP_8611ade8 / CAP_5ae434b2</title>
+  <rect x="322.0" y="464.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="496.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">大规模并行 PPO 训练</tspan></text>
+  <text x="437.0" y="530.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="437.0" dy="0">在策略 AC 训练管线 +1</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>策略导出
+将策略导出为 JIT scripted policy，脱离仿真器依赖。输入：策略权重；输出：JIT scripted policy 文件。约束：导出后需验证前向推理一致性。
+CAP_4b72227c</title>
+  <rect x="56.0" y="636.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="668.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">策略导出</tspan></text>
+  <text x="171.0" y="702.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="171.0" dy="0">策略导出与 sim-to-real 部署</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>真机控制器接口对接
+配置真机控制器 Kp/Kd/控制频率（如 RMA Kp=55, Kd=0.8），对接策略输入输出。输入：JIT policy + 控制器规格；输出：真机可运行的策略部署包。
+CAP_4b72227c</title>
+  <rect x="322.0" y="636.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="668.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">真机控制器接口对接</tspan></text>
+  <text x="437.0" y="702.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="437.0" dy="0">策略导出与 sim-to-real 部署</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>RMA 两阶段在线自适应
+RMA 两阶段：离线训练 π 和环境编码器 φ，在线用最近 ~10 步历史推断 φ 实时调整策略（φ@10Hz, π@100Hz）。输入：近期观测历史；输出：在线适应的环境隐变量 φ。约束：RSS 2021 Best Paper，arXiv:2107.04034。
+CAP_7bca8cea</title>
+  <rect x="56.0" y="808.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="839.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">RMA 两阶段在线自适应</tspan></text>
+  <rect x="62.0" y="812.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="823.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>ADR 自动域随机化
+自动调节域随机化范围，先窄范围训练再逐步扩大直到真机性能达标（OpenAI Dactyl）。输入：初始随机化范围 + 真机性能反馈；输出：自适应扩大的随机化范围。约束：需真机反馈闭环。
+CAP_d224b4ff</title>
+  <rect x="292.0" y="808.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="835.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">ADR 自动域随机化</tspan></text>
+  <rect x="298.0" y="812.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="823.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  <text x="392.0" y="862.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="392.0" dy="0">自动域随机化</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>真机部署执行
+在 A1/ANYmal 等四足机器人上部署执行策略，实时感知→控制。输入：策略 + 真机传感器；输出：真机运动行为。
+CAP_4b72227c</title>
+  <rect x="56.0" y="968.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="1000.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">真机部署执行</tspan></text>
+  <text x="171.0" y="1034.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="171.0" dy="0">策略导出与 sim-to-real 部署</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>真机性能评估与迭代
+评估真机性能（成功率/稳定性/能耗），根据结果迭代随机化范围或自适应参数。输入：真机运动行为；输出：性能指标 + 迭代方向。
+CAP_4b72227c</title>
+  <rect x="322.0" y="968.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="1000.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">真机性能评估与迭代</tspan></text>
+  <text x="437.0" y="1034.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="437.0" dy="0">策略导出与 sim-to-real 部署</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>数据集格式标准化
+将 HDF5/ROS bag/自定义格式转换为 RLDS（Open X-Embodiment 规范）tfrecord。输入：异构原始数据；输出：标准化 RLDS tfrecord。约束：不同数据集 action 语义需人工对齐。
+CAP_47eef774</title>
+  <rect x="56.0" y="1244.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="1276.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">数据集格式标准化</tspan></text>
+  <text x="171.0" y="1310.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="171.0" dy="0">跨本体数据聚合标准化</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>本体元数据登记
+登记每数据集的 action 维度/控制频率/关节定义/gripper 类型。输入：URDF + 控制接口规格；输出：本体元数据表。
+CAP_47eef774</title>
+  <rect x="322.0" y="1244.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="1276.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">本体元数据登记</tspan></text>
+  <text x="437.0" y="1310.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="437.0" dy="0">跨本体数据聚合标准化</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>统一动作空间设计
+条件：设计 PIUAS（RDT-1B 保留物理意义）或 RT-1 256-bin 离散化词表。输入：各本体原始动作定义；输出：统一动作表示。约束：PIUAS 需保留物理量纲避免 negative transfer。
+CAP_ccdaa82e / CAP_7026fc38</title>
+  <rect x="56.0" y="1416.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="1443.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">统一动作空间设计</tspan></text>
+  <rect x="62.0" y="1420.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="1431.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  <text x="156.0" y="1470.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">PIUAS 扩散策略 +1</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>本体条件化网络结构
+条件：用 CrossFormer block-wise masked attention + per-embodiment action head 或 π0 proprio token 注入 VLM。输入：本体 proprio + 本体 ID；输出：本体条件化策略网络结构。
+CAP_e2c9d743</title>
+  <rect x="292.0" y="1416.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="1443.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">本体条件化网络结构</tspan></text>
+  <rect x="298.0" y="1420.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="1431.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  <text x="392.0" y="1470.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="392.0" dy="0">共享主干本体条件策略</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>视觉-语言主干选择
+合并：选择 VLM 主干（OpenVLA prism-dinosiglip / π0 预训练 VLM）继承 web 语义知识，或 DiT（RDT-1B 不用 VLM）。输入：预训练 VLM/DiT 权重；输出：策略主干网络。约束：VLM 主干继承 Llama-2 等许可证。
+CAP_66ce96d5</title>
+  <rect x="174.0" y="1508.0" width="200.0" height="64.0" rx="6" fill="#0E2019" stroke="#4FC08D" stroke-width="2.2"/>
+  <text x="274.0" y="1535.0" font-size="13" fill="#4FC08D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">视觉-语言主干选择</tspan></text>
+  <rect x="180.0" y="1512.0" width="34.0" height="20.0" rx="10" fill="#4FC08D44" stroke="#4FC08D" stroke-width="1"/>
+  <text x="197.0" y="1523.0" font-size="10" fill="#4FC08D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="197.0" dy="0">合并</tspan></text>
+  <text x="274.0" y="1562.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="274.0" dy="0">VLM直作动作解码器VLA流水线</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>联合训练目标
+用 BC 交叉熵（OpenVLA/RT-X）/ flow matching（π0）/ diffusion DDPM（RDT-1B）在多本体数据上预训练。输入：统一动作 + (image, language) 对；输出：预训练策略权重。
+CAP_66ce96d5 / CAP_f989e145 / CAP_ccdaa82e</title>
+  <rect x="56.0" y="1668.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="1700.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">联合训练目标</tspan></text>
+  <text x="171.0" y="1734.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="171.0" dy="0">VLM直作动作解码器VLA流水线 +2</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>多本体数据混合采样
+配置多本体数据混合采样比例（OpenVLA Open-X Magic Soup++），防止大数据集主导训练。输入：各数据集权重；输出：每 batch 采样比例。
+CAP_47eef774</title>
+  <rect x="322.0" y="1668.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="1700.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">多本体数据混合采样</tspan></text>
+  <text x="437.0" y="1734.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="437.0" dy="0">跨本体数据聚合标准化</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>少量目标机器人演示采集
+用 ALOHA 遥操作 / WidowX 演示采集 15-100 条目标机器人演示轨迹。输入：目标机器人；输出：演示轨迹。
+CAP_66ce96d5</title>
+  <rect x="56.0" y="1840.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="1872.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">少量目标机器人演示采集</tspan></text>
+  <text x="171.0" y="1906.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="171.0" dy="0">VLM直作动作解码器VLA流水线</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>微调策略
+用 LoRA（单 A100 ~27GB）/ 全参 FSDP（8×A100）/ 15-shot 微调预训练策略。输入：预训练权重 + 演示；输出：微调后策略。约束：LoRA 适合分布相近，全参适合分布偏移大。
+CAP_66ce96d5 / CAP_f989e145</title>
+  <rect x="322.0" y="1840.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="1872.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">微调策略</tspan></text>
+  <text x="437.0" y="1906.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="437.0" dy="0">VLM直作动作解码器VLA流水线 +1</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>策略导出与推理服务
+导出策略为 REST API（OpenVLA deploy.py）/ ONNX / 边缘部署。输入：微调权重；输出：推理服务/嵌入式模型。
+CAP_4b72227c</title>
+  <rect x="56.0" y="2012.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="2044.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">策略导出与推理服务</tspan></text>
+  <text x="171.0" y="2078.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="171.0" dy="0">策略导出与 sim-to-real 部署</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>零样本或微调后部署执行
+在 WidowX/ALOHA/Franka/移动操作平台上部署，输入 image+language 输出 7-DoF/14-DoF 动作。输入：实时图像+语言指令；输出：机器人动作。
+CAP_4b72227c</title>
+  <rect x="322.0" y="2012.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="2044.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">零样本或微调后部署执行</tspan></text>
+  <text x="437.0" y="2078.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="437.0" dy="0">策略导出与 sim-to-real 部署</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Ego4D/SSv2 数据集下载与解析
+将 Ego4D 解析为按 clip 组织的帧目录（224×224 jpg）+ manifest.csv；SSv2 用标准格式。输入：原始视频数据集；输出：帧目录+manifest。约束：Ego4D 体积大需大量存储。
+CAP_96b7df74</title>
+  <rect x="56.0" y="2288.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="2320.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">Ego4D/SSv2 数据集下载与解析</tspan></text>
+  <text x="171.0" y="2354.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="171.0" dy="0">人类视频预训练数据准备</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>帧采样与语言配对
+从 clip 中按时间采样帧对/三元组，配对语言标签（Ego4D 自然语言描述 / SSv2 类别语言）。输入：帧目录 + 语言标签；输出：帧对/三元组 batch。
+CAP_96b7df74</title>
+  <rect x="322.0" y="2288.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="2320.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">帧采样与语言配对</tspan></text>
+  <text x="437.0" y="2354.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="437.0" dy="0">人类视频预训练数据准备</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>R3M 时间对比+语言对齐+稀疏预训练
+用时间对比+视频语言对齐+L1/L2 稀疏三损失联合训练 ResNet-50 编码器（train_representation.py）。输入：Ego4D 帧对+语言；输出：ResNet-50 编码器权重 φ_R3M。约束：Hydra 配置 langweight/l1weight。性能：12 任务/9 视角/3 环境上比 scratch +20%。
+CAP_e4848511</title>
+  <rect x="56.0" y="2460.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="2478.2" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">R3M 时间对比+语言对齐</tspan><tspan x="156.0" dy="17.6">+稀疏预训练</tspan></text>
+  <rect x="62.0" y="2464.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="2475.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  <text x="156.0" y="2514.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">多目标视频表征预训练</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>VIP 价值隐式预训练
+将表征学习表述为离线目标条件 RL 的 Fenchel 对偶，&lt;10 行 PyTorch 实现隐式时间对比，输出兼作表征与奖励。输入：Ego4D 轨迹帧（无动作）；输出：ResNet-50 权重 φ_VIP（兼奖励函数）。约束：CC BY-NC 非商业许可。性能：仿真 ~30% 零微调解。
+CAP_810e9553</title>
+  <rect x="292.0" y="2460.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="2487.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">VIP 价值隐式预训练</tspan></text>
+  <rect x="298.0" y="2464.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="2475.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  <text x="392.0" y="2514.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="392.0" dy="0">值隐式视频预训练</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_3" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Voltron 语言条件化掩码预训练
+用语言条件化 MAE 在 SSv2 上预训练 v-cond/v-dual/v-gen 三变体（ViT-S 骨干）。输入：SSv2 帧+类别语言；输出：ViT-S 编码器权重。约束：1.1.0+ 需 PyTorch 2.0。
+CAP_ee1a11f4</title>
+  <rect x="528.0" y="2460.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="628.0" y="2478.2" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="628.0" dy="0">Voltron 语言条件化掩</tspan><tspan x="628.0" dy="17.6">码预训练</tspan></text>
+  <rect x="534.0" y="2464.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="551.0" y="2475.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="551.0" dy="0">分支</tspan></text>
+  <text x="628.0" y="2514.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="628.0" dy="0">语言条件化掩码表征预训练</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>加载预训练编码器
+用 load_r3m/load_vip/voltron.load 加载预训练编码器，VIP 还可作为 TorchRL VIPTransform。输入：预训练权重；输出：加载的编码器实例。
+CAP_e972e269</title>
+  <rect x="56.0" y="2620.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="2652.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">加载预训练编码器</tspan></text>
+  <text x="171.0" y="2686.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="171.0" dy="0">冻结编码器下游策略微调</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>冻结为感知模块
+调用 eval()/freeze=True 冻结编码器，下游策略不再更新编码器权重。输入：编码器实例；输出：冻结的 φ(·) 函数。
+CAP_e972e269</title>
+  <rect x="322.0" y="2620.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="2652.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">冻结为感知模块</tspan></text>
+  <text x="437.0" y="2686.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="437.0" dy="0">冻结编码器下游策略微调</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>IL 路线：冻结编码器+行为克隆
+将 φ(o) 喂给策略头，用少量演示（20 条级）做 BC（R3M eval 分支）。输入：φ(o) + 演示；输出：BC 策略 π_BC。
+CAP_e972e269</title>
+  <rect x="56.0" y="2792.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="2810.2" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">IL 路线：冻结编码器+</tspan><tspan x="156.0" dy="17.6">行为克隆</tspan></text>
+  <rect x="62.0" y="2796.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="2807.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  <text x="156.0" y="2846.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">冻结编码器下游策略微调</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>RL 路线：VIP 嵌入距离奖励+策略学习
+用 VIP 嵌入距离 R=S_φ(o_{t+1};g)−S_φ(o_t;g) 导出稠密视觉奖励，接轨迹优化/在线 RL/20 轨迹少样本离线 RL。输入：φ(o) + 目标图 g；输出：RL 策略 π_RL。
+CAP_810e9553 / CAP_e972e269</title>
+  <rect x="292.0" y="2792.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="2810.2" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">RL 路线：VIP 嵌入距离</tspan><tspan x="392.0" dy="17.6">奖励+策略学习</tspan></text>
+  <rect x="298.0" y="2796.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="2807.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  <text x="392.0" y="2846.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="392.0" dy="0">值隐式视频预训练 +1</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_3" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>策略训练收敛判定
+合并：基于目标任务成功率/嵌入距离曲线下降判定收敛（R3M 12 任务+9 视角 benchmark）。输入：策略 + benchmark；输出：收敛判定。
+CAP_e972e269</title>
+  <rect x="174.0" y="2884.0" width="200.0" height="64.0" rx="6" fill="#0E2019" stroke="#4FC08D" stroke-width="2.2"/>
+  <text x="274.0" y="2911.0" font-size="13" fill="#4FC08D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">策略训练收敛判定</tspan></text>
+  <rect x="180.0" y="2888.0" width="34.0" height="20.0" rx="10" fill="#4FC08D44" stroke="#4FC08D" stroke-width="1"/>
+  <text x="197.0" y="2899.0" font-size="10" fill="#4FC08D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="197.0" dy="0">合并</tspan></text>
+  <text x="274.0" y="2938.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="274.0" dy="0">冻结编码器下游策略微调</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>真机感知与策略部署
+在 Franka Emika Panda 真机上部署：相机图像→冻结编码器→策略头→动作。输入：真机图像；输出：动作指令。性能：R3M 20 演示达 50+% 成功率。
+CAP_e972e269</title>
+  <rect x="56.0" y="3044.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="3076.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">真机感知与策略部署</tspan></text>
+  <text x="171.0" y="3110.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="171.0" dy="0">冻结编码器下游策略微调</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>少样本任务迁移验证
+同一冻结表征迁移到多个未见任务（放生菜入锅/折毛巾/关抽屉/推瓶子等），验证少样本迁移能力。输入：多个未见任务；输出：迁移成功率。
+CAP_e972e269</title>
+  <rect x="322.0" y="3044.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="3076.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">少样本任务迁移验证</tspan></text>
+  <text x="437.0" y="3110.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="437.0" dy="0">冻结编码器下游策略微调</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>任务清单设计
+设计覆盖 pick/place/draw/sweep/stack 等技能的任务清单（BC-Z 100/RT-1 700/PerAct 18/VIMA 17 任务）。输入：技能 taxonomy；输出：任务清单。
+CAP_b328892f</title>
+  <rect x="56.0" y="3320.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="3352.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">任务清单设计</tspan></text>
+  <text x="171.0" y="3386.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="171.0" dy="0">同本体多任务策略预训练迁移</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>多任务演示收集
+用 HG-DAgger 共享自主干预（BC-Z）/ 大规模真实采集（RT-1 13 robots 17 months）/ 脚本 oracle（VIMA 650K）/ RLBench motion planner（PerAct）收集演示。输入：任务清单 + 远程操作接口；输出：多任务演示数据集 + 干预率指标。
+CAP_3581a7ae</title>
+  <rect x="322.0" y="3320.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="3352.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">多任务演示收集</tspan></text>
+  <text x="437.0" y="3386.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="437.0" dy="0">多任务演示收集与共享自主干预</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_3" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>数据标准化
+统一观测格式（RGB/RGB-D/voxel）、动作格式（连续/离散 token）、任务规范格式（语言/prompt）。输入：原始演示数据；输出：标准化多任务数据集。
+CAP_b328892f</title>
+  <rect x="588.0" y="3320.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="703.0" y="3352.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="703.0" dy="0">数据标准化</tspan></text>
+  <text x="703.0" y="3386.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="703.0" dy="0">同本体多任务策略预训练迁移</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>任务条件化模块搭建
+判断：搭建语言嵌入（BC-Z）/ FiLM（RT-1）/ CLIP 语言编码（PerAct）/ T5 encoder（VIMA）条件化模块。输入：任务规范格式；输出：条件化模块。
+CAP_2e0a60ae</title>
+  <polygon points="510.0,3492.0 590.0,3542.0 510.0,3592.0 430.0,3542.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="510.0" y="3528.2" font-size="13" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="510.0" dy="0">任务条件化模块</tspan><tspan x="510.0" dy="17.6">搭建</tspan></text>
+  <text x="510.0" y="3557.0" font-size="10" fill="#6E7796" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="510.0" dy="0">语言条件化多…</tspan></text>
+  <rect x="488.0" y="3482.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="510.0" y="3490.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="510.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_2a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>语言条件化 ResNet BC
+条件：BC-Z 风格，预训练语言嵌入条件化 ResNet feedforward BC，100 任务联合训练。输入：RGB + 语言嵌入；输出：7-DoF 连续动作。性能：BC-Z 24 unseen 44%。
+CAP_2e0a60ae</title>
+  <rect x="56.0" y="3620.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="3647.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">语言条件化 ResNet BC</tspan></text>
+  <rect x="62.0" y="3624.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="3635.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  <text x="156.0" y="3674.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="156.0" dy="0">语言条件化多任务视觉运动策略</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_2b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>离散动作 token Transformer
+条件：RT-1 风格，11 维 256-bin 离散化，EfficientNet+FiLM+TokenLearner+Transformer，700 任务联合训练。输入：RGB 序列 + 语言指令；输出：离散动作 token→连续动作。性能：seen 97%, unseen 76%。
+CAP_76f5a284 / CAP_7026fc38 / CAP_1cbb6c8b</title>
+  <rect x="292.0" y="3620.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="3638.2" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">离散动作 token</tspan><tspan x="392.0" dy="17.6">Transformer</tspan></text>
+  <rect x="298.0" y="3624.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="3635.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  <text x="392.0" y="3674.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="392.0" dy="0">离散动作 token 多任务 Transforme…</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_2c" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>voxel 3D 动作检测
+条件：PerAct 风格，RGB-D→100³ voxel→PerceiverIO→next best voxel action，18 RLBench 任务。输入：RGB-D 多视角 + 语言目标；输出：6-DoF 离散动作。性能：比 image-to-action 高 34x。
+CAP_c38d4e17</title>
+  <rect x="528.0" y="3620.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="628.0" y="3647.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="628.0" dy="0">voxel 3D 动作检测</tspan></text>
+  <rect x="534.0" y="3624.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="551.0" y="3635.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="551.0" dy="0">分支</tspan></text>
+  <text x="628.0" y="3674.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="628.0" dy="0">voxel 3D 多任务 6-DoF 动作检测</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_2d" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>multimodal prompt cross-attention
+条件：VIMA 风格，T5 encoder+object-centric tokenization+cross-attention decoder，17 任务 4 级评估。输入：multimodal prompt + 观测；输出：离散化 waypoint 动作。性能：hardest zero-shot 2.9x baseline。
+CAP_f1440fdb</title>
+  <rect x="764.0" y="3620.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="864.0" y="3642.2" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="864.0" dy="0">多模态 prompt 上下文</tspan><tspan x="864.0" dy="17.6">学习通用策略</tspan></text>
+  <rect x="770.0" y="3624.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="787.0" y="3635.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="787.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_3" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>scaling 验证与多任务联合 BC 训练收敛
+合并：验证模型 scaling（VIMA 2M-200M 7 尺寸）与数据 scaling（10x less data 2.7x better），多任务联合 BC 训练收敛。输入：条件化策略 + 多任务数据；输出：收敛的多任务策略。
+CAP_b328892f</title>
+  <rect x="410.0" y="3712.0" width="200.0" height="64.0" rx="6" fill="#0E2019" stroke="#4FC08D" stroke-width="2.2"/>
+  <text x="510.0" y="3730.2" font-size="13" fill="#4FC08D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="510.0" dy="0">scaling 验证与多任务</tspan><tspan x="510.0" dy="17.6">联合 BC 训练收敛</tspan></text>
+  <rect x="416.0" y="3716.0" width="34.0" height="20.0" rx="10" fill="#4FC08D44" stroke="#4FC08D" stroke-width="1"/>
+  <text x="433.0" y="3727.0" font-size="10" fill="#4FC08D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="433.0" dy="0">合并</tspan></text>
+  <text x="510.0" y="3766.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="510.0" dy="0">同本体多任务策略预训练迁移</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>零样本新任务评估
+评估零样本新任务泛化（BC-Z 24 unseen 44% / RT-1 unseen 76% / VIMA 4-level placement→novel task）。输入：多任务策略 + unseen 任务；输出：零样本成功率。
+CAP_b328892f</title>
+  <rect x="56.0" y="3872.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="3904.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">零样本新任务评估</tspan></text>
+  <text x="171.0" y="3938.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="171.0" dy="0">同本体多任务策略预训练迁移</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>鲁棒性评估
+评估 distractors/backgrounds 鲁棒性（RT-1 distractors 83% / backgrounds 59%）。输入：策略 + 鲁棒性测试场景；输出：鲁棒性指标。
+CAP_b328892f</title>
+  <rect x="322.0" y="3872.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="3904.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">鲁棒性评估</tspan></text>
+  <text x="437.0" y="3938.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="437.0" dy="0">同本体多任务策略预训练迁移</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_3" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>少样本迁移评估
+评估少样本迁移（BC-Z 视频条件化 few-shot / VIMA 10x less data 2.7x better）。输入：策略 + 少量新任务数据；输出：少样本成功率。
+CAP_b328892f</title>
+  <rect x="588.0" y="3872.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="703.0" y="3904.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="703.0" dy="0">少样本迁移评估</tspan></text>
+  <text x="703.0" y="3938.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="703.0" dy="0">同本体多任务策略预训练迁移</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>sim 数据吸收
+RT-1 sim+real 混合训练吸收 sim 数据（仅 -2% 原任务）。输入：sim 数据 + 真实数据；输出：扩展后策略。
+CAP_b328892f</title>
+  <rect x="56.0" y="4044.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="4076.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">sim 数据吸收</tspan></text>
+  <text x="171.0" y="4110.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="171.0" dy="0">同本体多任务策略预训练迁移</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>跨本体数据吸收
+RT-1 吸收 Kuka 跨本体数据（22%→39%）。输入：跨本体数据；输出：扩展后策略。
+CAP_b328892f</title>
+  <rect x="322.0" y="4044.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="4076.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">跨本体数据吸收</tspan></text>
+  <text x="437.0" y="4110.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="437.0" dy="0">同本体多任务策略预训练迁移</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_3" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>长时程任务组合
+RT-1 + PaLM-SayCan 实现 50 步长时程任务组合。输入：多任务策略 + 高层规划器；输出：长时程执行能力。
+CAP_b328892f</title>
+  <rect x="588.0" y="4044.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="703.0" y="4076.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="703.0" dy="0">长时程任务组合</tspan></text>
+  <text x="703.0" y="4110.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="703.0" dy="0">同本体多任务策略预训练迁移</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>真机闭环部署
+在真机上闭环部署（BC-Z 10Hz / RT-1 3Hz / PerAct motion planner / VIMA 交互式）。输入：策略 + 真机传感器；输出：真机动作。
+CAP_4b72227c</title>
+  <rect x="56.0" y="4216.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="4248.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">真机闭环部署</tspan></text>
+  <text x="171.0" y="4282.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="171.0" dy="0">策略导出与 sim-to-real 部署</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>持续数据扩展与迭代改进
+持续添加新指令/任务数据扩展策略能力（RT-1 无假设添加新指令，BC-Z 干预率监控）。输入：新数据 + 策略；输出：迭代后策略。
+CAP_b328892f</title>
+  <rect x="322.0" y="4216.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="4248.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">持续数据扩展与迭代改进</tspan></text>
+  <text x="437.0" y="4282.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="437.0" dy="0">同本体多任务策略预训练迁移</tspan></text>
+  </g>
+</svg>

@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="3308"
+ viewBox="0 0 1180 3308"
+ shape-rendering="geometricPrecision" text-rendering="optimizeLegibility">
+<!--SV-THEME--><style>/* 一份 SVG 两种主题 */@media (prefers-color-scheme: light){[fill="#0B0D16"]{fill:#F6F3EC}[stroke="#0B0D16"]{stroke:#F6F3EC}[fill="#0D1D28"]{fill:#E4F1F8}[stroke="#0D1D28"]{stroke:#E4F1F8}[fill="#0D1F2C"]{fill:#E4F3F8}[stroke="#0D1F2C"]{stroke:#E4F3F8}[fill="#0E2019"]{fill:#E3F5EC}[stroke="#0E2019"]{stroke:#E3F5EC}[fill="#12162A"]{fill:#EFEBE2}[stroke="#12162A"]{stroke:#EFEBE2}[fill="#151A2B"]{fill:#FFFFFF}[stroke="#151A2B"]{stroke:#FFFFFF}[fill="#161A26"]{fill:#F0EEE8}[stroke="#161A26"]{stroke:#F0EEE8}[fill="#1A1430"]{fill:#EFEAFB}[stroke="#1A1430"]{stroke:#EFEAFB}[fill="#231A0C"]{fill:#FAF2DF}[stroke="#231A0C"]{stroke:#FAF2DF}[fill="#2A0F1E"]{fill:#FBE6EF}[stroke="#2A0F1E"]{stroke:#FBE6EF}[fill="#2A3050"]{fill:#DFD8CC}[stroke="#2A3050"]{stroke:#DFD8CC}[fill="#39406A"]{fill:#C7BDAD}[stroke="#39406A"]{stroke:#C7BDAD}[fill="#3FC5E8"]{fill:#0E6E8C}[stroke="#3FC5E8"]{stroke:#0E6E8C}[fill="#3FD6E8"]{fill:#0E6E8C}[stroke="#3FD6E8"]{stroke:#0E6E8C}[fill="#4FA8FF"]{fill:#1668A8}[stroke="#4FA8FF"]{stroke:#1668A8}[fill="#4FB3E8"]{fill:#1668A8}[stroke="#4FB3E8"]{stroke:#1668A8}[fill="#4FC08D"]{fill:#1F7A55}[stroke="#4FC08D"]{stroke:#1F7A55}[fill="#5C6480"]{fill:#8A8378}[stroke="#5C6480"]{stroke:#8A8378}[fill="#5FD08A"]{fill:#1F7A55}[stroke="#5FD08A"]{stroke:#1F7A55}[fill="#6E7796"]{fill:#A9A196}[stroke="#6E7796"]{stroke:#A9A196}[fill="#6FD3A6"]{fill:#166344}[stroke="#6FD3A6"]{stroke:#166344}[fill="#7A87A8"]{fill:#5A637C}[stroke="#7A87A8"]{stroke:#5A637C}[fill="#7B8BFF"]{fill:#3A46B0}[stroke="#7B8BFF"]{stroke:#3A46B0}[fill="#8A93B0"]{fill:#7B7368}[stroke="#8A93B0"]{stroke:#7B7368}[fill="#8FA3B8"]{fill:#4E5F70}[stroke="#8FA3B8"]{stroke:#4E5F70}[fill="#9B87FF"]{fill:#5B3FD4}[stroke="#9B87FF"]{stroke:#5B3FD4}[fill="#A9B0C8"]{fill:#5A5349}[stroke="#A9B0C8"]{stroke:#5A5349}[fill="#B08D7A"]{fill:#6D5546}[stroke="#B08D7A"]{stroke:#6D5546}[fill="#B98BFF"]{fill:#5B3FD4}[stroke="#B98BFF"]{stroke:#5B3FD4}[fill="#D6DAE8"]{fill:#2E2A25}[stroke="#D6DAE8"]{stroke:#2E2A25}[fill="#E8A33D"]{fill:#9A6C0B}[stroke="#E8A33D"]{stroke:#9A6C0B}[fill="#EDE7DD"]{fill:#191714}[stroke="#EDE7DD"]{stroke:#191714}[fill="#FF5FA8"]{fill:#B02063}[stroke="#FF5FA8"]{stroke:#B02063}[fill="#FF6B6B"]{fill:#C0392B}[stroke="#FF6B6B"]{stroke:#C0392B}[fill="#FF8FC2"]{fill:#8F1B4E}[stroke="#FF8FC2"]{stroke:#8F1B4E}[fill="#FFB03D"]{fill:#9A6C0B}[stroke="#FFB03D"]{stroke:#9A6C0B}}html[data-theme="light"] [fill="#0B0D16"]{fill:#F6F3EC}html[data-theme="light"] [stroke="#0B0D16"]{stroke:#F6F3EC}html[data-theme="light"] [fill="#0D1D28"]{fill:#E4F1F8}html[data-theme="light"] [stroke="#0D1D28"]{stroke:#E4F1F8}html[data-theme="light"] [fill="#0D1F2C"]{fill:#E4F3F8}html[data-theme="light"] [stroke="#0D1F2C"]{stroke:#E4F3F8}html[data-theme="light"] [fill="#0E2019"]{fill:#E3F5EC}html[data-theme="light"] [stroke="#0E2019"]{stroke:#E3F5EC}html[data-theme="light"] [fill="#12162A"]{fill:#EFEBE2}html[data-theme="light"] [stroke="#12162A"]{stroke:#EFEBE2}html[data-theme="light"] [fill="#151A2B"]{fill:#FFFFFF}html[data-theme="light"] [stroke="#151A2B"]{stroke:#FFFFFF}html[data-theme="light"] [fill="#161A26"]{fill:#F0EEE8}html[data-theme="light"] [stroke="#161A26"]{stroke:#F0EEE8}html[data-theme="light"] [fill="#1A1430"]{fill:#EFEAFB}html[data-theme="light"] [stroke="#1A1430"]{stroke:#EFEAFB}html[data-theme="light"] [fill="#231A0C"]{fill:#FAF2DF}html[data-theme="light"] [stroke="#231A0C"]{stroke:#FAF2DF}html[data-theme="light"] [fill="#2A0F1E"]{fill:#FBE6EF}html[data-theme="light"] [stroke="#2A0F1E"]{stroke:#FBE6EF}html[data-theme="light"] [fill="#2A3050"]{fill:#DFD8CC}html[data-theme="light"] [stroke="#2A3050"]{stroke:#DFD8CC}html[data-theme="light"] [fill="#39406A"]{fill:#C7BDAD}html[data-theme="light"] [stroke="#39406A"]{stroke:#C7BDAD}html[data-theme="light"] [fill="#3FC5E8"]{fill:#0E6E8C}html[data-theme="light"] [stroke="#3FC5E8"]{stroke:#0E6E8C}html[data-theme="light"] [fill="#3FD6E8"]{fill:#0E6E8C}html[data-theme="light"] [stroke="#3FD6E8"]{stroke:#0E6E8C}html[data-theme="light"] [fill="#4FA8FF"]{fill:#1668A8}html[data-theme="light"] [stroke="#4FA8FF"]{stroke:#1668A8}html[data-theme="light"] [fill="#4FB3E8"]{fill:#1668A8}html[data-theme="light"] [stroke="#4FB3E8"]{stroke:#1668A8}html[data-theme="light"] [fill="#4FC08D"]{fill:#1F7A55}html[data-theme="light"] [stroke="#4FC08D"]{stroke:#1F7A55}html[data-theme="light"] [fill="#5C6480"]{fill:#8A8378}html[data-theme="light"] [stroke="#5C6480"]{stroke:#8A8378}html[data-theme="light"] [fill="#5FD08A"]{fill:#1F7A55}html[data-theme="light"] [stroke="#5FD08A"]{stroke:#1F7A55}html[data-theme="light"] [fill="#6E7796"]{fill:#A9A196}html[data-theme="light"] [stroke="#6E7796"]{stroke:#A9A196}html[data-theme="light"] [fill="#6FD3A6"]{fill:#166344}html[data-theme="light"] [stroke="#6FD3A6"]{stroke:#166344}html[data-theme="light"] [fill="#7A87A8"]{fill:#5A637C}html[data-theme="light"] [stroke="#7A87A8"]{stroke:#5A637C}html[data-theme="light"] [fill="#7B8BFF"]{fill:#3A46B0}html[data-theme="light"] [stroke="#7B8BFF"]{stroke:#3A46B0}html[data-theme="light"] [fill="#8A93B0"]{fill:#7B7368}html[data-theme="light"] [stroke="#8A93B0"]{stroke:#7B7368}html[data-theme="light"] [fill="#8FA3B8"]{fill:#4E5F70}html[data-theme="light"] [stroke="#8FA3B8"]{stroke:#4E5F70}html[data-theme="light"] [fill="#9B87FF"]{fill:#5B3FD4}html[data-theme="light"] [stroke="#9B87FF"]{stroke:#5B3FD4}html[data-theme="light"] [fill="#A9B0C8"]{fill:#5A5349}html[data-theme="light"] [stroke="#A9B0C8"]{stroke:#5A5349}html[data-theme="light"] [fill="#B08D7A"]{fill:#6D5546}html[data-theme="light"] [stroke="#B08D7A"]{stroke:#6D5546}html[data-theme="light"] [fill="#B98BFF"]{fill:#5B3FD4}html[data-theme="light"] [stroke="#B98BFF"]{stroke:#5B3FD4}html[data-theme="light"] [fill="#D6DAE8"]{fill:#2E2A25}html[data-theme="light"] [stroke="#D6DAE8"]{stroke:#2E2A25}html[data-theme="light"] [fill="#E8A33D"]{fill:#9A6C0B}html[data-theme="light"] [stroke="#E8A33D"]{stroke:#9A6C0B}html[data-theme="light"] [fill="#EDE7DD"]{fill:#191714}html[data-theme="light"] [stroke="#EDE7DD"]{stroke:#191714}html[data-theme="light"] [fill="#FF5FA8"]{fill:#B02063}html[data-theme="light"] [stroke="#FF5FA8"]{stroke:#B02063}html[data-theme="light"] [fill="#FF6B6B"]{fill:#C0392B}html[data-theme="light"] [stroke="#FF6B6B"]{stroke:#C0392B}html[data-theme="light"] [fill="#FF8FC2"]{fill:#8F1B4E}html[data-theme="light"] [stroke="#FF8FC2"]{stroke:#8F1B4E}html[data-theme="light"] [fill="#FFB03D"]{fill:#9A6C0B}html[data-theme="light"] [stroke="#FFB03D"]{stroke:#9A6C0B}</style>
+<defs>
+  <marker id="arr" markerWidth="12" markerHeight="9" refX="10" refY="4.5" orient="auto">
+    <polygon points="0 0,12 4.5,0 9" fill="#5C6480"/>
+  </marker>
+  <marker id="arr-gray" markerWidth="12" markerHeight="9" refX="10" refY="4.5" orient="auto">
+    <polygon points="0 0,12 4.5,0 9" fill="#39406A"/>
+  </marker>
+</defs>
+<rect width="100%" height="100%" fill="#0B0D16" rx="0"/>
+<rect x="0.0" y="0.0" width="1180.0" height="100.0" rx="0" fill="#101528" stroke="none" stroke-width="0"/>
+  <text x="590.0" y="52.0" font-size="20" fill="#EDE7DD" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="590.0" dy="0">实时MPC优化  (Real-Time MPC Optimization)</tspan></text>
+  <rect x="296.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.5"/>
+  <text x="318.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="318.0" dy="0">阶段</tspan></text>
+  <rect x="380.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#231A0C" stroke="#E8A33D" stroke-width="1.5"/>
+  <text x="402.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="402.0" dy="0">步骤</tspan></text>
+  <rect x="464.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#0D1D28" stroke="#4FB3E8" stroke-width="1.5"/>
+  <text x="486.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="486.0" dy="0">子链</tspan></text>
+  <rect x="548.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="1.5"/>
+  <text x="570.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="570.0" dy="0">判断</tspan></text>
+  <rect x="632.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#1A1430" stroke="#9B87FF" stroke-width="1.5"/>
+  <text x="654.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="654.0" dy="0">分支</tspan></text>
+  <rect x="716.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#0E2019" stroke="#4FC08D" stroke-width="1.5"/>
+  <text x="738.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="738.0" dy="0">合并</tspan></text>
+  <rect x="800.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#161A26" stroke="#7A87A8" stroke-width="1.5"/>
+  <text x="822.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="822.0" dy="0">编码</tspan></text>
+  <rect x="36.0" y="164.0" width="1108.0" height="588.0" rx="8" fill="#151A2B" stroke="#2A3050" stroke-width="2.0"/>
+  <rect x="36.0" y="164.0" width="1108.0" height="48.0" rx="8" fill="#16223A" stroke="none" stroke-width="0"/>
+  <rect x="36.0" y="188.0" width="1108.0" height="24.0" rx="0" fill="#16223A" stroke="none" stroke-width="0"/>
+  <text x="590.0" y="189.0" font-size="15" fill="#7FD9F0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="590.0" dy="0">任务链 1: RTI-SQP Sparse IPM Real-Time NMPC</tspan></text>
+  <rect x="56.0" y="232.0" width="1068.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="232.0" width="1068.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="252.0" width="1068.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="590.0" y="253.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="590.0" dy="0">s1 — OCP 建模与 QP 构造</tspan></text>
+  <rect x="56.0" y="404.0" width="1068.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="404.0" width="1068.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="424.0" width="1068.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="590.0" y="425.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="590.0" dy="0">s2 — 结构感知 QP 求解</tspan></text>
+  <rect x="56.0" y="576.0" width="1068.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="576.0" width="1068.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="596.0" width="1068.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="590.0" y="597.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="590.0" dy="0">s3 — 实时部署与滚动</tspan></text>
+  <rect x="36.0" y="784.0" width="842.0" height="588.0" rx="8" fill="#151A2B" stroke="#2A3050" stroke-width="2.0"/>
+  <rect x="36.0" y="784.0" width="842.0" height="48.0" rx="8" fill="#16223A" stroke="none" stroke-width="0"/>
+  <rect x="36.0" y="808.0" width="842.0" height="24.0" rx="0" fill="#16223A" stroke="none" stroke-width="0"/>
+  <text x="457.0" y="809.0" font-size="15" fill="#7FD9F0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="457.0" dy="0">任务链 2: DDP-FDDP Receding-Horizon Optimal Control</tspan></text>
+  <rect x="56.0" y="852.0" width="802.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="852.0" width="802.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="872.0" width="802.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="457.0" y="873.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="457.0" dy="0">s1 — OCP 建模与前向 rollout</tspan></text>
+  <rect x="56.0" y="1024.0" width="802.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="1024.0" width="802.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="1044.0" width="802.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="457.0" y="1045.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="457.0" dy="0">s2 — 后向 Riccati 扫掠与可行性处理</tspan></text>
+  <rect x="56.0" y="1196.0" width="802.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="1196.0" width="802.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="1216.0" width="802.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="457.0" y="1217.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="457.0" dy="0">s3 — 实时部署与滚动</tspan></text>
+  <rect x="36.0" y="1404.0" width="842.0" height="588.0" rx="8" fill="#151A2B" stroke="#2A3050" stroke-width="2.0"/>
+  <rect x="36.0" y="1404.0" width="842.0" height="48.0" rx="8" fill="#16223A" stroke="none" stroke-width="0"/>
+  <rect x="36.0" y="1428.0" width="842.0" height="24.0" rx="0" fill="#16223A" stroke="none" stroke-width="0"/>
+  <text x="457.0" y="1429.0" font-size="15" fill="#7FD9F0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="457.0" dy="0">任务链 3: Embedded Code-Generated Custom MPC Solver</tspan></text>
+  <rect x="56.0" y="1472.0" width="802.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="1472.0" width="802.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="1492.0" width="802.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="457.0" y="1493.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="457.0" dy="0">s1 — 问题定义与分析</tspan></text>
+  <rect x="56.0" y="1644.0" width="802.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="1644.0" width="802.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="1664.0" width="802.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="457.0" y="1665.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="457.0" dy="0">s2 — 代码生成与验证</tspan></text>
+  <rect x="56.0" y="1816.0" width="802.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="1816.0" width="802.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="1836.0" width="802.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="457.0" y="1837.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="457.0" dy="0">s3 — 嵌入式部署与在线求解</tspan></text>
+  <rect x="36.0" y="2024.0" width="842.0" height="588.0" rx="8" fill="#151A2B" stroke="#2A3050" stroke-width="2.0"/>
+  <rect x="36.0" y="2024.0" width="842.0" height="48.0" rx="8" fill="#16223A" stroke="none" stroke-width="0"/>
+  <rect x="36.0" y="2048.0" width="842.0" height="24.0" rx="0" fill="#16223A" stroke="none" stroke-width="0"/>
+  <text x="457.0" y="2049.0" font-size="15" fill="#7FD9F0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="457.0" dy="0">任务链 4: ADMM First-Order QP-MPC for MCU</tspan></text>
+  <rect x="56.0" y="2092.0" width="802.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="2092.0" width="802.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="2112.0" width="802.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="457.0" y="2113.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="457.0" dy="0">s1 — QP 编码与参数标定</tspan></text>
+  <rect x="56.0" y="2264.0" width="802.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="2264.0" width="802.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="2284.0" width="802.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="457.0" y="2285.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="457.0" dy="0">s2 — ADMM 一阶分裂求解</tspan></text>
+  <rect x="56.0" y="2436.0" width="802.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="2436.0" width="802.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="2456.0" width="802.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="457.0" y="2457.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="457.0" dy="0">s3 — 实时部署与滚动</tspan></text>
+  <rect x="36.0" y="2644.0" width="842.0" height="588.0" rx="8" fill="#151A2B" stroke="#2A3050" stroke-width="2.0"/>
+  <rect x="36.0" y="2644.0" width="842.0" height="48.0" rx="8" fill="#16223A" stroke="none" stroke-width="0"/>
+  <rect x="36.0" y="2668.0" width="842.0" height="24.0" rx="0" fill="#16223A" stroke="none" stroke-width="0"/>
+  <text x="457.0" y="2669.0" font-size="15" fill="#7FD9F0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="457.0" dy="0">任务链 5: GPU-Parallel Sampling MPPI Control</tspan></text>
+  <rect x="56.0" y="2712.0" width="802.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="2712.0" width="802.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="2732.0" width="802.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="457.0" y="2733.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="457.0" dy="0">s1 — 采样与前向 rollout</tspan></text>
+  <rect x="56.0" y="2884.0" width="802.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="2884.0" width="802.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="2904.0" width="802.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="457.0" y="2905.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="457.0" dy="0">s2 — 代价评估与加权平均</tspan></text>
+  <rect x="56.0" y="3056.0" width="802.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="3056.0" width="802.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="3076.0" width="802.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="457.0" y="3077.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="457.0" dy="0">s3 — 实时部署与滚动</tspan></text>
+  <line x1="287.0" y1="330.0" x2="321.0" y2="330.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="553.0" y1="330.0" x2="587.0" y2="330.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="819.0" y1="330.0" x2="853.0" y2="330.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 969.0 368.0 L 969.0 416.0 L 171.0 416.0 L 171.0 464.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="502.0" x2="321.0" y2="502.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 437.0 540.0 L 437.0 588.0 L 171.0 588.0 L 171.0 636.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="674.0" x2="321.0" y2="674.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="950.0" x2="321.0" y2="950.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 437.0 988.0 L 437.0 1036.0 L 171.0 1036.0 L 171.0 1084.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="1122.0" x2="321.0" y2="1122.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="553.0" y1="1122.0" x2="587.0" y2="1122.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 703.0 1160.0 L 703.0 1208.0 L 171.0 1208.0 L 171.0 1256.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="1294.0" x2="321.0" y2="1294.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="1570.0" x2="321.0" y2="1570.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 437.0 1608.0 L 437.0 1656.0 L 171.0 1656.0 L 171.0 1704.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="1742.0" x2="321.0" y2="1742.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="553.0" y1="1742.0" x2="587.0" y2="1742.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 703.0 1780.0 L 703.0 1828.0 L 171.0 1828.0 L 171.0 1876.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="1914.0" x2="321.0" y2="1914.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="2190.0" x2="321.0" y2="2190.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 437.0 2228.0 L 437.0 2276.0 L 171.0 2276.0 L 171.0 2324.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="2362.0" x2="321.0" y2="2362.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="553.0" y1="2362.0" x2="587.0" y2="2362.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 703.0 2400.0 L 703.0 2448.0 L 171.0 2448.0 L 171.0 2496.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="2534.0" x2="321.0" y2="2534.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="2810.0" x2="321.0" y2="2810.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 437.0 2848.0 L 437.0 2896.0 L 171.0 2896.0 L 171.0 2944.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="2982.0" x2="321.0" y2="2982.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="553.0" y1="2982.0" x2="587.0" y2="2982.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 703.0 3020.0 L 703.0 3068.0 L 171.0 3068.0 L 171.0 3116.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="3154.0" x2="321.0" y2="3154.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <g class="step-node" data-sid="s1_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>OCP Symbolic Modeling
+用 CasADi 符号框架定义 OCP 的状态变量 x、控制变量 u、动力学方程 f(x,u)、阶段代价 l(x,u)、末端代价 m(x_N)、路径约束 g(x,u)≤g_max。CasADi 自动微分生成雅可比/海森矩阵供后续 SQP 使用。输入：动力学方程 + 代价/约束设计。输出：CasADi 符号函数对象（f, l, m, g + ∂f/∂x, ∂f/∂u）。约束：动力学必须可微。
+CAP_5544f399</title>
+  <rect x="56.0" y="292.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="329.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">OCP 符号化建模</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Dynamics Discretization and Sensitivity
+将连续动力学 ẋ=f(x,u) 离散化为 x_{k+1}=Φ(x_k,u_k)（多步配点 multiple shooting），用 CasADi 自动微分生成离散动力学的雅可比 ∂Φ/∂x、∂Φ/∂u 供 SQP 线性化使用。输入：CasADi 符号动力学 + 积分方法（RK4/IRK）。输出：离散动力学 Φ + 雅可比矩阵。约束：积分步长需与控制周期匹配。性能指标：CasADi 自动微分生成雅可比 &lt;10 ms（离线 codegen 后 &lt;1 ms）。
+CAP_85201669</title>
+  <rect x="322.0" y="292.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="329.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">动力学离散化与灵敏度</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_3" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>QP Subproblem Construction
+在当前线性化点（x̂_k, u_warm）对 NLP 做一阶泰勒展开，构造 QP 子问题 min ½ΔzᵀHΔz + gᵀΔz s.t. AΔz + b ≤ 0，其中 H 是拉格朗日海森近似（Gauss-Newton）、g 是代价梯度、A/b 是约束雅可比。RTI 方案每周期只构造一次 QP（单步 SQP 迭代）。输入：线性化点 + 雅可比 + warm-start。输出：QP 矩阵 (H,g,A,lb,ub)。约束：H 需正定（可用 Gauss-Newton 近似保证）。
+CAP_c6dd72a3</title>
+  <rect x="588.0" y="292.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="703.0" y="329.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="703.0" dy="0">QP 子问题构造</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_4" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Partial Condensing
+对 N 步 horizon 的 QP 做 partial condensing——把相邻的若干步合并为一个超级步，减少 QP 的决策变量维度与约束数，同时保留块三对角结构供 HPIPM 利用。acados 的 partial condensing 实测减少约 30% 计算量。输入：N 步 QP (H,g,A,lb,ub)。输出：压缩后 QP (H_cond,g_cond,A_cond,lb_cond,ub_cond)。约束：condensing 块数需权衡。性能指标：减少约 30% QP 求解时间。
+CAP_2f118391</title>
+  <rect x="854.0" y="292.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="969.0" y="329.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="969.0" dy="0">部分稀疏压缩</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>HPIPM Sparse IPM QP Solve
+用 HPIPM 内点法求解 QP 子问题——利用 MPC QP 的块三对角结构做 Riccati 递归消元，把 KKT 系统求解复杂度从 O(N³) 降到 O(N)。内点法通过原对偶路径跟踪迭代收敛，若未收敛则增加内点迭代次数。输入：(H_cond,g_cond,A_cond,lb_cond,ub_cond)。输出：QP 解 Δu* + 对偶变量 λ。约束：QP 必须凸（H 正定）。性能指标：Riccati 递归 O(N)。
+CAP_4a31e344</title>
+  <rect x="56.0" y="464.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="501.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">HPIPM 稀疏内点 QP 求解</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>BLASFEO Linear Algebra Backend
+BLASFEO 提供面向小规模密集矩阵优化的线性代数后端，针对 AMD64/ARM/嵌入式架构做指令级优化，KKT 系统求解 &lt;0.5 ms。是 HPIPM 的底层依赖。输入：KKT 系统线性方程组。输出：KKT 解（QP 解 Δu*）。约束：针对小矩阵优化（&lt;100 维），大矩阵不如标准 BLAS。性能指标：小矩阵求解 &lt;0.5 ms。
+CAP_4a31e344</title>
+  <rect x="322.0" y="464.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="501.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">HPIPM 稀疏内点 QP 求解</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Preparation Feedback Phase Split
+RTI 方案的核心机制——把每个 SQP 迭代拆为 preparation 相（耗时的 QP 构造+因式分解，用上一周期数据）与 feedback 相（快速的 QP 求解+首步下发，用当前周期状态）。feedback 相延迟 &lt;1 ms，preparation 相在上一周期的等待间隙完成。输入：当前状态 x̂_k + 上一周期 preparation 结果。输出：u₀* = u_nom + Δu₀*。约束：preparation 相必须在下一周期 feedback 相前完成。性能指标：feedback 相 &lt;1 ms。
+CAP_0a6cfaec</title>
+  <rect x="56.0" y="636.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="673.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">准备反馈相分离</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>First-Step Dispatch and Warm-Start Rolling
+从 QP 解 Δu* 中取首步 u₀* 下发给执行器，其余 {u₁*,...,u_{N-1}*} 作为下一周期的 warm-start（平移一步+重复末步）。warm-start 使下一周期的 SQP 迭代从良好的初始点出发，是 RTI 方案跨周期收敛的关键。判断：若 QP 求解未收敛（原对偶残差 ≥ tol），则回退到上一周期解并增加内点迭代次数。输入：完整控制序列 {u₀*,...,u_{N-1}*}。输出：u₀*（下发）+ warm-start（下一周期）。约束：warm-start 必须在下一周期 preparation 相前更新。
+CAP_fec7abe3</title>
+  <rect x="322.0" y="636.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="673.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">首步下发与暖启动滚动</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>OCP Contact Sequence Modeling
+用 Crocoddyl 的 ActionModel 抽象定义 OCP：状态 x=[q,v]（广义位置+速度）、控制 u=[τ, f_contact]（关节力矩+接触力）、动力学 f(x,u)（含接触约束，基于 Pinocchio ABA/RNEA）、代价 l(x,u)（跟踪+能耗+接触力正则）、接触序列 schedule（定义各相位的接触状态）。输入：URDF + 代价设计 + 步态 schedule。输出：Crocoddyl ActionModel/Data 对象列表。约束：接触约束需可微（软接触模型）。
+CAP_049a7df7</title>
+  <rect x="56.0" y="912.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="949.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">OCP 接触序列建模</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Forward Rollout
+用当前控制序列 {u_k} 与初始状态 x_0 做前向积分，得到轨迹 {x_k},{u_k} 与总代价 J。每步用 Pinocchio 的 ABA（Articulated Body Algorithm）计算前向动力学，解析导数 ∂f/∂x, ∂f/∂u 供后向扫掠使用。输入：x_0 + {u_k}。输出：{x_k},{u_k}, J + 导数。约束：积分需稳定（步长与控制周期匹配）。性能指标：Pinocchio 解析导数 &lt;1 ms/步。
+CAP_91a778a9</title>
+  <rect x="322.0" y="912.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="949.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">前向 rollout</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Backward Riccati Sweep
+DDP 核心——从末端 N 到 0 反向递归，计算价值函数 V(x) 的二次展开 V_x, V_xx 与反馈增益 K_k = -(V_xx)^{-1}·V_xu。利用前向 rollout 的导数 ∂f/∂x, ∂f/∂u 做泰勒展开。若 V_xx 非正定则加正则化 μ·I 保证。输入：{∂f/∂x, ∂f/∂u} + 残差。输出：V_x/V_xx + K_k。约束：V_xx 需正定（可用正则化保证）。性能指标：复杂度 O(N·n²)，低于 QP 的 O((n·N)³)。
+CAP_9083fd68</title>
+  <rect x="56.0" y="1084.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="1121.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">后向 Riccati 扫掠</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Feasibility-Driven Line Search
+FDDP 的核心改进——通过 gap function（实际状态与积分状态的差距）处理不可行初始猜测。若 rollout 不可行（gap ≥ tol），减小步长 α 并用 gap 补偿重做前向 rollout（在同一迭代内重复直到可行）；若可行（gap &lt; tol），接受步长 α=1。这解决了标准 DDP 要求可行初始猜测的限制。输入：K_k + gap。输出：可行步长 α + 更新的 {u_k}。约束：α 需保证 J 单调下降或 gap 减小。
+CAP_0c3652c7</title>
+  <rect x="322.0" y="1084.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="1121.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">可行性驱动线搜索</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_3" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>BoxFDDP Inequality Constraint Handling
+BoxFDDP 用 clamping 机制处理控制 box 约束 u_min≤u≤u_max——若控制触碰边界（u &lt; u_min OR u &gt; u_max），clamp 到边界并冻结 active-set；若未触碰则正常更新。在后向扫掠中对触碰边界的控制分量 clamp 并冻结，只对未触碰分量计算反馈增益，使 DDP 原生处理力矩/接触力上下限，不需要外层 QP 包装。输入：{u_k} + box 约束。输出：clamp 后 {u_k} + active set。约束：仅支持 box 约束（一般不等式需 Aligator ProxDDP）。
+CAP_665cc5b1</title>
+  <rect x="588.0" y="1084.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="703.0" y="1121.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="703.0" dy="0">BoxFDDP 不等式约束处理</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Feedback Gain Application
+在线 MPC 模式下，DDP 取首步反馈控制 u_0* = u_nom_0 + K_0·(x_actual - x_nom_0)。反馈增益 K_0 使 DDP 具备闭环稳定性（vs 开环 rollout）。输入：K_0 + x_actual + {u_nom}。输出：u_0*。约束：反馈增益需在每周期更新。
+CAP_f9514390</title>
+  <rect x="56.0" y="1256.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="1293.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">反馈增益应用</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>DDP First-Step Dispatch and Warm-Start Rolling
+取 u_0* 下发给执行器，{u_1,...,u_{N-1}} 作为下一周期 warm-start（平移+重复末步）。warm-start 使下一周期 DDP 从良好初始点收敛，是滚动时域跨周期收敛的关键。输入：u_0* + {u_nom}。输出：u_0*（下发）+ warm-start（下一周期）。约束：warm-start 需在下一周期前更新。
+CAP_b479af16</title>
+  <rect x="322.0" y="1256.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="1293.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">DDP 首步下发与暖启动滚动</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>MPC Problem Symbolic Definition
+在 MATLAB/Python 中用符号框架（ACADO/CasADi/YALMIP）定义 OCP 结构：状态 x、控制 u、动力学 f(x,u)、代价 l(x,u)、约束 g(x,u)≤g_max、horizon N。符号定义供 codegen 服务器分析。输入：OCP 设计。输出：符号 OCP 对象。约束：动力学需可微（codegen 需导数）。
+CAP_affb3bd6</title>
+  <rect x="56.0" y="1532.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="1569.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">MPC 问题符号化定义</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Sparsity Convexity Analysis
+codegen 服务器离线分析 OCP 的稀疏模式（雅可比/海森的非零结构）、凸性（H 是否正定）、调度结构（MPC 的块三对角），据此选择最优求解器配置（IPM/active-set/C-GMRES）与内存预算。输入：符号 OCP。输出：求解器配置（类型+稀疏模式+内存预算）。约束：分析需在离线完成（不可在线）。
+CAP_f86a948f</title>
+  <rect x="322.0" y="1532.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="1569.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">稀疏性与凸性分析</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>C Code Template Instantiation
+codegen 引擎根据分析结果实例化 C 代码模板，生成定制求解器源码——展开循环、硬编码稀疏模式、静态内存分配（无 malloc）、无外部依赖。生成的 C 代码针对特定问题定制，比通用求解器快 10-100 倍。输入：求解器配置。输出：solver.c, solver.h（静态内存、无 malloc）。约束：生成的代码需 MISRA-C 兼容（汽车）。
+CAP_63d9471b</title>
+  <rect x="56.0" y="1704.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="1741.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">C 代码模板实例化</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Static Memory Compilation
+用目标平台 toolchain（arm-gcc/IAR/Keil）交叉编译生成的 C 代码，确保静态内存分配、无动态分配、无 OS 依赖。编译后的二进制适合 MCU/ECU 部署。输入：C 源码 + toolchain。输出：编译后的二进制（.elf/.hex）。约束：需匹配目标平台架构（ARM Cortex-M 等）。
+CAP_b4f14949</title>
+  <rect x="322.0" y="1704.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="1741.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">静态内存编译</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_3" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>SIL Verification
+在 PC 上用生成的 C 代码与原符号模型对比验证正确性——同一组输入下，C 代码输出与符号求解器输出误差需 &lt;1e-6。SIL 验证是嵌入式部署的必要质量保证（MCU 上不可在线调试）。若验证未通过则回 S1_2 调整求解器配置重新生成。输入：二进制 + 测试用例。输出：SIL 验证报告。约束：需覆盖典型工况与边界情况。
+CAP_ac3c0596</title>
+  <rect x="588.0" y="1704.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="703.0" y="1741.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="703.0" dy="0">软件在环验证</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>MCU Deployment
+将验证通过的求解器部署到 MCU（STM32/Cortex-M/ECU），配置中断与实时调度，确保静态内存预算与 Flash 容量匹配。输入：验证通过的求解器二进制。输出：MCU 上的求解器库（中断驱动、实时调度）。约束：MCU RAM/Flash 预算严格；实时中断需保证求解完成。
+CAP_d20e840a</title>
+  <rect x="56.0" y="1876.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="1913.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">MCU 部署</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Online Warm-Start Solving
+在线每周期调用求解器，传入当前状态 x̂_k + warm-start（上一周期解平移），输出首步控制 u_0*。warm-start 使 codegen 求解器在 MCU 上达到微秒–毫秒级。输入：求解器 + x̂_k + warm-start。输出：u_0* + 更新 warm-start。约束：MCU RAM/Flash 预算严格；实时中断需保证求解完成。
+CAP_3770a8c1</title>
+  <rect x="322.0" y="1876.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="1913.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">在线热启动求解</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>MPC QP Encoding
+把 MPC 问题转为标准 QP min 0.5 x&#x27;Px+q&#x27;x s.t. l≤Ax≤u，提取 P（代价海森）、q（代价梯度）、A（约束雅可比）、l/u（约束上下界）。对 MPC，利用块三对角结构编码。输入：MPC（动力学+代价+约束）。输出：标准 QP (P,q,A,l,u)。约束：需凸 QP（P 正定）。
+CAP_ce2fca53</title>
+  <rect x="56.0" y="2152.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="2189.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">MPC QP 编码</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>ADMM Rho Tuning
+标定 ADMM 惩罚参数 ρ（与 P 对角元素比例），平衡原始/对偶残差收敛。ρ 过大原始残差慢，ρ 过小对偶残差慢。OSQP 支持自适应 ρ 调整——若残差比例失衡则动态调整 ρ 并重迭代。输入：QP (P,q,A,l,u)。输出：ρ 参数。约束：ρ 需离线标定或在线自适应。
+CAP_916e9395</title>
+  <rect x="322.0" y="2152.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="2189.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">ADMM ρ 参数标定</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Riccati z-Update
+ADMM 第一步——用 Riccati 递归利用 MPC 块三对角结构更新原始变量 z，求解 (P + ρ A&#x27;A) z = q + ρ A&#x27;(u - λ/ρ)。TinyMPC 的 Riccati 递归把复杂度从 O(N³) 降到 O(N)，且 division-free（无矩阵因式分解）。输入：QP + ρ + warm-start。输出：原始变量 z。约束：需 P + ρ A&#x27;A 正定。性能指标：Riccati 递归 O(N)。
+CAP_2da8d3c0</title>
+  <rect x="56.0" y="2324.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="2361.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">Riccati 原始变量更新</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Primal u-Update
+ADMM 第二步——投影到约束集，u = clip(z + σ⁻¹ λ, l, u)（投影到 box 约束）。对 MPC 的 box 约束（力矩/状态上下限），这是逐元素 clip，无矩阵运算。输入：z + λ + l/u。输出：投影后 u。约束：仅 box 约束（一般约束需 Conic-TinyMPC）。
+CAP_4c196ace</title>
+  <rect x="322.0" y="2324.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="2361.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">原始 u 更新</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_3" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Dual Lambda Update Convergence
+ADMM 第三步——对偶变量更新 λ = λ + σ(z - u)，检查原对偶残差（||z-u|| primal, ||σA&#x27;(u-u_prev)|| dual）&lt; tol。若未收敛则回 S2_1 继续 ADMM 迭代；若残差比例失衡则自适应调整 ρ。输入：u + λ + z。输出：更新 λ + 收敛判定。约束：需设定 tol 与最大迭代数。
+CAP_11168647</title>
+  <rect x="588.0" y="2324.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="703.0" y="2361.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="703.0" dy="0">对偶 λ 更新与收敛</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>ADMM Warm-Start
+用上一周期解作为 warm-start，加速 ADMM 收敛（ADMM 原生支持 warm-start）。warm-start 使 MCU 上 QP 求解从良好初始点出发，减少迭代次数。输入：收敛 z* + 上一周期 warm-start。输出：warm-start 下一周期。约束：warm-start 需在下一周期前更新。
+CAP_5fa3df90</title>
+  <rect x="56.0" y="2496.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="2533.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">ADMM 热启动</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>ADMM First-Step Dispatch MCU
+取首步 u_0* 下发执行器，{u_1,...,u_{N-1}} 作为下一周期 warm-start（ADMM 原生支持 warm-start，加速收敛）。TinyMPC 在 MCU（Cortex-M）上实现实时调度，27g Crazyflie 高速轨迹跟踪。输入：z* + 当前状态。输出：u_0* + warm-start。约束：MCU RAM/Flash 预算；实时中断。性能指标：&lt;1 ms（QP）/MCU。
+CAP_5fe9d787</title>
+  <rect x="322.0" y="2496.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="2533.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">ADMM 首步下发与 MCU 滚动</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Reference Control Gaussian Sampling
+在参考控制 v_t（上一周期 warm-start）上叠加高斯噪声 ε~N(0,Σ_ε) 采样 K 条控制扰动序列 {v_t + ε^i}。Σ_ε 是噪声协方差，控制探索强度。若 GPU 不可用则回退 CPU xtensor 采样。输入：v_t + Σ_ε。输出：K 条扰动控制序列。约束：Σ_ε 需标定（过大过小都不好）。
+CAP_0058d2ac</title>
+  <rect x="56.0" y="2772.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="2809.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">参考控制高斯采样</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>K Trajectories Forward Rollout
+GPU 并行前向积分 K 条轨迹，每条 N 步，得到 {x_k^i, u_k^i}。AERO-MPPI 用 NVIDIA Warp 编写 GPU 内核，性能比 CUDA C++ 更高；Nav2 支持 GPU CUDA 与 CPU xtensor 回退。输入：{v_t + ε^i} + x_k。输出：K 条轨迹 {x_k^i, u_k^i}。性能指标：GPU 并行使 K=1000-5000 条 rollout &lt;10 ms。
+CAP_a3ec3ad4</title>
+  <rect x="322.0" y="2772.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="2809.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">K 条轨迹前向 rollout</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>MPPI Cost Evaluation
+对每条轨迹评估代价 J(u^i) = Σ_{k=0}^{N-1} l(x_k^i, u_k^i) + m(x_N^i)，其中 l 是阶段代价（跟踪+能耗+碰撞），m 是末端代价。代价可非凸/不可微（MPPI 优势）。若 J 出现 inf/nan 则 clip 到 [J_min, J_max] 或用 log-MPPI 变体保证数值稳定。输入：{x_k^i, u_k^i}。输出：K 个代价标量 J(u^i)。约束：代价需有限。
+CAP_34443f10</title>
+  <rect x="56.0" y="2944.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="2981.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">MPPI 代价评估</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Softmax Importance Weight
+MPPI 核心机制——用代价负指数做重要性加权 w^i = exp(-1/λ·(J(u^i) - min J)) / Σ exp(...)。λ 是温度参数（控制权重集中度），λ 大均匀探索，λ 小贪婪利用。若 J 跨度大导致数值不稳定则用 log-MPPI 在对数域计算。输入：J(u^i)。输出：K 个权重 w^i。约束：λ 需标定；J 需数值稳定。
+CAP_1264a195</title>
+  <rect x="322.0" y="2944.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="2981.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">softmax 重要性权重</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_3" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Weighted Average Control
+用 softmax 权重对扰动控制做加权平均，得最优控制序列 u* = Σ w^i · (v_t + ε^i)。加权平均使 MPPI 输出平滑（vs 单条最优轨迹）。输入：w^i + {v_t + ε^i}。输出：最优控制序列 u*。适用场景：MPPI 聚合阶段。
+CAP_0846989f</title>
+  <rect x="588.0" y="2944.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="703.0" y="2981.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="703.0" dy="0">加权平均控制</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>MPPI First-Step Dispatch
+取首步 u_0* 下发执行器。anytime 属性——K 可任意时刻截断出次优解，GPU 采样 K=5000 条若时间不够只用前 K=1000 条也能输出合理控制。输入：u*。输出：u_0*（下发）。约束：需在控制周期内完成采样+rollout+加权。
+CAP_7c3089af</title>
+  <rect x="56.0" y="3116.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="3153.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">MPPI 首步下发</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>MPPI Warm-Start Rolling
+{u_1*,...,u_{N-1}*} 作为下一周期参考控制 v_t（平移+重复末步）。warm-start 使下一周期 MPPI 从良好初始点采样，加速收敛。输入：u*。输出：warm-start v_t（下一周期）。约束：warm-start 需在下一周期前更新。性能指标：20 ms 级延迟（GPU Jetson）。
+CAP_a30c58f6</title>
+  <rect x="322.0" y="3116.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="3153.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">MPPI 暖启动滚动</tspan></text>
+  </g>
+</svg>

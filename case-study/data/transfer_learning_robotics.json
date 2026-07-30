@@ -1,0 +1,1656 @@
+{
+ "topic": {
+  "keyword": "transfer_learning_robotics",
+  "en": "Transfer Learning for Robotics",
+  "zh": "机器人迁移学习",
+  "domain": "LEARNING",
+  "description": "将源域（仿真/多本体真实数据/人类视频/同本体多任务）上学到的策略、表征或动作分布迁移到目标机器人，降低目标任务对演示与交互数据的需求。本主题下设四条互补链路：链1 Sim-to-Real 策略迁移（域随机化 + 执行器网络 + RMA 在线自适应 + ADR，代表系统 legged_gym/RMA/OpenAI Dactyl）；链2 跨本体策略预训练迁移（OXE 统一动作空间 PIUAS / 本体条件化 + VLA/Diffusion 预训练 + 少样本微调，代表系统 Open X-Embodiment/CrossFormer/OpenVLA/π0/RDT-1B）；链3 视觉表征预训练迁移（人类视频自监督预训练冻结编码器 + 少样本 BC/RL，代表系统 R3M/VIP/Voltron）；链4 多任务预训练迁移（同本体多任务联合 BC + 连续任务条件化零样本迁移，代表系统 BC-Z/RT-1/PerAct/VIMA）。四链按源域、迁移对象、核心工程问题严格划界，覆盖仿真→真实、跨本体、视频→机器人、多任务→新任务四大迁移范式。输入：源域数据（仿真/多本体轨迹/人类视频/多任务演示）+ 目标机器人规格。输出：目标机器人可部署策略或冻结表征。约束：sim-to-real gap、动作空间异构、视频-控制语义鸿沟、任务语义差异分别是四链核心挑战。适用场景：数据高效机器人操作/运动学习、跨本体策略迁移、少样本离线 RL、零样本多任务泛化。"
+ },
+ "chains": [
+  {
+   "name": "Sim-to-Real Policy Transfer",
+   "steps": [
+    {
+     "id": "s1",
+     "name": "仿真环境搭建与域随机化配置",
+     "description": "阶段入口。输入：URDF + 仿真器 + 任务规格；输出：域随机化配置好的仿真环境。",
+     "caps": [
+      "Transfer Learning for Robotics",
+      "Sim-to-Real Policy Transfer Training"
+     ],
+     "next": [
+      "s1_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s1_1",
+     "name": "仿真场景搭建",
+     "description": "用 legged_gym task_config / Isaac Lab 搭建仿真环境，配置机器人 URDF、地形、控制频率。输入：URDF + 任务规格；输出：可训练的仿真环境实例。约束：仿真器需支持大规模并行（Isaac Gym 4096 robots）。",
+     "caps": [
+      "Sim-to-Real Policy Transfer Training"
+     ],
+     "next": [
+      "s1_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s1_2",
+     "name": "域随机化配置",
+     "description": "配置摩擦/质量/控制增益/外力/恢复系数等物理参数随机化范围。输入：真实参数估计范围；输出：随机化配置文件。约束：范围过宽导致训练困难，过窄无法覆盖真实变异。",
+     "caps": [
+      "Sim-to-Real Policy Transfer Training"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2",
+     "name": "执行器网络辨识与策略训练",
+     "description": "阶段入口。输入：随机化配置 + 执行器数据；输出：训练好的 RL 策略权重。",
+     "caps": [
+      "Sim-to-Real Policy Transfer Training"
+     ],
+     "next": [
+      "s2_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2_1",
+     "name": "执行器网络辨识",
+     "description": "用真实机器人阶跃响应数据训练 actuator network（raisim），嵌入仿真器缩小动力学 gap。输入：真实机器人阶跃响应数据；输出：执行器网络权重。约束：辨识精度影响迁移效果。",
+     "caps": [
+      "Actuator Network System Identification"
+     ],
+     "next": [
+      "s2_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2_2",
+     "name": "大规模并行 PPO 训练",
+     "description": "用 rsl_rl 在 legged_gym 中 4096 robots 并行 PPO 训练，可选地形课程。输入：仿真环境 + 随机化配置；输出：训练好的策略权重。约束：legged_gym 20 分钟训练 4096 robots。",
+     "caps": [
+      "On-Policy AC Training Pipeline",
+      "Game-Inspired Terrain Curriculum"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3",
+     "name": "策略导出与部署前准备",
+     "description": "阶段入口。输入：训练好的策略权重；输出：真机可部署的策略文件。",
+     "caps": [
+      "Policy Export and Sim-to-Real Deployment"
+     ],
+     "next": [
+      "s3_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3_1",
+     "name": "策略导出",
+     "description": "将策略导出为 JIT scripted policy，脱离仿真器依赖。输入：策略权重；输出：JIT scripted policy 文件。约束：导出后需验证前向推理一致性。",
+     "caps": [
+      "Policy Export and Sim-to-Real Deployment"
+     ],
+     "next": [
+      "s3_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3_2",
+     "name": "真机控制器接口对接",
+     "description": "配置真机控制器 Kp/Kd/控制频率（如 RMA Kp=55, Kd=0.8），对接策略输入输出。输入：JIT policy + 控制器规格；输出：真机可运行的策略部署包。",
+     "caps": [
+      "Policy Export and Sim-to-Real Deployment"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4",
+     "name": "真实机器人在线自适应",
+     "description": "阶段入口。输入：真机部署包；输出：在线自适应后的策略。",
+     "caps": [
+      "Sim-to-Real Policy Transfer Training"
+     ],
+     "next": [
+      "s4_1",
+      "s4_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4_1",
+     "name": "RMA 两阶段在线自适应",
+     "description": "RMA 两阶段：离线训练 π 和环境编码器 φ，在线用最近 ~10 步历史推断 φ 实时调整策略（φ@10Hz, π@100Hz）。输入：近期观测历史；输出：在线适应的环境隐变量 φ。约束：RSS 2021 Best Paper，arXiv:2107.04034。",
+     "caps": [
+      "RMA Two-Stage Online Adaptation"
+     ],
+     "next": [
+      "s5"
+     ],
+     "condition": "分支A：RMA 自适应路线",
+     "is_merge": false
+    },
+    {
+     "id": "s4_2",
+     "name": "ADR 自动域随机化",
+     "description": "自动调节域随机化范围，先窄范围训练再逐步扩大直到真机性能达标（OpenAI Dactyl）。输入：初始随机化范围 + 真机性能反馈；输出：自适应扩大的随机化范围。约束：需真机反馈闭环。",
+     "caps": [
+      "Automatic Domain Randomization"
+     ],
+     "next": [
+      "s5"
+     ],
+     "condition": "分支B：ADR 自动随机化路线",
+     "is_merge": false
+    },
+    {
+     "id": "s5",
+     "name": "真机部署与迭代",
+     "description": "阶段入口。输入：自适应后策略；输出：真机性能评估结果。",
+     "caps": [
+      "Policy Export and Sim-to-Real Deployment"
+     ],
+     "next": [
+      "s5_1"
+     ],
+     "condition": "",
+     "is_merge": true
+    },
+    {
+     "id": "s5_1",
+     "name": "真机部署执行",
+     "description": "在 A1/ANYmal 等四足机器人上部署执行策略，实时感知→控制。输入：策略 + 真机传感器；输出：真机运动行为。",
+     "caps": [
+      "Policy Export and Sim-to-Real Deployment"
+     ],
+     "next": [
+      "s5_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s5_2",
+     "name": "真机性能评估与迭代",
+     "description": "评估真机性能（成功率/稳定性/能耗），根据结果迭代随机化范围或自适应参数。输入：真机运动行为；输出：性能指标 + 迭代方向。",
+     "caps": [
+      "Policy Export and Sim-to-Real Deployment"
+     ],
+     "next": [],
+     "condition": "",
+     "is_merge": false
+    }
+   ]
+  },
+  {
+   "name": "Cross-Embodiment Policy Pretraining Transfer",
+   "steps": [
+    {
+     "id": "s1",
+     "name": "多本体数据聚合与标准化",
+     "description": "阶段入口。输入：各机构异构原始数据 + URDF + 控制接口规格；输出：标准化 RLDS 数据集 + 本体元数据表。",
+     "caps": [
+      "Transfer Learning for Robotics",
+      "Cross-Embodiment Policy Pretraining Transfer"
+     ],
+     "next": [
+      "s1_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s1_1",
+     "name": "数据集格式标准化",
+     "description": "将 HDF5/ROS bag/自定义格式转换为 RLDS（Open X-Embodiment 规范）tfrecord。输入：异构原始数据；输出：标准化 RLDS tfrecord。约束：不同数据集 action 语义需人工对齐。",
+     "caps": [
+      "Cross Embodiment Data Aggregation"
+     ],
+     "next": [
+      "s1_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s1_2",
+     "name": "本体元数据登记",
+     "description": "登记每数据集的 action 维度/控制频率/关节定义/gripper 类型。输入：URDF + 控制接口规格；输出：本体元数据表。",
+     "caps": [
+      "Cross Embodiment Data Aggregation"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2",
+     "name": "统一动作空间设计或本体条件化",
+     "description": "阶段入口。输入：标准化数据 + 本体元数据；输出：统一动作表示 + 策略主干。",
+     "caps": [
+      "Cross-Embodiment Policy Pretraining Transfer"
+     ],
+     "next": [
+      "s2_1a",
+      "s2_1b"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2_1a",
+     "name": "统一动作空间设计",
+     "description": "条件：设计 PIUAS（RDT-1B 保留物理意义）或 RT-1 256-bin 离散化词表。输入：各本体原始动作定义；输出：统一动作表示。约束：PIUAS 需保留物理量纲避免 negative transfer。",
+     "caps": [
+      "PIUAS Diffusion Policy",
+      "Action Token Discretization"
+     ],
+     "next": [
+      "s2_2"
+     ],
+     "condition": "分支A：动作空间可统一",
+     "is_merge": false
+    },
+    {
+     "id": "s2_1b",
+     "name": "本体条件化网络结构",
+     "description": "条件：用 CrossFormer block-wise masked attention + per-embodiment action head 或 π0 proprio token 注入 VLM。输入：本体 proprio + 本体 ID；输出：本体条件化策略网络结构。",
+     "caps": [
+      "Shared Backbone Embodiment-Conditioned Policy"
+     ],
+     "next": [
+      "s2_2"
+     ],
+     "condition": "分支B：需保留本体特异",
+     "is_merge": false
+    },
+    {
+     "id": "s2_2",
+     "name": "视觉-语言主干选择",
+     "description": "合并：选择 VLM 主干（OpenVLA prism-dinosiglip / π0 预训练 VLM）继承 web 语义知识，或 DiT（RDT-1B 不用 VLM）。输入：预训练 VLM/DiT 权重；输出：策略主干网络。约束：VLM 主干继承 Llama-2 等许可证。",
+     "caps": [
+      "VLM as Action Decoder VLA Pipeline"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": "",
+     "is_merge": true
+    },
+    {
+     "id": "s3",
+     "name": "大规模多本体预训练",
+     "description": "阶段入口。输入：统一动作 + 主干 + 多本体数据；输出：预训练策略权重。",
+     "caps": [
+      "Cross-Embodiment Policy Pretraining Transfer"
+     ],
+     "next": [
+      "s3_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3_1",
+     "name": "联合训练目标",
+     "description": "用 BC 交叉熵（OpenVLA/RT-X）/ flow matching（π0）/ diffusion DDPM（RDT-1B）在多本体数据上预训练。输入：统一动作 + (image, language) 对；输出：预训练策略权重。",
+     "caps": [
+      "VLM as Action Decoder VLA Pipeline",
+      "Flow Matching Action Generation",
+      "PIUAS Diffusion Policy"
+     ],
+     "next": [
+      "s3_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3_2",
+     "name": "多本体数据混合采样",
+     "description": "配置多本体数据混合采样比例（OpenVLA Open-X Magic Soup++），防止大数据集主导训练。输入：各数据集权重；输出：每 batch 采样比例。",
+     "caps": [
+      "Cross Embodiment Data Aggregation"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4",
+     "name": "目标机器人数据采集与微调",
+     "description": "阶段入口。输入：预训练权重 + 目标机器人；输出：微调后策略。",
+     "caps": [
+      "VLM as Action Decoder VLA Pipeline"
+     ],
+     "next": [
+      "s4_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4_1",
+     "name": "少量目标机器人演示采集",
+     "description": "用 ALOHA 遥操作 / WidowX 演示采集 15-100 条目标机器人演示轨迹。输入：目标机器人；输出：演示轨迹。",
+     "caps": [
+      "VLM as Action Decoder VLA Pipeline"
+     ],
+     "next": [
+      "s4_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4_2",
+     "name": "微调策略",
+     "description": "用 LoRA（单 A100 ~27GB）/ 全参 FSDP（8×A100）/ 15-shot 微调预训练策略。输入：预训练权重 + 演示；输出：微调后策略。约束：LoRA 适合分布相近，全参适合分布偏移大。",
+     "caps": [
+      "VLM as Action Decoder VLA Pipeline",
+      "Flow Matching Action Generation"
+     ],
+     "next": [
+      "s5"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s5",
+     "name": "部署到目标机器人",
+     "description": "阶段入口。输入：微调后策略；输出：目标机器人执行结果。",
+     "caps": [
+      "Policy Export and Sim-to-Real Deployment"
+     ],
+     "next": [
+      "s5_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s5_1",
+     "name": "策略导出与推理服务",
+     "description": "导出策略为 REST API（OpenVLA deploy.py）/ ONNX / 边缘部署。输入：微调权重；输出：推理服务/嵌入式模型。",
+     "caps": [
+      "Policy Export and Sim-to-Real Deployment"
+     ],
+     "next": [
+      "s5_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s5_2",
+     "name": "零样本或微调后部署执行",
+     "description": "在 WidowX/ALOHA/Franka/移动操作平台上部署，输入 image+language 输出 7-DoF/14-DoF 动作。输入：实时图像+语言指令；输出：机器人动作。",
+     "caps": [
+      "Policy Export and Sim-to-Real Deployment"
+     ],
+     "next": [],
+     "condition": "",
+     "is_merge": false
+    }
+   ]
+  },
+  {
+   "name": "Visual Representation Pretraining Transfer",
+   "steps": [
+    {
+     "id": "s1",
+     "name": "视频预训练数据准备",
+     "description": "阶段入口。输入：人类视频数据集（Ego4D/SSv2）；输出：帧目录 + manifest.csv + 语言配对。",
+     "caps": [
+      "Transfer Learning for Robotics",
+      "Visual Representation Pretraining Transfer"
+     ],
+     "next": [
+      "s1_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s1_1",
+     "name": "Ego4D/SSv2 数据集下载与解析",
+     "description": "将 Ego4D 解析为按 clip 组织的帧目录（224×224 jpg）+ manifest.csv；SSv2 用标准格式。输入：原始视频数据集；输出：帧目录+manifest。约束：Ego4D 体积大需大量存储。",
+     "caps": [
+      "Human Video Pretraining Data Preparation"
+     ],
+     "next": [
+      "s1_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s1_2",
+     "name": "帧采样与语言配对",
+     "description": "从 clip 中按时间采样帧对/三元组，配对语言标签（Ego4D 自然语言描述 / SSv2 类别语言）。输入：帧目录 + 语言标签；输出：帧对/三元组 batch。",
+     "caps": [
+      "Human Video Pretraining Data Preparation"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2",
+     "name": "视觉表征预训练",
+     "description": "阶段入口。输入：帧对+语言 batch；输出：预训练编码器权重。",
+     "caps": [
+      "Visual Representation Pretraining Transfer"
+     ],
+     "next": [
+      "s2_1",
+      "s2_2",
+      "s2_3"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2_1",
+     "name": "R3M 时间对比+语言对齐+稀疏预训练",
+     "description": "用时间对比+视频语言对齐+L1/L2 稀疏三损失联合训练 ResNet-50 编码器（train_representation.py）。输入：Ego4D 帧对+语言；输出：ResNet-50 编码器权重 φ_R3M。约束：Hydra 配置 langweight/l1weight。性能：12 任务/9 视角/3 环境上比 scratch +20%。",
+     "caps": [
+      "Multi-Objective Video Representation Pretraining"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": "分支A：R3M 三损失路线",
+     "is_merge": false
+    },
+    {
+     "id": "s2_2",
+     "name": "VIP 价值隐式预训练",
+     "description": "将表征学习表述为离线目标条件 RL 的 Fenchel 对偶，<10 行 PyTorch 实现隐式时间对比，输出兼作表征与奖励。输入：Ego4D 轨迹帧（无动作）；输出：ResNet-50 权重 φ_VIP（兼奖励函数）。约束：CC BY-NC 非商业许可。性能：仿真 ~30% 零微调解。",
+     "caps": [
+      "Value Implicit Pretraining"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": "分支B：VIP 价值对偶路线",
+     "is_merge": false
+    },
+    {
+     "id": "s2_3",
+     "name": "Voltron 语言条件化掩码预训练",
+     "description": "用语言条件化 MAE 在 SSv2 上预训练 v-cond/v-dual/v-gen 三变体（ViT-S 骨干）。输入：SSv2 帧+类别语言；输出：ViT-S 编码器权重。约束：1.1.0+ 需 PyTorch 2.0。",
+     "caps": [
+      "Language-Conditioned Masked Representation Pretraining"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": "分支C：Voltron 语言条件掩码路线",
+     "is_merge": false
+    },
+    {
+     "id": "s3",
+     "name": "表征加载与冻结",
+     "description": "阶段入口。输入：预训练编码器权重；输出：冻结的 φ(·) 函数。",
+     "caps": [
+      "Frozen Encoder Downstream Policy Finetuning"
+     ],
+     "next": [
+      "s3_1"
+     ],
+     "condition": "",
+     "is_merge": true
+    },
+    {
+     "id": "s3_1",
+     "name": "加载预训练编码器",
+     "description": "用 load_r3m/load_vip/voltron.load 加载预训练编码器，VIP 还可作为 TorchRL VIPTransform。输入：预训练权重；输出：加载的编码器实例。",
+     "caps": [
+      "Frozen Encoder Downstream Policy Finetuning"
+     ],
+     "next": [
+      "s3_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3_2",
+     "name": "冻结为感知模块",
+     "description": "调用 eval()/freeze=True 冻结编码器，下游策略不再更新编码器权重。输入：编码器实例；输出：冻结的 φ(·) 函数。",
+     "caps": [
+      "Frozen Encoder Downstream Policy Finetuning"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4",
+     "name": "下游策略学习",
+     "description": "阶段入口。输入：冻结 φ + 演示/目标图；输出：可部署策略 π(φ(o))。",
+     "caps": [
+      "Frozen Encoder Downstream Policy Finetuning"
+     ],
+     "next": [
+      "s4_1",
+      "s4_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4_1",
+     "name": "IL 路线：冻结编码器+行为克隆",
+     "description": "将 φ(o) 喂给策略头，用少量演示（20 条级）做 BC（R3M eval 分支）。输入：φ(o) + 演示；输出：BC 策略 π_BC。",
+     "caps": [
+      "Frozen Encoder Downstream Policy Finetuning"
+     ],
+     "next": [
+      "s4_3"
+     ],
+     "condition": "IL：有演示",
+     "is_merge": false
+    },
+    {
+     "id": "s4_2",
+     "name": "RL 路线：VIP 嵌入距离奖励+策略学习",
+     "description": "用 VIP 嵌入距离 R=S_φ(o_{t+1};g)−S_φ(o_t;g) 导出稠密视觉奖励，接轨迹优化/在线 RL/20 轨迹少样本离线 RL。输入：φ(o) + 目标图 g；输出：RL 策略 π_RL。",
+     "caps": [
+      "Value Implicit Pretraining",
+      "Frozen Encoder Downstream Policy Finetuning"
+     ],
+     "next": [
+      "s4_3"
+     ],
+     "condition": "RL：有目标图",
+     "is_merge": false
+    },
+    {
+     "id": "s4_3",
+     "name": "策略训练收敛判定",
+     "description": "合并：基于目标任务成功率/嵌入距离曲线下降判定收敛（R3M 12 任务+9 视角 benchmark）。输入：策略 + benchmark；输出：收敛判定。",
+     "caps": [
+      "Frozen Encoder Downstream Policy Finetuning"
+     ],
+     "next": [
+      "s5"
+     ],
+     "condition": "",
+     "is_merge": true
+    },
+    {
+     "id": "s5",
+     "name": "真实机器人部署",
+     "description": "阶段入口。输入：收敛策略 + Franka 真机；输出：真机少样本迁移结果。",
+     "caps": [
+      "Frozen Encoder Downstream Policy Finetuning"
+     ],
+     "next": [
+      "s5_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s5_1",
+     "name": "真机感知与策略部署",
+     "description": "在 Franka Emika Panda 真机上部署：相机图像→冻结编码器→策略头→动作。输入：真机图像；输出：动作指令。性能：R3M 20 演示达 50+% 成功率。",
+     "caps": [
+      "Frozen Encoder Downstream Policy Finetuning"
+     ],
+     "next": [
+      "s5_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s5_2",
+     "name": "少样本任务迁移验证",
+     "description": "同一冻结表征迁移到多个未见任务（放生菜入锅/折毛巾/关抽屉/推瓶子等），验证少样本迁移能力。输入：多个未见任务；输出：迁移成功率。",
+     "caps": [
+      "Frozen Encoder Downstream Policy Finetuning"
+     ],
+     "next": [],
+     "condition": "",
+     "is_merge": false
+    }
+   ]
+  },
+  {
+   "name": "Same-Embodiment Multi-Task Policy Pretraining Transfer",
+   "steps": [
+    {
+     "id": "s1",
+     "name": "多任务演示数据收集与标准化",
+     "description": "阶段入口。输入：任务清单 + 远程操作接口 + 同本体机器人；输出：标准化多任务演示数据集。",
+     "caps": [
+      "Transfer Learning for Robotics",
+      "Same-Embodiment Multi-Task Policy Pretraining Transfer"
+     ],
+     "next": [
+      "s1_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s1_1",
+     "name": "任务清单设计",
+     "description": "设计覆盖 pick/place/draw/sweep/stack 等技能的任务清单（BC-Z 100/RT-1 700/PerAct 18/VIMA 17 任务）。输入：技能 taxonomy；输出：任务清单。",
+     "caps": [
+      "Same-Embodiment Multi-Task Policy Pretraining Transfer"
+     ],
+     "next": [
+      "s1_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s1_2",
+     "name": "多任务演示收集",
+     "description": "用 HG-DAgger 共享自主干预（BC-Z）/ 大规模真实采集（RT-1 13 robots 17 months）/ 脚本 oracle（VIMA 650K）/ RLBench motion planner（PerAct）收集演示。输入：任务清单 + 远程操作接口；输出：多任务演示数据集 + 干预率指标。",
+     "caps": [
+      "Multi-Task Demonstration Collection with Shared Autonomy"
+     ],
+     "next": [
+      "s1_3"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s1_3",
+     "name": "数据标准化",
+     "description": "统一观测格式（RGB/RGB-D/voxel）、动作格式（连续/离散 token）、任务规范格式（语言/prompt）。输入：原始演示数据；输出：标准化多任务数据集。",
+     "caps": [
+      "Same-Embodiment Multi-Task Policy Pretraining Transfer"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2",
+     "name": "多任务条件化策略预训练",
+     "description": "阶段入口。输入：标准化数据 + 条件化模块；输出：多任务预训练策略。",
+     "caps": [
+      "Same-Embodiment Multi-Task Policy Pretraining Transfer"
+     ],
+     "next": [
+      "s2_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2_1",
+     "name": "任务条件化模块搭建",
+     "description": "判断：搭建语言嵌入（BC-Z）/ FiLM（RT-1）/ CLIP 语言编码（PerAct）/ T5 encoder（VIMA）条件化模块。输入：任务规范格式；输出：条件化模块。",
+     "caps": [
+      "Language-Conditioned Multi-Task Visuomotor Policy"
+     ],
+     "next": [
+      "s2_2a",
+      "s2_2b",
+      "s2_2c",
+      "s2_2d"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2_2a",
+     "name": "语言条件化 ResNet BC",
+     "description": "条件：BC-Z 风格，预训练语言嵌入条件化 ResNet feedforward BC，100 任务联合训练。输入：RGB + 语言嵌入；输出：7-DoF 连续动作。性能：BC-Z 24 unseen 44%。",
+     "caps": [
+      "Language-Conditioned Multi-Task Visuomotor Policy"
+     ],
+     "next": [
+      "s2_3"
+     ],
+     "condition": "路线A：连续动作语言条件化",
+     "is_merge": false
+    },
+    {
+     "id": "s2_2b",
+     "name": "离散动作 token Transformer",
+     "description": "条件：RT-1 风格，11 维 256-bin 离散化，EfficientNet+FiLM+TokenLearner+Transformer，700 任务联合训练。输入：RGB 序列 + 语言指令；输出：离散动作 token→连续动作。性能：seen 97%, unseen 76%。",
+     "caps": [
+      "Discrete Action Token Multi-Task Transformer",
+      "Action Token Discretization",
+      "Action Token Unnorm Decoding"
+     ],
+     "next": [
+      "s2_3"
+     ],
+     "condition": "路线B：离散 token Transformer",
+     "is_merge": false
+    },
+    {
+     "id": "s2_2c",
+     "name": "voxel 3D 动作检测",
+     "description": "条件：PerAct 风格，RGB-D→100³ voxel→PerceiverIO→next best voxel action，18 RLBench 任务。输入：RGB-D 多视角 + 语言目标；输出：6-DoF 离散动作。性能：比 image-to-action 高 34x。",
+     "caps": [
+      "Voxel-Based Multi-Task 6-DoF Action Detection"
+     ],
+     "next": [
+      "s2_3"
+     ],
+     "condition": "路线C：voxel 6-DoF 检测",
+     "is_merge": false
+    },
+    {
+     "id": "s2_2d",
+     "name": "multimodal prompt cross-attention",
+     "description": "条件：VIMA 风格，T5 encoder+object-centric tokenization+cross-attention decoder，17 任务 4 级评估。输入：multimodal prompt + 观测；输出：离散化 waypoint 动作。性能：hardest zero-shot 2.9x baseline。",
+     "caps": [
+      "Multimodal Prompt In-Context Generalist Policy"
+     ],
+     "next": [
+      "s2_3"
+     ],
+     "condition": "路线D：multimodal prompt",
+     "is_merge": false
+    },
+    {
+     "id": "s2_3",
+     "name": "scaling 验证与多任务联合 BC 训练收敛",
+     "description": "合并：验证模型 scaling（VIMA 2M-200M 7 尺寸）与数据 scaling（10x less data 2.7x better），多任务联合 BC 训练收敛。输入：条件化策略 + 多任务数据；输出：收敛的多任务策略。",
+     "caps": [
+      "Same-Embodiment Multi-Task Policy Pretraining Transfer"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": "",
+     "is_merge": true
+    },
+    {
+     "id": "s3",
+     "name": "零样本/少样本迁移评估",
+     "description": "阶段入口。输入：多任务策略；输出：迁移评估指标。",
+     "caps": [
+      "Same-Embodiment Multi-Task Policy Pretraining Transfer"
+     ],
+     "next": [
+      "s3_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3_1",
+     "name": "零样本新任务评估",
+     "description": "评估零样本新任务泛化（BC-Z 24 unseen 44% / RT-1 unseen 76% / VIMA 4-level placement→novel task）。输入：多任务策略 + unseen 任务；输出：零样本成功率。",
+     "caps": [
+      "Same-Embodiment Multi-Task Policy Pretraining Transfer"
+     ],
+     "next": [
+      "s3_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3_2",
+     "name": "鲁棒性评估",
+     "description": "评估 distractors/backgrounds 鲁棒性（RT-1 distractors 83% / backgrounds 59%）。输入：策略 + 鲁棒性测试场景；输出：鲁棒性指标。",
+     "caps": [
+      "Same-Embodiment Multi-Task Policy Pretraining Transfer"
+     ],
+     "next": [
+      "s3_3"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3_3",
+     "name": "少样本迁移评估",
+     "description": "评估少样本迁移（BC-Z 视频条件化 few-shot / VIMA 10x less data 2.7x better）。输入：策略 + 少量新任务数据；输出：少样本成功率。",
+     "caps": [
+      "Same-Embodiment Multi-Task Policy Pretraining Transfer"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4",
+     "name": "异构数据吸收与扩展",
+     "description": "阶段入口。输入：多任务策略 + 异构数据源；输出：扩展后策略。",
+     "caps": [
+      "Same-Embodiment Multi-Task Policy Pretraining Transfer"
+     ],
+     "next": [
+      "s4_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4_1",
+     "name": "sim 数据吸收",
+     "description": "RT-1 sim+real 混合训练吸收 sim 数据（仅 -2% 原任务）。输入：sim 数据 + 真实数据；输出：扩展后策略。",
+     "caps": [
+      "Same-Embodiment Multi-Task Policy Pretraining Transfer"
+     ],
+     "next": [
+      "s4_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4_2",
+     "name": "跨本体数据吸收",
+     "description": "RT-1 吸收 Kuka 跨本体数据（22%→39%）。输入：跨本体数据；输出：扩展后策略。",
+     "caps": [
+      "Same-Embodiment Multi-Task Policy Pretraining Transfer"
+     ],
+     "next": [
+      "s4_3"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4_3",
+     "name": "长时程任务组合",
+     "description": "RT-1 + PaLM-SayCan 实现 50 步长时程任务组合。输入：多任务策略 + 高层规划器；输出：长时程执行能力。",
+     "caps": [
+      "Same-Embodiment Multi-Task Policy Pretraining Transfer"
+     ],
+     "next": [
+      "s5"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s5",
+     "name": "真机部署与持续改进",
+     "description": "阶段入口。输入：扩展后策略 + 真机；输出：真机执行结果。",
+     "caps": [
+      "Policy Export and Sim-to-Real Deployment"
+     ],
+     "next": [
+      "s5_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s5_1",
+     "name": "真机闭环部署",
+     "description": "在真机上闭环部署（BC-Z 10Hz / RT-1 3Hz / PerAct motion planner / VIMA 交互式）。输入：策略 + 真机传感器；输出：真机动作。",
+     "caps": [
+      "Policy Export and Sim-to-Real Deployment"
+     ],
+     "next": [
+      "s5_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s5_2",
+     "name": "持续数据扩展与迭代改进",
+     "description": "持续添加新指令/任务数据扩展策略能力（RT-1 无假设添加新指令，BC-Z 干预率监控）。输入：新数据 + 策略；输出：迭代后策略。",
+     "caps": [
+      "Same-Embodiment Multi-Task Policy Pretraining Transfer"
+     ],
+     "next": [],
+     "condition": "",
+     "is_merge": false
+    }
+   ]
+  }
+ ],
+ "capabilities": [
+  {
+   "en": "Transfer Learning for Robotics",
+   "zh": "机器人迁移学习",
+   "level": "l1",
+   "description": "前置依赖：源域数据（仿真器/多本体轨迹/人类视频/多任务演示）+ 目标机器人规格。输入：源域数据 + 目标机器人 URDF/控制接口。输出：目标机器人可部署策略或冻结表征。约束：sim-to-real gap、动作空间异构、视频-控制语义鸿沟、任务语义差异分别是四链核心挑战。性能指标：四链代表系统均在真实机器人上验证（legged_gym 20 分钟训练/R3M 20 演示 50%+/RT-1 97% seen）。适用场景：数据高效机器人操作/运动学习、跨本体策略迁移、少样本离线 RL、零样本多任务泛化。",
+   "aliases": [
+    "robot transfer learning",
+    "迁移学习机器人"
+   ],
+   "parent": null,
+   "children": [
+    "Sim-to-Real Policy Transfer Training",
+    "Cross-Embodiment Policy Pretraining Transfer",
+    "Visual Representation Pretraining Transfer",
+    "Same-Embodiment Multi-Task Policy Pretraining Transfer"
+   ],
+   "assets": []
+  },
+  {
+   "en": "Sim-to-Real Policy Transfer Training",
+   "zh": "仿真到真实策略迁移训练",
+   "level": "l2",
+   "description": "前置依赖：URDF + 仿真器（Isaac Gym/Lab/raisim）+ RL 训练框架（rsl_rl）。输入：URDF + 任务规格。输出：真机可部署策略。约束：sim-to-real gap 是核心挑战；执行器动力学差异需辨识；域随机化范围需覆盖真实变异。性能指标：legged_gym 4096 robots 并行 20 分钟训练；RMA RSS 2021 Best Paper。适用场景：四足/双足运动 sim-to-real、灵巧手操作 sim-to-real。",
+   "aliases": [
+    "sim-to-real transfer",
+    "domain randomization deployment"
+   ],
+   "parent": "Transfer Learning for Robotics",
+   "children": [
+    "Sim-to-Real Policy Transfer Training",
+    "Actuator Network System Identification",
+    "Game-Inspired Terrain Curriculum",
+    "RMA Two-Stage Online Adaptation",
+    "Automatic Domain Randomization",
+    "Policy Export and Sim-to-Real Deployment"
+   ],
+   "assets": [
+    "legged_gym",
+    "Isaac Gym",
+    "RaiSim"
+   ]
+  },
+  {
+   "en": "Cross-Embodiment Policy Pretraining Transfer",
+   "zh": "跨本体策略预训练迁移",
+   "level": "l2",
+   "description": "前置依赖：多本体标准化数据集（OXE RLDS）+ VLM/Diffusion 主干 + 微调算力。输入：多本体 RLDS 数据 + URDF。输出：可微调迁移的预训练策略权重。约束：动作空间异构是核心挑战；大数据集易主导训练需混合采样；VLM 主干继承 web 许可证限制。性能指标：Open X-Embodiment 22 本体 100 万+ 轨迹 positive transfer；RDT-1B 1B 参数。适用场景：跨本体 VLA 策略预训练与少样本微调迁移。",
+   "aliases": [
+    "cross-embodiment transfer",
+    "cross-robot policy transfer",
+    "X-embodiment pretraining"
+   ],
+   "parent": "Transfer Learning for Robotics",
+   "children": [
+    "PIUAS Diffusion Policy"
+   ],
+   "assets": []
+  },
+  {
+   "en": "Visual Representation Pretraining Transfer",
+   "zh": "视觉表征预训练迁移",
+   "level": "l2",
+   "description": "前置依赖：人类视频数据集（Ego4D/SSv2）+ 视频编码器骨干（ResNet-50/ViT-S）。输入：人类视频帧+语言。输出：冻结编码器 φ(·)（+可选奖励函数）。约束：预训练需大规模视频数据与算力；下游迁移对域差距敏感。性能指标：R3M 12 任务/9 视角/3 环境上比 scratch +20%；VIP 仿真 ~30% 零微调解。适用场景：数据高效的机器人操作 IL/RL、目标图指定任务、少样本离线 RL。",
+   "aliases": [
+    "video representation pretraining transfer",
+    "frozen visual encoder transfer",
+    "visual reward transfer"
+   ],
+   "parent": "Transfer Learning for Robotics",
+   "children": [
+    "Human Video Pretraining Data Preparation",
+    "Multi-Objective Video Representation Pretraining",
+    "Language-Conditioned Masked Representation Pretraining",
+    "Frozen Encoder Downstream Policy Finetuning"
+   ],
+   "assets": []
+  },
+  {
+   "en": "Same-Embodiment Multi-Task Policy Pretraining Transfer",
+   "zh": "同本体多任务策略预训练迁移",
+   "level": "l2",
+   "description": "前置依赖：同本体多任务演示数据集 + 任务条件化规范（语言/prompt/ID）+ 策略骨干。输入：同本体多任务演示数据集（N 任务 × M demos/task）+ 任务条件化规范。输出：单一多任务条件化策略 π(a|o, task_spec)，可零样本/少样本迁移到未见任务。约束：任务语义差异是核心挑战；连续任务条件化优于离散 task ID；数据规模与多样性是泛化关键。性能指标：RT-1 130k demos/700 tasks seen 97% unseen 76%；BC-Z 100 tasks 24 unseen 44%；VIMA 2.9x baseline。适用场景：同本体多任务零样本泛化、少样本新任务迁移。",
+   "aliases": [
+    "multi-task pretraining transfer",
+    "same-embodiment multi-task BC"
+   ],
+   "parent": "Transfer Learning for Robotics",
+   "children": [
+    "Multi-Task Demonstration Collection with Shared Autonomy",
+    "Language-Conditioned Multi-Task Visuomotor Policy",
+    "Discrete Action Token Multi-Task Transformer",
+    "Voxel-Based Multi-Task 6-DoF Action Detection",
+    "Multimodal Prompt In-Context Generalist Policy"
+   ],
+   "assets": []
+  },
+  {
+   "en": "Actuator Network System Identification",
+   "zh": "执行器网络系统辨识",
+   "level": "l3",
+   "description": "前置依赖：真实机器人阶跃响应数据 + 仿真器。输入：真实机器人阶跃响应数据。输出：执行器网络权重。约束：辨识精度影响迁移效果；需真实机器人数据采集。性能指标：raisim actuator network 精确建模电机延迟/摩擦/非线性。适用场景：sim-to-real 动力学 gap 缩小。",
+   "aliases": [
+    "actuator network",
+    "system identification sim-to-real"
+   ],
+   "parent": "Sim-to-Real Policy Transfer Training",
+   "children": [],
+   "assets": [
+    "RaiSim"
+   ]
+  },
+  {
+   "en": "Game-Inspired Terrain Curriculum",
+   "zh": "游戏启发式地形课程",
+   "level": "l3",
+   "description": "前置依赖：仿真器地形生成器。输入：地形参数范围。输出：课程化地形生成器。约束：课程进度需自适应策略能力。性能指标：legged_gym terrain generator 支持渐进难度。适用场景：四足机器人运动 sim-to-real 训练。",
+   "aliases": [
+    "terrain curriculum",
+    "game-inspired curriculum"
+   ],
+   "parent": "Sim-to-Real Policy Transfer Training",
+   "children": [],
+   "assets": [
+    "legged_gym"
+   ]
+  },
+  {
+   "en": "RMA Two-Stage Online Adaptation",
+   "zh": "RMA 两阶段在线自适应",
+   "level": "l3",
+   "description": "前置依赖：仿真训练的 π 和 φ。输入：近期观测历史（~10 步）。输出：在线适应的环境隐变量 φ。约束：自适应窗口长度影响响应速度；需两阶段训练。性能指标：RSS 2021 Best Paper，arXiv:2107.04034；φ@10Hz, π@100Hz。适用场景：仿真策略在真实机器人上在线适应未知动力学变化。",
+   "aliases": [
+    "RMA",
+    "rapid motor adaptation",
+    "online adaptation sim-to-real"
+   ],
+   "parent": "Sim-to-Real Policy Transfer Training",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "Automatic Domain Randomization",
+   "zh": "自动域随机化",
+   "level": "l3",
+   "description": "前置依赖：初始随机化范围 + 真机性能反馈。输入：初始随机化范围 + 真机性能反馈。输出：自适应扩大的随机化范围。约束：扩展策略影响探索效率；需真机反馈闭环。性能指标：OpenAI Dactyl ADR 自动探索随机化空间。适用场景：无需人工调参的 sim-to-real 域随机化。",
+   "aliases": [
+    "ADR",
+    "automatic domain randomization",
+    "OpenAI Dactyl ADR"
+   ],
+   "parent": "Sim-to-Real Policy Transfer Training",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "PIUAS Diffusion Policy",
+   "zh": "PIUAS 扩散策略",
+   "level": "l3",
+   "description": "前置依赖：各本体原始动作定义 + Diffusion Transformer 骨干。输入：各本体原始动作定义。输出：统一动作表示（连续 PIUAS）。约束：PIUAS 需保留物理量纲避免 negative transfer。性能指标：RDT-1B 1B 参数，arXiv:2410.07864；PIUAS 化解跨本体 data heterogeneity 的 negative transfer。适用场景：跨本体双臂操作 diffusion 策略预训练。",
+   "aliases": [
+    "PIUAS",
+    "physically interpretable unified action space",
+    "RDT-1B action space"
+   ],
+   "parent": "Cross-Embodiment Policy Pretraining Transfer",
+   "children": [],
+   "assets": [
+    "RDT-1B"
+   ]
+  },
+  {
+   "en": "Human Video Pretraining Data Preparation",
+   "zh": "人类视频预训练数据准备",
+   "level": "l3",
+   "description": "前置依赖：Ego4D / SSv2 原始视频数据集。输入：原始视频数据集。输出：帧目录+manifest/语言配对。约束：Ego4D 体积大需大量存储；SSv2 类别语言较粗。性能指标：Ego4D 3500+ 小时；SSv2 ~220K 段。适用场景：所有视频表征预训练前置数据准备。",
+   "aliases": [
+    "Ego4D parsing",
+    "SSv2 preparation",
+    "video frame extraction for pretraining"
+   ],
+   "parent": "Visual Representation Pretraining Transfer",
+   "children": [],
+   "assets": [
+    "Ego4D",
+    "Something-Something V2"
+   ]
+  },
+  {
+   "en": "Multi-Objective Video Representation Pretraining",
+   "zh": "多目标视频表征预训练",
+   "level": "l3",
+   "description": "前置依赖：Ego4D 帧对+语言。输入：Ego4D 帧对+语言。输出：ResNet-50 编码器权重。约束：需 Ego4D 语言描述；Hydra 配置 langweight/l1weight。性能指标：12 任务/9 视角/3 环境上比 scratch +20%、比 CLIP/MoCo +10%。适用场景：纯 IL 下游、需语义+时序的表征。",
+   "aliases": [
+    "R3M pretraining",
+    "time-contrastive video-language alignment pretraining"
+   ],
+   "parent": "Visual Representation Pretraining Transfer",
+   "children": [],
+   "assets": [
+    "R3M"
+   ]
+  },
+  {
+   "en": "Language-Conditioned Masked Representation Pretraining",
+   "zh": "语言条件化掩码表征预训练",
+   "level": "l3",
+   "description": "前置依赖：SSv2 帧+类别语言。输入：SSv2 帧+类别语言。输出：ViT-S 编码器权重（v-cond/v-dual/v-gen）。约束：依赖 SSv2 类别语言（粗粒度）；PyTorch ≥1.12，1.1.0+ 需 PyTorch 2.0。性能指标：RSS 2023，arXiv:2302.12766；v-cond/v-dual/v-gen 三变体。适用场景：有任务语言描述的下游。",
+   "aliases": [
+    "Voltron pretraining",
+    "language-conditioned MAE for robotics"
+   ],
+   "parent": "Visual Representation Pretraining Transfer",
+   "children": [],
+   "assets": [
+    "Voltron Language-Driven Representation"
+   ]
+  },
+  {
+   "en": "Frozen Encoder Downstream Policy Finetuning",
+   "zh": "冻结编码器下游策略微调",
+   "level": "l3",
+   "description": "前置依赖：冻结 φ + 演示/目标图。输入：冻结 φ + 演示/目标图。输出：可部署策略 π(φ(o))。约束：IL 需 20 演示级数据，RL 需 20 轨迹级数据；域差距大时表征效果下降。性能指标：R3M Franka 真机 20 演示达 50+% 成功率；VIP 真机 20 轨迹少样本离线 RL。适用场景：数据高效 IL/RL、目标图指定任务、少样本离线 RL。",
+   "aliases": [
+    "frozen perception module finetuning",
+    "frozen encoder behavior cloning",
+    "embedding-distance reward RL"
+   ],
+   "parent": "Visual Representation Pretraining Transfer",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "Multi-Task Demonstration Collection with Shared Autonomy",
+   "zh": "多任务演示收集与共享自主干预",
+   "level": "l3",
+   "description": "前置依赖：任务清单 + 远程操作接口 + 共享自主控制器。输入：任务清单 + 远程操作接口。输出：大规模多任务演示数据集（含原始演示 + 干预纠正片段）+ 实时干预率指标。约束：干预率与成功率相关但非严格因果。性能指标：BC-Z 100 任务 25877 demos 125h。适用场景：大规模多任务 BC 数据收集。",
+   "aliases": [
+    "HG-DAgger multi-task collection",
+    "shared autonomy demonstration collection"
+   ],
+   "parent": "Same-Embodiment Multi-Task Policy Pretraining Transfer",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "Language-Conditioned Multi-Task Visuomotor Policy",
+   "zh": "语言条件化多任务视觉运动策略",
+   "level": "l3",
+   "description": "前置依赖：RGB 观测 + 预训练语言嵌入。输入：RGB 观测 + 自然语言任务指令（预训练语言嵌入）。输出：7-DoF 连续动作（BC-Z）或离散动作 token（RT-1）。约束：连续语言条件化 > 离散 task ID。性能指标：BC-Z 24 unseen 44%；RT-1 FiLM 语言条件化。适用场景：语言指令驱动的多任务零样本泛化。",
+   "aliases": [
+    "language conditioned visuomotor policy",
+    "FiLM language conditioning"
+   ],
+   "parent": "Same-Embodiment Multi-Task Policy Pretraining Transfer",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "Discrete Action Token Multi-Task Transformer",
+   "zh": "离散动作 token 多任务 Transformer",
+   "level": "l3",
+   "description": "前置依赖：RGB 图像序列 + 语言指令 + 256-bin 离散化器。输入：RGB 图像序列 + 语言指令。输出：离散化动作 token 序列 → 反归一化为连续动作。约束：256-bin 量化误差约 0.4%。性能指标：RT-1 seen 97%, unseen 76%, 3Hz 闭环。适用场景：大规模多任务离散动作 Transformer 控制。",
+   "aliases": [
+    "RT-1 action tokenization",
+    "discrete action token transformer"
+   ],
+   "parent": "Same-Embodiment Multi-Task Policy Pretraining Transfer",
+   "children": [],
+   "assets": [
+    "RT-1"
+   ]
+  },
+  {
+   "en": "Voxel-Based Multi-Task 6-DoF Action Detection",
+   "zh": "voxel 3D 多任务 6-DoF 动作检测",
+   "level": "l3",
+   "description": "前置依赖：RGB-D 多视角图像 + CLIP 语言编码 + PerceiverIO Transformer。输入：RGB-D 多视角图像 + 语言目标。输出：离散化 translation/rotation/gripper/collision 动作（6-DoF）。约束：依赖 PyRep + CoppeliaSim 4.1 + RLBench。性能指标：比 image-to-action 高 34x，18 RLBench 任务 249 variations。适用场景：语言条件化多任务 6-DoF 操作、少演示 BC。",
+   "aliases": [
+    "PerAct voxel action detection",
+    "3D voxel manipulation"
+   ],
+   "parent": "Same-Embodiment Multi-Task Policy Pretraining Transfer",
+   "children": [],
+   "assets": [
+    "RLBench",
+    "PerAct"
+   ]
+  },
+  {
+   "en": "Multimodal Prompt In-Context Generalist Policy",
+   "zh": "多模态 prompt 上下文学习通用策略",
+   "level": "l3",
+   "description": "前置依赖：multimodal prompt + T5 encoder + Mask R-CNN + cross-attention decoder。输入：multimodal prompt（文本+图像交错 token 序列）+ 观测历史。输出：离散化机器人 waypoint 动作（自回归）。约束：需 VIMA-Bench + mask_rcnn.pth。性能指标：hardest zero-shot 2.9x baseline；10x less data 2.7x better。适用场景：multimodal prompt 条件化机器人操作、in-context 学习新任务。",
+   "aliases": [
+    "VIMA multimodal prompt",
+    "in-context learning robot policy"
+   ],
+   "parent": "Same-Embodiment Multi-Task Policy Pretraining Transfer",
+   "children": [],
+   "assets": [
+    "VIMA",
+    "VIMA-Bench"
+   ]
+  },
+  {
+   "en": "On-Policy AC Training Pipeline",
+   "zh": "在策略 AC 训练管线",
+   "level": "l2",
+   "description": "链 1 链级伞形：在策略 actor-critic 训练管线，用 PPO 裁剪目标 + GAE 优势估计在并行仿真中训练腿足/人形机器人策略。代表系统 rsl_rl（OnPolicyRunner）+ Legged Gym。前置依赖：GPU 并行仿真环境。输入：仿真环境+策略网络配置。输出：训练后的在策略 AC 策略。约束：on-policy 要求每次更新后重新采集；需 GPU 并行仿真（4096+ envs）。性能指标：rsl_rl 训练 ANYmal ~20min/10000 iters（IsaacGym）。适用场景：腿足/人形机器人 locomotion 训练。",
+   "aliases": [],
+   "parent": null,
+   "children": [],
+   "assets": [
+    "legged_gym",
+    "Isaac Gym",
+    "rsl_rl"
+   ]
+  },
+  {
+   "en": "Policy Export and Sim-to-Real Deployment",
+   "zh": "策略导出与 sim-to-real 部署",
+   "level": "l3",
+   "description": "将训练好的 actor 网络导出为 JIT/ONNX 格式，部署到真实机器人。legged_gym 支持 torch.jit.export。输入：训练后的 actor 网络。输出：JIT 策略文件。约束：需域随机化确保 sim-to-real 迁移。适用场景：腿足机器人 sim-to-real。",
+   "aliases": [],
+   "parent": "Sim-to-Real Policy Transfer Training",
+   "children": [],
+   "assets": [
+    "Mobile ALOHA",
+    "ManiSkill"
+   ]
+  },
+  {
+   "en": "Cross Embodiment Data Aggregation",
+   "zh": "跨本体数据聚合标准化",
+   "level": "l2",
+   "description": "链 3 链级伞形：将多机构异构机器人数据集映射到统一 schema（RLDS/LeRobotDataset），归一化动作/观测空间，对齐语言指令，支持跨本体混合训练。代表系统 Open X-Embodiment/DROID/BridgeData V2/Octo。前置依赖：源数据集+RLDS 工具链。输入：异构数据集集合。输出：统一 schema 的标准化数据集+unnorm_key。约束：schema 异构性与动作空间不一致是核心挑战。性能指标：Open X-Embodiment 22 机构 1M+ 轨迹。适用场景：跨本体 VLA 预训练数据准备。",
+   "aliases": [
+    "cross-embodiment normalization",
+    "multi-dataset aggregation"
+   ],
+   "parent": null,
+   "children": [],
+   "assets": [
+    "Open X-Embodiment"
+   ]
+  },
+  {
+   "en": "Shared Backbone Embodiment-Conditioned Policy",
+   "zh": "共享主干本体条件策略",
+   "level": "l2",
+   "description": "单一Transformer主干在大规模跨本体数据上co-train，通过block-wise masked attention处理任意输入组合，per-embodiment readout head输出原生动作，fine-tune到新机器人只需加adapter/head的跨本体策略范式。输入：多本体多任务数据+本体描述token。输出：per-embodiment 原生动作。约束：新动作类型需加 readout head；主干共享需大数据混合。性能指标：Octo 27M参数跨本体泛化；π0 flow matching head 50Hz。适用场景：跨本体策略共享主干与少样本适配。代表系统Octo（diffusion head）与π0（flow matching head）。",
+   "aliases": [
+    "Shared Transformer Per-Embodiment Head Policy"
+   ],
+   "parent": null,
+   "children": [
+    "Flow Matching Action Generation"
+   ],
+   "assets": [
+    "CrossFormer"
+   ]
+  },
+  {
+   "en": "VLM as Action Decoder VLA Pipeline",
+   "zh": "VLM直作动作解码器VLA流水线",
+   "level": "l2",
+   "description": "链级伞形：复用预训练 VLM，把动作离散化为 token 直接自回归输出，零代价继承 VLM 互联网规模语义泛化能力。代表系统：RT-2、OpenVLA。输入：RGB+语言指令+本体感觉；输出：7-DoF 动作 token 序列。约束：动作 token 离散化损失精度；长尾指令 OOD。",
+   "aliases": [
+    "VLM Action Decoder Pipeline",
+    "RT-2 Style VLA"
+   ],
+   "parent": null,
+   "children": [
+    "Action Token Discretization",
+    "Action Token Unnorm Decoding"
+   ],
+   "assets": [
+    "OpenVLA-7B",
+    "RT-2",
+    "Pi0",
+    "openpi",
+    "FAST Tokenizer"
+   ]
+  },
+  {
+   "en": "Flow Matching Action Generation",
+   "zh": "Flow Matching动作生成",
+   "level": "l3",
+   "description": "π0 的 action expert（自定义 transformer）以 vlm_semantic_features 为 cross-attention 条件，从先验分布 ODE 积分采样动作 chunk（10-50 步）。代表系统：π0/π0.5（Physical Intelligence）。输入：vlm_semantic_features+noise。输出：action_chunk[H, action_dim]。性能指标：π0 真机 50Hz 控制，droid-droid 泛化。约束：采样步数与延迟权衡；action expert 需独立训练。",
+   "aliases": [
+    "π0 Flow Matching Action Head"
+   ],
+   "parent": "Shared Backbone Embodiment-Conditioned Policy",
+   "children": [],
+   "assets": [
+    "Pi0",
+    "openpi"
+   ]
+  },
+  {
+   "en": "Value Implicit Pretraining",
+   "zh": "值隐式视频预训练",
+   "level": "l2",
+   "description": "把视觉编码器预训练建模为离线目标条件 RL——从无标签 Ego4D 视频采样 (state, goal) 对，通过对偶目标学习隐式价值函数，使表征同时可用作视觉奖励（嵌入距离）和视觉表征。前置依赖：Ego4D 视频数据 + ResNet 骨干。输入：224x224 RGB 帧 + (state, goal) 采样。输出：1024d（ResNet-50）图像嵌入 + 隐式奖励函数 R = S(o_{t+1}; g) - S(o_t; g)。约束：需通过对偶绕过动作标签缺失；嵌入需时间光滑才能作奖励。性能指标：trajectory optimizer ~30-45% 任务成功率；online RL 40% aggregate；Franka 实机 20 轨迹 few-shot offline RL。",
+   "aliases": [
+    "VIP",
+    "Value-Implicit Pre-Training",
+    "offline goal-conditioned RL pretraining"
+   ],
+   "parent": null,
+   "children": [],
+   "assets": [
+    "VIP Value-Implicit Pretraining"
+   ]
+  },
+  {
+   "en": "Action Token Discretization",
+   "zh": "动作token离散化",
+   "level": "l3",
+   "description": "对 7-DoF 动作每维独立按 dataset 归一化统计量(q01/q99)做 256-bin 离散化，映射为新增的 256 个 action token 加入 LLM 词表，使动作预测变为 next-token 分类。输入：action_7dof(连续)。输出：action_token_ids[7]。约束：256-bin 分辨率限制动作精度；按 unnorm_key 反归一化。适用场景：把 VLM 的 next-token 训练管线复用于动作生成。",
+   "aliases": [
+    "256-bin Action Tokenizer",
+    "Action Token Binning"
+   ],
+   "parent": "VLM as Action Decoder VLA Pipeline",
+   "children": [],
+   "assets": [
+    "RT-1"
+   ]
+  },
+  {
+   "en": "Action Token Unnorm Decoding",
+   "zh": "动作token反归一化解码",
+   "level": "l3",
+   "description": "模型自回归输出 7 个 action token 后，按 dataset unnorm_key 反量化为连续 7-DoF 动作。输入：predict_action 输出 action_tokens[7]。输出：action_7dof[dx,dy,dz,drx,dry,drz,gripper]。约束：do_sample=False 贪心；unnorm_key 必须与训练数据集匹配。适用场景：VLA 推理时把 token 转机器人可执行动作。",
+   "aliases": [
+    "Action Token Unnormalization"
+   ],
+   "parent": "VLM as Action Decoder VLA Pipeline",
+   "children": [],
+   "assets": [
+    "RT-1"
+   ]
+  }
+ ],
+ "assets": [
+  {
+   "name": "legged_gym",
+   "type": "package",
+   "source": "https://github.com/leggedrobotics/legged_gym",
+   "description": "ETH Zürich RSL（leggedrobotics）出品的基于 IsaacGym Preview 的四足 RL 训练框架，是 Anymal/A1 等四足 RL 训练事实标准。GYF 系统 B（arXiv:2310.04828）基于此训练 transition/recovery controllers。输入：URDF、reward 配置、训练超参。输出：训练好的 RL 策略权重。依赖：IsaacGym Preview、PyTorch。约束：需 NVIDIA GPU；并行环境数 4096-65536。性能指标：单步仿真 <0.1 ms/env。适用场景：Chain 4 安全跌倒策略训练。",
+   "usage": "git clone https://github.com/leggedrobotics/legged_gym\ncd legged_gym && pip install -e .\n# 训练\npython legged_gym/legged_gym/scripts/train.py --task=a1_fall_recovery --headless\n# 推理\npython legged_gym/legged_gym/scripts/play.py --task=a1_fall_recovery",
+   "implements": [
+    "Sim-to-Real Policy Transfer Training",
+    "Game-Inspired Terrain Curriculum",
+    "On-Policy AC Training Pipeline"
+   ]
+  },
+  {
+   "name": "Isaac Gym",
+   "type": "simulator",
+   "source": "https://developer.nvidia.com/isaac-gym",
+   "description": "NVIDIA出品的GPU加速物理仿真平台，支持数千个环境并行训练，提供多机器人编队场景的GPU加速仿真。输入：机器人模型、环境配置。输出：并行仿真观测与奖励。约束：需NVIDIA GPU（推荐RTX 3060+）；依赖CUDA。适用场景：MARL编队策略的大规模并行训练。",
+   "usage": "pip install isaacgym; from isaacgym import gymapi; gym = gymapi.acquire_gym(); sim_params = gymapi.SimParams(); sim = gym.create_sim(0, 0, gymapi.SIM_PHYSX, sim_params);",
+   "implements": [
+    "Sim-to-Real Policy Transfer Training",
+    "On-Policy AC Training Pipeline"
+   ]
+  },
+  {
+   "name": "rsl_rl",
+   "type": "package",
+   "source": "https://github.com/leggedrobotics/rsl_rl",
+   "description": "ETH Zürich RSL（leggedrobotics）出品的 PPO 实现，配合 legged_gym 使用，提供 recurrent PPO 与若干 baseline。GYF 系统 B 的 RL 训练基于此。输入：策略网络架构、reward、训练超参。输出：训练好的策略权重。依赖：PyTorch、legged_gym。约束：与 legged_gym 版本耦合。适用场景：Chain 4 安全跌倒策略训练的 PPO 实现。",
+   "usage": "git clone https://github.com/leggedrobotics/rsl_rl\ncd rsl_rl && pip install -e .\n# 配合 legged_gym 训练\npython legged_gym/scripts/train.py --task=a1_fall_recovery --rsl_rl=ppo",
+   "implements": [
+    "On-Policy AC Training Pipeline"
+   ]
+  },
+  {
+   "name": "CrossFormer",
+   "type": "model",
+   "source": "https://github.com/rail-berkeley/crossformer",
+   "description": "UC Berkeley 开发的可扩展跨实体 Transformer 策略，在 900k 轨迹(20种机器人实体)上训练，是迄今最大最多样化的跨实体策略。无需手动对齐观测或动作空间，相同网络权重控制单臂/双臂/轮式/四旋翼/四足。架构：共享 causal decoder-only Transformer backbone(12层、8头、2048 MLP、512 embedding，130M参数) + 4个 per-embodiment action head(单臂笛卡尔位置7维/导航路径点2维/双臂关节位置14维/四足关节位置12维) + readout tokens。输入：多视角图像+本体感知+语言/目标图像；输出：分块动作。适用场景：跨实体策略控制多种机器人。约束：4个action head是预定义的，新动作类型需加head；依赖大规模数据混合与TPU训练资源。",
+   "usage": "pip install -e .\nfrom crossformer.model.crossformer_model import CrossFormerModel\nmodel = CrossFormerModel.load_pretrained('hf://rail-berkeley/crossformer')",
+   "implements": [
+    "Shared Backbone Embodiment-Conditioned Policy"
+   ]
+  },
+  {
+   "name": "OpenVLA-7B",
+   "type": "model",
+   "source": "https://github.com/openvla/openvla",
+   "description": "开源7B VLA模型，prism-dinosiglip-224px VLM（Llama 2+DINOv2+SigLIP），在Open X-Embodiment 970K轨迹上训练。输入：RGB+语言指令+本体感觉；输出：7-DoF action tokens。性能指标：29任务多本体平均成功率比RT-2-X(55B)高16.5%，参数少7x。约束：MIT代码+Llama 2 License模型。适用场景：通用机器人抓取与操控策略。",
+   "usage": "HuggingFace AutoModelForVision2Seq加载，支持LoRA/全量微调，OFT/FAST加速",
+   "implements": [
+    "VLM as Action Decoder VLA Pipeline"
+   ]
+  },
+  {
+   "name": "RT-1",
+   "type": "model",
+   "source": "https://arxiv.org/abs/2212.06817",
+   "description": "Google 2022推出的Robotics Transformer，首次把机器人动作离散化为256 bins/token词表，由Transformer自回归生成7-DoF动作。输入：RGB图像序列+语言指令。输出：7-DoF action tokens→连续动作。约束：闭源模型；35M参数；13万条人类演示训练。适用场景：离散动作token化VLA奠基、厨房操作任务。",
+   "usage": "离散动作token空间设计的奠基模型，256 bins分箱方案被OpenVLA直接复用。",
+   "implements": [
+    "Discrete Action Token Multi-Task Transformer",
+    "Action Token Discretization",
+    "Action Token Unnorm Decoding"
+   ]
+  },
+  {
+   "name": "RT-2",
+   "type": "model",
+   "source": "https://arxiv.org/abs/2307.15818",
+   "description": "RT-2（Google DeepMind 2023）是 VLA 范式的 web 协同训练模型，将动作表示为文本 token 融入 VLM 词表，实现 web 视觉-语言数据与机器人轨迹协同微调。输入：RGB+语言指令。输出：动作 token（文本形式）。约束：需 PaLI-X/PaLM-E 级别大模型。适用场景：web 规模 VLA 协同预训练。",
+   "usage": "RT-2 为闭源模型, 参考论文 arXiv:2307.15818 实现协同训练范式",
+   "implements": [
+    "VLM as Action Decoder VLA Pipeline"
+   ]
+  },
+  {
+   "name": "RDT-1B",
+   "type": "model",
+   "source": "https://arxiv.org/abs/2410.07864",
+   "description": "清华+Bosch 2024提出的1.2B参数扩散Transformer VLA模型，用Physically Interpretable Unified Action Space把7种机器人异构动作标准化为128维统一表示，保留物理含义。输入：RGB+语言+本体感觉。输出：统一动作→目标机器人原生动作。约束：1.2B参数需较大显存。性能指标：7种机器人泛化；DiT扩散头。适用场景：跨本体统一动作空间、大规模VLA训练。",
+   "usage": "Physically Interpretable Unified Action Space的标杆，跨本体链统一归一化的核心证据。",
+   "implements": [
+    "PIUAS Diffusion Policy"
+   ]
+  },
+  {
+   "name": "Pi0",
+   "type": "model",
+   "source": "https://physicalintelligence.company/blog/pi0",
+   "description": "Physical Intelligence 的 flow matching VLA foundation model(arXiv 2410.24164, RSS 2025)，PaliGemma VLM backbone + 独立 flow matching action expert，在 10,000+ 小时跨本体数据(7 配置/68 任务)上预训练 + 后训练。输入：RGB+语言+robot state。输出：action chunk(50Hz)。约束：模型权重闭源(商业)；50Hz 控制对硬件要求高。性能指标：支持叠衣服/清桌/装盒等灵巧任务。适用场景：flow matching VLA 范式代表。",
+   "usage": "论文方法公开(physicalintelligence.company/blog/pi0)，代码/权重闭源，开源复现用 SmolVLA",
+   "implements": [
+    "VLM as Action Decoder VLA Pipeline",
+    "Flow Matching Action Generation"
+   ]
+  },
+  {
+   "name": "openpi",
+   "type": "framework",
+   "source": "https://github.com/Physical-Intelligence/openpi",
+   "description": "openpi 是 Physical Intelligence 开源的 π0/π0.5 视觉-语言-动作（VLA）模型官方实现框架，提供 π0 VLA 模型权重、推理服务、微调流水线。在语言驱动技能抽象设计中作为 Hi Robot System1（底层 VLA 执行）的后端：高层 VLM 输出原子命令后，由 openpi 的 π0 模型执行原子命令产出 action chunk。输入：图像 + 原子命令（自然语言）。输出：机器人 action chunk。约束：Apache-2.0；需 GPU 推理。适用场景：Hi Robot 风格双层架构的底层 VLA 后端。",
+   "usage": "git clone https://github.com/Physical-Intelligence/openpi\n# 用 π0 模型执行原子命令：VLA(image, atomic_command) → action_chunk",
+   "implements": [
+    "VLM as Action Decoder VLA Pipeline",
+    "Flow Matching Action Generation"
+   ]
+  },
+  {
+   "name": "Open X-Embodiment",
+   "type": "dataset",
+   "source": "https://robotics-transformer-x.github.io/",
+   "description": "22机器人本体100万+轨迹的大规模机器人学习数据集，RLDS格式。输入：多本体机器人轨迹；输出：标准化轨迹数据。适用场景：训练OpenVLA/RT-2-X等VLA模型。",
+   "usage": "训练OpenVLA（970K轨迹混合）/RT-2-X，支持任意RLDS格式数据集混合",
+   "implements": [
+    "Cross Embodiment Data Aggregation"
+   ]
+  },
+  {
+   "name": "FAST Tokenizer",
+   "type": "tool",
+   "source": "https://github.com/Physical-Intelligence/openpi",
+   "description": "Physical Intelligence 2025 (Karl Pertsch, Kyle Stachowicz, Brian Ichter, Chelsea Finn, Sergey Levine) 提出的FAST (Frequency-space Action Sequence Tokenization)，用DCT把多步动作块压缩为少量频率系数，再用BPE进一步压缩为离散token。FAST+在1M真机轨迹上训练，是通用动作tokenizer。与π0结合训练π0-FAST，匹配扩散VLA性能同时训练快5x。输入：action_chunk[steps,dims]。输出：compressed_tokens[few]。约束：DCT截断高频损失精细动作。性能指标：推理速度提升6x。",
+   "usage": "from transformers import AutoProcessor; tokenizer = AutoProcessor.from_pretrained('physical-intelligence/fast', trust_remote_code=True); tokens = tokenizer(action_chunk); action_chunk = tokenizer.decode(tokens)",
+   "implements": [
+    "VLM as Action Decoder VLA Pipeline"
+   ]
+  },
+  {
+   "name": "Mobile ALOHA",
+   "type": "framework",
+   "source": "https://github.com/MarkFzp/mobile-aloha",
+   "description": "Stanford CoRL 2024（Zhao/Fu/Finn et al., arXiv:2401.02117）的低成本全身遥操作 + 行为克隆框架，用于学习双臂移动操作。Tracer 差速底盘 + 2x ViperX 300 双臂 + 4x RealSense，全身遥操作结构采集 16-DoF 整身动作 demo，ACT/Diffusion Policy/VINN co-training 训练整身策略。输入：硬件平台 + demo 数据。输出：整身移动操作策略。约束：MIT license；需 ROS 1 noetic。适用场景：双臂移动操作数据采集与策略训练。",
+   "usage": "git clone https://github.com/MarkFzp/mobile-aloha; cd mobile-aloha && rosrun mobile_aloha record_demo.py --task_name <task>",
+   "implements": [
+    "Policy Export and Sim-to-Real Deployment"
+   ]
+  },
+  {
+   "name": "ManiSkill",
+   "type": "framework",
+   "source": "https://github.com/haosulab/ManiSkill",
+   "description": "ManiSkill3仿真框架，RDT-1B仓库集成作为simulation benchmark。支持GPU并行仿真、多种机器人形态与操作任务。输入：机器人URDF+任务配置。输出：GPU并行仿真观测（RGBD+分割）。约束：Apache-2.0（rigid body environments）；assets CC BY-NC 4.0；需Vulkan渲染；Linux完整支持，Windows/Mac有限。适用场景：大规模并行机器人操作仿真与benchmark。",
+   "usage": "pip install --upgrade mani_skill\nimport gymnasium as gym\nimport mani_skill.envs\nenv = gym.make('PickCube-v1', obs_mode='rgb', render_mode='rgb_array')",
+   "implements": [
+    "Policy Export and Sim-to-Real Deployment"
+   ]
+  },
+  {
+   "name": "R3M",
+   "type": "model",
+   "source": "https://github.com/facebookresearch/r3m",
+   "description": "Stanford + Meta AI CoRL 2022 开源的 Reusable Representation for Robotic Manipulation。ResNet50/34/18 骨干，Ego4D 上时序对比 + 视频语言对齐 + L1 稀疏三组件预训练。性能指标：12 仿真任务较 CLIP/MoCo +10%、较 from-scratch +20%；Franka 实机 20 demos 50+% 成功率（约 CLIP 双倍）。约束：MIT 许可；Ego4D 非商业。适用场景：机器人操控冻结视觉表征、零样本语义接地。输入：RGB。输出：512d 机器人对齐向量。",
+   "usage": "pip install -e .; from r3m import load_r3m; r3m = load_r3m('resnet50'); r3m.eval()  # resnet18 / resnet34 可选",
+   "implements": [
+    "Multi-Objective Video Representation Pretraining"
+   ]
+  },
+  {
+   "name": "Voltron Language-Driven Representation",
+   "type": "model",
+   "source": "https://github.com/siddk/voltron-robotics",
+   "description": "Stanford RSS 2023 Best Paper Nominee 开源的 Language-Driven Representation Learning for Robotics。ViT-S 骨干，SSv2 上语言条件 MAE 重建 + 视觉接地语言生成预训练。性能指标：v-Cond 在 5 问题套件上严格超 MVP/R3M；v-Gen 在 intent scoring 上更进一步。约束：ViT-S 较小（22M）；alpha 参数需调。适用场景：需要高级语义的机器人任务（语言条件模仿、intent scoring）。输入：RGB + 语言。输出：多模态嵌入。",
+   "usage": "pip install voltron-robotics; from voltron import instantiate_extractor, load; vcond, preprocess = load('v-cond', device='cuda', freeze=True); multimodal_embeddings = vcond(img, lang, mode='multimodal')",
+   "implements": [
+    "Language-Conditioned Masked Representation Pretraining"
+   ]
+  },
+  {
+   "name": "Ego4D",
+   "type": "dataset",
+   "source": "https://ego4d-data.org/",
+   "description": "FAIR CVPR 2022 主导的大规模第一人称视频数据集，3670 小时视频、923 名参与者、74 个全球地点。含 Active Object 标注、Goal-Step 子目标标注、Long-Term Action Anticipation 标注。在 activity_intent_prediction 中作为链 02 下一个主动物体意图与下一个子目标意图的训练/评测基准。特殊性：迄今最大的人类第一人称活动视频集。适用场景：第一人称视频意图预测。约束：Ego4D License 非商业研究用；需申请下载权限。",
+   "usage": "通过 https://ego4d-data.org/ 申请下载 CLI 后 ego4d --output_directory=<path> --datasets full_scale autoav",
+   "implements": [
+    "Human Video Pretraining Data Preparation"
+   ]
+  },
+  {
+   "name": "VIP Value-Implicit Pretraining",
+   "type": "model",
+   "source": "https://github.com/facebookresearch/vip",
+   "description": "UPenn + Meta AI ICLR 2023 Spotlight 开源的 Value-Implicit Pre-Training 模型。ResNet-50 骨干，Ego4D 上离线 goal-conditioned RL 对偶预训练，产出可同时用作视觉奖励（嵌入距离）和视觉表征的编码器。特殊性：首个证明用 RL 本身作为预训练机制的工作；首个完全用 out-of-domain 数据学的感知奖励函数；TorchRL 集成开箱即用。适用场景：goal-image 指定机器人任务、视觉奖励学习、few-shot offline RL。约束：CC BY-NC 4.0 非商业；需 Ego4D 预解析。性能指标：trajectory optimizer ~30-45% 任务成功率；online RL 40% aggregate；Franka 实机 20 轨迹 few-shot offline RL。",
+   "usage": "pip install -e .; from vip import load_vip; vip = load_vip(); vip.eval()  # ResNet-50 frozen; 或 TorchRL: from torchrl.envs.transforms import VIPTransform; env = TransformedEnv(my_env, VIPTransform(keys_in=['next_pixels'], download=True))",
+   "implements": [
+    "Value Implicit Pretraining"
+   ]
+  },
+  {
+   "name": "Something-Something V2",
+   "type": "dataset",
+   "source": "https://developer.qualcomm.com/software/ai-datasets/something-something",
+   "description": "约束：220K 视频片段，174 类原子动作，非商业研究用。Goyal et al. 2017 大规模人类手物交互视频集，每片段含类别标签 + 自然语言描述。适合手物交互活动识别评测。适用场景：手物交互活动识别次基准。",
+   "usage": "访问 https://developer.qualcomm.com/software/ai-datasets/something-something 下载",
+   "implements": [
+    "Human Video Pretraining Data Preparation"
+   ]
+  },
+  {
+   "name": "RLBench",
+   "type": "simulator",
+   "source": "https://github.com/stepjam/RLBench",
+   "description": "Peract/RLBench 出品的机器人仿真 benchmark（James et al. RA-L 2020 'RLBench: The Robot Learning Benchmark & Learning Environment'），含 100+ 任务。VoxPoser 默认仿真环境（因 task diversity 接近 real-world setup）。本链作为 VoxPoser 轨迹合成的仿真后端。约束：Imperial College London non-commercial research licence（含 BSD 组件）；依赖 CoppeliaSim。适用场景：机器人操作轨迹合成的仿真评测。",
+   "usage": "import rlbench; env = rlbench.Environment()",
+   "implements": [
+    "Voxel-Based Multi-Task 6-DoF Action Detection"
+   ]
+  },
+  {
+   "name": "PerAct",
+   "type": "model",
+   "source": "https://github.com/peract/peract",
+   "description": "UW+NVIDIA 2022 (Mohit Shridhar, Lucas Manuelli, Dieter Fox, CoRL 2022, arXiv:2209.05451) 提出的 Perceiver-Actor：首个用 PerceiverIO + 100³ voxel 表示做多任务6-DoF manipulation的transformer policy。把策略建模为voxel grid上的next-best-pose检测（argmax）。输入：100^3_voxel+language。输出：next_best_pose(translation+rotation+gripper)。约束：detection argmax无法表达多模态动作分布；100³ voxel显存高。适用场景：早期perceiver-actor多任务BC（链03历史奠基参照系）。单一模型学18个RLBench任务249变体，比2D baseline高34×。",
+   "usage": "python train.py --task all --rlbench_env rlbench --voxel_size 100 --layers 6 --num_latents 512",
+   "implements": [
+    "Voxel-Based Multi-Task 6-DoF Action Detection"
+   ]
+  },
+  {
+   "name": "VIMA",
+   "type": "model",
+   "source": "https://github.com/vimalabs/VIMA",
+   "description": "约束：需 VIMA-Bench + mask_rcnn.pth；PyBullet 后端；Python ≥ 3.9；MIT 许可。VIMA 是以 multimodal prompt（文本+图像交错 token 序列）为统一任务规范的多任务 generalist robot manipulation agent。T5 encoder 编码 prompt → object-centric tokenization（Mask R-CNN 检测对象 → bounding box encoder + ViT → object tokens） → cross-attention decoder（alternating cross-attention + causal self-attention）→ 自回归输出离散化动作。输入：multimodal prompt + 观测。输出：离散化机器人 waypoint 动作。性能指标：17 任务 4 级泛化评估；hardest zero-shot 2.9x baseline；10x less data 2.7x better；7 模型尺寸 2M-200M。适用场景：multimodal prompt 条件化机器人操作、in-context 学习新任务。ICML 2023。",
+   "usage": "pip install git+https://github.com/vimalabs/VIMA  # Python >= 3.9; python3 scripts/example.py --ckpt={ckpt_path} --device={device} --partition={eval_level} --task={task}",
+   "implements": [
+    "Multimodal Prompt In-Context Generalist Policy"
+   ]
+  },
+  {
+   "name": "VIMA-Bench",
+   "type": "framework",
+   "source": "https://github.com/vimalabs/VimaBench",
+   "description": "约束：Python ≥ 3.9；PyBullet 后端；MIT 代码 + CC BY 4.0 数据。VIMA-Bench 是 multimodal prompt 机器人操作任务套件与 benchmark。17 个代表性任务，multimodal prompt 模板可程序化实例化为数千个个体。4 级评估协议（placement→combinatorial→novel object→novel task）。输入：任务名 + 种子。输出：观测 + prompt + prompt_assets。性能指标：650K 成功轨迹离线数据集；17 任务 6 类别。适用场景：multimodal prompt 机器人操作策略训练与评估。ICML 2023。",
+   "usage": "git clone https://github.com/vimalabs/VimaBench && cd VimaBench; pip install -e .  # from vima_bench import make; env = make(task_name='visual_manipulation'); obs = env.reset()",
+   "implements": [
+    "Multimodal Prompt In-Context Generalist Policy"
+   ]
+  },
+  {
+   "name": "RaiSim",
+   "type": "simulator",
+   "source": "https://github.com/raisimTech/raisimLib",
+   "description": "约束：开源版功能受限；需 C++ 编译；actuator net 需真实机器人数据训练；MIT 开源版许可。RaiSim 是 raisimTech 开发的高性能刚体动力学仿真器，专为机器人学习和 sim-to-real 迁移优化。支持大规模并行仿真（4096+ robots），精确接触动力学建模，actuator network 功能可将真实执行器动力学嵌入仿真。输入：URDF + 地形 + 控制指令。输出：仿真状态（关节角/速度/接触力）。性能指标：大规模并行仿真；actuator network 精确建模执行器动力学。适用场景：四足/双足运动 sim-to-real、执行器网络辨识、大规模并行 RL 训练。",
+   "usage": "# 安装见官方文档 raisim.com; actuator network: 用真实机器人阶跃响应数据训练 PD 控制器输出映射，嵌入仿真器",
+   "implements": [
+    "Actuator Network System Identification",
+    "Sim-to-Real Policy Transfer Training"
+   ]
+  }
+ ],
+ "evidence": {
+  "chain_documents": 4,
+  "ledgers": 4,
+  "websearch_total": 41,
+  "webfetch_total": 36,
+  "with_negative_results": 0
+ }
+}

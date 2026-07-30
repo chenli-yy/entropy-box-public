@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1512" height="2948"
+ viewBox="0 0 1512 2948"
+ shape-rendering="geometricPrecision" text-rendering="optimizeLegibility">
+<!--SV-THEME--><style>/* 一份 SVG 两种主题 */@media (prefers-color-scheme: light){[fill="#0B0D16"]{fill:#F6F3EC}[stroke="#0B0D16"]{stroke:#F6F3EC}[fill="#0D1D28"]{fill:#E4F1F8}[stroke="#0D1D28"]{stroke:#E4F1F8}[fill="#0D1F2C"]{fill:#E4F3F8}[stroke="#0D1F2C"]{stroke:#E4F3F8}[fill="#0E2019"]{fill:#E3F5EC}[stroke="#0E2019"]{stroke:#E3F5EC}[fill="#12162A"]{fill:#EFEBE2}[stroke="#12162A"]{stroke:#EFEBE2}[fill="#151A2B"]{fill:#FFFFFF}[stroke="#151A2B"]{stroke:#FFFFFF}[fill="#161A26"]{fill:#F0EEE8}[stroke="#161A26"]{stroke:#F0EEE8}[fill="#1A1430"]{fill:#EFEAFB}[stroke="#1A1430"]{stroke:#EFEAFB}[fill="#231A0C"]{fill:#FAF2DF}[stroke="#231A0C"]{stroke:#FAF2DF}[fill="#2A0F1E"]{fill:#FBE6EF}[stroke="#2A0F1E"]{stroke:#FBE6EF}[fill="#2A3050"]{fill:#DFD8CC}[stroke="#2A3050"]{stroke:#DFD8CC}[fill="#39406A"]{fill:#C7BDAD}[stroke="#39406A"]{stroke:#C7BDAD}[fill="#3FC5E8"]{fill:#0E6E8C}[stroke="#3FC5E8"]{stroke:#0E6E8C}[fill="#3FD6E8"]{fill:#0E6E8C}[stroke="#3FD6E8"]{stroke:#0E6E8C}[fill="#4FA8FF"]{fill:#1668A8}[stroke="#4FA8FF"]{stroke:#1668A8}[fill="#4FB3E8"]{fill:#1668A8}[stroke="#4FB3E8"]{stroke:#1668A8}[fill="#4FC08D"]{fill:#1F7A55}[stroke="#4FC08D"]{stroke:#1F7A55}[fill="#5C6480"]{fill:#8A8378}[stroke="#5C6480"]{stroke:#8A8378}[fill="#5FD08A"]{fill:#1F7A55}[stroke="#5FD08A"]{stroke:#1F7A55}[fill="#6E7796"]{fill:#A9A196}[stroke="#6E7796"]{stroke:#A9A196}[fill="#6FD3A6"]{fill:#166344}[stroke="#6FD3A6"]{stroke:#166344}[fill="#7A87A8"]{fill:#5A637C}[stroke="#7A87A8"]{stroke:#5A637C}[fill="#7B8BFF"]{fill:#3A46B0}[stroke="#7B8BFF"]{stroke:#3A46B0}[fill="#8A93B0"]{fill:#7B7368}[stroke="#8A93B0"]{stroke:#7B7368}[fill="#8FA3B8"]{fill:#4E5F70}[stroke="#8FA3B8"]{stroke:#4E5F70}[fill="#9B87FF"]{fill:#5B3FD4}[stroke="#9B87FF"]{stroke:#5B3FD4}[fill="#A9B0C8"]{fill:#5A5349}[stroke="#A9B0C8"]{stroke:#5A5349}[fill="#B08D7A"]{fill:#6D5546}[stroke="#B08D7A"]{stroke:#6D5546}[fill="#B98BFF"]{fill:#5B3FD4}[stroke="#B98BFF"]{stroke:#5B3FD4}[fill="#D6DAE8"]{fill:#2E2A25}[stroke="#D6DAE8"]{stroke:#2E2A25}[fill="#E8A33D"]{fill:#9A6C0B}[stroke="#E8A33D"]{stroke:#9A6C0B}[fill="#EDE7DD"]{fill:#191714}[stroke="#EDE7DD"]{stroke:#191714}[fill="#FF5FA8"]{fill:#B02063}[stroke="#FF5FA8"]{stroke:#B02063}[fill="#FF6B6B"]{fill:#C0392B}[stroke="#FF6B6B"]{stroke:#C0392B}[fill="#FF8FC2"]{fill:#8F1B4E}[stroke="#FF8FC2"]{stroke:#8F1B4E}[fill="#FFB03D"]{fill:#9A6C0B}[stroke="#FFB03D"]{stroke:#9A6C0B}}html[data-theme="light"] [fill="#0B0D16"]{fill:#F6F3EC}html[data-theme="light"] [stroke="#0B0D16"]{stroke:#F6F3EC}html[data-theme="light"] [fill="#0D1D28"]{fill:#E4F1F8}html[data-theme="light"] [stroke="#0D1D28"]{stroke:#E4F1F8}html[data-theme="light"] [fill="#0D1F2C"]{fill:#E4F3F8}html[data-theme="light"] [stroke="#0D1F2C"]{stroke:#E4F3F8}html[data-theme="light"] [fill="#0E2019"]{fill:#E3F5EC}html[data-theme="light"] [stroke="#0E2019"]{stroke:#E3F5EC}html[data-theme="light"] [fill="#12162A"]{fill:#EFEBE2}html[data-theme="light"] [stroke="#12162A"]{stroke:#EFEBE2}html[data-theme="light"] [fill="#151A2B"]{fill:#FFFFFF}html[data-theme="light"] [stroke="#151A2B"]{stroke:#FFFFFF}html[data-theme="light"] [fill="#161A26"]{fill:#F0EEE8}html[data-theme="light"] [stroke="#161A26"]{stroke:#F0EEE8}html[data-theme="light"] [fill="#1A1430"]{fill:#EFEAFB}html[data-theme="light"] [stroke="#1A1430"]{stroke:#EFEAFB}html[data-theme="light"] [fill="#231A0C"]{fill:#FAF2DF}html[data-theme="light"] [stroke="#231A0C"]{stroke:#FAF2DF}html[data-theme="light"] [fill="#2A0F1E"]{fill:#FBE6EF}html[data-theme="light"] [stroke="#2A0F1E"]{stroke:#FBE6EF}html[data-theme="light"] [fill="#2A3050"]{fill:#DFD8CC}html[data-theme="light"] [stroke="#2A3050"]{stroke:#DFD8CC}html[data-theme="light"] [fill="#39406A"]{fill:#C7BDAD}html[data-theme="light"] [stroke="#39406A"]{stroke:#C7BDAD}html[data-theme="light"] [fill="#3FC5E8"]{fill:#0E6E8C}html[data-theme="light"] [stroke="#3FC5E8"]{stroke:#0E6E8C}html[data-theme="light"] [fill="#3FD6E8"]{fill:#0E6E8C}html[data-theme="light"] [stroke="#3FD6E8"]{stroke:#0E6E8C}html[data-theme="light"] [fill="#4FA8FF"]{fill:#1668A8}html[data-theme="light"] [stroke="#4FA8FF"]{stroke:#1668A8}html[data-theme="light"] [fill="#4FB3E8"]{fill:#1668A8}html[data-theme="light"] [stroke="#4FB3E8"]{stroke:#1668A8}html[data-theme="light"] [fill="#4FC08D"]{fill:#1F7A55}html[data-theme="light"] [stroke="#4FC08D"]{stroke:#1F7A55}html[data-theme="light"] [fill="#5C6480"]{fill:#8A8378}html[data-theme="light"] [stroke="#5C6480"]{stroke:#8A8378}html[data-theme="light"] [fill="#5FD08A"]{fill:#1F7A55}html[data-theme="light"] [stroke="#5FD08A"]{stroke:#1F7A55}html[data-theme="light"] [fill="#6E7796"]{fill:#A9A196}html[data-theme="light"] [stroke="#6E7796"]{stroke:#A9A196}html[data-theme="light"] [fill="#6FD3A6"]{fill:#166344}html[data-theme="light"] [stroke="#6FD3A6"]{stroke:#166344}html[data-theme="light"] [fill="#7A87A8"]{fill:#5A637C}html[data-theme="light"] [stroke="#7A87A8"]{stroke:#5A637C}html[data-theme="light"] [fill="#7B8BFF"]{fill:#3A46B0}html[data-theme="light"] [stroke="#7B8BFF"]{stroke:#3A46B0}html[data-theme="light"] [fill="#8A93B0"]{fill:#7B7368}html[data-theme="light"] [stroke="#8A93B0"]{stroke:#7B7368}html[data-theme="light"] [fill="#8FA3B8"]{fill:#4E5F70}html[data-theme="light"] [stroke="#8FA3B8"]{stroke:#4E5F70}html[data-theme="light"] [fill="#9B87FF"]{fill:#5B3FD4}html[data-theme="light"] [stroke="#9B87FF"]{stroke:#5B3FD4}html[data-theme="light"] [fill="#A9B0C8"]{fill:#5A5349}html[data-theme="light"] [stroke="#A9B0C8"]{stroke:#5A5349}html[data-theme="light"] [fill="#B08D7A"]{fill:#6D5546}html[data-theme="light"] [stroke="#B08D7A"]{stroke:#6D5546}html[data-theme="light"] [fill="#B98BFF"]{fill:#5B3FD4}html[data-theme="light"] [stroke="#B98BFF"]{stroke:#5B3FD4}html[data-theme="light"] [fill="#D6DAE8"]{fill:#2E2A25}html[data-theme="light"] [stroke="#D6DAE8"]{stroke:#2E2A25}html[data-theme="light"] [fill="#E8A33D"]{fill:#9A6C0B}html[data-theme="light"] [stroke="#E8A33D"]{stroke:#9A6C0B}html[data-theme="light"] [fill="#EDE7DD"]{fill:#191714}html[data-theme="light"] [stroke="#EDE7DD"]{stroke:#191714}html[data-theme="light"] [fill="#FF5FA8"]{fill:#B02063}html[data-theme="light"] [stroke="#FF5FA8"]{stroke:#B02063}html[data-theme="light"] [fill="#FF6B6B"]{fill:#C0392B}html[data-theme="light"] [stroke="#FF6B6B"]{stroke:#C0392B}html[data-theme="light"] [fill="#FF8FC2"]{fill:#8F1B4E}html[data-theme="light"] [stroke="#FF8FC2"]{stroke:#8F1B4E}html[data-theme="light"] [fill="#FFB03D"]{fill:#9A6C0B}html[data-theme="light"] [stroke="#FFB03D"]{stroke:#9A6C0B}</style>
+<defs>
+  <marker id="arr" markerWidth="12" markerHeight="9" refX="10" refY="4.5" orient="auto">
+    <polygon points="0 0,12 4.5,0 9" fill="#5C6480"/>
+  </marker>
+  <marker id="arr-gray" markerWidth="12" markerHeight="9" refX="10" refY="4.5" orient="auto">
+    <polygon points="0 0,12 4.5,0 9" fill="#39406A"/>
+  </marker>
+</defs>
+<rect width="100%" height="100%" fill="#0B0D16" rx="0"/>
+<rect x="0.0" y="0.0" width="1512.0" height="100.0" rx="0" fill="#101528" stroke="none" stroke-width="0"/>
+  <text x="756.0" y="52.0" font-size="20" fill="#EDE7DD" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="756.0" dy="0">近距社交导航  (Proxemic Navigation)</tspan></text>
+  <rect x="462.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.5"/>
+  <text x="484.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="484.0" dy="0">阶段</tspan></text>
+  <rect x="546.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#231A0C" stroke="#E8A33D" stroke-width="1.5"/>
+  <text x="568.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="568.0" dy="0">步骤</tspan></text>
+  <rect x="630.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#0D1D28" stroke="#4FB3E8" stroke-width="1.5"/>
+  <text x="652.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="652.0" dy="0">子链</tspan></text>
+  <rect x="714.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="1.5"/>
+  <text x="736.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="736.0" dy="0">判断</tspan></text>
+  <rect x="798.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#1A1430" stroke="#9B87FF" stroke-width="1.5"/>
+  <text x="820.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="820.0" dy="0">分支</tspan></text>
+  <rect x="882.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#0E2019" stroke="#4FC08D" stroke-width="1.5"/>
+  <text x="904.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="904.0" dy="0">合并</tspan></text>
+  <rect x="966.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#161A26" stroke="#7A87A8" stroke-width="1.5"/>
+  <text x="988.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="988.0" dy="0">编码</tspan></text>
+  <rect x="36.0" y="164.0" width="1400.0" height="784.0" rx="8" fill="#151A2B" stroke="#2A3050" stroke-width="2.0"/>
+  <rect x="36.0" y="164.0" width="1400.0" height="48.0" rx="8" fill="#16223A" stroke="none" stroke-width="0"/>
+  <rect x="36.0" y="188.0" width="1400.0" height="24.0" rx="0" fill="#16223A" stroke="none" stroke-width="0"/>
+  <text x="736.0" y="189.0" font-size="15" fill="#7FD9F0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="736.0" dy="0">任务链 1: Proxemic Gaussian Costmap Navigation</tspan></text>
+  <rect x="56.0" y="232.0" width="1360.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="232.0" width="1360.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="252.0" width="1360.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="736.0" y="253.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="736.0" dy="0">s1 — 行人感知与状态估计</tspan></text>
+  <rect x="56.0" y="404.0" width="1360.0" height="180.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="404.0" width="1360.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="424.0" width="1360.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="736.0" y="425.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="736.0" dy="0">s2 — Proxemic高斯代价计算</tspan></text>
+  <rect x="56.0" y="600.0" width="1360.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="600.0" width="1360.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="620.0" width="1360.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="736.0" y="621.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="736.0" dy="0">s3 — 分层代价地图融合</tspan></text>
+  <rect x="56.0" y="772.0" width="1360.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="772.0" width="1360.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="792.0" width="1360.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="736.0" y="793.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="736.0" dy="0">s4 — 路径规划与速度输出</tspan></text>
+  <rect x="36.0" y="980.0" width="978.0" height="1028.0" rx="8" fill="#151A2B" stroke="#2A3050" stroke-width="2.0"/>
+  <rect x="36.0" y="980.0" width="978.0" height="48.0" rx="8" fill="#16223A" stroke="none" stroke-width="0"/>
+  <rect x="36.0" y="1004.0" width="978.0" height="24.0" rx="0" fill="#16223A" stroke="none" stroke-width="0"/>
+  <text x="525.0" y="1005.0" font-size="15" fill="#7FD9F0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="525.0" dy="0">任务链 2: Social Force Model Proxemic Navigation</tspan></text>
+  <rect x="56.0" y="1048.0" width="938.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="1048.0" width="938.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="1068.0" width="938.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="525.0" y="1069.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="525.0" dy="0">s1 — 行人状态感知与目标设定</tspan></text>
+  <rect x="56.0" y="1220.0" width="938.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="1220.0" width="938.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="1240.0" width="938.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="525.0" y="1241.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="525.0" dy="0">s2 — 社会力计算</tspan></text>
+  <rect x="56.0" y="1392.0" width="938.0" height="180.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="1392.0" width="938.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="1412.0" width="938.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="525.0" y="1413.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="525.0" dy="0">s3 — 力融合与动力学积分</tspan></text>
+  <rect x="56.0" y="1588.0" width="938.0" height="400.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="1588.0" width="938.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="1608.0" width="938.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="525.0" y="1609.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="525.0" dy="0">s4 — 安全约束与速度输出</tspan></text>
+  <rect x="36.0" y="2040.0" width="1440.0" height="832.0" rx="8" fill="#151A2B" stroke="#2A3050" stroke-width="2.0"/>
+  <rect x="36.0" y="2040.0" width="1440.0" height="48.0" rx="8" fill="#16223A" stroke="none" stroke-width="0"/>
+  <rect x="36.0" y="2064.0" width="1440.0" height="24.0" rx="0" fill="#16223A" stroke="none" stroke-width="0"/>
+  <text x="756.0" y="2065.0" font-size="15" fill="#7FD9F0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="756.0" dy="0">任务链 3: Deep Reinforcement Learning Proxemic Navigation</tspan></text>
+  <rect x="56.0" y="2108.0" width="1400.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="2108.0" width="1400.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="2128.0" width="1400.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="756.0" y="2129.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="756.0" dy="0">s1 — 观测构建与特征生成</tspan></text>
+  <rect x="56.0" y="2280.0" width="1400.0" height="180.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="2280.0" width="1400.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="2300.0" width="1400.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="756.0" y="2301.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="756.0" dy="0">s2 — 策略网络推理</tspan></text>
+  <rect x="56.0" y="2476.0" width="1400.0" height="180.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="2476.0" width="1400.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="2496.0" width="1400.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="756.0" y="2497.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="756.0" dy="0">s3 — 安全过滤与动作执行</tspan></text>
+  <rect x="56.0" y="2672.0" width="1400.0" height="180.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="2672.0" width="1400.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="2692.0" width="1400.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="756.0" y="2693.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="756.0" dy="0">s4 — 训练阶段：奖励计算与策略更新</tspan></text>
+  <line x1="287.0" y1="330.0" x2="321.0" y2="330.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 437.0 368.0 L 437.0 422.0 L 171.0 422.0 L 171.0 476.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="514.0" x2="321.0" y2="514.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="553.0" y1="514.0" x2="587.0" y2="514.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="749.0" y1="514.0" x2="783.0" y2="514.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 668.0 564.0 L 668.0 612.0 L 171.0 612.0 L 171.0 660.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="945.0" y1="514.0" x2="979.0" y2="514.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 864.0 564.0 L 864.0 612.0 L 171.0 612.0 L 171.0 660.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="1141.0" y1="514.0" x2="1175.0" y2="514.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 1060.0 564.0 L 1060.0 612.0 L 171.0 612.0 L 171.0 660.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 1276.0 546.0 L 1276.0 603.0 L 171.0 603.0 L 171.0 660.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="698.0" x2="321.0" y2="698.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 437.0 736.0 L 437.0 784.0 L 171.0 784.0 L 171.0 832.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="870.0" x2="321.0" y2="870.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="553.0" y1="870.0" x2="587.0" y2="870.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="789.0" y1="870.0" x2="823.0" y2="870.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="1146.0" x2="321.0" y2="1146.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 437.0 1184.0 L 437.0 1232.0 L 171.0 1232.0 L 171.0 1280.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="1318.0" x2="321.0" y2="1318.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="553.0" y1="1318.0" x2="587.0" y2="1318.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 703.0 1356.0 L 703.0 1410.0 L 171.0 1410.0 L 171.0 1464.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="1502.0" x2="321.0" y2="1502.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="483.0" y1="1502.0" x2="517.0" y2="1502.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 402.0 1552.0 L 402.0 1566.0 L 854.0 1566.0 L 854.0 1534.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="719.0" y1="1502.0" x2="753.0" y2="1502.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 854.0 1534.0 L 854.0 1591.0 L 274.0 1591.0 L 274.0 1648.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 1748.0 L 274.0 1771.0 L 176.0 1771.0 L 176.0 1794.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 1748.0 L 274.0 1762.0 L 392.0 1762.0 L 392.0 1776.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 176.0 1858.0 L 176.0 1881.0 L 392.0 1881.0 L 392.0 1904.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 1876.0 L 392.0 1890.0 L 156.0 1890.0 L 156.0 1904.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="392.0" y1="1876.0" x2="392.0" y2="1904.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="257.0" y1="1936.0" x2="291.0" y2="1936.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="2206.0" x2="321.0" y2="2206.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="553.0" y1="2206.0" x2="587.0" y2="2206.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="819.0" y1="2206.0" x2="853.0" y2="2206.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 969.0 2244.0 L 969.0 2298.0 L 171.0 2298.0 L 171.0 2352.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="2390.0" x2="321.0" y2="2390.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="483.0" y1="2390.0" x2="517.0" y2="2390.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 402.0 2440.0 L 402.0 2454.0 L 854.0 2454.0 L 854.0 2422.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="719.0" y1="2390.0" x2="753.0" y2="2390.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 854.0 2422.0 L 854.0 2485.0 L 171.0 2485.0 L 171.0 2548.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="2586.0" x2="321.0" y2="2586.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="483.0" y1="2586.0" x2="517.0" y2="2586.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 402.0 2636.0 L 402.0 2650.0 L 854.0 2650.0 L 854.0 2618.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="719.0" y1="2586.0" x2="753.0" y2="2586.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 854.0 2618.0 L 854.0 2675.0 L 136.0 2675.0 L 136.0 2732.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 136.0 2832.0 L 136.0 2846.0 L 784.0 2846.0 L 784.0 2814.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="217.0" y1="2782.0" x2="251.0" y2="2782.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 332.0 2832.0 L 332.0 2846.0 L 784.0 2846.0 L 784.0 2814.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="413.0" y1="2782.0" x2="447.0" y2="2782.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="649.0" y1="2782.0" x2="683.0" y2="2782.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="885.0" y1="2782.0" x2="919.0" y2="2782.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="1151.0" y1="2782.0" x2="1185.0" y2="2782.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <g class="step-node" data-sid="s1_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Detect and Track Pedestrians
+从激光雷达/RGB-D/RGB图像中实时检测行人位置和速度，发布people_msgs/People消息供ProxemicLayer订阅。激光方案常用leg_detector检测腿部模式，视觉方案常用YOLO+DeepSORT。输入：激光/RGB-D/RGB传感器原始数据。输出：people_msgs/People（每个行人position+velocity）。约束：leg_detector室内检测率&gt;85%，跟踪频率≥10Hz；YOLOv5+DeepSORT mAP&gt;50%，跟踪≥15FPS（GPU）。适用场景：室内服务机器人社交导航的前置感知。
+CAP_60357b64</title>
+  <rect x="56.0" y="292.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="329.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">近距导航行人检测与跟踪</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Transform People to Costmap Frame
+通过TF坐标变换将行人位姿从传感器坐标系变换到costmap坐标系（map/odom），确保高斯中心与栅格对齐。输入：people_msgs/People（传感器坐标系）。输出：transformed_people_（costmap坐标系行人列表）。约束：TF变换超时&lt;10ms否则丢弃过期行人数据。适用场景：所有基于costmap的社交导航插件。
+CAP_60357b64</title>
+  <rect x="322.0" y="292.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="329.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">近距导航行人检测与跟踪</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Initialize Proxemic Parameters
+加载ProxemicLayer参数（cutoff/amplitude/covariance/factor）并初始化dynamic_reconfigure动态调参服务。输入：ROS参数服务器配置。输出：成员变量cutoff_/amplitude_/covar_/factor_/server_。约束：amplitude必须大于cutoff（默认77&gt;10），否则高斯函数恒低于阈值无效果。适用场景：ProxemicLayer插件初始化阶段。
+CAP_21f336b4</title>
+  <rect x="56.0" y="476.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="513.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">社交代价地图插件集成</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Update Costmap Bounds from People
+遍历每个行人，根据高斯有效半径公式r=sqrt(-2*var*log(cutoff/A))计算影响范围，扩展costmap更新窗口边界，确保行人附近栅格进入updateCosts计算范围。输入：transformed_people_。输出：min_x/min_y/max_x/max_y边界参数。约束：运动行人的factor会放大前方半径，边界必须按放大后的半径计算。适用场景：ProxemicLayer每次updateCosts前的边界计算。
+CAP_44edcbac</title>
+  <rect x="322.0" y="476.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="513.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">近距高斯代价计算</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_3a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>判断：ProxemicLayer是否启用
+判断：ProxemicLayer插件是否启用。
+CAP_21f336b4</title>
+  <polygon points="668.0,464.0 748.0,514.0 668.0,564.0 588.0,514.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="668.0" y="500.2" font-size="13" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="668.0" dy="0">判断：</tspan><tspan x="668.0" dy="17.6">ProxemicLaye…</tspan></text>
+  <text x="668.0" y="529.0" font-size="10" fill="#6E7796" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="668.0" dy="0">社交代价地图…</tspan></text>
+  <rect x="646.0" y="454.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="668.0" y="462.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="668.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_3b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>判断：是否检测到行人
+判断：当前是否有行人在场景中。
+CAP_44edcbac</title>
+  <polygon points="864.0,464.0 944.0,514.0 864.0,564.0 784.0,514.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="864.0" y="500.2" font-size="13" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="864.0" dy="0">判断：是否检测</tspan><tspan x="864.0" dy="17.6">到行人</tspan></text>
+  <text x="864.0" y="529.0" font-size="10" fill="#6E7796" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="864.0" dy="0">近距高斯代价…</tspan></text>
+  <rect x="842.0" y="454.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="864.0" y="462.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="864.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_3c" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>判断：高斯参数是否合法
+判断：cutoff是否小于amplitude（参数合法性检查）。
+CAP_44edcbac</title>
+  <polygon points="1060.0,464.0 1140.0,514.0 1060.0,564.0 980.0,514.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="1060.0" y="500.2" font-size="13" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="1060.0" dy="0">判断：高斯参数</tspan><tspan x="1060.0" dy="17.6">是否合法</tspan></text>
+  <text x="1060.0" y="529.0" font-size="10" fill="#6E7796" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="1060.0" dy="0">近距高斯代价…</tspan></text>
+  <rect x="1038.0" y="454.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="1060.0" y="462.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="1060.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_3" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Compute and Write Gaussian Costs
+逐栅格遍历更新窗口，对每个栅格计算高斯函数值：以行人位置为中心，静止/后方使用圆形高斯gaussian(x,y,cx,cy,A,covar,covar,0)，运动前方使用拉伸高斯gaussian(x,y,cx,cy,A,covar*factor,covar,angle)。高斯值≥cutoff时取max写入costmap，跳过NO_INFORMATION栅格。输入：transformed_people_+master_grid+边界参数。输出：更新后的costmap（高斯代价栅格）。约束：单次updateCosts在5m×5m@0.05m分辨率（10000栅格）内毫秒级完成；栅格代价取max与已有代价叠加。适用场景：ProxemicLayer核心代价写入。
+CAP_44edcbac / CAP_4d51b15d / CAP_af037dd5</title>
+  <rect x="1176.0" y="482.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="1276.0" y="509.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="1276.0" dy="0">近距高斯代价计算</tspan></text>
+  <rect x="1182.0" y="486.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="1199.0" y="497.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="1199.0" dy="0">分支</tspan></text>
+  <text x="1276.0" y="536.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="1276.0" dy="0">近距高斯代价计算 +2</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Fuse Layered Costmaps
+按plugin注册顺序依次调用各Layer的updateBounds/updateCosts（StaticLayer→ObstacleLayer→ProxemicLayer→InflationLayer），将各层代价叠加到master_grid。输入：各Layer独立代价数据。输出：融合后的master costmap。约束：plugin顺序决定叠加顺序，ProxemicLayer在InflationLayer之前。适用场景：ROS costmap_2d分层架构的标准融合流程。
+CAP_21f336b4</title>
+  <rect x="56.0" y="660.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="697.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">社交代价地图插件集成</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Inflate Costs Around Obstacles
+InflationLayer对所有已标记栅格（含ProxemicLayer写入的社交代价）按cost_scaling_factor和inflation_radius做指数衰减膨胀，提供安全渐变距离。输入：master costmap（含各层原始代价）。输出：膨胀后costmap（含安全距离衰减）。约束：膨胀半径需与ProxemicLayer高斯半径协调，避免社交区域被过度膨胀。适用场景：导航栈安全基础层，不可省略。
+CAP_21f336b4</title>
+  <rect x="322.0" y="660.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="697.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">社交代价地图插件集成</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Global Path Planning (A*/Dijkstra)
+在融合了ProxemicLayer高斯代价的全局costmap上运行A*或Dijkstra图搜索，生成社交合规全局路径。路径自然绕开行人前方和个人区，但不阻断通道（软约束），狭窄走廊可穿越社交区。输入：global costmap+起点位姿+目标位姿。输出：nav_msgs/Path全局路径点序列。约束：A*在1024×1024栅格上规划&lt;100ms；路径倾向保持≥1.2m距离，空间不足时可缩至0.45m。适用场景：结构化室内环境全局社交路径规划。
+CAP_259075c9</title>
+  <rect x="56.0" y="832.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="869.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">社交合规全局路径规划</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Local Trajectory Optimization
+局部规划器（DWA或TEB）在local costmap滚动窗口内采样/优化可行轨迹。DWA在速度空间采样评分选最优；TEB通过g2o优化时间弹性带多目标代价函数（路径/时间/障碍/社交/动力学），自然感知costmap中的ProxemicLayer高斯代价。输入：local costmap+全局路径+当前位姿+里程计。输出：局部最优轨迹+速度指令。约束：DWA控制频率5-10Hz；TEB典型5-10Hz，min_obstacle_dist建议≥0.5m。
+CAP_10e5b57e</title>
+  <rect x="322.0" y="832.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="869.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">社交代价TEB局部轨迹优化</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_2a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Configure Local Planner Type
+根据部署配置选择DWA或TEB作为局部规划器插件：DWA适合计算资源受限的嵌入式平台，TEB适合需要更平滑轨迹和社交约束的服务机器人场景。两种规划器均从proxemic social costmap读取代价，最终均输出速度指令至/cmd_vel。输入：部署配置参数+局部代价地图+全局路径。输出：选定的局部规划器输出速度指令。约束：ROS中同一时间只能激活一个local_planner插件；切换需重启move_base。适用场景：ROS导航栈部署时的规划器选型环节。
+CAP_10e5b57e</title>
+  <rect x="588.0" y="838.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="688.0" y="860.2" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="688.0" dy="0">社交代价TEB局部轨迹优</tspan><tspan x="688.0" dy="17.6">化</tspan></text>
+  <rect x="594.0" y="842.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="611.0" y="853.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="611.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_3" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Publish Velocity Commands
+move_base将局部规划器输出的速度指令发布为geometry_msgs/Twist到/cmd_vel话题，驱动底盘执行。输入：局部最优速度指令。输出：geometry_msgs/Twist→/cmd_vel。约束：发布频率与局部规划器一致（5-20Hz）。适用场景：所有ROS导航栈的最终速度输出环节。
+CAP_433292d3</title>
+  <rect x="824.0" y="832.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="939.0" y="869.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="939.0" dy="0">高斯代价地图近距导航</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Detect and Track Pedestrians
+从传感器检测行人位置和速度，与链01共享上游感知模块。输入：LiDAR/RGB-D数据。输出：行人列表（位置px,py+速度vx,vy+半径r）。约束：检测延迟&lt;50ms，跟踪帧率≥20Hz。适用场景：所有社交导航范式的共享前置感知。
+CAP_60357b64</title>
+  <rect x="56.0" y="1108.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="1145.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">近距导航行人检测与跟踪</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Set Navigation Goal
+接收用户/RViz设定的导航目标点坐标。输入：move_base SimpleActionGoal或RViz clicked_point。输出：目标位置坐标(gx,gy)。约束：目标点必须在自由空间内（非障碍/非致命cost区域）。适用场景：SFM导航的目标输入环节。
+CAP_d56fde47</title>
+  <rect x="322.0" y="1108.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="1145.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">社会力模型近距导航</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Compute Desired Driving Force
+计算机器人朝向目标的自驱动力f_drive=m(v0*e_i-v_i)/τ，模拟行人想走到目的地的意图。v0为期望速度（典型1.0-1.5m/s），τ为弛豫时间（典型0.5s），e_i为目标方向单位向量。输入：当前速度+目标位置。输出：驱动力向量(2D)。约束：goal_threshold=0.2m（到达目标判定距离）。适用场景：SFM目标趋向力的标准计算。
+CAP_3a1ad462</title>
+  <rect x="56.0" y="1280.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="1317.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">目标驱动力计算</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Compute Social Repulsive Force
+计算行人对机器人的社交排斥力f_soc=A*exp((r_ij-d_ij)/B)*n_ij，是proxemic约束的核心编码。Extended SFM引入速度依赖项（lambda_importance=2.0，位置力是速度力的2倍）和角度依赖项（gamma=0.35, n=2, n&#x27;=3）。先判断行人间距是否小于社交力作用阈值（约2.0m），超出则力为0跳过。输入：自身位置+行人位置/速度。输出：社交排斥力向量数组(2D×N_ped)。约束：A和B参数决定排斥强度和衰减速率；社交力factor=5.1，是驱动力的5倍；B≈0.5-1.0m对应个人区→社交区过渡。适用场景：proxemic距离在SFM中的核心编码环节。
+CAP_c8080ef4</title>
+  <rect x="322.0" y="1280.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="1317.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">社交排斥力计算</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_3" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Compute Obstacle Repulsive Force
+计算墙壁和静态障碍物对机器人的排斥力，参数sigma=0.2m（障碍物力标准差）、threshold=3.0m（触发距离）、factor=10.0（力缩放因子，大于社交力5.1确保硬障碍避让优先）。先判断障碍物距离是否小于阈值，超出则力为0。输入：自身位置+障碍物线段位置。输出：障碍物排斥力向量数组(2D×N_obs)。约束：障碍物表示为线段，计算到最近线段的距离和法向。适用场景：SFM导航中硬障碍避让的安全基础。
+CAP_4088fd28</title>
+  <rect x="588.0" y="1280.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="703.0" y="1317.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="703.0" dy="0">导航障碍物排斥力</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Sum Forces and Compute Acceleration
+将所有分力向量叠加求合力F_total=f_drive+Σf_soc+Σf_wall+Σf_group，通过F=ma计算加速度。输入：所有分力向量。输出：合力向量(2D)+加速度。约束：力的向量叠加遵循牛顿第二定律；各分力可并行计算。适用场景：SFM每步仿真的核心计算环节。
+CAP_c8080ef4 / CAP_3a1ad462 / CAP_4088fd28</title>
+  <rect x="56.0" y="1464.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="1496.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">社交排斥力计算</tspan></text>
+  <text x="171.0" y="1530.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="171.0" dy="0">社交排斥力计算 +2</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_2a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>判断：机器人是否为非完整约束
+判断：机器人运动学类型（全向/非完整约束差速/阿克曼）。
+CAP_781515ac</title>
+  <polygon points="402.0,1452.0 482.0,1502.0 402.0,1552.0 322.0,1502.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="402.0" y="1488.2" font-size="13" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="402.0" dy="0">判断：机器人是</tspan><tspan x="402.0" dy="17.6">否为非完整约束</tspan></text>
+  <text x="402.0" y="1517.0" font-size="10" fill="#6E7796" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="402.0" dy="0">非完整约束SF…</tspan></text>
+  <rect x="380.0" y="1442.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="402.0" y="1450.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="402.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Project to Nonholonomic Constraints
+条件：NMR（差速/阿克曼机器人）。将全向SFM的2D合力投影到差速机器人可行运动方向：纵向力直接映射为线加速度a_x=F_x/m，横向力映射为转向力矩M=F_y*L（L为轴距参数），避免产生侧向滑动指令。TSFM（Projected Time-to-collision SFM）额外将碰撞时间投影到力计算中。输入：合力+当前航向θ+运动学类型。输出：可行方向力向量(2D)。约束：Ferrer et al.直接将全向SFM用于NMR被批评为&#x27;ignoring the inconsistency&#x27;；Jafari et al. 2026证明在boundedly nonpassive行人假设下的Lyapunov稳定性。适用场景：差速/阿克曼服务机器人部署SFM的必要投影步骤。
+CAP_781515ac</title>
+  <rect x="518.0" y="1470.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="618.0" y="1501.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="618.0" dy="0">非完整约束SFM投影</tspan></text>
+  <rect x="524.0" y="1474.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="541.0" y="1485.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="541.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_3" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Integrate Velocity with Clipping
+通过前向欧拉积分计算期望速度v_des=v+F_total/m*dt，然后裁剪到机器人运动学可行范围(v_max, ω_max)。判断积分后速度是否超限，超限则限幅。输入：可行力+当前速度+dt+速度/加速度限幅。输出：期望速度(v,ω)。约束：v_max典型0.5-1.5m/s（人行走速度），ω_max典型1.0-2.0rad/s；dt典型0.1-0.25s。适用场景：SFM力到速度指令的转换环节。
+CAP_d56fde47</title>
+  <rect x="754.0" y="1470.0" width="200.0" height="64.0" rx="6" fill="#0E2019" stroke="#4FC08D" stroke-width="2.2"/>
+  <text x="854.0" y="1501.0" font-size="13" fill="#4FC08D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="854.0" dy="0">社会力模型近距导航</tspan></text>
+  <rect x="760.0" y="1474.0" width="34.0" height="20.0" rx="10" fill="#4FC08D44" stroke="#4FC08D" stroke-width="1"/>
+  <text x="777.0" y="1485.0" font-size="10" fill="#4FC08D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="777.0" dy="0">合并</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>判断：是否启用ORCA安全过滤
+判断：是否叠加ORCA互惠避碰作为安全过滤层。
+CAP_d3864774</title>
+  <polygon points="274.0,1648.0 354.0,1698.0 274.0,1748.0 194.0,1698.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="274.0" y="1684.2" font-size="13" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">判断：是否启用</tspan><tspan x="274.0" dy="17.6">ORCA安全过滤</tspan></text>
+  <text x="274.0" y="1713.0" font-size="10" fill="#6E7796" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="274.0" dy="0">ORCA-SFM混…</tspan></text>
+  <rect x="252.0" y="1638.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="274.0" y="1646.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Apply ORCA Velocity Constraints
+条件：启用ORCA。将SFM期望速度作为ORCA的preferred velocity，用RVO2库求解ORCA半平面交集内的最近可行速度，解决纯SFM在正面相遇时的振荡和死锁问题。输入：期望速度+行人速度/位置+邻域半径。输出：ORCA可行速度(v,ω)。约束：ORCA在密集人群中保证互惠无碰撞（所有智能体都使用ORCA假设下）；交集为空时按距离放弃最远邻居约束（降级处理）。适用场景：密集人群中SFM导航的安全兜底层。
+CAP_d3864774</title>
+  <rect x="76.0" y="1794.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="176.0" y="1825.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="176.0" dy="0">ORCA-SFM混合避碰</tspan></text>
+  <rect x="82.0" y="1798.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="99.0" y="1809.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="99.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_2a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>判断：是否与DWA融合
+判断：是否将SFM力融入DWA评分函数。
+CAP_6a54a943</title>
+  <polygon points="392.0,1776.0 472.0,1826.0 392.0,1876.0 312.0,1826.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="392.0" y="1812.2" font-size="13" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">判断：是否与</tspan><tspan x="392.0" dy="17.6">DWA融合</tspan></text>
+  <text x="392.0" y="1841.0" font-size="10" fill="#6E7796" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="392.0" dy="0">SFM增强DWA…</tspan></text>
+  <rect x="370.0" y="1766.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="392.0" y="1774.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Fuse SFM with DWA Scoring
+条件：DWA融合模式。将SFM排斥力信息融入DWA轨迹评分函数：在DWA采样多组(v,ω)速度并模拟轨迹时，额外加入SFM行人排斥力代价项cost+=weight_sfm*(1-exp(-d_ped/sigma))，使评分同时考虑目标距离、障碍物距离和社交距离。输入：SFM期望速度+costmap+全局路径。输出：DWA最优速度(v,ω)。约束：SFM-DWA融合相比纯DWA在行人密集场景避障效率提升约25%；可提前0.8-1.5s预测行人走向避让。适用场景：需要兼顾全局一致性和局部力场反应性的SFM部署。
+CAP_6a54a943</title>
+  <rect x="56.0" y="1904.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="1935.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">SFM增强DWA局部规划</tspan></text>
+  <rect x="62.0" y="1908.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="1919.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_3" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Publish Velocity Commands
+将最终速度指令发布为geometry_msgs/Twist到/cmd_vel话题，驱动底盘执行。输入：最终速度指令。输出：geometry_msgs/Twist→/cmd_vel。约束：发布频率10-20Hz。适用场景：SFM导航最终速度输出。
+CAP_d56fde47</title>
+  <rect x="292.0" y="1904.0" width="200.0" height="64.0" rx="6" fill="#0E2019" stroke="#4FC08D" stroke-width="2.2"/>
+  <text x="392.0" y="1935.0" font-size="13" fill="#4FC08D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">社会力模型近距导航</tspan></text>
+  <rect x="298.0" y="1908.0" width="34.0" height="20.0" rx="10" fill="#4FC08D44" stroke="#4FC08D" stroke-width="1"/>
+  <text x="315.0" y="1919.0" font-size="10" fill="#4FC08D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">合并</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Get Pedestrian States
+从行人检测器/跟踪器或仿真环境获取每个行人的位置(px,py)、速度(vx,vy)和半径r。CrowdNav中通过Human.get_observable_state()获取完美状态，DRL-VO中从pedsim_ros行人话题订阅。输入：传感器/跟踪器数据。输出：行人状态列表[(px,py,vx,vy,r)×N]。约束：CrowdNav假设完美行人状态（仿真直接提供）；真机部署需接入YOLO+DeepSORT/MHT检测器，检测延迟&lt;100ms。适用场景：DRL社交导航策略的环境观测输入。
+CAP_60357b64</title>
+  <rect x="56.0" y="2168.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="2205.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">近距导航行人检测与跟踪</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Process Sensor Data
+处理激光雷达扫描数据，堆叠短历史帧（3-5帧），转换为局部坐标系下的occupancy grid表示（DRL-VO的80×80激光网格），提供静态障碍物和环境几何信息。纯agent-level方法（SARL/CADRL）可跳过本步（无激光输入）。输入：LiDAR扫描序列。输出：激光历史网格/原始scan向量。约束：网格分辨率0.05-0.1m；历史长度3-5帧覆盖0.75-1.25s运动。适用场景：需要处理静态障碍物的DRL导航（DRL-VO风格），agent-level方法（SARL）无此步。
+CAP_ec536d11</title>
+  <rect x="322.0" y="2168.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="2195.6" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">DRL导航激光-历史-目标多模态观</tspan><tspan x="437.0" dy="18.9">测</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_3" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Generate Subgoal Point
+由全局规划器（A*/Dijkstra）提供局部目标点，转换到机器人局部坐标系(gx,gy)，为策略提供导航方向指引。CrowdNav直接使用goal position，DRL-VO使用global planner输出的subgoal编码为方向指示网格。输入：全局路径+当前位姿。输出：子目标点（局部坐标系）。约束：子目标点典型距离机器人2-5m，过远失去局部引导意义，过近频繁更新。适用场景：所有DRL社交导航策略的方向指引输入。
+CAP_ec536d11</title>
+  <rect x="588.0" y="2168.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="703.0" y="2195.6" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="703.0" dy="0">DRL导航激光-历史-目标多模态观</tspan><tspan x="703.0" dy="18.9">测</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_4" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Assemble Observation Tensor
+将机器人自身状态、行人列表、传感器数据和子目标点对齐到机器人局部坐标系，拼接/编码为统一观测张量o_t。CrowdNav拼接joint state s_t^jn=[s_t,w_t]，DRL-VO拼接三通道80×80网格o_t=[l_t;P_t;g_t]。输入：机器人状态+行人列表+sensor数据+子目标点。输出：观测张量o_t（统一格式）。约束：所有数据必须在机器人局部坐标系表示（DRL-VO论文明确这是sim-to-real关键设计）；数值归一化到合理范围。适用场景：DRL策略网络输入层的前置组装。
+CAP_ec536d11</title>
+  <rect x="854.0" y="2168.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="969.0" y="2195.6" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="969.0" dy="0">DRL导航激光-历史-目标多模态观</tspan><tspan x="969.0" dy="18.9">测</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Extract Features
+通过CNN或MLP从观测张量中提取高级特征。SARL使用MLP计算人-人、人-机器人pairwise features；DRL-VO使用CNN主干从80×80三通道网格提取空间特征；GA3C-CADRL使用MLP编码单个行人状态。输入：观测张量o_t。输出：高级特征向量/特征图。约束：特征维度典型64-256；CNN特征提取在GPU上&lt;5ms。适用场景：所有DRL导航策略的特征提取环节。
+CAP_7e78cefd / CAP_ec536d11</title>
+  <rect x="56.0" y="2352.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="2384.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">注意力机制人群-机器人交互建模</tspan></text>
+  <text x="171.0" y="2418.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="171.0" dy="0">注意力机制人群-机器人交互建模 +1</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_2a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>判断：场景中是否有行人
+判断：当前观测中是否检测到行人。
+CAP_7e78cefd</title>
+  <polygon points="402.0,2340.0 482.0,2390.0 402.0,2440.0 322.0,2390.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="402.0" y="2376.2" font-size="13" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="402.0" dy="0">判断：场景中是</tspan><tspan x="402.0" dy="17.6">否有行人</tspan></text>
+  <text x="402.0" y="2405.0" font-size="10" fill="#6E7796" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="402.0" dy="0">注意力机制人…</tspan></text>
+  <rect x="380.0" y="2330.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="402.0" y="2338.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="402.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Model Crowd-Robot Interactions
+条件：有行人时执行。通过Self-Attention（SARL）、LSTM（GA3C-CADRL）、CNN空间编码（DRL-VO）或GNN（MultiSoc）建模人-机器人（HR）和人-人（HH）交互关系。SARL的self-attention pooling计算每个行人对机器人决策的重要性权重；GA3C-CADRL用LSTM顺序编码变长行人输入；DRL-VO的CNN网格隐式编码空间交互。输入：高级特征。输出：交互编码（attention权重/LSTM隐藏状态/图嵌入）。约束：SARL的attention复杂度O(N log N)优于CADRL的O(N²)；LSTM隐藏维度典型64-128。适用场景：多行人环境中的社交交互建模，是DRL proxemic导航区别于普通避障DRL的核心环节。
+CAP_7e78cefd / CAP_ec536d11</title>
+  <rect x="518.0" y="2358.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="618.0" y="2376.2" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="618.0" dy="0">注意力机制人群-机器人</tspan><tspan x="618.0" dy="17.6">交互建模</tspan></text>
+  <rect x="524.0" y="2362.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="541.0" y="2373.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="541.0" dy="0">分支</tspan></text>
+  <text x="618.0" y="2412.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="618.0" dy="0">注意力机制人群-机器人交互建模 +1</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_3" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Select Action
+根据交互建模结果组装动作特征向量，经策略网络输出层产生原始动作a_t。训练模式从策略分布采样（加入高斯噪声保证探索）；部署模式取分布均值作为确定性动作输出。输入：交互特征向量。输出：原始线速度v和角速度ω（单位：m/s, rad/s）。约束：动作范围v∈[0,1.0]m/s, ω∈[-1.0,1.0]rad/s；策略前向推理延迟&lt;10ms/步（GPU）；部署时禁用dropout保持确定性。
+CAP_04742b2b</title>
+  <rect x="754.0" y="2358.0" width="200.0" height="64.0" rx="6" fill="#0E2019" stroke="#4FC08D" stroke-width="2.2"/>
+  <text x="854.0" y="2389.0" font-size="13" fill="#4FC08D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="854.0" dy="0">深度强化学习近距导航</tspan></text>
+  <rect x="760.0" y="2362.0" width="34.0" height="20.0" rx="10" fill="#4FC08D44" stroke="#4FC08D" stroke-width="1"/>
+  <text x="777.0" y="2373.0" font-size="10" fill="#4FC08D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="777.0" dy="0">合并</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Clip Action to Kinematic Limits
+将网络输出的原始动作裁剪到机器人运动学可行范围：线速度裁剪到[v_min,v_max]（典型0-1.0m/s），角速度裁剪到[-ω_max,ω_max]（典型±1.0rad/s），加速度限制通过a_max约束。输入：原始动作a_t。输出：裁剪后动作(v_clipped,ω_clipped)。约束：神经网络输出不受物理约束，必须限幅；限幅后动作需满足非完整运动学约束（差速机器人不能侧向移动）。适用场景：所有DRL导航策略的动作后处理。
+CAP_04742b2b</title>
+  <rect x="56.0" y="2548.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="2585.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">深度强化学习近距导航</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_2a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>判断：是否启用安全防护层
+判断：是否启用ORCA碰撞检查或紧急制动策略作为DRL输出的安全兜底层。
+CAP_04742b2b</title>
+  <polygon points="402.0,2536.0 482.0,2586.0 402.0,2636.0 322.0,2586.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="402.0" y="2572.2" font-size="13" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="402.0" dy="0">判断：是否启用</tspan><tspan x="402.0" dy="17.6">安全防护层</tspan></text>
+  <text x="402.0" y="2601.0" font-size="10" fill="#6E7796" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="402.0" dy="0">深度强化学习…</tspan></text>
+  <rect x="380.0" y="2526.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="402.0" y="2534.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="402.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Apply Safety Fallback
+条件：启用安全防护层时执行。检查裁剪后动作是否将导致（即将）碰撞，若是则切换为ORCA可行速度或触发紧急制动（v=0,ω=0）。DRL-VO不使用显式ORCA层（VO信息编码在奖励中），部分ROS实现添加emergency stop。输入：(v_clipped,ω_clipped)+障碍物/行人状态。输出：安全动作(v_safe,ω_safe)。约束：安全层以DRL输出为主，仅在碰撞危险时覆盖；紧急制动反应时间&lt;100ms。适用场景：安全性要求高的真机部署场景弥补DRL策略缺乏形式化安全保证的短板。
+CAP_04742b2b</title>
+  <rect x="518.0" y="2554.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="618.0" y="2585.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="618.0" dy="0">深度强化学习近距导航</tspan></text>
+  <rect x="524.0" y="2558.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="541.0" y="2569.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="541.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_3" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Publish Velocity Commands
+将最终速度指令发布为geometry_msgs/Twist到/cmd_vel话题驱动底盘执行。CrowdNav中Step环境直接使用v_t=a_t（瞬间速度假设），ROS部署通过ROS bridge node发布。输入：最终速度指令。输出：geometry_msgs/Twist→/cmd_vel。约束：发布频率与推理频率一致（4-10Hz，CrowdNav默认4Hz time_step=0.25s）。适用场景：DRL导航策略的最终动作输出环节。
+CAP_04742b2b</title>
+  <rect x="754.0" y="2554.0" width="200.0" height="64.0" rx="6" fill="#0E2019" stroke="#4FC08D" stroke-width="2.2"/>
+  <text x="854.0" y="2585.0" font-size="13" fill="#4FC08D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="854.0" dy="0">深度强化学习近距导航</tspan></text>
+  <rect x="760.0" y="2558.0" width="34.0" height="20.0" rx="10" fill="#4FC08D44" stroke="#4FC08D" stroke-width="1"/>
+  <text x="777.0" y="2569.0" font-size="10" fill="#4FC08D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="777.0" dy="0">合并</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_1a" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>判断：是否到达目标
+判断：执行动作后机器人是否到达导航目标位置。
+CAP_8caf4d81</title>
+  <polygon points="136.0,2732.0 216.0,2782.0 136.0,2832.0 56.0,2782.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="136.0" y="2768.2" font-size="13" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="136.0" dy="0">判断：是否到达</tspan><tspan x="136.0" dy="17.6">目标</tspan></text>
+  <text x="136.0" y="2797.0" font-size="10" fill="#6E7796" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="136.0" dy="0">DRL导…</tspan></text>
+  <rect x="114.0" y="2722.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="136.0" y="2730.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="136.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_1b" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>判断：是否发生碰撞
+判断：执行动作后是否与行人或障碍物发生碰撞。
+CAP_8caf4d81 / CAP_199d51f0</title>
+  <polygon points="332.0,2732.0 412.0,2782.0 332.0,2832.0 252.0,2782.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="332.0" y="2768.2" font-size="13" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="332.0" dy="0">判断：是否发生</tspan><tspan x="332.0" dy="17.6">碰撞</tspan></text>
+  <text x="332.0" y="2797.0" font-size="10" fill="#6E7796" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="332.0" dy="0">DRL导…</tspan></text>
+  <rect x="310.0" y="2722.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="332.0" y="2730.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="332.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_1c" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>判断：是否侵入个人空间
+未碰撞且未到达目标时，计算机器人与最近行人的距离d_min，与discomfort_dist=0.2m阈值比较，施加个人空间侵入惩罚奖励-0.1+d_min/2（距离越近惩罚越大）；d_min≥discomfort_dist时奖励为0。奖励值写入当前transition记录。输入：当前观测o_t+动作a_t+新观测o_{t+1}。输出：标量奖励r_t∈{(-0.1,0]}。约束：discomfort_dist默认0.2m（可调至0.3m高密度场景）；奖励函数在d_min=0处与碰撞奖励-0.25平滑衔接。
+CAP_8caf4d81</title>
+  <rect x="448.0" y="2750.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="548.0" y="2777.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="548.0" dy="0">判断：是否侵入个人空间</tspan></text>
+  <rect x="454.0" y="2754.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="471.0" y="2765.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="471.0" dy="0">分支</tspan></text>
+  <text x="548.0" y="2804.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="548.0" dy="0">DRL导航proxemic奖励塑形</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Compute Proxemic Reward
+根据状态判断结果赋值分段奖励：到达目标+1（或+10），碰撞-0.25（或-5.0），侵入个人区（0≤d_t&lt;0.2m）线性惩罚-0.1+d_t/2（距离越近惩罚越大），VO锥内额外惩罚（DRL-VO），其他时间步0。奖励函数是proxemic约束在DRL中的唯一编码点——没有discomfort_dist惩罚项策略不会主动保持社交距离。输入：新状态s_{t+1}+最小行人距离d_t。输出：奖励值r_t+done标志。约束：discomfort_dist=0.2m对应Hall个人区内圈边界，高密度场景可调至0.3m；CrowdNav默认success_reward=10.0/collision_penalty=-5.0/discomfort_penalty_factor=-10.0；SARL论文分段奖励collision:-0.25/discomfort:-0.1+d/2/goal:+1。适用场景：DRL社交导航策略训练的奖励信号计算。
+CAP_8caf4d81 / CAP_199d51f0</title>
+  <rect x="684.0" y="2750.0" width="200.0" height="64.0" rx="6" fill="#0E2019" stroke="#4FC08D" stroke-width="2.2"/>
+  <text x="784.0" y="2768.2" font-size="13" fill="#4FC08D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="784.0" dy="0">DRL导航proxemic奖励</tspan><tspan x="784.0" dy="17.6">塑形</tspan></text>
+  <rect x="690.0" y="2754.0" width="34.0" height="20.0" rx="10" fill="#4FC08D44" stroke="#4FC08D" stroke-width="1"/>
+  <text x="707.0" y="2765.0" font-size="10" fill="#4FC08D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="707.0" dy="0">合并</tspan></text>
+  <text x="784.0" y="2804.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="784.0" dy="0">DRL导航proxemic奖励塑形 +1</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Store Experience in Replay Buffer
+将当前时间步的transition (o_t, a_t, r_t, o_{t+1}, done)存入经验回放池E。CrowdNav回放池容量100,000步，FIFO溢出淘汰。输入：transition元组。输出：更新后的回放池。约束：容量100,000步（CrowdNav默认）；训练前需收集足够warm-up经验（IL阶段或随机策略）。适用场景：off-policy DRL算法（DQN/Deep V-learning/PPO）的经验存储。
+CAP_04742b2b</title>
+  <rect x="920.0" y="2744.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="1035.0" y="2781.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="1035.0" dy="0">深度强化学习近距导航</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_3" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Update Policy Network
+从经验回放池采样mini-batch（典型100样本），计算TD-error或PPO clipped surrogate loss，执行梯度下降（Adam优化器）更新策略网络参数θ。SARL使用Deep V-learning（TD target+target network），DRL-VO使用PPO actor-critic梯度更新。训练通常需50万步交互经验（普通GPU约1-3天）。输入：mini-batch经验。输出：更新后的网络参数θ。约束：学习率RL阶段0.001（IL warm start 0.01）；ε-greedy从0.5线性衰减到0.1；target network更新频率C=1000步。适用场景：DRL策略训练的参数优化环节；部署模式不执行。
+CAP_04742b2b / CAP_ec536d11 / CAP_ec536d11</title>
+  <rect x="1186.0" y="2744.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="1301.0" y="2776.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="1301.0" dy="0">深度强化学习近距导航</tspan></text>
+  <text x="1301.0" y="2810.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="1301.0" dy="0">深度强化学习近距导航 +2</tspan></text>
+  </g>
+</svg>

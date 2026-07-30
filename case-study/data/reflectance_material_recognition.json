@@ -1,0 +1,1448 @@
+{
+ "topic": {
+  "keyword": "reflectance_material_recognition",
+  "en": "Reflectance Material Recognition",
+  "zh": "反射率材质识别",
+  "domain": "PERCEPTION",
+  "description": "利用表面反射特性区分材质类型，属于材料识别的技术子方向。通过偏振、光度立体、BRDF、高光谱、ToF/LiDAR强度等多个物理信号维度提取反射率特征，实现材质分类与识别。输入：传感器原始数据（图像/点云/光谱）。输出：材质类别标签+置信度+特征向量。约束：需镜面反射分量在视场内（偏振/BRDF链）；需主动照明（光度立体/ToF链）。适用场景：工业分拣、自动驾驶环境感知、机器人抓取策略选择、文物鉴定。不处理：材质属性估计（归material_property_estimation兄弟主题）、多模态融合（归multi_modal_material_recognition兄弟主题）、触觉材质识别（归tactile_material_recognition兄弟主题）。"
+ },
+ "chains": [
+  {
+   "name": "polarization_fresnel_material",
+   "steps": [
+    {
+     "id": "s1",
+     "name": "Polarization Image Acquisition",
+     "description": "用DoFP分焦平面偏振相机（LUCID TRI050S / FLIR Blackfly S Pol，Sony IMX250MZR 2×2微偏振阵列）或旋转偏振片+单色相机方案，单次曝光或4帧采集0°/45°/90°/135°四方向偏振强度图。输出4×H×W强度数据。约束：相机需固定、镜面反射分量需在视场内。",
+     "caps": [
+      "Polarization Capture"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2",
+     "name": "Stokes Compute",
+     "description": "由4方向偏振强度I_0, I_45, I_90, I_135计算Stokes参量：S_0 = I_0 + I_90（总强度）、S_1 = I_0 - I_90（0°/90°偏振差）、S_2 = I_45 - I_135（45°/135°偏振差）。线性偏振假设下S_3不计算（DoFP相机无法测圆偏振）。",
+     "caps": [
+      "Stokes Analysis"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s3",
+     "name": "DoP AoP Derive",
+     "description": "计算DoP（Degree of Polarization）= sqrt(S_1^2 + S_2^2)/S_0，取值[0,1]，介质镜面反射DoP通常>0.3，金属<0.1；AoP（Angle of Polarization）= 0.5*arctan2(S_2, S_1)，取值[0,π)，反映偏振椭圆主轴方向。Wolff 1990给出介质/金属阈值边界。",
+     "caps": [
+      "DoP AoP Derive"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s4",
+     "name": "Fresnel Ratio Estimate",
+     "description": "估计Fresnel反射率比ρ = R_s/R_p。介质（实折射率）ρ > 1；金属（复折射率）ρ ≈ 1。Wolff 1990 PAMI第III节给出完整推导。约束：需入射角θ_i先验（来自法线估计）或来自RMCW相干接收的s/p强度直读。",
+     "caps": [
+      "Fresnel Ratio Estimation"
+     ],
+     "next": [
+      "s4_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s4_1",
+     "name": "Incident Angle Prior",
+     "description": "判断：是否具备入射角先验或镜面法线估计",
+     "caps": [
+      "Fresnel Ratio Estimation"
+     ],
+     "next": [
+      "s4_1a",
+      "s4_1b"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s4_1a",
+     "name": "Fresnel Formula Compute",
+     "description": "条件：具备入射角先验→直接用Fresnel公式计算ρ。基于Fresnel公式R_s = |(n1*cosθi - n2*cosθt)/(n1*cosθi + n2*cosθt)|^2, R_p = |(n1*cosθt - n2*cosθi)/(n1*cosθt + n2*cosθi)|^2，估计反射率比ρ = R_s/R_p。",
+     "caps": [
+      "Fresnel Ratio Estimation"
+     ],
+     "next": [
+      "s5"
+     ],
+     "condition": "has_incident_angle_prior == true",
+     "is_merge": false
+    },
+    {
+     "id": "s4_1b",
+     "name": "RMCW Coherent Rx Ratio",
+     "description": "条件：不具备入射角先验→走RMCW相干接收通道读s/p比。RMCW偏振分集相干接收器单shot同时采集s/p偏振分量强度，直接计算ρ = I_s / I_p，无需入射角先验。",
+     "caps": [
+      "Fresnel Ratio Estimation"
+     ],
+     "next": [
+      "s5"
+     ],
+     "condition": "has_incident_angle_prior == false AND has_coherent_rx == true",
+     "is_merge": false
+    },
+    {
+     "id": "s5",
+     "name": "Material Classify",
+     "description": "合并：两路Fresnel比估计汇合后进入分类。基于(DoP, AoP, ρ)三元组+可选RGB特征，分类器输出材质类别+置信度。Wolff 1990用阈值法（二元金属/介质）；Baraja 2024用随机森林+RMCW强度联合特征，4类85.4%准确率；现代实现可用sklearn SVM或PyTorch MLP/CNN。",
+     "caps": [
+      "Polarization Material Classify"
+     ],
+     "next": [
+      "s5_1"
+     ],
+     "condition": null,
+     "is_merge": true
+    },
+    {
+     "id": "s5_1",
+     "name": "DoP Threshold Judge",
+     "description": "判断：DoP是否高于介质判别阈值（如0.3）",
+     "caps": [
+      "Polarization Material Classify"
+     ],
+     "next": [
+      "s5_1a",
+      "s5_1b"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s5_1a",
+     "name": "Dielectric Classify",
+     "description": "条件：DoP高→介质类（塑料/玻璃/水）。介质镜面反射DoP通常>0.3，结合Fresnel比ρ与RGB特征进一步细分类别（塑料/玻璃/陶瓷/水等）。",
+     "caps": [
+      "Polarization Material Classify"
+     ],
+     "next": [
+      "s6"
+     ],
+     "condition": "dop > 0.3",
+     "is_merge": false
+    },
+    {
+     "id": "s5_1b",
+     "name": "Metal Subclassify",
+     "description": "条件：DoP低→金属类，需进一步用ρ与RGB细分金属子类。金属DoP通常<0.1（复折射率虚部主导），结合Fresnel比ρ≈1与颜色/光谱特征细分铝/铜/钢/涂层金属等。",
+     "caps": [
+      "Polarization Material Classify"
+     ],
+     "next": [
+      "s6"
+     ],
+     "condition": "dop <= 0.3",
+     "is_merge": false
+    },
+    {
+     "id": "s6",
+     "name": "Result Emit",
+     "description": "合并：介质与金属两条分类分支汇合。输出材质类别+置信度+偏振特征向量到下游模块（分拣/抓取/导航）。ROS2实现：发布到~/material_class话题（自定义msg含string class, float32 confidence, float32[3] pol_feature）。工业总线实现：Profinet/EtherCAT字节映射。",
+     "caps": [
+      "Material Label Emit"
+     ],
+     "next": [],
+     "condition": null,
+     "is_merge": true
+    }
+   ]
+  },
+  {
+   "name": "photometric_stereo_material",
+   "steps": [
+    {
+     "id": "s1",
+     "name": "Multi-light Image Capture",
+     "description": "固定相机+N方向LED光源阵列，逐次点亮不同方向光源拍摄图像。典型配置：4-8个LED半球分布；工业面阵相机。输入：触发信号+光源控制。输出：N张图像+对应光源方向向量。",
+     "caps": [
+      "Photometric Stereo Capture"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2",
+     "name": "Normal Albedo Solve",
+     "description": "基于Lambertian假设最小二乘光度立体求解法线与反照率。进阶：阴影mask、RANSAC非Lambertian剔除。输入：N张图像+光源方向。输出：法线图+反照率图。性能：5MP图像N=8约<100ms。",
+     "caps": [
+      "Normal Albedo Estimate"
+     ],
+     "next": [
+      "s2_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2_1",
+     "name": "BRDF Model Select",
+     "description": "判断：是否使用非Lambertian BRDF模型",
+     "caps": [
+      "Normal Albedo Estimate"
+     ],
+     "next": [
+      "s2_1a",
+      "s2_1b"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2_1a",
+     "name": "Lambertian LSQR",
+     "description": "条件：Lambertian假设->最小二乘直接求解法线与反照率。快速且对漫反射材质准确。",
+     "caps": [
+      "Normal Albedo Estimate"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": "brdf_model == lambertian",
+     "is_merge": false
+    },
+    {
+     "id": "s2_1b",
+     "name": "Non-Lambertian RANSAC",
+     "description": "条件：非Lambertian->RANSAC迭代+Oren-Nayar/Torrance-Sparrow模型，剔除镜面outlier后拟合。精度更高但慢。",
+     "caps": [
+      "Normal Albedo Estimate"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": "brdf_model == non_lambertian",
+     "is_merge": false
+    },
+    {
+     "id": "s3",
+     "name": "Material Classify PS",
+     "description": "合并：两种求解方式汇合后进入分类。基于反照率直方图+法线分布+镜面指数等特征，SVM/Random Forest输出材质类别+置信度。Higo 2007对10类>90%准确率。性能：SVM推理单区域<1ms。",
+     "caps": [
+      "PS Material Classify"
+     ],
+     "next": [
+      "s3_1"
+     ],
+     "condition": null,
+     "is_merge": true
+    },
+    {
+     "id": "s3_1",
+     "name": "Specular Level Check",
+     "description": "判断：表面镜面反射强度（非Lambertian残差）是否高于阈值",
+     "caps": [
+      "PS Material Classify"
+     ],
+     "next": [
+      "s3_1a",
+      "s3_1b"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s3_1a",
+     "name": "Diffuse Dominant Classify",
+     "description": "条件：漫反射主导->用反照率+法线曲率特征分类（织物/石材/纸张等）。",
+     "caps": [
+      "PS Material Classify"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": "specular_level < threshold",
+     "is_merge": false
+    },
+    {
+     "id": "s3_1b",
+     "name": "Specular BRDF Classify",
+     "description": "条件：镜面主导->用BRDF参数（粗糙度/镜面强度）+反照率分类（金属/塑料漆面/玻璃等）。",
+     "caps": [
+      "PS Material Classify"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": "specular_level >= threshold",
+     "is_merge": false
+    },
+    {
+     "id": "s4",
+     "name": "Result Emit PS",
+     "description": "合并：两条分类分支汇合。输出材质类别+置信度+法线/反照率特征到下游模块。",
+     "caps": [
+      "Material Label Emit"
+     ],
+     "next": [],
+     "condition": null,
+     "is_merge": true
+    }
+   ]
+  },
+  {
+   "name": "brdf_svbrdf_clustering",
+   "steps": [
+    {
+     "id": "s1",
+     "name": "BRDF Data Acquisition",
+     "description": "采集BRDF数据：1）实验室测量仪逐角度扫描；2）多视角+多光照图像反演。输入：待测样本。输出：BRDF采样数据。约束：测量仪慢且贵；图像估计精度较低。",
+     "caps": [
+      "BRDF Acquisition"
+     ],
+     "next": [
+      "s1_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s1_1",
+     "name": "Acquisition Method",
+     "description": "判断：BRDF数据采集方式",
+     "caps": [
+      "BRDF Acquisition"
+     ],
+     "next": [
+      "s1_1a",
+      "s1_1b"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s1_1a",
+     "name": "Gonioreflectometer Scan",
+     "description": "条件：实验室测量仪->高精度逐角度扫描，获取密集BRDF采样。精度高但慢（小时级）。",
+     "caps": [
+      "BRDF Acquisition"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": "acquisition == gonioreflectometer",
+     "is_merge": false
+    },
+    {
+     "id": "s1_1b",
+     "name": "Image-based Inversion",
+     "description": "条件：图像估计->多视角+多光照图像反演BRDF参数。快但精度较低。",
+     "caps": [
+      "BRDF Acquisition"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": "acquisition == image_based",
+     "is_merge": false
+    },
+    {
+     "id": "s2",
+     "name": "BRDF Feature Extraction",
+     "description": "合并：两种采集方式汇合后提取特征。从BRDF数据提取特征向量：参数化模型拟合参数、统计特征、PCA/自编码器降维。输入：BRDF采样数据。输出：BRDF特征向量。性能：PCA投影毫秒级。",
+     "caps": [
+      "BRDF Feature Extraction"
+     ],
+     "next": [
+      "s2_1"
+     ],
+     "condition": null,
+     "is_merge": true
+    },
+    {
+     "id": "s2_1",
+     "name": "Feature Type",
+     "description": "判断：特征提取方法",
+     "caps": [
+      "BRDF Feature Extraction"
+     ],
+     "next": [
+      "s2_1a",
+      "s2_1b",
+      "s2_1c"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2_1a",
+     "name": "Parametric Model Fit",
+     "description": "条件：参数化模型->拟合Cook-Torrance/Oren-Nayar/Ward模型参数作为特征。物理可解释。",
+     "caps": [
+      "BRDF Feature Extraction"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": "feature_type == parametric",
+     "is_merge": false
+    },
+    {
+     "id": "s2_1b",
+     "name": "Statistical Features",
+     "description": "条件：统计特征->反射率直方图、镜面峰宽、albedo等统计量。简单快速。",
+     "caps": [
+      "BRDF Feature Extraction"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": "feature_type == statistical",
+     "is_merge": false
+    },
+    {
+     "id": "s2_1c",
+     "name": "Dimensionality Reduction",
+     "description": "条件：降维->PCA/自编码器将高维BRDF压缩为低维embedding。信息保留多。",
+     "caps": [
+      "BRDF Feature Extraction"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": "feature_type == dim_reduction",
+     "is_merge": false
+    },
+    {
+     "id": "s3",
+     "name": "BRDF Classification",
+     "description": "合并：三种特征汇合后进入分类。基于BRDF特征向量做分类（SVM/RF）、聚类（K-Means）或最近邻检索（KNN）。输入：BRDF特征向量。输出：材质类别+置信度。性能：KNN检索<1ms/样本。",
+     "caps": [
+      "BRDF Clustering Classify"
+     ],
+     "next": [
+      "s3_1"
+     ],
+     "condition": null,
+     "is_merge": true
+    },
+    {
+     "id": "s3_1",
+     "name": "Task Type",
+     "description": "判断：任务类型（监督分类/无监督聚类/检索）",
+     "caps": [
+      "BRDF Clustering Classify"
+     ],
+     "next": [
+      "s3_1a",
+      "s3_1b",
+      "s3_1c"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s3_1a",
+     "name": "Supervised Classification",
+     "description": "条件：监督分类->SVM/Random Forest对已知类别分类。需标注训练集。",
+     "caps": [
+      "BRDF Clustering Classify"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": "task == supervised",
+     "is_merge": false
+    },
+    {
+     "id": "s3_1b",
+     "name": "Unsupervised Clustering",
+     "description": "条件：无监督聚类->K-Means/层次聚类发现材质群组。无需标注。",
+     "caps": [
+      "BRDF Clustering Classify"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": "task == unsupervised",
+     "is_merge": false
+    },
+    {
+     "id": "s3_1c",
+     "name": "Nearest Neighbor Retrieval",
+     "description": "条件：最近邻检索->在BRDF数据库中KNN查询匹配材质。需参考数据库。",
+     "caps": [
+      "BRDF Clustering Classify"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": "task == retrieval",
+     "is_merge": false
+    },
+    {
+     "id": "s4",
+     "name": "Result Emit BRDF",
+     "description": "合并：三条任务分支汇合。输出材质类别+置信度+BRDF特征向量到下游模块。",
+     "caps": [
+      "Material Label Emit"
+     ],
+     "next": [],
+     "condition": null,
+     "is_merge": true
+    }
+   ]
+  },
+  {
+   "name": "hyperspectral_spectral_signature",
+   "steps": [
+    {
+     "id": "s1",
+     "name": "Hyperspectral Image Capture",
+     "description": "高光谱成像采集：推扫式（线阵+光栅逐行扫描）或快照式（LCTF+面阵相机电控调谐）。输入：触发+扫描控制。输出：HxWxB高光谱数据立方。约束：推扫式需运动平台；快照式空间/光谱分辨率trade-off。",
+     "caps": [
+      "Hyperspectral Capture"
+     ],
+     "next": [
+      "s1_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s1_1",
+     "name": "Capture Mode",
+     "description": "判断：高光谱采集模式",
+     "caps": [
+      "Hyperspectral Capture"
+     ],
+     "next": [
+      "s1_1a",
+      "s1_1b"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s1_1a",
+     "name": "Pushbroom Scan",
+     "description": "条件：推扫式->线阵+光栅，运动平台逐行扫描。光谱分辨率高，需运动平台。",
+     "caps": [
+      "Hyperspectral Capture"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": "capture_mode == pushbroom",
+     "is_merge": false
+    },
+    {
+     "id": "s1_1b",
+     "name": "Snapshot LCTF",
+     "description": "条件：快照式->LCTF电控调谐+面阵相机，逐波段拍摄。灵活但速度慢（每个波段一次曝光）。",
+     "caps": [
+      "Hyperspectral Capture"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": "capture_mode == snapshot_lctf",
+     "is_merge": false
+    },
+    {
+     "id": "s2",
+     "name": "Spectral Feature Extraction",
+     "description": "合并：两种采集模式汇合后提取特征。从高光谱数据立方提取光谱特征：反射率曲线、光谱指数、PCA/MNF降维、包络线去除。输入：HxWxB数据立方。输出：HxWxF特征图。性能：PCA降维512x512x200约<1s。",
+     "caps": [
+      "Spectral Signature Extract"
+     ],
+     "next": [
+      "s2_1"
+     ],
+     "condition": null,
+     "is_merge": true
+    },
+    {
+     "id": "s2_1",
+     "name": "Feature Method",
+     "description": "判断：特征提取方法",
+     "caps": [
+      "Spectral Signature Extract"
+     ],
+     "next": [
+      "s2_1a",
+      "s2_1b",
+      "s2_1c"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2_1a",
+     "name": "Spectral Indices",
+     "description": "条件：光谱指数->NDVI/红边位置等物理指数。可解释性强，特征维度低。",
+     "caps": [
+      "Spectral Signature Extract"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": "feature_method == indices",
+     "is_merge": false
+    },
+    {
+     "id": "s2_1b",
+     "name": "DR PCA MNF",
+     "description": "条件：降维->PCA/MNF将数百波段压缩到低维。信息保留多。",
+     "caps": [
+      "Spectral Signature Extract"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": "feature_method == dim_reduction",
+     "is_merge": false
+    },
+    {
+     "id": "s2_1c",
+     "name": "Full Spectrum",
+     "description": "条件：全光谱->完整反射率曲线作为特征。信息最全但维度高。",
+     "caps": [
+      "Spectral Signature Extract"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": "feature_method == full_spectrum",
+     "is_merge": false
+    },
+    {
+     "id": "s3",
+     "name": "Spectral Material Classification",
+     "description": "合并：三种特征汇合后分类。基于光谱特征分类：SVM/RF传统方法、1D-CNN深度学习、SAM光谱角匹配。输入：光谱特征向量。输出：材质类别+置信度。性能：SVM像素级<1ms。",
+     "caps": [
+      "Spectral Material Classify"
+     ],
+     "next": [
+      "s3_1"
+     ],
+     "condition": null,
+     "is_merge": true
+    },
+    {
+     "id": "s3_1",
+     "name": "Classification Method",
+     "description": "判断：分类方法",
+     "caps": [
+      "Spectral Material Classify"
+     ],
+     "next": [
+      "s3_1a",
+      "s3_1b",
+      "s3_1c"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s3_1a",
+     "name": "ML Classifier",
+     "description": "条件：传统机器学习->SVM/Random Forest/MLP。需标注样本。",
+     "caps": [
+      "Spectral Material Classify"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": "classifier == ml",
+     "is_merge": false
+    },
+    {
+     "id": "s3_1b",
+     "name": "Deep Learning 1D",
+     "description": "条件：深度学习->1D-CNN/Transformer直接处理光谱曲线。大数据集性能优。",
+     "caps": [
+      "Spectral Material Classify"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": "classifier == deep_learning",
+     "is_merge": false
+    },
+    {
+     "id": "s3_1c",
+     "name": "Spectral Matching",
+     "description": "条件：光谱匹配->SAM/MF与参考光谱库比对。无需训练，需参考库。",
+     "caps": [
+      "Spectral Material Classify"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": "classifier == matching",
+     "is_merge": false
+    },
+    {
+     "id": "s4",
+     "name": "Result Emit HS",
+     "description": "合并：三条分类分支汇合。输出材质类别+置信度+光谱特征到下游模块。",
+     "caps": [
+      "Material Label Emit"
+     ],
+     "next": [],
+     "condition": null,
+     "is_merge": true
+    }
+   ]
+  },
+  {
+   "name": "tof_lidar_intensity",
+   "steps": [
+    {
+     "id": "s1",
+     "name": "ToF LiDAR Intensity Capture",
+     "description": "ToF相机或LiDAR采集深度+强度数据。iToF：AMCW相位差测深度+强度；FMCW：相干接收测深度+速度+强度。输入：触发。输出：深度图/点云+强度。约束：强度受距离/角度影响。",
+     "caps": [
+      "ToF LiDAR Intensity Capture"
+     ],
+     "next": [
+      "s1_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s1_1",
+     "name": "Sensor Type",
+     "description": "判断：传感器类型",
+     "caps": [
+      "ToF LiDAR Intensity Capture"
+     ],
+     "next": [
+      "s1_1a",
+      "s1_1b"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s1_1a",
+     "name": "iToF Camera",
+     "description": "条件：iToF相机->AMCW调制，相位差测深度+IR强度。低成本，室内适用。",
+     "caps": [
+      "ToF LiDAR Intensity Capture"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": "sensor_type == itof",
+     "is_merge": false
+    },
+    {
+     "id": "s1_1b",
+     "name": "FMCW LiDAR",
+     "description": "条件：FMCW LiDAR->相干接收，深度+速度+强度。远距离，抗干扰强。",
+     "caps": [
+      "ToF LiDAR Intensity Capture"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": "sensor_type == fmcw",
+     "is_merge": false
+    },
+    {
+     "id": "s2",
+     "name": "Intensity Feature Extraction",
+     "description": "合并：两种传感器汇合后提取特征。从强度数据提取特征：距离归一化、角度归一化、直方图统计、时域波形特征、多波长比。输入：强度+深度+可选法线。输出：材质特征向量。性能：统计+归一化<10ms/帧。",
+     "caps": [
+      "Intensity Feature Extraction"
+     ],
+     "next": [
+      "s2_1"
+     ],
+     "condition": null,
+     "is_merge": true
+    },
+    {
+     "id": "s2_1",
+     "name": "Feature Type",
+     "description": "判断：特征类型",
+     "caps": [
+      "Intensity Feature Extraction"
+     ],
+     "next": [
+      "s2_1a",
+      "s2_1b",
+      "s2_1c"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2_1a",
+     "name": "Statistical Features",
+     "description": "条件：统计特征->强度直方图均值/方差/分位数+距离/角度归一化。简单通用。",
+     "caps": [
+      "Intensity Feature Extraction"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": "feature_type == statistical",
+     "is_merge": false
+    },
+    {
+     "id": "s2_1b",
+     "name": "Temporal Features",
+     "description": "条件：时域特征->LiDAR脉冲波形的峰值/脉宽/上升沿/下降沿。需全波形硬件。",
+     "caps": [
+      "Intensity Feature Extraction"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": "feature_type == temporal",
+     "is_merge": false
+    },
+    {
+     "id": "s2_1c",
+     "name": "Multi-wavelength",
+     "description": "条件：多波长->不同波长反射率比。需多波长LiDAR硬件，区分度高。",
+     "caps": [
+      "Intensity Feature Extraction"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": "feature_type == multi_wavelength",
+     "is_merge": false
+    },
+    {
+     "id": "s3",
+     "name": "ToF Material Classification",
+     "description": "合并：三种特征汇合后分类。基于强度特征分类：SVM/RF/XGBoost传统方法、PointNet等点云深度学习。输入：强度特征。输出：材质类别+置信度。性能：传统ML<1ms。",
+     "caps": [
+      "ToF LiDAR Intensity Capture"
+     ],
+     "next": [
+      "s3_1"
+     ],
+     "condition": null,
+     "is_merge": true
+    },
+    {
+     "id": "s3_1",
+     "name": "Classifier Type",
+     "description": "判断：分类器类型",
+     "caps": [
+      "ToF LiDAR Intensity Capture"
+     ],
+     "next": [
+      "s3_1a",
+      "s3_1b"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s3_1a",
+     "name": "Traditional ML",
+     "description": "条件：传统ML->SVM/Random Forest/XGBoost对特征向量分类。小样本快。",
+     "caps": [
+      "ToF LiDAR Intensity Capture"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": "classifier == traditional_ml",
+     "is_merge": false
+    },
+    {
+     "id": "s3_1b",
+     "name": "Point Cloud Deep Learning",
+     "description": "条件：点云深度学习->PointNet/RandLA-Net直接处理带强度点云。大数据集性能优。",
+     "caps": [
+      "ToF LiDAR Intensity Capture"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": "classifier == point_cloud_dl",
+     "is_merge": false
+    },
+    {
+     "id": "s4",
+     "name": "Result Emit ToF",
+     "description": "合并：两条分类分支汇合。输出材质类别+置信度+强度特征到下游模块。",
+     "caps": [
+      "Material Label Emit"
+     ],
+     "next": [],
+     "condition": null,
+     "is_merge": true
+    }
+   ]
+  }
+ ],
+ "capabilities": [
+  {
+   "en": "Reflectance Material Recognition",
+   "zh": "反射率材质识别",
+   "level": "l2",
+   "description": "利用表面反射特性区分材质类型，属于材料识别的技术子方向。通过偏振、光度立体、BRDF、高光谱、ToF/LiDAR强度等多个物理信号维度提取反射率特征，实现材质分类与识别。输入：传感器原始数据（图像/点云/光谱）。输出：材质类别标签+置信度+特征向量。约束：需镜面反射分量在视场内（偏振/BRDF链）；需主动照明（光度立体/ToF链）。适用场景：工业分拣、自动驾驶环境感知、机器人抓取策略选择、文物鉴定。不处理：材质属性估计（归material_property_estimation兄弟主题）、多模态融合（归multi_modal_material_recognition兄弟主题）、触觉材质识别（归tactile_material_recognition兄弟主题）。",
+   "aliases": [
+    "Reflectance-Based Material Classification"
+   ],
+   "parent": null,
+   "children": [
+    "Polarization Capture",
+    "Photometric Stereo Capture",
+    "BRDF Acquisition",
+    "Hyperspectral Capture",
+    "ToF LiDAR Intensity Capture",
+    "Material Label Emit"
+   ],
+   "assets": []
+  },
+  {
+   "en": "Polarization Capture",
+   "zh": "偏振图像采集",
+   "level": "l3",
+   "description": "通过DoFP分焦平面偏振相机（LUCID TRI050S / FLIR Blackfly S Pol，Sony IMX250MZR 2×2微偏振阵列）或旋转偏振片+单色相机方案，单次曝光或4帧采集0°/45°/90°/135°四方向偏振强度图。输入：触发信号与照明控制。输出：4×H×W四方向偏振强度数据。约束：相机需固定；镜面反射分量需在视场内；DoFP方案空间分辨率降为1/4。适用场景：工业分拣线偏振材质检测、自动驾驶车载偏振相机、实验室材质测量。不处理：偏振三维重建（归reflective_surface_perception兄弟主题）。",
+   "aliases": [
+    "DoFP Image Capture",
+    "Polarized Image Acquisition"
+   ],
+   "parent": "Reflectance Material Recognition",
+   "children": [
+    "Stokes Analysis"
+   ],
+   "assets": [
+    "LUCID TRI050S Polarization Camera",
+    "FLIR Blackfly S Polarization",
+    "Baraja Spectrum-Scan RMCW LIDAR"
+   ]
+  },
+  {
+   "en": "Stokes Analysis",
+   "zh": "Stokes参量计算",
+   "level": "l3",
+   "description": "由4方向偏振强度I_0, I_45, I_90, I_135计算Stokes参量：S_0 = I_0 + I_90（总强度）、S_1 = I_0 - I_90（0°/90°偏振差）、S_2 = I_45 - I_135（45°/135°偏振差）。线性偏振假设下S_3不计算（DoFP相机无法测圆偏振）。输入：4×H×W四方向强度图。输出：H×W×3 Stokes参量图（S0, S1, S2）。约束：仅线性偏振分量；S3圆偏振需quarter-wave plate硬件。性能：单帧5MP图像NumPy广播计算<10ms。适用场景：偏振材质分类前置处理、偏振视觉系统标准流水线。",
+   "aliases": [
+    "Stokes Parameter Calculation"
+   ],
+   "parent": "Polarization Capture",
+   "children": [
+    "DoP AoP Derive"
+   ],
+   "assets": [
+    "polanalyser"
+   ]
+  },
+  {
+   "en": "DoP AoP Derive",
+   "zh": "偏振度/偏振角派生",
+   "level": "l3",
+   "description": "计算DoP（Degree of Polarization）= sqrt(S_1^2 + S_2^2)/S_0，取值[0,1]，介质镜面反射DoP通常>0.3，金属<0.1；AoP（Angle of Polarization）= 0.5*arctan2(S_2, S_1)，取值[0,π)，反映偏振椭圆主轴方向。Wolff 1990给出介质/金属阈值边界。输入：H×W×3 Stokes参量图。输出：DoP图（0-1浮点）、AoP图（0-π弧度）。约束：S0≈0时DoP无定义需mask；S1=S2=0时AoP无定义。性能：单帧5MP图像NumPy向量化计算<5ms。适用场景：金属/介质二元分类、偏振特征提取、表面光泽度评估。",
+   "aliases": [
+    "Degree of Polarization",
+    "Angle of Polarization"
+   ],
+   "parent": "Stokes Analysis",
+   "children": [
+    "Fresnel Ratio Estimation"
+   ],
+   "assets": [
+    "polanalyser"
+   ]
+  },
+  {
+   "en": "Fresnel Ratio Estimation",
+   "zh": "Fresnel反射率比估计",
+   "level": "l3",
+   "description": "基于Fresnel公式R_s = |(n1*cosθi - n2*cosθt)/(n1*cosθi + n2*cosθt)|^2, R_p = |(n1*cosθt - n2*cosθi)/(n1*cosθt + n2*cosθi)|^2，估计反射率比ρ = R_s/R_p。介质（实折射率）ρ > 1；金属（复折射率）ρ ≈ 1。Wolff 1990 PAMI第III节给出完整推导。输入：DoP/AoP图、入射角θ_i先验（或RMCW s/p强度）。输出：Fresnel反射率比ρ图。约束：需入射角θ_i先验（来自法线估计）或RMCW相干接收的s/p强度直读；Brewster角附近ρ对介质最敏感。适用场景：金属/介质物理判别、折射率估计、镜面材质分类。",
+   "aliases": [
+    "Fresnel Reflectance Ratio",
+    "R_s/R_p Ratio"
+   ],
+   "parent": "DoP AoP Derive",
+   "children": [
+    "Polarization Material Classify"
+   ],
+   "assets": [
+    "Baraja 2024 RMCW Polarization LIDAR",
+    "Baraja Spectrum-Scan RMCW LIDAR"
+   ]
+  },
+  {
+   "en": "Polarization Material Classify",
+   "zh": "偏振材质分类",
+   "level": "l3",
+   "description": "以(DoP, AoP, ρ)三元组（可拼接RGB特征）作为输入，分类器输出材质类别+置信度。Wolff 1990用阈值法（二元金属/介质）；Baraja 2024用随机森林+RMCW强度联合特征，4类85.4%准确率；现代实现可用sklearn SVM或PyTorch MLP/CNN。输入：(DoP, AoP, Fresnel比)特征向量+可选RGB。输出：材质类别标签+置信度[0,1]。约束：需镜面反射分量；漫反射主导表面无效。性能：SVM推理单样本<1ms；随机森林100棵树单样本<5ms。适用场景：工业分拣金属/塑料分类、自动驾驶材质感知、文物材质鉴定。",
+   "aliases": [
+    "Polarization-Based Material Classification"
+   ],
+   "parent": "Fresnel Ratio Estimation",
+   "children": [],
+   "assets": [
+    "Baraja 2024 RMCW Polarization LIDAR",
+    "scikit-learn"
+   ]
+  },
+  {
+   "en": "Photometric Stereo Capture",
+   "zh": "光度立体采集",
+   "level": "l3",
+   "description": "光度立体采集系统：固定相机+多方向可控LED光源阵列，逐次点亮不同方向光源拍摄多张图像。典型配置：4-8个LED分布在半球形支架上，覆盖不同方位角与天顶角；相机用工业面阵相机（Basler acA系列/FLIR Blackfly）。输入：触发信号+光源控制（GPIO/I2C）。输出：N张不同光照方向的图像+对应光源方向向量L_i。约束：相机与物体相对位置固定；光源方向需精确标定。适用场景：工业质检表面缺陷+材质识别、文物数字化+材质分析、实验室BRDF测量。不处理：单图像光度立体（Shape from Shading，归reflective_surface_perception兄弟主题）。",
+   "aliases": [
+    "PS Image Capture",
+    "多光源图像采集"
+   ],
+   "parent": "Reflectance Material Recognition",
+   "children": [
+    "Normal Albedo Estimate"
+   ],
+   "assets": [
+    "Basler acA2040 工业相机"
+   ]
+  },
+  {
+   "en": "Normal Albedo Estimate",
+   "zh": "法线与反照率估计",
+   "level": "l3",
+   "description": "基于Lambertian假设的最小二乘光度立体：对每个像素，已知N个光源方向L_i和对应图像强度I_i，求解表面法线n与反照率rho：I_i = rho * (L_i . n)。写成矩阵形式I = L * (rho * n)，用最小二乘求解。进阶：考虑阴影mask、非Lambertian剔除（RANSAC）、各向同性BRDF模型（如Oren-Nayar）。输入：N张不同光照图像+光源方向L_i。输出：HxWx3法线图（单位向量）+ HxW反照率图rho。约束：Lambertian假设对镜面物体不准；阴影区域结果不可靠。性能：单像素NumPy向量化最小二乘，5MP图像N=8约<100ms。适用场景：表面法线+反照率联合特征提取、材质分类前置。",
+   "aliases": [
+    "Photometric Stereo Solver",
+    "Normal Albedo from PS"
+   ],
+   "parent": "Photometric Stereo Capture",
+   "children": [
+    "PS Material Classify"
+   ],
+   "assets": [
+    "pyphotostereo"
+   ]
+  },
+  {
+   "en": "PS Material Classify",
+   "zh": "光度立体材质分类",
+   "level": "l3",
+   "description": "基于法线图+反照率图+可选BRDF参数的材质分类。特征组合：反照率直方图、法线分布（曲率/斜率直方图）、镜面指数（从非Lambertian残差估计）、微表面粗糙度。分类器：sklearn SVM/Random Forest/MLP；或CNN直接端到端。参考：Higo 2007用光度立体+SVM对10类材质分类>90%；MERL BRDF库合成数据训练。输入：法线图+反照率图+可选BRDF参数。输出：材质类别+置信度。约束：需多方向主动照明；远距离/户外难布置。性能：SVM推理单像素区域<1ms；CNN推理视模型大小而定。适用场景：工业精密件材质检测、实验室材质测量、文物表面材质分析。",
+   "aliases": [
+    "PS-Based Material Classification"
+   ],
+   "parent": "Normal Albedo Estimate",
+   "children": [],
+   "assets": [
+    "scikit-learn",
+    "MERL BRDF Database",
+    "CUReT Texture and BRDF Database"
+   ]
+  },
+  {
+   "en": "BRDF Acquisition",
+   "zh": "BRDF数据采集",
+   "level": "l3",
+   "description": "采集材料的双向反射分布函数（BRDF）数据。两种方式：1）BRDF测量仪（gonioreflectometer）：高精度实验室设备，逐角度扫描；2）多视角+多光照图像估计：用相机+LED阵列从多角度拍摄，从图像反演BRDF参数。SVBRDF（空间变化BRDF）需逐像素测量。输入：待测材料样本+扫描控制。输出：BRDF采样数据（theta_i, theta_r, phi_r -> 反射率）或参数化BRDF模型参数。约束：实验室测量仪昂贵且慢（小时级）；图像估计精度较低但快。适用场景：实验室材质数据库构建、工业材质质检、数字孪生材质采集。不处理：BSDF（含透射，归transparent_material_recognition兄弟主题）。",
+   "aliases": [
+    "BRDF Measurement",
+    "BRDF Capture"
+   ],
+   "parent": "Reflectance Material Recognition",
+   "children": [
+    "BRDF Feature Extraction"
+   ],
+   "assets": [
+    "Gonioreflectometer BRDF测量仪"
+   ]
+  },
+  {
+   "en": "BRDF Feature Extraction",
+   "zh": "BRDF特征提取",
+   "level": "l3",
+   "description": "从原始BRDF数据提取紧凑特征向量用于分类/聚类。方法：1）参数化模型拟合：Cook-Torrance、Oren-Nayar、Ward等模型参数作为特征；2）统计特征：反射率直方图、镜面峰宽度/高度、漫反射albedo；3）维度缩减：PCA、自编码器将高维BRDF向量压缩为低维embedding。输入：BRDF采样数据（高维向量）。输出：BRDF特征向量（通常10-100维）。约束：参数化模型拟合需优化，可能陷入局部最优；PCA需先验数据集。性能：参数拟合单样本秒级；PCA投影毫秒级。适用场景：BRDF数据库索引、材质分类特征工程、材质检索。",
+   "aliases": [
+    "BRDF Feature",
+    "BRDF Embedding"
+   ],
+   "parent": "BRDF Acquisition",
+   "children": [
+    "BRDF Clustering Classify"
+   ],
+   "assets": [
+    "scikit-learn",
+    "MERL BRDF Database",
+    "BRDF Playground"
+   ]
+  },
+  {
+   "en": "BRDF Clustering Classify",
+   "zh": "BRDF聚类/分类",
+   "level": "l3",
+   "description": "基于BRDF特征向量的材质聚类与分类。无监督：K-Means、谱聚类、层次聚类发现材质群组；有监督：SVM、Random Forest、KNN对已知材质类别分类。近邻检索：用BRDF特征向量在数据库中做最近邻查询实现材质识别。参考：MERL 100 BRDF数据库常用作benchmark；CUReT 61种材质常用作评估。输入：BRDF特征向量。输出：材质类别+置信度（监督）或聚类标签（无监督）。约束：需BRDF数据库作为参考；小样本难泛化。性能：KNN检索sklearn NearestNeighbors <1ms/样本；SVM分类<1ms/样本。适用场景：材质数据库检索、工业材质识别、数字孪生材质匹配。",
+   "aliases": [
+    "BRDF Classification",
+    "BRDF Clustering"
+   ],
+   "parent": "BRDF Feature Extraction",
+   "children": [],
+   "assets": [
+    "scikit-learn",
+    "MERL BRDF Database",
+    "CUReT Texture and BRDF Database"
+   ]
+  },
+  {
+   "en": "Hyperspectral Capture",
+   "zh": "高光谱图像采集",
+   "level": "l3",
+   "description": "高光谱成像采集系统：在连续波段上获取每个像素的光谱反射率曲线。两种主流方案：1）推扫式（pushbroom）：线阵+光栅，逐行扫描获空间维和光谱维；2）快照式：液晶可调谐滤光片（LCTF）或多光谱相机阵列，单次曝光获多波段。典型光谱范围：400-1000nm（VNIR）或900-2500nm（SWIR）。光谱分辨率：1-10nm。输入：触发信号+扫描控制。输出：HxWxB高光谱数据立方（B为波段数，通常数十到数百）。约束：推扫式需运动平台；快照式空间/光谱分辨率trade-off；SWIR传感器贵。适用场景：农业遥感、矿物识别、工业分选、文物鉴定、食品检测。",
+   "aliases": [
+    "HSI Capture",
+    "高光谱成像"
+   ],
+   "parent": "Reflectance Material Recognition",
+   "children": [
+    "Spectral Signature Extract"
+   ],
+   "assets": [
+    "Headwall Nano-Hyperspec 高光谱相机",
+    "LCTF液晶可调谐滤光片"
+   ]
+  },
+  {
+   "en": "Spectral Signature Extract",
+   "zh": "光谱特征提取",
+   "level": "l3",
+   "description": "从高光谱数据立方提取光谱反射率特征。方法：1）光谱反射率曲线：每个像素的完整光谱曲线作为特征；2）波段比/光谱指数：NDVI、PRI、红边位置等物理意义明确的指数；3）降维：PCA、MNF（Minimum Noise Fraction）将数百波段压缩到低维特征；4）包络线去除（continuum removal）：归一化光谱曲线突出吸收特征。输入：HxWxB高光谱数据立方。输出：HxWxF光谱特征图（F为特征维度）。约束：需白板/标准板反射率校正；大气散射需校正（户外场景）。性能：PCA降维512x512x200数据约<1s。适用场景：材质分类前置、光谱特征工程、异常检测。",
+   "aliases": [
+    "Spectral Feature",
+    "光谱特征提取"
+   ],
+   "parent": "Hyperspectral Capture",
+   "children": [
+    "Spectral Material Classify"
+   ],
+   "assets": [
+    "scikit-learn",
+    "USGS Spectral Library",
+    "pysptools"
+   ]
+  },
+  {
+   "en": "Spectral Material Classify",
+   "zh": "高光谱材质分类",
+   "level": "l3",
+   "description": "基于光谱特征的材质分类。传统方法：SVM、Random Forest、MLP对光谱特征分类；深度学习：1D-CNN、Transformer直接处理光谱曲线；子空间方法：SAM（Spectral Angle Mapper）、MF（Matched Filter）在光谱空间匹配。参考：USGS矿物光谱库、ASTER数据库、MetaMaterial光谱数据库。输入：光谱特征向量/高光谱数据立方。输出：材质类别图+置信度图。约束：需参考光谱库；光照变化影响反射率绝对值。性能：SVM像素级推理<1ms；CNN推理视模型而定。适用场景：矿物识别、农业作物分类、工业塑料分选、文物材质分析、食品检测。",
+   "aliases": [
+    "Hyperspectral Classification",
+    "光谱分类"
+   ],
+   "parent": "Spectral Signature Extract",
+   "children": [],
+   "assets": [
+    "scikit-learn",
+    "USGS Spectral Library",
+    "pysptools"
+   ]
+  },
+  {
+   "en": "ToF LiDAR Intensity Capture",
+   "zh": "ToF/LiDAR强度采集",
+   "level": "l3",
+   "description": "ToF相机或LiDAR同时采集深度与强度（回波强度）信息。两种技术：1）iToF（间接飞行时间）：AMCW（振幅调制连续波）调制光强，测相位差得深度，同时获得反射强度；2）FMCW LiDAR：调频连续波相干接收，可测深度、速度、强度。强度通道反映表面反射率（入射功率与距离平方反比归一化后）。输入：触发信号。输出：深度图/点云 + 对应强度图/强度字段。约束：强度受距离、入射角、表面粗糙度影响；需距离归一化才能用于材质识别。适用场景：自动驾驶环境感知、机器人导航+材质识别、工业3D检测、室内空间理解。",
+   "aliases": [
+    "ToF Intensity",
+    "LiDAR强度采集"
+   ],
+   "parent": "Reflectance Material Recognition",
+   "children": [
+    "Intensity Feature Extraction"
+   ],
+   "assets": [
+    "scikit-learn",
+    "Intel RealSense D435i",
+    "Livox HAP LiDAR",
+    "Velodyne HDL-64E LiDAR",
+    "XGBoost"
+   ]
+  },
+  {
+   "en": "Intensity Feature Extraction",
+   "zh": "强度特征提取",
+   "level": "l3",
+   "description": "从ToF/LiDAR强度数据提取材质相关特征。特征类型：1）强度直方图统计：均值、方差、偏度、峰度、分位数；2）距离归一化强度：按1/R^2或更精确的距离模型校正强度，消除距离影响；3）入射角归一化：用法线估计校正入射角影响（Lambertian余弦律）；4）时域特征：多帧强度时间序列的脉冲响应（LiDAR脉冲波形特征：上升沿、下降沿、峰值、脉宽）；5）多波长特征：多波长LiDAR不同波长的反射率比。输入：强度图/点云 + 深度/距离 + 可选法线。输出：材质特征向量/特征图。约束：需精确的距离与角度归一化模型；多波长需专用硬件。性能：直方图统计+归一化<10ms/帧。适用场景：LiDAR材质分类、点云语义分割辅助、工业3D检测。",
+   "aliases": [
+    "Intensity Feature",
+    "强度特征提取"
+   ],
+   "parent": "ToF LiDAR Intensity Capture",
+   "children": [
+    "ToF LiDAR Intensity Capture"
+   ],
+   "assets": [
+    "Open3D"
+   ]
+  },
+  {
+   "en": "Material Label Emit",
+   "zh": "材质标签输出",
+   "level": "l3",
+   "description": "输出材质类别+置信度+偏振特征向量到下游模块（分拣/抓取/导航）。ROS2实现：发布到~/material_class话题（自定义msg含string class, float32 confidence, float32[3] pol_feature）。工业总线实现：Profinet/EtherCAT字节映射。输入：材质类别枚举、置信度[0,1]、特征向量。输出：下游消息或总线数据。约束：ROS2需QoS reliable；工业总线需周期<100ms。性能：单条消息序列化<0.5ms。适用场景：工业分拣系统材质分选、机器人抓取力度调整、自动驾驶路面材质识别。",
+   "aliases": [
+    "Material Classification Output"
+   ],
+   "parent": "Reflectance Material Recognition",
+   "children": [],
+   "assets": []
+  }
+ ],
+ "assets": [
+  {
+   "name": "LUCID TRI050S Polarization Camera",
+   "type": "tool",
+   "source": "https://lucidvisionlabs.com/products/tri050s/",
+   "description": "LUCID出品的工业级5.1MP偏振相机，基于Sony IMX250MZR分焦平面传感器，每像素位置2×2微偏振阵列覆盖0°/45°/90°/135°，单次曝光即可获得4方向偏振图像。GigE Vision接口支持长距离传输，提供Arena SDK支持C++/Python，社区也有ROS2驱动。适用场景：工业分拣、自动驾驶、医疗成像。约束：DoFP空间分辨率降为1/4；需GigE Vision驱动安装。",
+   "usage": "from arena_api import arena\nsystem = arena.System()\ndevices = system.create_devices()\ndevice = devices[0]\ndevice.nodemap['Width'].value = 2448\ndevice.start_stream()\nbuffer = device.get_buffer()\n# buffer.pdata为DoFP原始数据，需demosaicing",
+   "implements": [
+    "Polarization Capture"
+   ]
+  },
+  {
+   "name": "FLIR Blackfly S Polarization",
+   "type": "tool",
+   "source": "https://www.flir.com/products/blackfly-s-usb3/",
+   "description": "Teledyne FLIR Blackfly S Pol系列基于Sony IMX250MZR分焦平面偏振传感器，USB3.0/GigE双接口可选，与LUCID TRI050S同源传感器。提供Spinnaker SDK与PyCapture2 Python绑定。FLIR偏振白皮书给出4方向→Stokes/DoP/AoP计算流程。适用场景：工业视觉、科研偏振成像。约束：闭源SDK；USB3版需注意带宽。",
+   "usage": "import PyCapture2 as pc\nbus = pc.BusManager()\ncam = pc.GigECamera()\ncam.connect(bus.getCameraFromIndex(0))\n# retrieve polarized buffer",
+   "implements": [
+    "Polarization Capture"
+   ]
+  },
+  {
+   "name": "polanalyser",
+   "type": "package",
+   "source": "https://github.com/elerac/polanalyser",
+   "description": "日本开发者elerac维护的偏振图像分析Python包，提供DoFP解码、Stokes参量计算、DoP/AoP派生、Müller矩阵运算、伪彩色可视化等全套算子。是社区最活跃的开源偏振分析工具，被多个学术偏振项目引用。支持PyPI安装pip install polanalyser，依赖NumPy/OpenCV。适用场景：偏振算法快速原型验证、科研偏振数据处理。约束：DoFP demosaicing对Sony IMX250MZR 2×2阵列硬编码；S3圆偏振未实现。",
+   "usage": "import polanalyser as pa\nimport cv2\n\nimg_raw = cv2.imread('dofp_image.png', -1)\nimg_0, img_45, img_90, img_135 = pa.demosaice(img_raw, pa.COLOR_PolarMono)\nstokes = pa.calcLinearStokes([img_0, img_45, img_90, img_135], [0, 45, 90, 135])\nimg_dop = pa.cvtStokesToDoP(stokes)\nimg_aop = pa.cvtStokesToAoP(stokes)",
+   "implements": [
+    "Stokes Analysis",
+    "DoP AoP Derive"
+   ]
+  },
+  {
+   "name": "Baraja 2024 RMCW Polarization LIDAR",
+   "type": "dataset",
+   "source": "https://www.mdpi.com/1424-8220/24/17/5761",
+   "description": "Baraja 2024 Sensors论文「Instantaneous Material Classification Using a Polarization-Diverse RMCW LIDAR」是已知首例车载LIDAR工业级偏振材质分类落地工作。基于Baraja Spectrum-Scan RMCW LIDAR加装硅光子偏振分集接收器，每shot同时采集s/p偏振分量。在4类材质（塑料/木材/混凝土/涂层铝）任务上达到85.4% mean accuracy，验证了偏振维度对车载材质识别的工程价值。适用场景：自动驾驶材质感知、RMCW LiDAR偏振扩展。约束：数据未单独发布为可下载包，需联系作者；硬件成本高。",
+   "usage": "论文Section 4给出RMCW + 偏振分集数据采集协议；Section 5给出4类分类评估表（85.4% mean accuracy）；数据未单独发布为可下载包，需联系作者",
+   "implements": [
+    "Fresnel Ratio Estimation",
+    "Polarization Material Classify"
+   ]
+  },
+  {
+   "name": "Baraja Spectrum-Scan RMCW LIDAR",
+   "type": "tool",
+   "source": "https://www.mdpi.com/1424-8220/24/17/5761",
+   "description": "Baraja Spectrum-Scan RMCW（Frequency Modulated Continuous Wave）激光雷达，采用硅光子偏振分集相干接收器（PD-CR），每shot同时采集s/p偏振分量与回波强度。支持偏振+时域强度双能力材质分类。适用场景：自动驾驶环境感知、工业LiDAR材质检测。约束：硬件成本高；商用价格未公开。",
+   "usage": "Baraja Spectrum-Scan LIDAR硬件需采购；SDK提供点云+强度+偏振数据接口；分类模型需自行训练或参考Baraja 2024 Sensors论文",
+   "implements": [
+    "Polarization Capture",
+    "Fresnel Ratio Estimation"
+   ]
+  },
+  {
+   "name": "scikit-learn",
+   "type": "package",
+   "source": "https://github.com/scikit-learn/scikit-learn",
+   "description": "scikit-learn是Python机器学习事实标准库，提供SVM、Random Forest、MLP等分类器。本链用sklearn.svm.SVC（小样本）或RandomForestClassifier（多类鲁棒）对偏振特征做材质分类。Baraja 2024用随机森林在偏振+RMCW联合特征上达85.4%。适用场景：传统机器学习材质分类、小样本快速验证。约束：大样本深度学习性能更优。",
+   "usage": "from sklearn.svm import SVC\nclf = SVC(kernel='rbf', probability=True)\nclf.fit(X_train, y_train)  # X = [[dop, aop, fresnel_ratio], ...]\npred = clf.predict(X_test)",
+   "implements": [
+    "Polarization Material Classify",
+    "PS Material Classify",
+    "BRDF Clustering Classify",
+    "BRDF Feature Extraction",
+    "Spectral Material Classify",
+    "Spectral Signature Extract",
+    "ToF LiDAR Intensity Capture"
+   ]
+  },
+  {
+   "name": "Basler acA2040 工业相机",
+   "type": "tool",
+   "source": "https://www.baslerweb.com/en/products/cameras/area-scan-cameras/ace/aca2040-180km/",
+   "description": "Basler acA2040-180km 4.2MP GigE工业面阵相机，Sony IMX267传感器，180fps全局快门，广泛用于工业视觉与光度立体。提供pylon SDK支持Python/C++。适用场景：工业检测、光度立体、高速成像。约束：需GigE Vision网卡；镜头需另行选配。",
+   "usage": "from pypylon import pylon\ntl = pylon.TlFactory.GetInstance()\ncam = pylon.InstantCamera(tl.CreateFirstDevice())\ncam.Open()\ncam.StartGrabbing()\nresult = cam.RetrieveResult(1000)",
+   "implements": [
+    "Photometric Stereo Capture"
+   ]
+  },
+  {
+   "name": "pyphotostereo",
+   "type": "package",
+   "source": "https://github.com/elerac/pyphotostereo",
+   "description": "开源Python光度立体工具箱，支持Lambertian/非Lambertian（Oren-Nayar/Torrance-Sparrow）模型，提供光源标定、阴影检测、法线/反照率估计、可视化。适用场景：光度立体算法原型验证、教学、科研数据处理。约束：主要面向科研；工业级性能需定制。",
+   "usage": "import pyphotostereo as pps\nps = pps.PhotometricStereo()\nps.set_images(images, light_dirs)\nnormal, albedo = ps.solve_lambertian()",
+   "implements": [
+    "Normal Albedo Estimate"
+   ]
+  },
+  {
+   "name": "MERL BRDF Database",
+   "type": "dataset",
+   "source": "https://www.merl.com/brdf/",
+   "description": "MIT MERL实验室发布的100种实测各向同性BRDF材质数据库，涵盖塑料、金属、织物、漆面、石材等。每种材质测量90x90x180采样（theta_h x theta_d x phi_d），二进制格式存储。可用于合成光度立体训练数据、BRDF聚类ground truth。适用场景：BRDF材质分类基准、合成训练数据生成、渲染验证。约束：仅各向同性；无空间变化（SVBRDF需其他库）。",
+   "usage": "import numpy as np\nbrdf = np.fromfile(redplastic.binary, dtype=np.float64)\nbrdf = brdf.reshape((90, 90, 180, 3))",
+   "implements": [
+    "PS Material Classify",
+    "BRDF Clustering Classify",
+    "BRDF Feature Extraction"
+   ]
+  },
+  {
+   "name": "CUReT Texture and BRDF Database",
+   "type": "dataset",
+   "source": "https://www.cs.columbia.edu/CAVE/curet/",
+   "description": "Columbia-Utrecht Reflectance and Texture Database，含61种真实材质（叶片、织物、石材、金属等），每种材质在205个视角+光照组合下拍摄，覆盖BRDF变化。适用于光度立体、BRDF聚类、材质识别benchmark。适用场景：材质识别算法评估、纹理+BRDF联合分析。约束：数据集较老（2001年）；部分图像分辨率低。",
+   "usage": "官方下载页面提供按材质分类的图像集，可用OpenCV读取: import cv2; img = cv2.imread(curet/01/front.png)",
+   "implements": [
+    "PS Material Classify",
+    "BRDF Clustering Classify"
+   ]
+  },
+  {
+   "name": "BRDF Playground",
+   "type": "package",
+   "source": "https://github.com/mitsuba-renderer/mitsuba3",
+   "description": "Mitsuba渲染器配套的BRDF分析与可视化工具集，支持多种BRDF模型拟合、对比、可视化。提供Python API用于BRDF特征提取与分析。适用场景：BRDF研究、材质分析、渲染验证。约束：需Mitsuba渲染器依赖。",
+   "usage": "import mitsuba as mi\nmi.set_variant(scalar_rgb)\nbrdf = mi.load_dict(type: roughconductor, alpha: 0.1)",
+   "implements": [
+    "BRDF Feature Extraction"
+   ]
+  },
+  {
+   "name": "Gonioreflectometer BRDF测量仪",
+   "type": "tool",
+   "source": "https://www.merl.com/brdf/",
+   "description": "实验室级BRDF测量仪（如Autonetics gonioreflectometer、自建转台+光谱仪方案），通过机械转台精确控制光源与探测器角度，逐点测量材料BRDF。高精度但测量时间长（单样本数小时）。适用场景：实验室BRDF数据库构建、高精度材质测量。约束：设备昂贵；测量慢；样本尺寸受限。",
+   "usage": "设备厂商专用SDK控制转台与光谱仪; 数据采集脚本通常LabVIEW或Python+厂商API",
+   "implements": [
+    "BRDF Acquisition"
+   ]
+  },
+  {
+   "name": "Headwall Nano-Hyperspec 高光谱相机",
+   "type": "tool",
+   "source": "https://www.headwallphotonics.com/",
+   "description": "Headwall Nano-Hyperspec系列推扫式高光谱相机，VNIR（400-1000nm）270波段，体积小可搭载无人机。广泛用于农业、环境、工业检测。提供Python SDK。适用场景：无人机遥感、工业在线检测、实验室研究。约束：推扫式需运动平台；价格较高（数十万元）。",
+   "usage": "Headwall提供Python SDK采集高光谱数据立方; 具体API见厂商文档",
+   "implements": [
+    "Hyperspectral Capture"
+   ]
+  },
+  {
+   "name": "LCTF液晶可调谐滤光片",
+   "type": "tool",
+   "source": "https://www.meadowlark.com/",
+   "description": "Meadowlark Optics / CRI VariSpec液晶可调谐滤光片（LCTF），配合普通面阵相机实现快照式多光谱成像。电控快速切换波段（毫秒级），光谱范围400-720nm或400-1000nm，带宽10-20nm。适用场景：实验室多光谱成像、生物医学成像、工业检测。约束：波段数有限；光强损失大。",
+   "usage": "import meadowlark_lctf as lctf\nfilter = lctf.LCTF()\nfilter.set_wavelength(550)\nimg = camera.capture()",
+   "implements": [
+    "Hyperspectral Capture"
+   ]
+  },
+  {
+   "name": "USGS Spectral Library",
+   "type": "dataset",
+   "source": "https://www.usgs.gov/labs/spectroscopy-lab",
+   "description": "美国地质调查局（USGS）发布的矿物/材料光谱数据库，含数千种天然与人工材料的反射率/发射率光谱曲线，覆盖可见光-近红外-短波红外-中红外全波段。本链用做参考光谱库与分类ground truth。适用场景：矿物识别、材料光谱匹配、高光谱算法验证。约束：实验室测量环境，实际应用需考虑光照/大气校正。",
+   "usage": "import numpy as np\nimport pysptools as pst\n# USGS库以ASD格式存储，可用pysptools读取\nspec = pst.spectral.read_spec(usgs_sample.txt)",
+   "implements": [
+    "Spectral Material Classify",
+    "Spectral Signature Extract"
+   ]
+  },
+  {
+   "name": "pysptools",
+   "type": "package",
+   "source": "https://github.com/techforspace/pysptools",
+   "description": "Python高光谱图像处理工具箱，提供光谱角匹配（SAM）、匹配滤波（MF）、MNF降维、PPI端元提取、分类算法等全套高光谱算子。是Python生态最全面的高光谱开源库。适用场景：高光谱算法原型验证、科研数据处理、教学。约束：大图像内存占用高；速度比C++实现慢。",
+   "usage": "import pysptools.classification as cls\nimport pysptools.distance as dist\nresult = cls.SAM(data, reference_spectra)\nangle = dist.SAM(spectrum1, spectrum2)",
+   "implements": [
+    "Spectral Signature Extract",
+    "Spectral Material Classify"
+   ]
+  },
+  {
+   "name": "Intel RealSense D435i",
+   "type": "tool",
+   "source": "https://www.intelrealsense.com/depth-camera-d435i/",
+   "description": "Intel RealSense D435i立体视觉+IMU深度相机，同时输出深度图与IR强度图（左右两个红外相机）。IR强度可用于材质识别。价格低廉（约2000元），广泛用于机器人与室内3D视觉。提供librealsense + pyrealsense2 Python绑定。适用场景：室内机器人、3D扫描、室内材质识别。约束：室外阳光干扰大；有效距离<10m；强度受曝光自动调整影响。",
+   "usage": "import pyrealsense2 as rs\npipeline = rs.pipeline()\ncfg = rs.config()\ncfg.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)\ncfg.enable_stream(rs.stream.infrared, 1, 640, 480, rs.format.y8, 30)\npipeline.start(cfg)\nframes = pipeline.wait_for_frames()\ndepth = frames.get_depth_frame()\nir = frames.get_infrared_frame(1)",
+   "implements": [
+    "ToF LiDAR Intensity Capture"
+   ]
+  },
+  {
+   "name": "Livox HAP LiDAR",
+   "type": "tool",
+   "source": "https://www.livoxtech.com/hap",
+   "description": "Livox HAP混合固态激光雷达，自动驾驶级，150m测距，点云含intensity字段。用于自动驾驶环境感知与材质识别。支持Livox ROS驱动与Livox SDK。适用场景：自动驾驶、机器人导航、工业3D检测。约束：非重复扫描模式需积累帧；强度需距离归一化。",
+   "usage": "import livox_ros_driver.msg as livox_msg\n# ROS2点云消息含intensity通道\n# sensor_msgs/PointCloud2字段: x, y, z, intensity",
+   "implements": [
+    "ToF LiDAR Intensity Capture"
+   ]
+  },
+  {
+   "name": "Velodyne HDL-64E LiDAR",
+   "type": "tool",
+   "source": "https://velodynelidar.com/products/hdl-64e/",
+   "description": "Velodyne HDL-64E机械式64线激光雷达，自动驾驶经典型号，点云含intensity通道。广泛用于自动驾驶研究与路面材质分类。适用场景：自动驾驶环境感知、3D测绘。约束：机械式寿命短；价格高（约50万）；强度需距离归一化。",
+   "usage": "ROS2 velodyne_driver输出sensor_msgs/PointCloud2含intensity字段\nimport ros2_numpy as rnp\npc = rnp.numpify(pointcloud_msg)\nintensity = pc[intensity]",
+   "implements": [
+    "ToF LiDAR Intensity Capture"
+   ]
+  },
+  {
+   "name": "Open3D",
+   "type": "package",
+   "source": "https://github.com/isl-org/Open3D",
+   "description": "Open3D是最流行的开源3D数据处理库，支持点云处理、可视化、配准、分割。本链用其点云强度通道处理、可视化、法线估计辅助入射角归一化。适用场景：点云数据处理、3D可视化、法线估计。约束：深度学习需额外框架。",
+   "usage": "import open3d as o3d\npcd = o3d.io.read_point_cloud(scan.ply)\n# 强度存储在colors或自定义属性\npcd.estimate_normals()\no3d.visualization.draw_geometries([pcd])",
+   "implements": [
+    "Intensity Feature Extraction"
+   ]
+  },
+  {
+   "name": "XGBoost",
+   "type": "package",
+   "source": "https://github.com/dmlc/xgboost",
+   "description": "XGBoost是优化的梯度提升树库，分类回归性能优异。本链用于强度特征的高精度分类，处理表格类特征效果好。适用场景：结构化特征分类、Kaggle竞赛级性能。约束：需调参；训练比RF慢。",
+   "usage": "import xgboost as xgb\nclf = xgb.XGBClassifier(n_estimators=200, max_depth=6)\nclf.fit(X_train, y_train)\npred = clf.predict(X_test)",
+   "implements": [
+    "ToF LiDAR Intensity Capture"
+   ]
+  }
+ ],
+ "evidence": {
+  "chain_documents": 5,
+  "ledgers": 5,
+  "websearch_total": 53,
+  "webfetch_total": 42,
+  "with_negative_results": 5
+ }
+}

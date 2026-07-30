@@ -1,0 +1,1361 @@
+{
+ "topic": {
+  "keyword": "contact_detection_algorithm",
+  "en": "Contact Detection Algorithm",
+  "zh": "接触检测算法",
+  "domain": "SIMULATION",
+  "description": "高效检测物体间几何接触的算法，包括GJK/EPA方法和宽相位BVH加速结构。本主题覆盖凸-凸窄相（GJK/EPA Minkowski 差空间算法）、BVH+mesh 两阶段检测（机器人 motion planning 范式）、SAP+primitive pipeline（物理引擎范式）、GPU 并行 voxel 碰撞检测四条本质不同的技术路线，输出 (contact_point, normal, depth) manifold 或 (collision_bool, conflict_voxels) 给上层接触求解/路径校验。边界：接触力计算与求解归兄弟主题（compliance_contact_model / friction_cone_solver / sequential_impulse / multi_body_contact）。"
+ },
+ "chains": [
+  {
+   "name": "GJK-EPA Convex Narrowphase Pipeline",
+   "steps": [
+    {
+     "id": "s1",
+     "name": "凸形状与 support 函数建模",
+     "description": "阶段入口：接收 broadphase 候选对并配置 support function 接口。",
+     "caps": [
+      "GJK-EPA Convex Narrowphase Detection"
+     ],
+     "next": [
+      "s1_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s1_1",
+     "name": "Convex Pair Reception And Support Function Dispatch",
+     "description": "接收上层 broadphase 送入的凸体对 (A, B) 与几何状态，按凸形状类型（box/sphere/ellipsoid/capsule/cone/cylinder/convex hull/half-space/plane）派发对应 support function。libccd 用 ccd_t 结构的 ccd.support1/support2 函数指针封装；Bullet3 用 btConvexShape::localGetSupportingVertex 多态派发。输入：凸体对 + 几何状态 + 凸形状类型。输出：support1/support2 函数指针 + 初始 search direction。依赖：凸形状几何 + shape 类型枚举。约束：仅处理凸-凸对；凹 mesh 需先用 V-HACD 凸分解后挂为 convex hull；旋转矩阵传递需正交化；libccd 提供 USE_DOUBLE 编译开关用于高精度。性能指标：dispatch <0.01ms。适用场景：GJK-EPA 链入口、链 3 primitive-pair dispatch 的子步骤。",
+     "caps": [
+      "Convex Support Function Dispatch"
+     ],
+     "next": [
+      "s1_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s1_2",
+     "name": "Minkowski Difference Simplex Initialization",
+     "description": "从初始 search direction 开始，用 support 函数在 Minkowski 差空间 A⊖B = {a-b : a∈A, b∈B} 采第一个 support 点作为 simplex 起点。libccd 用 ccd_simplex 结构；Bullet3 用 btVoronoiSimplexSolver::initialize。输入：support 函数 + 初始 direction。输出：simplex 包含 1 个初始点。依赖：support function 已配置。约束：初始 direction 通常取 A.center - B.center 方向；空 simplex 不可启动迭代。",
+     "caps": [
+      "GJK Simplex Evolution"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2",
+     "name": "GJK 单纯形演化与相交判定",
+     "description": "阶段入口：执行 GJK 单纯形迭代并做相交判定分支。",
+     "caps": [
+      "GJK-EPA Convex Narrowphase Detection"
+     ],
+     "next": [
+      "s2_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2_1",
+     "name": "GJK Simplex Iteration Toward Origin",
+     "description": "GJK 主循环：求 simplex 中离原点最近点 p → 设 d = -p → 采 support(d) 新点 → 若新点未超越 p 则收敛（不相交）→ 否则加入 simplex 并 reduceSimplexContainingClosest。libccd ccd_gjk_simplex 主循环；Bullet3 btGjkPairDetector::closestPtPointTetra。输入：simplex + support 函数。输出：simplex（最多 4 点 tetrahedron）+ 收敛标志 + closest point。依赖：simplex 已初始化。约束：max_iterations 默认 100（libccd）；数值退化（共面/共线 simplex）需 epsilon 容差。性能指标：单次查询 <1ms（万级顶点凸包，i7-12700）。适用场景：GJK-EPA 链核心步骤、链 3 SAP+primitive 窄相步骤复用。",
+     "caps": [
+      "GJK Simplex Evolution"
+     ],
+     "next": [
+      "s2_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2_2",
+     "name": "判断：Intersected",
+     "description": "判断：GJK simplex 是否包围原点。libccd ccdGJKIntersect() 返回 0/1；Bullet3 btGjkPairDetector 检查 simplex 收敛时 closestPoint 距离。是 → 转入 s3 阶段启动 EPA 求穿透深度；否 → 物体未接触，直接转 s4_2 输出 no-contact。输入：收敛 simplex + 距离。输出：分支标志 intersected (depth>0) OR separated (返回最近距离)。",
+     "caps": [
+      "GJK Simplex Evolution"
+     ],
+     "next": [
+      "s3",
+      "s4_2"
+     ],
+     "condition": "simplex 是否包围原点",
+     "is_merge": false
+    },
+    {
+     "id": "s3",
+     "name": "EPA 多面体扩展求穿透深度",
+     "description": "阶段入口：从 GJK 最终 simplex 启动 EPA 多面体扩展（仅 intersected 分支进入）。",
+     "caps": [
+      "GJK-EPA Convex Narrowphase Detection"
+     ],
+     "next": [
+      "s3_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3_1",
+     "name": "EPA Polytope Seed From GJK Final Simplex",
+     "description": "从 GJK 收敛时的最终 simplex（3D 下 tetrahedron 包围原点）出发构造初始 EPA polytope。libccd ccdGJKPenetration 内 ccdEPA 初始化；Bullet3 btGjkEpa2::EvaluateEPA 初始 polytope。输入：GJK 最终 simplex。输出：初始 EPA polytope（四面体）。依赖：GJK 已判定相交（s2_2 的 intersected 分支）。约束：初始 simplex 必须包含原点（由 GJK 保证）；退化情况（共面 simplex）需 fallback 到 MPR 或采样多方向重启。",
+     "caps": [
+      "EPA Polytope Expansion"
+     ],
+     "next": [
+      "s3_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3_2",
+     "name": "EPA Polytope Expansion Loop",
+     "description": "EPA 核心循环：找距离原点最近的面 → 沿该面法向采 support 点 → 若新点超出当前面，删除该面并添加三个新面（多面体增长）→ 收敛后原点到最近面的距离即穿透深度、该面法向即接触 normal。libccd ccdEPA::expand；Bullet3 btGjkEpa2::sExpand 扩展循环。输入：初始 polytope + support 函数。输出：扩展后的 polytope + 最近面信息。依赖：EPA seed 已构造。约束：epa_tolerance 默认 1e-4（libccd）。性能指标：单次扩展 <0.5ms（典型 5-15 次扩展收敛）。",
+     "caps": [
+      "EPA Polytope Expansion"
+     ],
+     "next": [
+      "s3_3"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3_3",
+     "name": "Minimum Penetration Depth And Normal Extraction",
+     "description": "EPA 收敛后，从最近面提取 (depth, normal, contact_point) 元组：原点到最近面的距离 = depth，该面法向 = contact normal，原点在该面上的投影 = contact point。libccd 用 epa.last->dist/last->normal；Bullet3 用 btGjkEpa2::sResults 输出 depth/normal/contactPoint。输入：收敛 polytope + 最近面。输出：(depth, normal, contact_point) 元组。依赖：EPA 已收敛。约束：normal 与 depth 方向遵循 libccd 约定（depth 沿 normal 方向指向 B）。",
+     "caps": [
+      "EPA Polytope Expansion"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4",
+     "name": "接触流形生成与输出",
+     "description": "合并：聚合 intersected 分支（s3_3）的穿透信息与 separated 分支（s2_2）的 no-contact 标志。",
+     "caps": [
+      "GJK-EPA Convex Narrowphase Detection"
+     ],
+     "next": [
+      "s4_1"
+     ],
+     "condition": "",
+     "is_merge": true
+    },
+    {
+     "id": "s4_1",
+     "name": "Contact Manifold Construction And Persistence",
+     "description": "把单次 GJK-EPA 求得的 (normal, depth, contact_point) 整理为接触流形（最多 4 个 contact point），跨帧持久化以维持稳定接触。Bullet3 用 btPersistentManifold（4-point buffer + sort by distance）；PhysX 用 Gu::ContactBuffer；FCL 用 CollisionResult::contacts。manifold 管理包括：旧点剔除（depth < 阈值移除）、新点添加（保持 ≤4 点）、跨帧 sort。输入：(normal, depth, contact_point) + 历史 manifold ID。输出：persistent manifold（≤4 contact points）。依赖：GJK-EPA 单次查询结果。约束：4 点上限是 Bullet/PhysX 工程约束；持久化需 body pair ID 索引；首次接触时 manifold 为空。性能指标：manifold 更新 <0.1ms。适用场景：物理引擎跨帧接触稳定、链 3 窄相后处理。",
+     "caps": [
+      "Contact Manifold Generation"
+     ],
+     "next": [
+      "s4_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4_2",
+     "name": "Contact Pair Output To Upstream Solver",
+     "description": "把完整 manifold 输出给上层接触求解器（兄弟主题 sequential_impulse / multi_body_contact / compliance_contact_model）。Bullet3 用 btManifoldResult::addContactPoint；FCL 用 CollisionResult。不相交分支（s2_2 separated）也经此步输出 no-contact 标志。输入：manifold with contact points（或 no-contact 标志）。输出：contact pair + normal + depth 给上层 solver。约束：本主题止于检测到接触，不做力计算与求解（归兄弟主题）。",
+     "caps": [
+      "Contact Manifold Generation"
+     ],
+     "next": [],
+     "condition": "",
+     "is_merge": false
+    }
+   ]
+  },
+  {
+   "name": "BVH Broadphase + Mesh Narrowphase Collision Pipeline",
+   "steps": [
+    {
+     "id": "s1",
+     "name": "BVH 构建与 mesh 注册",
+     "description": "阶段入口：把 triangle mesh 转化为 BVHModel<OBBRSS> 加速结构。",
+     "caps": [
+      "BVH Mesh Collision Detection"
+     ],
+     "next": [
+      "s1_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s1_1",
+     "name": "Triangle Mesh Loading And BVH Construction",
+     "description": "用 FCL BVHModel<OBBRSSf>::beginModel() + addSubModel() + endModel() 构建 BVH。Bullet3 用 btBvhTriangleMeshShape；HPP-FCL 用 BVHModel<OBBRSS>。输入：triangle mesh (顶点 + 三角形索引)。输出：BVHModel<OBBRSS> 加速结构。依赖：用户提供 mesh。约束：mesh 三角形数典型 100-10000；BVH 构建需 100ms 量级（mesh 大时）；构建可缓存跨帧。性能指标：BVH 构建 O(n log n)。适用场景：机器人 motion planning 的 link mesh 与障碍 mesh 预处理。",
+     "caps": [
+      "Dynamic AABB Tree Construction And Update",
+      "BVH SAH Rebalance"
+     ],
+     "next": [
+      "s1_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s1_2",
+     "name": "Dynamic BVH Update On Object Pose Change",
+     "description": "机器人每个 link 每帧位姿变化，BVH 必须随 link pose 增量更新。FCL DynamicAABBTreeCollisionManager::update(obj) 增量更新；Bullet3 btDbvt::update 增量 refit。输入：BVH + 新位姿。输出：更新后的 BVH 节点 bbox。依赖：BVH 已构建。约束：增量更新比重建便宜（O(log n)）；动态场景需每帧调用。性能指标：单 link BVH 增量更新 <1ms。",
+     "caps": [
+      "Dynamic AABB Tree Construction And Update"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2",
+     "name": "BVH 双树遍历与 leaf pair 提取",
+     "description": "阶段入口：启动 BVH 双树遍历。",
+     "caps": [
+      "BVH Mesh Collision Detection"
+     ],
+     "next": [
+      "s2_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2_1",
+     "name": "Broadphase CollisionManager Double-Tree Traversal",
+     "description": "两物体 BVH 同时遍历，每对 internal node 测 AABB 重叠，重叠则下钻到子节点；不重叠剪枝。FCL DynamicAABBTreeCollisionManager::collide(other_manager, callback) 双树递归遍历；HPP-FCL 同名接口。输入：两物体的 BVH + CollisionManager。输出：candidate AABB 重叠 leaf pair 列表。依赖：BVH 已构建并按当前位姿更新。约束：BVH 双树遍历复杂度 O(log n × log m × k) k=重叠对数。性能指标：单次遍历 1-10ms（典型 1000 三角形 mesh 对）。适用场景：FCL/HPP-FCL/MoveIt2 默认 broadphase。",
+     "caps": [
+      "OBBRSS BVH Descent"
+     ],
+     "next": [
+      "s2_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2_2",
+     "name": "判断：OBB Overlap",
+     "description": "判断：当前 BVH 节点对的 OBB 是否重叠？FCL OBB::overlap() 用 Gottschalk 15 轴 SAT 测试（A 的 3 axis + B 的 3 axis + 9 个边叉积）。是 → 下钻到 leaf 触发 s2_3 leaf pair 提取；否 → 剪枝，直接转 s4_1 聚合（此 branch 无 contact）。输入：BVH 内部节点 OBB pair。输出：overlap yes/no + leaf pair（若 overlap 到 leaf）。",
+     "caps": [
+      "OBBRSS BVH Descent"
+     ],
+     "next": [
+      "s2_3",
+      "s4"
+     ],
+     "condition": "OBB 重叠",
+     "is_merge": false
+    },
+    {
+     "id": "s2_3",
+     "name": "Leaf Pair Candidate Extraction",
+     "description": "BVH 双树遍历到 leaf pair（各含一个 triangle 或一小簇），触发精确 triangle-triangle 或 mesh-primitive 测试。FCL MeshCollisionTraversalNode::leafTesting() 把 leaf pair 送入 s3 阶段。输入：BVH leaf pair（各含一个 triangle）。输出：(triangle_A, triangle_B, BVH path) 或 (mesh, primitive) leaf。依赖：s2_2 判定 OBB 重叠。约束：每个 leaf 含一个 triangle（典型）或一小簇；leaf pair 数量受 BVH 重叠率影响。",
+     "caps": [
+      "BVH Candidate Pair To Narrowphase"
+     ],
+     "next": [
+      "s3",
+      "s3_2",
+      "s3_3"
+     ],
+     "condition": "leaf pair 几何类型",
+     "is_merge": false
+    },
+    {
+     "id": "s3",
+     "name": "leaf pair 几何精确测试",
+     "description": "阶段入口：根据 leaf pair 几何类型派发到不同 narrowphase 测试（在 s2_3 内联实现为判断节点）。",
+     "caps": [
+      "BVH Mesh Collision Detection"
+     ],
+     "next": [
+      "s3_1",
+      "s3_2",
+      "s3_3"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3_1",
+     "name": "Triangle-Triangle Intersection Test",
+     "description": "条件：leaf pair 是 mesh-mesh triangle 对。O(1) 复杂度的两 triangle 相交判定：计算两三角形所在平面的交线，将两三角形投影到交线上得两个区间，区间重叠则相交。Möller 1997 JGT 算法。FCL Intersect::intersect_TriangleTriangle() 默认实现。输入：两个 triangle（顶点 3×3）。输出：相交 yes/no + 交线段（若相交）。依赖：BVH leaf pair（s2_3）。约束：共面三角形需特殊处理（退化为 2D triangle-triangle 测试）；浮点精度需 epsilon 容差。性能指标：单次测试 O(1)，典型 <1μs。适用场景：mesh-mesh 窄相 leaf 测试。",
+     "caps": [
+      "Triangle Triangle Intersection Test"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": "triangle-triangle pair",
+     "is_merge": false
+    },
+    {
+     "id": "s3_2",
+     "name": "Mesh-Primitive Narrowphase Dispatch",
+     "description": "条件：leaf pair 是 mesh-primitive 对（mesh-box / mesh-sphere / mesh-capsule / mesh-convex / mesh-halfspace / mesh-plane / mesh-octree）。派发到专用 narrowphase 实现，避免通过 triangle-triangle 间接测试（性能与数值稳定性更优）。FCL ShapeMeshCollisionTraversalNode 模板族。输入：mesh + primitive + 位姿对。输出：contact info。依赖：BVH leaf pair（s2_3）。约束：每对类型需单独实现；octree 需 octomap 集成；mesh-capsule 在薄接触下数值不稳定。适用场景：机械臂 link mesh vs 环境 box obstacle 等场景。",
+     "caps": [
+      "Mesh Primitive Narrowphase Dispatch"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": "mesh-primitive pair",
+     "is_merge": false
+    },
+    {
+     "id": "s3_3",
+     "name": "Distance Query Alternative For Tolerance Mode",
+     "description": "条件：collision query 不相交且用户请求 tolerance verification（如距离小于 5cm 时报警）。转 distance query 模式，BVH 节点的 RSS（Rectangle Swept Sphere）体积给保守距离下界。FCL MeshCollisionTraversalNode + RSS::distance() 求最近距离。输入：(mesh, mesh) leaf + RSS BV。输出：conservative lower bound distance。依赖：s2_3 leaf pair + CollisionRequest flag。约束：仅当 request.enable_nearest_distance=true 时启用；RSS 距离是下界，精确距离需 leaf triangle 距离计算。适用场景：tolerance verification 与 proximity query。",
+     "caps": [
+      "OBBRSS BVH Descent"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": "tolerance mode + non-intersected",
+     "is_merge": false
+    },
+    {
+     "id": "s4",
+     "name": "contact 结果聚合与输出",
+     "description": "合并：聚合所有 leaf pair 测试结果到 CollisionResult。",
+     "caps": [
+      "BVH Mesh Collision Detection"
+     ],
+     "next": [
+      "s4_1"
+     ],
+     "condition": "",
+     "is_merge": true
+    },
+    {
+     "id": "s4_1",
+     "name": "CollisionResult Aggregation",
+     "description": "把 BVH 遍历所有 leaf pair 产生的 contact info 聚合到 CollisionResult 容器，包括 contact point 列表、最远 penetration depth、碰撞对统计。FCL CollisionResult::addContact() 累加；MoveIt2 collision_result::ContactMap 按对象对分组。输入：所有 leaf pair 的 contact info。输出：聚合 CollisionResult + 最远 contact pair。依赖：s3 步骤产出。约束：contact 数量上限受 CollisionRequest::max_contacts 限制（默认 1，motion planning 通常调高）；聚合后需按距离排序保留最深接触。性能指标：聚合 <1ms（典型）。适用场景：本链 s4_1 步骤、链 3/4 输出阶段。",
+     "caps": [
+      "Collision Result Aggregation"
+     ],
+     "next": [
+      "s4_2"
+     ],
+     "condition": "",
+     "is_merge": true
+    },
+    {
+     "id": "s4_2",
+     "name": "Contact Pair Output To MoveIt2 Planning Scene",
+     "description": "把聚合 CollisionResult 输出给上层 MoveIt2 planning_scene，按 ACM (Allowed Collision Matrix) 过滤免检对，剩余传给 motion planner 作为约束违反标志。MoveIt2 planning_scene::checkCollision() 接收 CollisionResult；collision_detection::CollisionEnvFCL 默认实现。输入：CollisionResult + ACM。输出：filtered contact pairs to MoveIt2 planning_scene。依赖：FCL CollisionResult + ACM 配置。约束：MoveIt2 collision check 是 motion planning 计算瓶颈（可达 90% 资源）；ACM 是工程优化。适用场景：MoveIt2 / EXOTica / Tesseract motion planning。",
+     "caps": [
+      "Collision Result Aggregation"
+     ],
+     "next": [],
+     "condition": "",
+     "is_merge": false
+    }
+   ]
+  },
+  {
+   "name": "SAP Broadphase + Convex Primitive Narrowphase Pipeline",
+   "steps": [
+    {
+     "id": "s1",
+     "name": "SAP 量化与端点维护",
+     "description": "阶段入口：把刚体 AABB 量化为端点并初始化有序端点数组。",
+     "caps": [
+      "SAP Primitive Narrowphase"
+     ],
+     "next": [
+      "s1_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s1_1",
+     "name": "AABB Endpoint Quantization",
+     "description": "把每个刚体 AABB 在 x/y/z 三轴的 min/max 世界坐标量化到 16/32 位整数坐标。Bullet3 btAxisSweep3 用 quantizeWithClamp 把 float AABB 量化为 unsigned short；PhysX PxBroadPhase 用 32-bit uint；Box2D b2BroadPhase 用 uint16。输入：刚体 AABB 集合。输出：每轴两个端点 (min_handle, max_handle) 的量化坐标。依赖：刚体集合。约束：量化精度受限于整数位宽（uint16 量化精度 = world_extent / 65536）；坐标超出 AABB 量程会被 clamp。性能指标：单刚体量化 O(1)。适用场景：SAP broadphase 入口。",
+     "caps": [
+      "Axis Endpoint Sort And Sweep"
+     ],
+     "next": [
+      "s1_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s1_2",
+     "name": "Sorted Endpoint Array Maintenance",
+     "description": "对每轴端点数组初始化为有序（增量插入 + bubble sort），并在每帧刚体运动后做增量重排（仅移动少量端点）。Bullet3 btAxisSweep3::updateHandle() 用 insertion sort；PhysX PxBroadPhase 用 incremental radix sort；Box2D b2BroadPhase::UpdatePairs() 用 insertion sort。输入：每轴两个端点 + 上一帧排序。输出：每帧更新后的有序端点数组。依赖：s1_1 量化坐标。约束：增量更新复杂度 O(k) k=移动的端点数；静态物体端点不变。性能指标：增量更新 <1ms。适用场景：每帧 broadphase 更新。",
+     "caps": [
+      "Axis Endpoint Sort And Sweep"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2",
+     "name": "SAP 扫掠与活动集重叠测试",
+     "description": "阶段入口：扫掠一轴端点流并维护活动集。",
+     "caps": [
+      "SAP Primitive Narrowphase"
+     ],
+     "next": [
+      "s2_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2_1",
+     "name": "Longest Axis Sweep With Active Set",
+     "description": "扫掠最长轴（通常 x 轴）端点流：遇到 min 端点把对应 handle 加入活动集；遇到 max 端点从活动集移除。活动集内任意两个 handle 在该轴上 AABB 重叠。Bullet3 btAxisSweep3::calculateOverlappingPairs 主循环；PhysX PxBroadPhase 同。输入：有序端点数组。输出：x 轴候选对集合（活动集内笛卡尔积）。依赖：s1_2 排序端点。约束：活动集大小与场景密度相关；极端密集场景需 SAP-BVH hybrid。性能指标：单帧扫掠 O(n + k) k=候选对数。适用场景：Bullet3 btAxisSweep3、PhysX eSAP、Box2D b2BroadPhase 默认 broadphase。",
+     "caps": [
+      "Active Set Sweep And Multi-Axis Overlap Test"
+     ],
+     "next": [
+      "s2_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2_2",
+     "name": "判断：3-Axis AABB Overlap",
+     "description": "判断：x 轴候选对是否在 y/z 两轴也 AABB 重叠？是 → 候选对送窄相（s2_3）；否 → 此对剪枝，直接进入下一阶段 s3（无候选对处理）。Bullet3 btAxisSweep3::addPair 用 quantize3 兼容性测试；Box2D b2BroadPhase::UpdatePairs 用 b2AABB::Overlap 三轴测试。输入：x 轴候选对 + y/z 轴端点。输出：3 轴重叠 yes/no。",
+     "caps": [
+      "Active Set Sweep And Multi-Axis Overlap Test"
+     ],
+     "next": [
+      "s2_3",
+      "s3"
+     ],
+     "condition": "3 轴 AABB 重叠",
+     "is_merge": false
+    },
+    {
+     "id": "s2_3",
+     "name": "Candidate Pair To Narrowphase Cache",
+     "description": "把通过 3 轴测试的候选对写入 btOverlappingPairCache / PxBroadPhase pair cache，去重后送窄相。Bullet3 btHashedOverlappingPairCache::addOverlappingPair 用 hash 表去重；PhysX PxBroadPhase::getCreatedPairs 返回 pair 数组。输入：3 轴重叠候选对。输出：去重候选对集合送窄相。依赖：s2_2 通过测试。约束：hash 去重避免重复 narrowphase 调用；capacity 自适应扩展。适用场景：SAP → narrowphase 接口。",
+     "caps": [
+      "SAP Candidate Pair To Narrowphase"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3",
+     "name": "primitive-pair 类型派发",
+     "description": "合并：聚合所有候选对（含 s2_2 剪枝的 no-op 对）进入 primitive pair 派发阶段。",
+     "caps": [
+      "SAP Primitive Narrowphase"
+     ],
+     "next": [
+      "s3_1"
+     ],
+     "condition": "",
+     "is_merge": true
+    },
+    {
+     "id": "s3_1",
+     "name": "Primitive Pair Type Lookup",
+     "description": "查派发表 m_doubleDispatch[type1][type2] 找到对应 algorithm 类。Bullet3 btDefaultCollisionConfiguration::initializeConvexConvex 派发 btConvexConvexAlgorithm（GJK+EPA）；initializeBoxBox 派发 btBoxBoxDetector（SAT）；initializeSphereSphere 派发 btSphereSphereCollisionAlgorithm；等等。PhysX GuParticleSystem::dispatcher 同；Box2D b2ContactRegister 同。输入：候选 primitive pair + 类型枚举。输出：algorithm 类指针 + 算法上下文。依赖：s2_3 候选对。约束：未注册类型对需 fallback 到 GJK（凸-凸通用）；每对类型在初始化时注册。性能指标：派发表查询 O(1)。适用场景：本链 s3_1 步骤、链 1 GJK-EPA 链入口（同样有 primitive type lookup）。",
+     "caps": [
+      "Primitive Pair Dispatch"
+     ],
+     "next": [
+      "s3_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3_2",
+     "name": "判断：Algorithm Selection",
+     "description": "判断：根据 primitive pair 类型选择算法路径。convex-convex 通用对 → s4 阶段用 GJK+EPA；特定 primitive 对（box-box / sphere-sphere / sphere-plane / capsule-capsule / box-sphere 等）→ s4_3 直接用 SAT 公式或几何关系（无需迭代）。Bullet3 btDefaultCollisionConfiguration 派发表区分两类；Box2D b2Collide* 函数族直接派发；PhysX GuPCMContact 模板族同。输入：algorithm 类指针。输出：算法路径标志 (gjk_epa / sat / direct_formula)。",
+     "caps": [
+      "Primitive Pair Dispatch"
+     ],
+     "next": [
+      "s4",
+      "s4_3"
+     ],
+     "condition": "primitive pair 类型",
+     "is_merge": false
+    },
+    {
+     "id": "s4",
+     "name": "GJK / SAT 窄相求解穿透深度",
+     "description": "阶段入口（GJK+EPA 分支）：复用链 1 GJK-EPA convex narrowphase 算法求穿透深度。",
+     "caps": [
+      "SAP Primitive Narrowphase",
+      "GJK-EPA Convex Narrowphase Detection"
+     ],
+     "next": [
+      "s4_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4_1",
+     "name": "GJK Simplex Iteration For Convex Pair",
+     "description": "对 convex-convex 候选对执行 GJK 单纯形迭代判定相交。本步骤复用链 1 的 GJK Simplex Evolution 能力（caps 直接引用），具体算法见 chain_01 文档。libccd ccdGJKIntersect 是核心实现；Bullet3 btGjkPairDetector::getClosestPoints 调用 libccd 风格算法。输入：凸体对 + support function。输出：相交标志 + 最终 simplex（若相交，供 EPA 启动）。依赖：s3_2 选 GJK 分支。约束：max_iterations 默认 100；仅处理凸-凸对。适用场景：本链 convex-convex 窄相步骤、链 1 GJK-EPA 链核心步骤复用。",
+     "caps": [
+      "GJK Simplex Evolution"
+     ],
+     "next": [
+      "s4_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4_2",
+     "name": "EPA Penetration Depth Solver",
+     "description": "对 GJK 判定相交的对执行 EPA 扩展求穿透深度。本步骤复用链 1 的 EPA Polytope Expansion 能力，具体算法见 chain_01 文档。libccd ccdGJKPenetration 调用 ccdEPA::expand；Bullet3 btGjkEpa2::EvaluateEPA。输入：GJK 最终 simplex + support function。输出：(depth, normal, contact_point)。依赖：s4_1 GJK 判定相交。约束：epa_tolerance 默认 1e-4。适用场景：本链 convex-convex 窄相穿透深度求解、链 1 GJK-EPA 链核心步骤复用。",
+     "caps": [
+      "EPA Polytope Expansion"
+     ],
+     "next": [
+      "s4_4"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4_3",
+     "name": "SAT For Specific Primitive Pairs",
+     "description": "对特定 primitive 对执行 SAT（Separating Axis Theorem）算法，避免 GJK 迭代，直接求穿透深度。box-box：测试 15 轴（6 面法向 + 9 边叉积）；sphere-sphere：测试 1 轴（中心连线）；sphere-plane：测试 1 轴（平面法向）；capsule-capsule：测试 4 轴（两 capsule 轴 + 两 capsule 端点连线）。Box2D b2CollidePolygon 实现 2D SAT；Bullet3 btPolyhedralContactClipping 实现 3D SAT for polyhedron-polyhedron；PhysX GuPCMContact 模板族实现各 primitive 对的 SAT。输入：primitive pair + 位姿。输出：(normal, depth, contact_point)。依赖：s3_2 选 SAT 分支。约束：仅特定 primitive 对有专用 SAT；通用 convex-convex 需 fallback 到 GJK。性能指标：单次 SAT O(15) = 常数时间。适用场景：本链特定 primitive 对窄相、Box2D 2D 物理引擎默认窄相。",
+     "caps": [
+      "SAT For Specific Primitive Pairs"
+     ],
+     "next": [
+      "s4_4"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4_4",
+     "name": "Contact Manifold Output To Solver",
+     "description": "合并：聚合 GJK+EPA 路径（s4_2）与 SAT 路径（s4_3）的穿透信息，整理为 contact manifold 并送上层求解器。本步骤复用链 1 的 Contact Manifold Generation 能力。Bullet3 btPersistentManifold 跨帧持久化；PhysX Gu::ContactBuffer；Box2D b2ContactManifold。输入：(normal, depth, contact_point) + 历史 manifold。输出：persistent manifold 给上层 sequential_impulse / multi_body_contact 求解器。依赖：s4_2 或 s4_3 输出。约束：4 点上限（Bullet/PhysX 工程约束）。适用场景：本链 s4_4 步骤、链 1 GJK-EPA 链输出步骤复用。",
+     "caps": [
+      "Contact Manifold Generation"
+     ],
+     "next": [],
+     "condition": "",
+     "is_merge": true
+    }
+   ]
+  },
+  {
+   "name": "GPU Parallel Voxel Collision Pipeline",
+   "steps": [
+    {
+     "id": "s1",
+     "name": "mesh 离散化与 BitVector 构建",
+     "description": "阶段入口：把机器人 mesh 与环境点云离散为 voxel BitVector。",
+     "caps": [
+      "GPU Voxel Collision Detection"
+     ],
+     "next": [
+      "s1_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s1_1",
+     "name": "Robot Link Mesh Loading And Voxelization",
+     "description": "从 URDF 加载机器人 link mesh（collision mesh），用 GPU-Voxels voxelizeMesh() 把每个 link mesh 离散为 voxel BitVector 上传到 GPU 显存。voxelization 用 CUDA 三角面栅格化（每 triangle 由一个 warp 处理），凹 mesh 自然离散（不需 V-HACD 预处理，与 GJK 的 convex 假设不同）。GPU-Voxels GpuVoxels::addRobot() + voxelizeMesh()。输入：URDF/mesh + voxel size。输出：per-link BitVector (GPU 显存)。依赖：CUDA GPU + URDF 解析。约束：voxel size 决定精度，1cm 精度下 100m³ 场景需 ~100MB 显存；mesh 凹形不需预处理但精度受 triangle density 影响。性能指标：单 robot link mesh voxelization <50ms。适用场景：本链 s1_1 步骤、机器人 self-collision 与 map collision 的预处理。",
+     "caps": [
+      "Mesh And Point Cloud Voxelization"
+     ],
+     "next": [
+      "s1_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s1_2",
+     "name": "Environment Point Cloud Voxelization",
+     "description": "把传感器点云（LiDAR / RGB-D）离散为 voxel BitVector 上传到 GPU。GPU-Voxels GpuVoxels::insertPointcloud() 直接把点坐标 round 到 cell index，用 atomicOr 写入 BitVector。release 1.3.0 强化点云集成，支持 ROS DistanceROSDemo。输入：点云（ROS sensor_msgs::PointCloud2） + voxel size。输出：environment BitVector (GPU 显存)。依赖：CUDA GPU + ROS（可选）。约束：点云密度不均需密度归一化；1M points voxelization <20ms。性能指标：1M points voxelization <20ms。适用场景：本链 s1_2 步骤、机器人 map collision 的环境感知。",
+     "caps": [
+      "Mesh And Point Cloud Voxelization"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2",
+     "name": "voxel hash 与 BitVector GPU 维护",
+     "description": "阶段入口：用 spatial hash 维护 BitVector GPU 数据结构。",
+     "caps": [
+      "GPU Voxel Collision Detection"
+     ],
+     "next": [
+      "s2_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2_1",
+     "name": "Voxel Hash Map Construction On GPU",
+     "description": "用 spatial hash 函数把 (cell_x, cell_y, cell_z) 三元整数坐标映射到桶数组索引，GPU-Voxels VoxelMap / BitVector CUDA 数据结构在 GPU 显存中维护大世界稀疏 voxel。空间哈希函数 hash(cell_x, cell_y, cell_z) 把 cell 坐标映射到桶数组索引；查询时根据 hash 桶反查 cell 占用。GPU-Voxels VoxelMap 模板类。输入：voxel size + world bounds。输出：GPU 上的 VoxelMap / BitVector 数据结构。依赖：s1_1/s1_2 的 BitVector。约束：均匀 voxel 网格直接用 (x,y,z) → index 三元映射即可，但 GPU-Voxels 用 spatial hash 把大世界稀疏 voxel 压缩到紧凑 BitVector，节省显存。适用场景：本链 s2_1 步骤、GPU 并行 voxel 数据结构。",
+     "caps": [
+      "Spatial Hash Bucket Query",
+      "GPU Voxel BitVector Collision Query"
+     ],
+     "next": [
+      "s2_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2_2",
+     "name": "BitVector Maintenance On Object Pose Update",
+     "description": "机器人运动时每帧更新 link BitVector 位姿；增量更新避免每帧重建。GPU-Voxels GpuVoxels::updateRobot() 把机器人当前 joint state 转换为各 link 世界位姿，对应 link BitVector 平移/旋转到新位置；insertPointcloud() 增量插入新点云。release 1.2.0 的 self-collision 检查依赖此增量更新。输入：机器人位姿 / 点云增量 + 当前 BitVector。输出：更新后的 BitVector (GPU 显存)。依赖：s2_1 已构建 VoxelMap。约束：增量更新比重建便宜；机器人 link BitVector 平移需用 voxel grid discretization 重采（位姿非整数 voxel 边界对齐时）。性能指标：单 robot 30 link 增量更新 <5ms。适用场景：本链 s2_2 步骤、机器人 self-collision 与 map collision 每帧更新。",
+     "caps": [
+      "GPU Voxel BitVector Collision Query"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3",
+     "name": "GPU 并行 bit-AND 碰撞查询",
+     "description": "阶段入口：启动 CUDA 并行 bit-AND 碰撞查询。",
+     "caps": [
+      "GPU Voxel Collision Detection"
+     ],
+     "next": [
+      "s3_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3_1",
+     "name": "GPU Parallel Bit-AND Collision Kernel",
+     "description": "对两个对象的 BitVector 启动 CUDA kernel 并行 bit-AND：每 thread 处理 32 bit（一个 warp），用 popc() 内建函数数 bit 数，set bit 即冲突 voxel。GPU-Voxels GpuVoxels::collide() 直接调用；metaPointCloud_->getAssociatedBitvectors() 获取 BitVector 句柄。SIMT 并行让 100 万 voxel 对的检测 <10ms。输入：两个对象的 BitVector (GPU)。输出：overlap BitVector (GPU 显存)。依赖：s2_2 已更新 BitVector。约束：bit-AND kernel 复杂度 O(N/32) N=voxel 数；线程数受 GPU SM 数限制；GPU-Voxels 默认 collide() 返回 bool 仅做 boolean check，不返回 voxel list（如需 voxel list 需调 getCollidingVoxels）。性能指标：100³ cell × 2 对象 bit-AND 在 NVIDIA GTX 1080 上约 3ms；100 万 voxel 对 <10ms。适用场景：本链 s3_1 步骤、GPU 并行 voxel-AND 核心。",
+     "caps": [
+      "GPU Voxel BitVector Collision Query",
+      "Spatial Partition Pair To Narrowphase"
+     ],
+     "next": [
+      "s3_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3_2",
+     "name": "判断：Collision Found",
+     "description": "判断：bit-AND 结果 overlap BitVector 是否有 set bit（popc > 0）？是 → 转 s4 提取冲突 voxel list；否 → 直接转 s4_2 上报 no-collision（跳过 voxel 提取节省开销）。GPU-Voxels collide() 直接返回 bool；getCollidingVoxels() 用于需要 voxel list 的场景。输入：overlap BitVector (GPU)。输出：collision bool + (若 yes) 冲突 voxel list 候选。",
+     "caps": [
+      "Voxel Overlap Contact Extraction"
+     ],
+     "next": [
+      "s4",
+      "s4_2"
+     ],
+     "condition": "overlap BitVector 有 set bit",
+     "is_merge": false
+    },
+    {
+     "id": "s4",
+     "name": "碰撞结果提取与上报",
+     "description": "阶段入口（collision 分支）：提取冲突 voxel 并送上层。",
+     "caps": [
+      "GPU Voxel Collision Detection"
+     ],
+     "next": [
+      "s4_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4_1",
+     "name": "Collision Bool And Conflict Voxel Set Output",
+     "description": "把 GPU overlap BitVector 上的 set bit 提取为 (collision_bool, conflict_voxels_world_coord) 元组。GPU-Voxels getCollidingVoxels() / getCollidingBoxes() 把 set bit 的 cell 坐标转回 (x, y, z) 整数坐标，再乘 voxel size 得世界坐标；CUDA kernel 用 popc() 数 bit 数，用 atomicAdd 收集 set bit 的 cell 坐标到输出数组。两种输出形态：(1) bool collision（path validation 用）；(2) voxel list（self-collision 定位 link / map collision 定位障碍用）。输入：overlap BitVector (GPU)。输出：(collision_bool, conflict_voxels_world_coord)。依赖：s3_2 判定 collision found。约束：返回 voxel 中心点而非精确 contact point（精度限制为 voxel size）；冲突 voxel 数过多（>1000）时上报可能成为瓶颈。性能指标：1000 冲突 voxel 提取 <5ms。适用场景：本链 s4_1 步骤。",
+     "caps": [
+      "Voxel Overlap Contact Extraction"
+     ],
+     "next": [
+      "s4_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4_2",
+     "name": "Path Validation And Self Collision Report",
+     "description": "合并：聚合 collision found 分支（s4_1 提取的 voxel list）与 no-collision 分支（s3_2 直接转来）的结果，送上层 motion planning / path validation / self-collision check。GPU-Voxels ROS gpu_voxels_ros 包提供上报接口。path validation 把 trajectory 离散为多个 sample pose，每个 pose 跑 BitVector bit-AND；self-collision check 把 robot 自身 links 互相 bit-AND。输入：collision bool + conflict_voxels + trajectory samples。输出：path validation report / self-collision report 给上层 motion planner。依赖：s4_1 或 s3_2 输出。约束：本链止于检测，不做轨迹优化；本链产出的 (collision_bool, conflict_voxels) 不直接喂给 compliance_contact_model / sequential_impulse 等力学求解兄弟主题（精度不够），而是喂给上层 motion planning / path validation（不属于本 L2 主题）。适用场景：机器人 self-collision 检查、map collision 检查、motion planning path validation。",
+     "caps": [
+      "Voxel Overlap Contact Extraction"
+     ],
+     "next": [],
+     "condition": "",
+     "is_merge": true
+    }
+   ]
+  }
+ ],
+ "capabilities": [
+  {
+   "en": "GJK-EPA Convex Narrowphase Detection",
+   "zh": "GJK-EPA 凸接触窄相检测",
+   "level": "l2",
+   "description": "凸-凸几何接触检测的 Minkowski 差空间算法族。包含 GJK 单纯形迭代（相交判定 + 最近距离）和 EPA 多面体扩展（穿透深度 + 法向 + 接触点）两条核心子能力，以及配套的 support function 派发与接触流形生成子能力。输入：凸体对 + 几何状态。输出：(overlap, contact_point, normal, depth) 元组。依赖：凸形状（凹 mesh 需先用 V-HACD 凸分解）+ 上层宽相送入候选对。约束：仅处理凸-凸对；非凸需凸分解或用 mesh 窄相；典型 100 次迭代上限。性能指标：单对查询 <1ms（libccd 默认 max_iterations=100）。适用场景：物理引擎（Bullet/PhysX/MuJoCo）凸基元接触检测、机器人 motion planning 的凸包碰撞检查。",
+   "aliases": [
+    "GJK-EPA Narrowphase",
+    "Convex Penetration Solver",
+    "Minkowski Difference Collision Detection"
+   ],
+   "parent": null,
+   "children": [
+    "GJK Simplex Evolution",
+    "EPA Polytope Expansion",
+    "Convex Support Function Dispatch",
+    "Contact Manifold Generation"
+   ],
+   "assets": []
+  },
+  {
+   "en": "GJK Simplex Evolution",
+   "zh": "GJK 单纯形演化与相交判定",
+   "level": "l3",
+   "description": "在 Minkowski 差空间（A⊖B = {a-b : a∈A, b∈B}）用 support function 采点构造单纯形（最多 4 点 tetrahedron），迭代逼近原点判定是否包围。若 simplex 收敛包围原点 → 相交；若 simplex 收敛但未包围原点 → 不相交，返回最近点对距离。输入：凸体对 + support function。输出：相交标志 + 最近距离 + 最终 simplex（供 EPA 启动）。依赖：凸形状几何 + support function 接口。约束：仅处理凸-凸对；max_iterations 默认 100（libccd）；数值退化（共面/共线点）需 epsilon 容差处理。性能指标：单次查询 <1ms（万级顶点凸包，i7-12700）。适用场景：凸体接触判定，GJK-EPA 链核心步骤、链 3 SAP+primitive 窄相步骤复用。",
+   "aliases": [
+    "GJK Intersection Test",
+    "Simplex Iteration",
+    "Minkowski Difference Origin Containment"
+   ],
+   "parent": "GJK-EPA Convex Narrowphase Detection",
+   "children": [],
+   "assets": [
+    "libccd",
+    "PyBullet"
+   ]
+  },
+  {
+   "en": "EPA Polytope Expansion",
+   "zh": "EPA 多面体扩展求穿透深度",
+   "level": "l3",
+   "description": "从 GJK 收敛时的最终 simplex（3D 下 tetrahedron 包围原点）出发，构造初始多面体，迭代扩展：找距离原点最近的面 → 沿该面法向采 support 点 → 若新点超出当前面，删除该面并添加三个新面 → 收敛后原点到最近面的距离即穿透深度、该面法向即接触 normal。输入：GJK 最终 simplex + support function。输出：(depth, normal, contact_point)。依赖：GJK 已判定相交。约束：epa_tolerance 默认 1e-4（libccd）；初始 simplex 必须包含原点（由 GJK 保证）；退化情况（共面 simplex）需 fallback 到 MPR 或采样多方向重启。性能指标：单次扩展 <0.5ms（典型 5-15 次扩展收敛）。适用场景：穿透深度求解，GJK-EPA 链核心步骤、链 3 窄相步骤复用。",
+   "aliases": [
+    "EPA Expansion",
+    "Expanding Polytope Algorithm",
+    "Penetration Depth Solver"
+   ],
+   "parent": "GJK-EPA Convex Narrowphase Detection",
+   "children": [],
+   "assets": [
+    "libccd",
+    "PyBullet"
+   ]
+  },
+  {
+   "en": "Convex Support Function Dispatch",
+   "zh": "凸形状 support 函数派发",
+   "level": "l3",
+   "description": "根据凸形状类型（box / sphere / ellipsoid / capsule / cone / cylinder / convex hull / half-space / plane）派发对应 support function，返回该形状在指定方向上最远的点。这是 GJK/EPA 与具体形状的唯一接口，让算法 generic 在任意凸形状上。box：support_box(d) = sign(d)·extent/2；sphere：support_sphere(d) = R·normalize(d)；convex hull：support_hull(d) = argmax(v_i·d)；capsule/cylinder/cone 通过旋转到 local 系后用相应公式。输入：凸形状 + 方向向量 + 位姿。输出：support 点（世界系）。依赖：shape 类型与几何参数。约束：凹形状不适用；旋转矩阵传递需正交化；数值精度受浮点限制（libccd 提供 USE_DOUBLE 编译开关）。适用场景：GJK/EPA 算法的形状接口层、链 3 primitive-pair dispatch 的子步骤。",
+   "aliases": [
+    "Support Mapping",
+    "Support Function Implementation",
+    "Minkowski Support Vertex"
+   ],
+   "parent": "GJK-EPA Convex Narrowphase Detection",
+   "children": [],
+   "assets": [
+    "libccd"
+   ]
+  },
+  {
+   "en": "Contact Manifold Generation",
+   "zh": "接触流形生成与持久化",
+   "level": "l3",
+   "description": "把单次 GJK-EPA 求得的 (normal, depth, contact_point) 整理为接触流形（最多 4 个 contact point），跨帧持久化以维持稳定接触。Bullet3 用 btPersistentManifold（4-point buffer + sort by distance）；PhysX 用 Gu::ContactBuffer；FCL 用 CollisionResult::contacts。manifold 管理包括：旧点剔除（depth < 阈值移除）、新点添加（保持 ≤4 点）、跨帧 sort。输入：(normal, depth, contact_point) + 历史 manifold。输出：persistent manifold（≤4 contact points）。依赖：GJK-EPA 单次查询结果。约束：4 点上限是 Bullet/PhysX 的工程约束；持久化需 body pair ID 索引；首次接触时 manifold 为空。性能指标：manifold 更新 <0.1ms。适用场景：物理引擎跨帧接触稳定、链 3 窄相后处理。",
+   "aliases": [
+    "Contact Point Clipping",
+    "Persistent Manifold Update",
+    "Contact Buffer Management"
+   ],
+   "parent": "GJK-EPA Convex Narrowphase Detection",
+   "children": [],
+   "assets": [
+    "PyBullet"
+   ]
+  },
+  {
+   "en": "BVH Mesh Collision Detection",
+   "zh": "BVH 宽相 + Mesh 窄相接触检测",
+   "level": "l2",
+   "description": "面向任意 triangle mesh 模型的两阶段接触检测 pipeline。包含 BVH (OBBRSS) 双树遍历宽相、OBB 体积测试剪枝、triangle-triangle Möller 测试与 mesh-primitive 派发窄相、CollisionResult 聚合输出 4 条核心子能力。输入：mesh 模型对 + 位姿。输出：(contact_point, normal, depth) 列表 + 最远接触对。依赖：上层 CollisionManager 调度 + mesh 数据 + 机器人状态。约束：mesh 三角形数典型 100-10000；OBBRSS 构建需 100ms 量级（mesh 大时），运行期 BVH 遍历 1-10ms。适用场景：机器人 motion planning、autonomous navigation、autonomous manipulation。",
+   "aliases": [
+    "BVH Mesh Narrowphase",
+    "FCL-style Collision Pipeline",
+    "Triangle Mesh Collision Detection"
+   ],
+   "parent": null,
+   "children": [
+    "OBBRSS BVH Descent",
+    "Triangle Triangle Intersection Test",
+    "Mesh Primitive Narrowphase Dispatch",
+    "Collision Result Aggregation"
+   ],
+   "assets": [
+    "FCL",
+    "python-fcl"
+   ]
+  },
+  {
+   "en": "OBBRSS BVH Descent",
+   "zh": "OBBRSS BVH 双树遍历与 OBB 体积测试",
+   "level": "l3",
+   "description": "BVHModel<OBBRSS> 节点对的递归双树遍历，每个节点对用 OBB (Oriented Bounding Box) SAT 15 轴测试判断体积重叠，重叠则下钻子节点对，不重叠则剪枝。Gottschalk 1996 OBBTree 算法的工程实现。OBB 测试共 15 个候选分离轴：6 个面法向（A 的 3 + B 的 3）+ 9 个边叉积。输入：两 BVH 节点对 + 当前 BVH path。输出：重叠 leaf pair 列表。依赖：BVH 已构建（s1_1）。约束：BVH 节点需保持 OBB 与 RSS 两个 BV；OBB 重叠测试不保证几何相交（保守剪枝）；递归深度受 BVH 高度限制（典型 log2(triangle_count)）。性能指标：单次 BVH 双树遍历 O(log n × log m × k) k=重叠对数。适用场景：FCL MeshCollisionTraversalNode、HPP-FCL 同名节点、本链 s2 步骤。",
+   "aliases": [
+    "OBB Overlap Test",
+    "Gottschalk 15-Axis SAT",
+    "BVH Double Tree Traversal"
+   ],
+   "parent": "BVH Mesh Collision Detection",
+   "children": [],
+   "assets": [
+    "FCL",
+    "FCL"
+   ]
+  },
+  {
+   "en": "Triangle Triangle Intersection Test",
+   "zh": "三角形对相交测试（Möller 1997）",
+   "level": "l3",
+   "description": "O(1) 复杂度的两 triangle 相交判定：计算两三角形所在平面的交线，将两三角形投影到交线上得两个区间，区间重叠则相交。Möller 1997 JGT 算法。FCL Intersect::intersect_TriangleTriangle() 默认实现。输入：两个 triangle（顶点 3×3）。输出：相交 yes/no + 交线段（若相交）。依赖：BVH leaf pair（s2_3）。约束：共面三角形需特殊处理（退化为 2D triangle-triangle 测试）；浮点精度需 epsilon 容差。性能指标：单次测试 O(1)，典型 <1μs。适用场景：mesh-mesh 窄相 leaf 测试、本链 s3_1 步骤。",
+   "aliases": [
+    "Möller Triangle Test",
+    "Triangle Pair Intersection",
+    "JGT 1997 Triangle Test"
+   ],
+   "parent": "BVH Mesh Collision Detection",
+   "children": [],
+   "assets": [
+    "FCL"
+   ]
+  },
+  {
+   "en": "Mesh Primitive Narrowphase Dispatch",
+   "zh": "Mesh-Primitive 窄相派发",
+   "level": "l3",
+   "description": "根据 mesh 对与 primitive 对的类型组合派发到专用 narrowphase 实现：mesh-box / mesh-sphere / mesh-capsule / mesh-convex / mesh-halfspace / mesh-plane / mesh-octree。每种组合有定制 GJK / 距离查询 / projection 测试，避免通过 triangle-triangle 间接测试（性能与数值稳定性更优）。FCL ShapeMeshCollisionTraversalNode 模板族。输入：mesh + primitive + 位姿对。输出：contact info。依赖：BVH leaf pair（s2_3）。约束：每对类型需单独实现；octree 需 octomap 集成；mesh-capsule 在薄接触下数值不稳定。适用场景：本链 s3_2 步骤、链 3 primitive narrowphase 的对应 mesh 版本。",
+   "aliases": [
+    "Mesh-Shape Collision",
+    "ShapeMeshDispatch",
+    "FCL ShapeMeshTraversalNode"
+   ],
+   "parent": "BVH Mesh Collision Detection",
+   "children": [],
+   "assets": [
+    "FCL"
+   ]
+  },
+  {
+   "en": "Collision Result Aggregation",
+   "zh": "接触结果聚合与输出",
+   "level": "l3",
+   "description": "把 BVH 遍历所有 leaf pair 产生的 contact info 聚合到 CollisionResult 容器，包括 contact point 列表、最远 penetration depth、碰撞对统计。FCL CollisionResult::addContact() 累加；MoveIt2 collision_result::ContactMap 按对象对分组。输入：所有 leaf pair 的 contact info。输出：聚合 CollisionResult + 最远 contact pair。依赖：s3 步骤产出。约束：contact 数量上限受 CollisionRequest::max_contacts 限制（默认 1，motion planning 通常调高）；聚合后需按距离排序保留最深接触。适用场景：本链 s4_1 步骤、链 3/4 输出阶段。",
+   "aliases": [
+    "CollisionResult Aggregation",
+    "Contact List Collection",
+    "Collision Output Assembly"
+   ],
+   "parent": "BVH Mesh Collision Detection",
+   "children": [],
+   "assets": [
+    "FCL",
+    "MoveIt2"
+   ]
+  },
+  {
+   "en": "Dynamic BVH Broadphase Collision Detection",
+   "zh": "动态 BVH 宽相碰撞检测",
+   "level": "l2",
+   "description": "把每个刚体的 AABB 组织成层次化树（BVH），运动时增量更新 AABB 并沿父链 bubbling，查询时树自遍历或双树遍历输出 AABB 重叠的叶对。再平衡策略用 SAH（Surface Area Heuristic）。输入：刚体 AABB 集合 + 运动状态。输出：AABB 重叠候选对集合。依赖：刚体几何。约束：动态场景下需增量 refit；退化时需 SAH 再平衡。适用场景：Bullet3 btDbvtBroadphase、FCL DynamicAABBTreeCollisionManager、PhysX eBVH broadphase。",
+   "aliases": [
+    "Dynamic AABB Tree",
+    "BVH Broadphase"
+   ],
+   "parent": null,
+   "children": [
+    "Dynamic AABB Tree Construction And Update",
+    "BVH SAH Rebalance",
+    "BVH Candidate Pair To Narrowphase"
+   ],
+   "assets": []
+  },
+  {
+   "en": "Dynamic AABB Tree Construction And Update",
+   "zh": "动态 AABB 树构建与增量更新",
+   "level": "l3",
+   "description": "动态 AABB 树的构建与每帧增量更新。初始构建可选用 top-down（递归中位数分割，Bullet btDbvt::optimizeTopDown）或 bottom-up；运行期用增量 refit + bubbling 维护节点 bbox。输入：刚体几何。输出：BVH 树结构 + 每帧更新后的 bbox。约束：refit 仅更新 bbox 不改拓扑，长期运动后退化需 SAH 再平衡。适用场景：Bullet3 btDbvt、FCL DynamicAABBTreeCollisionManager。",
+   "aliases": [
+    "AABB Tree Build",
+    "BVH Refit"
+   ],
+   "parent": "Dynamic BVH Broadphase Collision Detection",
+   "children": [],
+   "assets": [
+    "FCL"
+   ]
+  },
+  {
+   "en": "BVH SAH Rebalance",
+   "zh": "BVH 包围盒面积启发式再平衡",
+   "level": "l2",
+   "description": "BVH 树退化的检测与再平衡机制。退化判据：树高超过阈值或节点 AABB 重叠率上升（SAH 下降）。再平衡策略：Bullet 周期性触发 optimizeIncremental；FCL 用 SAH（Surface Area Heuristic）重排节点。输入：退化 BVH。输出：再平衡后的 BVH。约束：再平衡开销大，需周期性触发。适用场景：Bullet3 btDbvt::optimizeIncremental、FCL SAH rebuild。",
+   "aliases": [
+    "SAH Rebuild",
+    "BVH Optimization"
+   ],
+   "parent": "Dynamic BVH Broadphase Collision Detection",
+   "children": [],
+   "assets": [
+    "FCL"
+   ]
+  },
+  {
+   "en": "BVH Candidate Pair To Narrowphase",
+   "zh": "BVH 候选对送窄相接口",
+   "level": "l3",
+   "description": "BVH 遍历输出的候选对集合送窄相做精确几何测试（GJK/EPA/SAT 等）的接口与去重机制。Bullet 实现 btOverlappingPairCache + btHashedOverlappingPairCache 哈希去重；FCL 用 CollisionManager 内部 pair cache。输入：BVH 候选对。输出：去重后的候选对集合送窄相。约束：去重避免重复 narrowphase 调用。适用场景：Bullet3 btOverlappingPairCache、FCL CollisionManager pair cache。区分：与 CAP_3fafbc78（SAP 候选对送窄相）的区别——本能力服务于 BVH 双树遍历 broadphase 后端（Bullet btDbvt / FCL DynamicAABBTree），候选对来自 BVH 节点 AABB 重叠；SAP 后端的候选对来自扫掠活动集 3 轴 AABB 重叠测试，去重机制相同但上游 broadphase 数据源不同，不可混用。",
+   "aliases": [
+    "BVH Pair Cache",
+    "Overlapping Pair Dispatcher"
+   ],
+   "parent": "Dynamic BVH Broadphase Collision Detection",
+   "children": [],
+   "assets": [
+    "FCL"
+   ]
+  },
+  {
+   "en": "SAP Primitive Narrowphase",
+   "zh": "SAP 宽相 + 凸基元窄相接触检测",
+   "level": "l2",
+   "description": "面向大量凸基元对的 SAP 宽相 + 派发窄相 pipeline。包含 SAP 端点量化与维护、扫掠与活动集、primitive-pair 类型派发、SAT 专用算法 4 条核心子能力，并复用链 1 GJK-EPA convex narrowphase 作为通用 convex-convex 路径。输入：凸基元集合 + 位姿。输出：(normal, depth, contact_point) manifold。依赖：刚体集合 + SAP 端点数组。约束：SAP 在密集场景退化需 BVH hybrid；SAT 仅适用特定 primitive 对。性能指标：1k 物体 SAP ~1ms；convex-convex narrowphase ~1μs/对。适用场景：Bullet3 btAxisSweep3、PhysX eSAP、Box2D b2BroadPhase 默认 broadphase+narrowphase。",
+   "aliases": [
+    "SAP+Primitive Pipeline",
+    "Bullet3-style Broadphase+Narrowphase",
+    "Axis Sweep + Convex Narrowphase"
+   ],
+   "parent": null,
+   "children": [
+    "Primitive Pair Dispatch",
+    "SAT For Specific Primitive Pairs"
+   ],
+   "assets": [
+    "PyBullet",
+    "NVIDIA PhysX",
+    "Box2D"
+   ]
+  },
+  {
+   "en": "Primitive Pair Dispatch",
+   "zh": "primitive 对算法派发表",
+   "level": "l3",
+   "description": "根据候选对的 primitive 类型组合查派发表（dispatch table），选择 GJK+EPA、SAT、或专用算法（sphere-sphere 距离 / capsule-capsule segment 距离）。Bullet3 btDefaultCollisionConfiguration 注册 m_doubleDispatch[type1][type2]；Box2D b2ContactRegister 同；PhysX GuParticleSystem::dispatcher 同。输入：候选 primitive pair + 类型枚举。输出：algorithm 类指针 + 算法上下文。依赖：s2_3 候选对。约束：未注册类型对需 fallback 到 GJK（凸-凸通用）；每对类型在初始化时注册。性能指标：派发表查询 O(1)。适用场景：本链 s3_1 步骤、链 1 GJK-EPA 链入口（同样有 primitive type lookup）。",
+   "aliases": [
+    "Collision Algorithm Dispatch",
+    "Type Pair Lookup",
+    "btCollisionDispatcher"
+   ],
+   "parent": "SAP Primitive Narrowphase",
+   "children": [],
+   "assets": [
+    "PyBullet",
+    "NVIDIA PhysX"
+   ]
+  },
+  {
+   "en": "SAT For Specific Primitive Pairs",
+   "zh": "SAT 窄相（特定 primitive 对）",
+   "level": "l3",
+   "description": "对特定 primitive 对执行 SAT（Separating Axis Theorem）算法，避免 GJK 迭代，直接求穿透深度。box-box：测试 15 轴（6 面法向 + 9 边叉积）；sphere-sphere：测试 1 轴（中心连线）；sphere-plane：测试 1 轴（平面法向）；capsule-capsule：测试 4 轴（两 capsule 轴 + 两 capsule 端点连线）。Box2D b2CollidePolygon 实现 2D SAT；Bullet3 btPolyhedralContactClipping 实现 3D SAT for polyhedron-polyhedron；PhysX GuPCMContact 模板族实现各 primitive 对的 SAT。输入：primitive pair + 位姿。输出：(normal, depth, contact_point)。依赖：s3_2 选 SAT 分支。约束：仅特定 primitive 对有专用 SAT；通用 convex-convex 需 fallback 到 GJK。性能指标：单次 SAT O(15) = 常数时间。适用场景：本链特定 primitive 对窄相、Box2D 2D 物理引擎默认窄相。",
+   "aliases": [
+    "Separating Axis Theorem",
+    "Hyperplane Separation",
+    "Box-Box SAT"
+   ],
+   "parent": "SAP Primitive Narrowphase",
+   "children": [],
+   "assets": [
+    "PyBullet",
+    "NVIDIA PhysX",
+    "Box2D"
+   ]
+  },
+  {
+   "en": "Sweep And Prune Broadphase",
+   "zh": "扫掠剪枝宽相碰撞检测",
+   "level": "l2",
+   "description": "把每个刚体的 AABB 在 N 轴（1/2/3）上展开成 min/max 端点，每轴维护一张有序端点表，扫掠时维护活动集，活动集内任意两 handle 在该轴上 AABB 重叠。3 轴 SAP 是 Bullet3 btAxisSweep3 默认实现；1 轴 SAP 是 Box2D b2BroadPhase 实现；PhysX eSAP 是 NVIDIA 实现。输入：刚体 AABB 集合 + 运动状态。输出：AABB 重叠候选对集合。依赖：刚体几何。约束：密集场景下活动集爆炸需 hybrid。适用场景：Bullet3 btAxisSweep3、PhysX eSAP、Box2D b2BroadPhase。",
+   "aliases": [
+    "SAP",
+    "Sort and Sweep",
+    "Axis Sweep"
+   ],
+   "parent": null,
+   "children": [
+    "Axis Endpoint Sort And Sweep",
+    "Active Set Sweep And Multi-Axis Overlap Test",
+    "SAP Candidate Pair To Narrowphase"
+   ],
+   "assets": [
+    "PyBullet",
+    "NVIDIA PhysX",
+    "Box2D"
+   ]
+  },
+  {
+   "en": "Axis Endpoint Sort And Sweep",
+   "zh": "轴端点排序与扫掠",
+   "level": "l3",
+   "description": "对 3 轴 edge 数组做初始化与每帧增量重排。初始化时 quantize 世界 AABB 坐标到 16/32 位整数坐标（Bullet btAxisSweep3 用 quantizeWithClamp）；每帧增量更新用 insertion sort（少量端点移动）。输入：刚体 AABB 集合 + 上一帧排序。输出：3 轴有序端点数组。约束：量化精度受限于整数位宽。适用场景：Bullet3 btAxisSweep3、PhysX PxBroadPhase、Box2D b2BroadPhase。",
+   "aliases": [
+    "Endpoint Sort",
+    "Incremental Sort",
+    "Quantize AABB"
+   ],
+   "parent": "Sweep And Prune Broadphase",
+   "children": [],
+   "assets": [
+    "PyBullet"
+   ]
+  },
+  {
+   "en": "Active Set Sweep And Multi-Axis Overlap Test",
+   "zh": "活动集扫描与多轴重叠测试",
+   "level": "l3",
+   "description": "扫描一轴（通常 x 轴）的端点流时维护活动集——遇到 min 端点把对应 handle 加入活动集，遇到 max 端点移除。活动集内任意两个 handle 在该轴上 AABB 重叠。再用其余 2 轴做精确 AABB 重叠测试，3 轴都重叠才送窄相。输入：3 轴有序端点数组。输出：3 轴 AABB 重叠候选对集合。约束：活动集大小与场景密度相关。适用场景：Bullet3 btAxisSweep3::calculateOverlappingPairs、Box2D b2BroadPhase::UpdatePairs。",
+   "aliases": [
+    "Active Set",
+    "Sort Sweep",
+    "3-Axis Overlap"
+   ],
+   "parent": "Sweep And Prune Broadphase",
+   "children": [],
+   "assets": [
+    "PyBullet"
+   ]
+  },
+  {
+   "en": "SAP Candidate Pair To Narrowphase",
+   "zh": "SAP 候选对送窄相接口",
+   "level": "l3",
+   "description": "SAP 扫描得到的候选对集合写入 btOverlappingPairCache（Bullet 用 btHashedOverlappingPairCache 哈希去重）或 PxBroadPhase pair cache。去重后送窄相做精确几何测试。输入：3 轴 AABB 重叠候选对。输出：去重候选对集合送窄相。约束：hash 去重避免重复 narrowphase 调用。适用场景：Bullet3 btAxisSweep3、PhysX PxBroadPhase pair cache。区分：与 CAP_682b5c7d（BVH 候选对送窄相）的区别——本能力服务于 SAP（Sweep And Prune）broadphase 后端（Bullet3 btAxisSweep3 / PhysX eSAP / Box2D b2BroadPhase），候选对来自扫掠活动集 3 轴 AABB 重叠测试，端点排序+量化是上游环节；BVH 后端的候选对来自树节点 AABB 重叠，两者数据源与上游 broadphase 不同，去重接口实现不同。",
+   "aliases": [
+    "SAP Pair Cache",
+    "Overlapping Pair Dispatcher"
+   ],
+   "parent": "Sweep And Prune Broadphase",
+   "children": [],
+   "assets": [
+    "PyBullet"
+   ]
+  },
+  {
+   "en": "GPU Voxel Collision Detection",
+   "zh": "GPU 并行体素碰撞检测",
+   "level": "l2",
+   "description": "基于 CUDA 并行的体素级碰撞检测 pipeline。包含 mesh/点云 voxelization 预处理、voxel hash BitVector GPU 维护、CUDA 并行 bit-AND 碰撞查询、冲突 voxel 提取与上报 4 条核心子能力。输入：机器人 URDF/mesh + 环境点云 + trajectory samples。输出：(collision_bool, conflict_voxels) 元组。依赖：CUDA GPU（最低 7.5 compute capability）+ URDF/mesh + 点云传感器。约束：voxel size 典型 1-5cm，分辨率与显存 trade-off；不做精确 contact normal；适合预筛 / 安全检查，不适合需要精确 contact point 的力学求解场景。性能指标：100 万 voxel 对 bit-AND <10ms。适用场景：机器人 self-collision 检查、map collision 检查、motion planning path validation。",
+   "aliases": [
+    "GPU Voxel Collision Pipeline",
+    "CUDA Bit-AND Collision",
+    "GPU-Voxels Pipeline"
+   ],
+   "parent": null,
+   "children": [
+    "Mesh And Point Cloud Voxelization",
+    "Voxel Overlap Contact Extraction"
+   ],
+   "assets": [
+    "GPU-Voxels"
+   ]
+  },
+  {
+   "en": "Mesh And Point Cloud Voxelization",
+   "zh": "mesh 与点云体素化预处理",
+   "level": "l3",
+   "description": "把机器人 link mesh（URDF）与环境感知点云（LiDAR/RGB-D）离散为 voxel BitVector。mesh 离散用 GPU-Voxels voxelizeMesh()（基于 CUDA 三角面栅格化），点云离散用 insertPointcloud()（直接把点坐标 round 到 cell index）。输入：URDF/mesh 或点云 + voxel size。输出：per-link / per-cloud BitVector (GPU 显存)。依赖：CUDA GPU + URDF 解析。约束：mesh 凹形需在 voxelization 时按 resolution 自然离散（不需 V-HACD 预处理，与链 1/3 的 convex 假设不同）；voxel size 决定精度，1cm 精度下 100m³ 场景需 ~100MB 显存。性能指标：单 robot link mesh voxelization <50ms，点云 1M points voxelization <20ms。适用场景：本链 s1_1/s1_2 步骤，机器人 self-collision 与 map collision 的预处理。",
+   "aliases": [
+    "Mesh To BitVector",
+    "Point Cloud Voxelization",
+    "Voxel Grid Discretization"
+   ],
+   "parent": "GPU Voxel Collision Detection",
+   "children": [],
+   "assets": [
+    "GPU-Voxels"
+   ]
+  },
+  {
+   "en": "Voxel Overlap Contact Extraction",
+   "zh": "voxel 重叠接触提取",
+   "level": "l3",
+   "description": "把 GPU bit-AND 输出的 overlap BitVector 提取为可用冲突信息。两种输出形态：(1) bool collision（仅返回是否有冲突，path validation 用）；(2) voxel list（返回冲突 voxel 的世界坐标，self-collision 定位 link / map collision 定位障碍用）。GPU-Voxels getCollidingVoxels() / getCollidingBoxes() 把 GPU BitVector 上的 set bit 转回 (x, y, z) cell 坐标，再乘 voxel size 得世界坐标。输入：overlap BitVector (GPU)。输出：(collision_bool, conflict_voxels_world_coord)。依赖：上游 bit-AND kernel 完成。约束：返回 voxel 中心点而非精确 contact point（精度限制为 voxel size）；冲突 voxel 数过多（>1000）时上报可能成为瓶颈。性能指标：1000 冲突 voxel 提取 <5ms。适用场景：本链 s3_2/s4_1 步骤。",
+   "aliases": [
+    "Conflict Voxel Extraction",
+    "Bit-AND Result Postprocess",
+    "Voxel Collision Localization"
+   ],
+   "parent": "GPU Voxel Collision Detection",
+   "children": [],
+   "assets": [
+    "GPU-Voxels"
+   ]
+  },
+  {
+   "en": "Spatial Partition Voxel Broadphase",
+   "zh": "空间划分体素宽相碰撞检测",
+   "level": "l2",
+   "description": "把工作空间离散为均匀体素网格（uniform voxel grid）或自适应八叉树（octree），物体或其占据的 cell 通过空间哈希函数（uniform grid）或递归下钻（octree）查询，输出 cell 重叠候选对送窄相。输入：物体几何 + 世界 bounds。输出：cell 重叠候选对集合。约束：均匀网格显存占用随场景尺寸立方增长；八叉树适合稀疏场景。适用场景：GPU-Voxels 均匀 voxel、OctoMap 八叉树、Bullet3 btVoxelBroadphase。",
+   "aliases": [
+    "Voxel Broadphase",
+    "Uniform Grid Collision",
+    "Spatial Partition Umbrella"
+   ],
+   "parent": null,
+   "children": [
+    "Spatial Hash Bucket Query",
+    "Spatial Partition Pair To Narrowphase",
+    "Octree Multi-Resolution Occupancy Query",
+    "GPU Voxel BitVector Collision Query"
+   ],
+   "assets": []
+  },
+  {
+   "en": "Spatial Hash Bucket Query",
+   "zh": "空间哈希桶查询",
+   "level": "l3",
+   "description": "均匀体素网格 + 空间哈希函数的候选对生成机制。空间哈希函数 hash(cell_x, cell_y, cell_z) 把 cell 坐标映射到桶数组索引；查询时根据 hash 桶反查 cell 占用。输入：cell 坐标 + hash 表。输出：cell 占用集合。约束：hash 冲突需链表或开放寻址解决。适用场景：GPU-Voxels VoxelMap、Bullet3 btHashedOverlappingPairCache、CPU voxel broadphase。",
+   "aliases": [
+    "Spatial Hash",
+    "Voxel Hash Function",
+    "Grid Hash Query"
+   ],
+   "parent": "Spatial Partition Voxel Broadphase",
+   "children": [],
+   "assets": [
+    "GPU-Voxels"
+   ]
+  },
+  {
+   "en": "Spatial Partition Pair To Narrowphase",
+   "zh": "空间划分候选对送窄相接口",
+   "level": "l3",
+   "description": "空间划分体素宽相输出候选对送窄相的接口机制。GPU-Voxels 的窄相是 voxel AND 精确测试（collide() 返回冲突 voxel BitVector）；Bullet3 btVoxelBroadphase 把候选对送 GJK/EPA。输入：空间划分候选对。输出：候选对集合送窄相。约束：接口与窄相实现解耦。适用场景：GPU-Voxels voxel-AND、Bullet3 voxel→GJK、CPU voxel broadphase。",
+   "aliases": [
+    "Voxel Pair Dispatcher",
+    "Spatial Partition To Narrowphase"
+   ],
+   "parent": "Spatial Partition Voxel Broadphase",
+   "children": [],
+   "assets": [
+    "GPU-Voxels"
+   ]
+  },
+  {
+   "en": "Octree Multi-Resolution Occupancy Query",
+   "zh": "八叉树多分辨率占据查询",
+   "level": "l3",
+   "description": "八叉树自适应空间划分的 occupancy mapping 框架的碰撞查询机制。OctoMap 用递归下钻把 cell 坐标映射到 OcTreeKey（三轴整数），按需展开节点；FCL 集成 octomap 作为 octree 几何类型。输入：cell 坐标 + octree。输出：cell 占用状态。约束：八叉树下钻不利于 GPU SIMT，适合 CPU；GPU-Voxels 选均匀 voxel 而非八叉树的理由。适用场景：OctoMap 建图、FCL mesh-octree 碰撞、CPU 稀疏 occupancy mapping。",
+   "aliases": [
+    "OctoMap Query",
+    "Octree Traversal",
+    "Multi-Resolution Voxel"
+   ],
+   "parent": "Spatial Partition Voxel Broadphase",
+   "children": [],
+   "assets": [
+    "OctoMap"
+   ]
+  },
+  {
+   "en": "GPU Voxel BitVector Collision Query",
+   "zh": "GPU 体素 BitVector 与碰撞查询",
+   "level": "l3",
+   "description": "GPU-Voxels 的 CUDA 并行体素哈希碰撞查询机制。把物体 mesh 离散为 voxel 集合写入 BitVector（每 cell 用 bit 表示 occupancy），CUDA kernel 并行 bit-AND 检测冲突 voxel 集合。输入：两对象 BitVector (GPU)。输出：overlap BitVector + collision bool。约束：CUDA 7.5+ required；voxel size 与显存占用呈立方关系。适用场景：GPU-Voxels 核心 collide() 实现、本链 s2/s3 步骤。",
+   "aliases": [
+    "GPU BitVector",
+    "CUDA Voxel AND",
+    "BitVector Collision"
+   ],
+   "parent": "Spatial Partition Voxel Broadphase",
+   "children": [],
+   "assets": [
+    "GPU-Voxels"
+   ]
+  }
+ ],
+ "assets": [
+  {
+   "name": "libccd",
+   "type": "tool",
+   "source": "https://github.com/danfis/libccd",
+   "description": "Daniel Fiser 维护的凸形状碰撞检测 C 库，实现 GJK + EPA + MPR（XenoCollide）三种凸-凸接触检测算法，被 ODE / FCL / Bullet3 / MuJoCo 共用作为 convex 窄相后端。BSD-3-Clause。输入：凸体对 + support function。输出：相交判定 / 穿透深度 + 法向 + 接触点。依赖：C 编译器。约束：仅处理凸-凸对，凹 mesh 需先凸分解；max_iterations 默认 100。适用场景：物理引擎（ODE/Bullet3/FCL/MuJoCo）的 convex 窄相后端、机器人 motion planning 的凸包碰撞检查。",
+   "usage": "#include <ccd/ccd.h>\nced_t ccd;\nCCD_INIT(&ccd);\nccd.support1 = support;\nccd.support2 = support;\nccd.max_iterations = 100;\nint intersect = ccdGJKIntersect(obj1, obj2, &ccd);",
+   "implements": [
+    "GJK Simplex Evolution",
+    "EPA Polytope Expansion",
+    "Convex Support Function Dispatch"
+   ]
+  },
+  {
+   "name": "PyBullet",
+   "type": "simulator",
+   "source": "https://github.com/bulletphysics/bullet3",
+   "description": "Bullet3 物理引擎的 Python 绑定，提供刚体动力学仿真与碰撞检测。本链引用其 btGjkPairDetector / btGjkEpa2 / btPersistentManifold / btVoronoiSimplexSolver 等 narrowphase 模块作为 contact manifold generation 与 GJK/EPA 实现证据。输入：URDF/MJCF + 刚体状态。输出：仿真状态 + contact manifold。依赖：CMake + Python。约束：3D 仿真，2D 用 Box2D。适用场景：物理仿真、机器人 motion planning 碰撞检查、强化学习训练。",
+   "usage": "import pybullet as p\nclient = p.connect(p.GUI)\nobj = p.loadURDF('robot.urdf')\np.stepSimulation()",
+   "implements": [
+    "Contact Manifold Generation",
+    "GJK Simplex Evolution",
+    "EPA Polytope Expansion",
+    "SAP Primitive Narrowphase",
+    "Primitive Pair Dispatch",
+    "SAT For Specific Primitive Pairs",
+    "Sweep And Prune Broadphase",
+    "Axis Endpoint Sort And Sweep",
+    "Active Set Sweep And Multi-Axis Overlap Test",
+    "SAP Candidate Pair To Narrowphase"
+   ]
+  },
+  {
+   "name": "FCL",
+   "type": "tool",
+   "source": "https://github.com/flexible-collision-library/fcl",
+   "description": "UNC Chapel Hill Gamma Lab（Jia Pan / Dinesh Manocha 等）出品的通用 3D 碰撞检测库，提供 collision/distance/tolerance/continuous 四类查询，支持 11 种几何（box/sphere/ellipsoid/capsule/cone/cylinder/convex/half-space/plane/mesh/octree）。DynamicAABBTreeCollisionManager 默认且最快 broadphase；BVHModel<OBBRSS> 是 mesh 加速结构。被 MoveIt2 / EXOTica / Tesseract 集成。输入：几何对象 + 位姿 + CollisionRequest。输出：CollisionResult。依赖：Eigen、libccd（gjk_libccd.inl）、可选 octomap。约束：C++ 库，Python 通过 python-fcl 绑定。适用场景：机器人 motion planning 碰撞检测。",
+   "usage": "std::shared_ptr<BVHModel<OBBRSSf>> geom = std::make_shared<BVHModel<OBBRSSf>>();\ngeom->beginModel();\ngeom->addSubModel(vertices, triangles);\ngeom->endModel();\nCollisionObjectf* obj = new CollisionObjectf(geom, pose);\nCollisionRequest request; CollisionResult result;\ncollide(o1, o2, request, result);",
+   "implements": [
+    "BVH Mesh Collision Detection",
+    "OBBRSS BVH Descent",
+    "Triangle Triangle Intersection Test",
+    "Mesh Primitive Narrowphase Dispatch",
+    "Collision Result Aggregation",
+    "Dynamic AABB Tree Construction And Update",
+    "OBBRSS BVH Descent",
+    "BVH SAH Rebalance",
+    "BVH Candidate Pair To Narrowphase"
+   ]
+  },
+  {
+   "name": "python-fcl",
+   "type": "tool",
+   "source": "https://github.com/BerkeleyAutomation/python-fcl",
+   "description": "UC Berkeley Automation Lab 维护的 FCL Python 绑定，被 pick-and-place / robot manipulation 社区使用。封装 FCL 的 BVHModel<OBBRSS> + CollisionManager + collide/distance API 为 Python 接口。输入：Python mesh + 位姿。输出：Python CollisionResult。依赖：FCL C++ 库、numpy。约束：Python 调用 C++ 开销在每帧调用时累积；建议批量查询。适用场景：Python 机器人 manipulation 与 motion planning 碰撞检测。",
+   "usage": "import fcl\ngeom = fcl.BVHModel()\ngeom.beginModel()\ngeom.addSubModel(vertices, triangles)\ngeom.endModel()\nobj = fcl.CollisionObject(geom)\nrequest = fcl.CollisionRequest()\nresult = fcl.CollisionResult()\nfcl.collide(obj1, obj2, request, result)",
+   "implements": [
+    "BVH Mesh Collision Detection"
+   ]
+  },
+  {
+   "name": "MoveIt2",
+   "type": "framework",
+   "source": "https://github.com/ros-planning/moveit2",
+   "description": "ROS2 机器人 motion planning 框架，planning_scene 提供 checkCollision() 接口，ACM (Allowed Collision Matrix) 编码免检对，默认集成 FCL 作为 collision 后端（collision_detection_fcl）。PickNik Robotics 维护。输入：URDF + SRDF + planning_scene + robot_state。输出：motion plan + collision result。依赖：ROS2、FCL、urdf、srdf、OMPL。约束：collision check 可占 motion planning 90% 计算资源；ACM 是工程优化。适用场景：ROS2 机器人 manipulation / mobile manipulation motion planning。",
+   "usage": "collision_detection::CollisionRequest req;\ncollision_detection::CollisionResult res;\nreq.group_name = \"manipulator\";\nplanning_scene.checkCollision(req, res, robot_state, acm);\nbool collides = res.collision;",
+   "implements": [
+    "Collision Result Aggregation"
+   ]
+  },
+  {
+   "name": "NVIDIA PhysX",
+   "type": "simulator",
+   "source": "https://github.com/NVIDIA-Omniverse/PhysX",
+   "description": "NVIDIA 实时物理仿真引擎，Isaac Sim / Omniverse 默认物理后端。提供 4 种 broadphase：eSAP（3 轴 SAP，本链主引用）、eBVH、eABP（automatic box pruning，hybrid）、eGPU（GPU 并行）。Narrowphase 用 GuPCMContact 模板族实现各 primitive 对的 SAT/GJK。输入：刚体集合 + 场景。输出：contact pairs + dynamics。依赖：CUDA（GPU 模式可选）。约束：NVIDIA SDK License（含品牌限制）。适用场景：Isaac Sim / Omniverse 物理、机器人仿真。",
+   "usage": "physx::PxFoundation* foundation = PxCreateFoundation(PX_PHYSICS_VERSION, allocator, errorCallback);\nphysx::PxPhysics* physics = PxCreateBasePhysics(PX_PHYSICS_VERSION, *foundation, scale);\nphysx::PxScene* scene = physics->createScene(sceneDesc);\nsceneDesc.flags |= physx::PxSceneFlag::eENABLE_PCM;\nscene->simulate(dt);",
+   "implements": [
+    "SAP Primitive Narrowphase",
+    "Primitive Pair Dispatch",
+    "SAT For Specific Primitive Pairs",
+    "Sweep And Prune Broadphase"
+   ]
+  },
+  {
+   "name": "Box2D",
+   "type": "simulator",
+   "source": "https://github.com/erincatto/box2d",
+   "description": "Erin Catto 维护的 2D 物理引擎，broadphase 用 b2DynamicTree（动态 AABB 树）+ b2BroadPhase（stack of AABB）。narrowphase 用 b2Collide* 函数族直接派发各 primitive 对的 SAT 算法。Box2D v3 重写为 C17。输入：刚体集合 + 2D 场景。输出：contact pairs + dynamics。依赖：CMake。约束：仅 2D 仿真。适用场景：2D 游戏、2D 物理仿真教学、SAT 算法参考实现。",
+   "usage": "b2WorldId world = b2CreateWorld(&worldDef);\nb2BodyDef bodyDef = b2_defaultBodyDef;\nbodyDef.type = b2_dynamicBody;\nb2BodyId body = b2CreateBody(world, &bodyDef);\nb2PolygonShapeDef shapeDef = b2_defaultPolygonShapeDef;\nb2CreatePolygonShape(body, &shapeDef, &polygon);\nb2World_Step(world, timeStep, subStepCount);",
+   "implements": [
+    "SAP Primitive Narrowphase",
+    "SAT For Specific Primitive Pairs",
+    "Sweep And Prune Broadphase"
+   ]
+  },
+  {
+   "name": "GPU-Voxels",
+   "type": "tool",
+   "source": "https://github.com/fzi-forschungszentrum-informatik/gpu-voxels",
+   "description": "FZI Forschungszentrum Informatik 维护（原 UNR-MSL 起家）的 CUDA-based 高速并行 3D voxel 碰撞检测库。把 mesh 离散为 voxel BitVector，CUDA kernel 并行 bit-AND 检测冲突 voxel 集合。release 1.3.0（2019-01-11）支持 CUDA 10.0 + Ubuntu 18.04，C++11 default，ROS DistanceROSDemo example；release 1.2.0（2018-05-02）Added self-collision checks by Andreas Hermann。CERBERUS DARPA SubT 团队使用。输入：URDF/mesh + 点云 + voxel size。输出：(collision_bool, conflict_voxels) 元组。依赖：CUDA 7.5+ / Ubuntu 16.04+ / PCL / Boost / GLEW / GLM / OpenGL / GLUT / ROS（可选）。约束：voxel size 决定精度，1cm 精度下 100m³ 场景需 ~100MB 显存；不输出精确 contact normal；FZI 接手后 release 进度慢但仓库持续 commit。适用场景：机器人 self-collision 检查、map collision 检查、motion planning path validation。",
+   "usage": "#include \"gpu_voxels/GpuVoxels.h\"\nusing namespace gpu_voxels;\nGpuVoxelsPtr gpu_voxels = GpuVoxels::getInstance();\ngpu_voxels->initialize(200, 200, 200, 0.01);\ngpu_voxels->addRobot(\"robot\", \"package://robot_description/urdf/robot.urdf\", std::vector<std::string>(), true);\ngpu_voxels->updateRobot(\"robot\", robot_joint_positions);\ngpu_voxels->insertPointcloud(\"env_cloud\", pointcloud_data, eBVM_OCCUPIED);\nbool collision = gpu_voxels->collide(\"robot_bitvector\", \"env_cloud_bitvector\");\nstd::vector<Vector3i> colliding_voxels = gpu_voxels->getCollidingVoxels(\"robot\", \"env_cloud\");",
+   "implements": [
+    "GPU Voxel Collision Detection",
+    "Mesh And Point Cloud Voxelization",
+    "Voxel Overlap Contact Extraction",
+    "GPU Voxel BitVector Collision Query",
+    "Spatial Hash Bucket Query",
+    "Spatial Partition Pair To Narrowphase"
+   ]
+  },
+  {
+   "name": "OctoMap",
+   "type": "framework",
+   "source": "https://github.com/OctoMap/octomap",
+   "description": "Armin Hornung 等开发的 CPU 八叉树 sparse occupancy mapping 框架，递归下钻把 cell 坐标映射到 OcTreeKey（三轴整数），按需展开节点。FCL 集成 octomap 作为 octree 几何类型。本链作为对比视角资产——GPU-Voxels 选均匀 voxel 而非八叉树的理由（GPU SIMT 要求均匀网格，自适应八叉树下钻不利于并行）。输入：点云 + resolution。输出：sparse occupancy octree。依赖：CMake。约束：CPU 实现，不适合 GPU 并行；稀疏场景下显存效率高。适用场景：SLAM 建图、CPU occupancy mapping、FCL mesh-octree 碰撞。",
+   "usage": "#include <octomap/octomap.h>\noctomap::OcTree tree(0.05);\ntree.insertPointCloud(cloud, sensor_origin);\nbool is_occupied = tree.search(point) == octomap::AbstractOcTreeNode::OCCUPIED;",
+   "implements": [
+    "Octree Multi-Resolution Occupancy Query"
+   ]
+  }
+ ],
+ "evidence": {
+  "chain_documents": 4,
+  "ledgers": 4,
+  "websearch_total": 42,
+  "webfetch_total": 34,
+  "with_negative_results": 4
+ }
+}

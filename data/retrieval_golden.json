@@ -1,0 +1,1779 @@
+{
+ "count": 126,
+ "description": "Domain-specific retrieval golden set for robotics engineering knowledge. Three assertion strengths (expect / expect_any / expect_match) plus negative assertions (reject / reject_match). Entity references carry both the surrogate id and the resolved bilingual name, so the set stays usable across registry rebuilds.",
+ "queries": [
+  {
+   "query": "MoveIt",
+   "type": "identity",
+   "note": "精确资产名；同时测不该混进无关资产",
+   "expect": [
+    {
+     "id": "AST_0c5223ee",
+     "kind": "asset",
+     "en": "MoveIt 2"
+    }
+   ],
+   "reject": [
+    {
+     "id": "AST_8d60f52a",
+     "kind": "asset",
+     "en": "MuJoCo"
+    },
+    {
+     "id": "AST_125b77d6",
+     "kind": "asset",
+     "en": "OpenAI Whisper"
+    }
+   ]
+  },
+  {
+   "query": "MuJoCo 仿真",
+   "type": "identity",
+   "note": "名+中文修饰",
+   "expect": [
+    {
+     "id": "AST_8d60f52a",
+     "kind": "asset",
+     "en": "MuJoCo"
+    }
+   ]
+  },
+  {
+   "query": "YOLOv8 目标检测",
+   "type": "identity",
+   "note": "模型/包别名",
+   "expect": [
+    {
+     "id": "AST_192a53ce",
+     "kind": "asset",
+     "en": "Ultralytics YOLO"
+    }
+   ]
+  },
+  {
+   "query": "ORB-SLAM3",
+   "type": "identity",
+   "note": "连字符名",
+   "expect": [
+    {
+     "id": "AST_7118dc67",
+     "kind": "asset",
+     "en": "ORB-SLAM3"
+    }
+   ]
+  },
+  {
+   "query": "GTSAM 因子图优化",
+   "type": "identity",
+   "note": "缩写+中文修饰",
+   "expect": [
+    {
+     "id": "AST_f6dc9b09",
+     "kind": "asset",
+     "en": "GTSAM"
+    }
+   ]
+  },
+  {
+   "query": "Pinocchio 动力学库",
+   "type": "identity",
+   "note": "名+用途",
+   "expect": [
+    {
+     "id": "AST_3070ed6a",
+     "kind": "asset",
+     "en": "Pinocchio"
+    }
+   ]
+  },
+  {
+   "query": "OMPL",
+   "type": "identity",
+   "note": "缩写",
+   "expect": [
+    {
+     "id": "AST_22510105",
+     "kind": "asset",
+     "en": "OMPL"
+    }
+   ]
+  },
+  {
+   "query": "cuRobo",
+   "type": "identity",
+   "note": "混合大小写；同时测精确实体不该扩散",
+   "expect": [
+    {
+     "id": "AST_6c304058",
+     "kind": "asset",
+     "en": "cuRobo"
+    }
+   ],
+   "reject": [
+    {
+     "id": "AST_f57280c8",
+     "kind": "asset",
+     "en": "PCL"
+    },
+    {
+     "id": "AST_405fe3a5",
+     "kind": "asset",
+     "en": "apriltag"
+    }
+   ]
+  },
+  {
+   "query": "Isaac Sim 仿真",
+   "type": "identity",
+   "note": "两词名，注意别串到 Isaac Gym",
+   "expect": [
+    {
+     "id": "AST_9893d376",
+     "kind": "asset",
+     "en": "Isaac Sim"
+    }
+   ]
+  },
+  {
+   "query": "Grounding DINO",
+   "type": "identity",
+   "note": "空格 vs 连写",
+   "expect": [
+    {
+     "id": "AST_ec3e8b68",
+     "kind": "asset",
+     "en": "GroundingDINO"
+    }
+   ]
+  },
+  {
+   "query": "Whisper 语音识别",
+   "type": "identity",
+   "note": "短名 vs 全名；同时测语音不该召回几何库",
+   "expect": [
+    {
+     "id": "AST_125b77d6",
+     "kind": "asset",
+     "en": "OpenAI Whisper"
+    }
+   ],
+   "reject": [
+    {
+     "id": "AST_d593af76",
+     "kind": "asset",
+     "en": "Open3D"
+    },
+    {
+     "id": "AST_f6dc9b09",
+     "kind": "asset",
+     "en": "GTSAM"
+    }
+   ]
+  },
+  {
+   "query": "BehaviorTree.CPP",
+   "type": "identity",
+   "note": "带点号",
+   "expect": [
+    {
+     "id": "AST_7b2714fd",
+     "kind": "asset",
+     "en": "BehaviorTree.CPP"
+    }
+   ]
+  },
+  {
+   "query": "RTAB-Map",
+   "type": "identity",
+   "note": "连字符",
+   "expect": [
+    {
+     "id": "AST_e51c31d7",
+     "kind": "asset",
+     "en": "RTAB-Map"
+    }
+   ]
+  },
+  {
+   "query": "teb_local_planner",
+   "type": "identity",
+   "note": "ROS 包名下划线",
+   "expect": [
+    {
+     "id": "AST_a7cee2e5",
+     "kind": "asset",
+     "en": "teb_local_planner"
+    }
+   ]
+  },
+  {
+   "query": "SAM 分割一切",
+   "type": "identity",
+   "note": "缩写+中文别名",
+   "expect": [
+    {
+     "id": "AST_4cfb5ead",
+     "kind": "asset",
+     "en": "Segment Anything Model"
+    }
+   ]
+  },
+  {
+   "query": "acados",
+   "type": "identity",
+   "note": "全小写包名",
+   "expect": [
+    {
+     "id": "AST_a4bcc29f",
+     "kind": "asset",
+     "en": "acados"
+    }
+   ]
+  },
+  {
+   "query": "AprilTag",
+   "type": "identity",
+   "note": "大小写不敏感",
+   "expect": [
+    {
+     "id": "AST_405fe3a5",
+     "kind": "asset",
+     "en": "apriltag"
+    }
+   ]
+  },
+  {
+   "query": "CasADi",
+   "type": "identity",
+   "note": "混合大小写",
+   "expect": [
+    {
+     "id": "AST_c61e96a1",
+     "kind": "asset",
+     "en": "CasADi"
+    }
+   ]
+  },
+  {
+   "query": "Open3D",
+   "type": "identity",
+   "note": "名+数字",
+   "expect": [
+    {
+     "id": "AST_d593af76",
+     "kind": "asset",
+     "en": "Open3D"
+    }
+   ]
+  },
+  {
+   "query": "PCL 点云库",
+   "type": "identity",
+   "note": "缩写+中文",
+   "expect": [
+    {
+     "id": "AST_f57280c8",
+     "kind": "asset",
+     "en": "PCL"
+    }
+   ]
+  },
+  {
+   "query": "ros2_control",
+   "type": "identity",
+   "note": "下划线包名",
+   "expect": [
+    {
+     "id": "AST_2f4df4c3",
+     "kind": "asset",
+     "en": "ros2_control"
+    }
+   ]
+  },
+  {
+   "query": "Cartographer",
+   "type": "identity",
+   "note": "同名 cap 存在，测 scope 消歧",
+   "expect": [
+    {
+     "id": "AST_709fcc3f",
+     "kind": "asset",
+     "en": "Cartographer"
+    }
+   ]
+  },
+  {
+   "query": "PythonRobotics",
+   "type": "identity",
+   "note": "驼峰仓库名",
+   "expect": [
+    {
+     "id": "AST_39091472",
+     "kind": "asset",
+     "en": "PythonRobotics"
+    }
+   ]
+  },
+  {
+   "query": "nav2_smac_planner",
+   "type": "identity",
+   "note": "ROS2 规划器包",
+   "expect": [
+    {
+     "id": "AST_7506fff4",
+     "kind": "asset",
+     "en": "nav2_smac_planner"
+    }
+   ]
+  },
+  {
+   "query": "OctoMap",
+   "type": "identity",
+   "note": "驼峰",
+   "expect": [
+    {
+     "id": "AST_18cd0259",
+     "kind": "asset",
+     "en": "OctoMap"
+    }
+   ]
+  },
+  {
+   "query": "AMCL",
+   "type": "identity",
+   "note": "全大写缩写",
+   "expect": [
+    {
+     "id": "AST_9165c401",
+     "kind": "asset",
+     "en": "AMCL"
+    }
+   ]
+  },
+  {
+   "query": "Contact-GraspNet",
+   "type": "identity",
+   "note": "连字符模型名",
+   "expect": [
+    {
+     "id": "AST_96cd0636",
+     "kind": "asset",
+     "en": "Contact-GraspNet"
+    }
+   ]
+  },
+  {
+   "query": "AnyGrasp",
+   "type": "identity",
+   "note": "驼峰模型名",
+   "expect": [
+    {
+     "id": "AST_64cc9117",
+     "kind": "asset",
+     "en": "AnyGrasp"
+    }
+   ]
+  },
+  {
+   "query": "避障",
+   "type": "concept",
+   "note": "中文短查询，能力粒度很细，任一即可",
+   "expect_any": [
+    {
+     "id": "CAP_2617d1fa",
+     "kind": "capability",
+     "en": "Dynamic Obstacle Avoidance Check",
+     "zh": "动态障碍物避让检查"
+    },
+    {
+     "id": "CAP_87a2f2cd",
+     "kind": "capability",
+     "en": "Static Obstacle Avoidance Costmap Trajectory Scoring",
+     "zh": "静态障碍物代价地图轨迹评分避障"
+    },
+    {
+     "id": "CAP_c6c919e0",
+     "kind": "capability",
+     "en": "Avoid AFSM Behavior",
+     "zh": "避障AFSM行为"
+    }
+   ]
+  },
+  {
+   "query": "回环检测",
+   "type": "concept",
+   "note": "SLAM 子问题",
+   "expect_any": [
+    {
+     "id": "CAP_f94166e6",
+     "kind": "capability",
+     "en": "Loop Detection via Covisibility Consistency",
+     "zh": "基于共视一致性的回环检测"
+    },
+    {
+     "id": "CAP_b36f8add",
+     "kind": "capability",
+     "en": "Loop Closure Residual Evaluation",
+     "zh": "回环约束残差评估"
+    },
+    {
+     "id": "CAP_36af5727",
+     "kind": "capability",
+     "en": "Loop Closure Re-perception",
+     "zh": "闭环重感知"
+    }
+   ]
+  },
+  {
+   "query": "逆运动学求解",
+   "type": "concept",
+   "note": "经典问题；同时测运动学不该召回感知模型",
+   "expect_any": [
+    {
+     "id": "CAP_4b1fa079",
+     "kind": "capability",
+     "en": "Inverse Kinematics Solver",
+     "zh": "逆运动学求解"
+    },
+    {
+     "id": "CAP_8da312c0",
+     "kind": "capability",
+     "en": "Numerical Inverse Kinematics Solving",
+     "zh": "数值逆运动学求解"
+    }
+   ],
+   "reject": [
+    {
+     "id": "AST_125b77d6",
+     "kind": "asset",
+     "en": "OpenAI Whisper"
+    },
+    {
+     "id": "AST_4cfb5ead",
+     "kind": "asset",
+     "en": "Segment Anything Model"
+    }
+   ]
+  },
+  {
+   "query": "抓取位姿生成",
+   "type": "concept",
+   "note": "抓取",
+   "expect_any": [
+    {
+     "id": "CAP_0b09c047",
+     "kind": "capability",
+     "en": "Grasp Pose Computation from Features",
+     "zh": "基于特征的抓取位姿计算"
+    },
+    {
+     "id": "CAP_1a7ae1b3",
+     "kind": "capability",
+     "en": "Grasp Pose Computation from Mask",
+     "zh": "基于掩码的抓取位姿计算"
+    }
+   ]
+  },
+  {
+   "query": "视觉伺服",
+   "type": "concept",
+   "note": "控制",
+   "expect_any": [
+    {
+     "id": "CAP_a1aab207",
+     "kind": "capability",
+     "en": "Visual Servoing Tool Alignment",
+     "zh": "视觉伺服工具对准"
+    },
+    {
+     "id": "CAP_936fa240",
+     "kind": "capability",
+     "en": "Visual Servoing Execution and Quality Inspection",
+     "zh": "视觉伺服执行与质检"
+    }
+   ]
+  },
+  {
+   "query": "前沿探索建图",
+   "type": "concept",
+   "note": "探索",
+   "expect_any": [
+    {
+     "id": "CAP_f622ffaf",
+     "kind": "capability",
+     "en": "Frontier-Based Exploration",
+     "zh": "前沿探索"
+    },
+    {
+     "id": "CAP_46eff0f5",
+     "kind": "capability",
+     "en": "Hierarchical Frontier Exploration",
+     "zh": "分层前沿探索"
+    },
+    {
+     "id": "CAP_c1f519a5",
+     "kind": "capability",
+     "en": "Frontier Cell Detection (2D BFS)",
+     "zh": "2D BFS 前沿单元检测"
+    }
+   ]
+  },
+  {
+   "query": "激光扫描匹配定位",
+   "type": "concept",
+   "note": "定位",
+   "expect_any": [
+    {
+     "id": "CAP_78e41ba7",
+     "kind": "capability",
+     "en": "Real-Time Scan to Submap Matching",
+     "zh": "实时扫描子图匹配"
+    },
+    {
+     "id": "CAP_5fa9f98e",
+     "kind": "capability",
+     "en": "Point Cloud ICP Scan Matching",
+     "zh": "点云ICP扫描匹配"
+    },
+    {
+     "id": "CAP_31dcd5bd",
+     "kind": "capability",
+     "en": "2D Branch-and-Bound Global Scan Matching",
+     "zh": "2D 分支定界全局扫描匹配"
+    }
+   ]
+  },
+  {
+   "query": "多机器人任务分配",
+   "type": "concept",
+   "note": "多机",
+   "expect_any": [
+    {
+     "id": "CAP_dfab5634",
+     "kind": "capability",
+     "en": "Heterogeneous Robot Task Allocation",
+     "zh": "异构机器人任务分配"
+    },
+    {
+     "id": "CAP_aa01b104",
+     "kind": "capability",
+     "en": "Human-Robot Task Allocation",
+     "zh": "人机任务分配"
+    }
+   ]
+  },
+  {
+   "query": "重力补偿",
+   "type": "concept",
+   "note": "力控",
+   "expect_any": [
+    {
+     "id": "CAP_b303f171",
+     "kind": "capability",
+     "en": "HRI Torque Sensing & Gravity Compensation",
+     "zh": "人机交互力矩传感与重力补偿"
+    },
+    {
+     "id": "CAP_abaf1aca",
+     "kind": "capability",
+     "en": "Dynamics Feedforward Compensation",
+     "zh": "动力学前馈补偿"
+    }
+   ]
+  },
+  {
+   "query": "行为树",
+   "type": "concept",
+   "note": "任务编排",
+   "expect_any": [
+    {
+     "id": "CAP_15c12fdf",
+     "kind": "capability",
+     "en": "Behavior Tree Action Execution",
+     "zh": "行为树动作执行"
+    },
+    {
+     "id": "CAP_02d3234a",
+     "kind": "capability",
+     "en": "Behavior Tree Load And Registration",
+     "zh": "行为树加载与节点注册"
+    },
+    {
+     "id": "CAP_ea3f13fe",
+     "kind": "capability",
+     "en": "Navigation Behavior Tree Loading",
+     "zh": "导航行为树加载与构造"
+    }
+   ]
+  },
+  {
+   "query": "碰撞检测",
+   "type": "concept",
+   "note": "安全",
+   "expect_any": [
+    {
+     "id": "CAP_ecc4cff1",
+     "kind": "capability",
+     "en": "Obstacle Map Inflation and Collision Check",
+     "zh": "障碍物膨胀与碰撞检测"
+    },
+    {
+     "id": "CAP_d0f90b59",
+     "kind": "capability",
+     "en": "Vehicle Footprint Continuous Collision Check",
+     "zh": "车辆足迹连续碰撞检测"
+    },
+    {
+     "id": "CAP_2690531f",
+     "kind": "capability",
+     "en": "Collision Detection Interface Configuration",
+     "zh": "碰撞检测接口配置"
+    }
+   ]
+  },
+  {
+   "query": "自动回充对接",
+   "type": "concept",
+   "note": "充电",
+   "expect_any": [
+    {
+     "id": "CAP_714396a4",
+     "kind": "capability",
+     "en": "IR Beacon Dock Servo and Charging Coupling",
+     "zh": "IR Beacon 对接伺服与充电耦合"
+    },
+    {
+     "id": "CAP_a85eb797",
+     "kind": "capability",
+     "en": "Dock Visual Recognition and Arm-Mediated Charging Coupling",
+     "zh": "对接坞视觉识别与机械臂介导充电耦合"
+    }
+   ]
+  },
+  {
+   "query": "栅格 A* 路径搜索",
+   "type": "concept",
+   "note": "路径规划",
+   "expect_any": [
+    {
+     "id": "CAP_89a8c59a",
+     "kind": "capability",
+     "en": "Grid Based A* Path Planning",
+     "zh": "栅格A*路径规划"
+    },
+    {
+     "id": "CAP_fe791001",
+     "kind": "capability",
+     "en": "Discrete Grid A* Search",
+     "zh": "离散栅格A*搜索"
+    }
+   ]
+  },
+  {
+   "query": "点云配准",
+   "type": "concept",
+   "note": "★ 审计中被 _looks_like_identity 误判为 identity 的用例，改判定后重点看这条；同时测不被跨领域模型污染",
+   "expect_any": [
+    {
+     "id": "CAP_5fa9f98e",
+     "kind": "capability",
+     "en": "Point Cloud ICP Scan Matching",
+     "zh": "点云ICP扫描匹配"
+    }
+   ],
+   "reject": [
+    {
+     "id": "AST_125b77d6",
+     "kind": "asset",
+     "en": "OpenAI Whisper"
+    },
+    {
+     "id": "AST_192a53ce",
+     "kind": "asset",
+     "en": "Ultralytics YOLO"
+    }
+   ]
+  },
+  {
+   "query": "如何实现无传感器碰撞检测",
+   "type": "function",
+   "note": "如何+方法",
+   "expect_any": [
+    {
+     "id": "CAP_7beea3fc",
+     "kind": "capability",
+     "en": "Collision Detection Auto Reset",
+     "zh": "碰撞检测与自动重置"
+    },
+    {
+     "id": "CAP_40ca1a8f",
+     "kind": "capability",
+     "en": "External Force Measurement Acquisition",
+     "zh": "外部力测量获取"
+    }
+   ]
+  },
+  {
+   "query": "怎么做力传感器重力补偿",
+   "type": "function",
+   "note": "怎么+对象",
+   "expect_any": [
+    {
+     "id": "CAP_b303f171",
+     "kind": "capability",
+     "en": "HRI Torque Sensing & Gravity Compensation",
+     "zh": "人机交互力矩传感与重力补偿"
+    },
+    {
+     "id": "CAP_7906ad56",
+     "kind": "capability",
+     "en": "Force Torque Sensor Feedback Integration",
+     "zh": "力矩传感器反馈集成"
+    }
+   ]
+  },
+  {
+   "query": "机器人怎么自动回充对接",
+   "type": "function",
+   "note": "充电对接",
+   "expect_any": [
+    {
+     "id": "CAP_714396a4",
+     "kind": "capability",
+     "en": "IR Beacon Dock Servo and Charging Coupling",
+     "zh": "IR Beacon 对接伺服与充电耦合"
+    },
+    {
+     "id": "CAP_6d0ad8a5",
+     "kind": "capability",
+     "en": "Funnel Capture Docking and Subsea Resident Charging",
+     "zh": "漏斗捕获对接与海底常驻充电"
+    }
+   ]
+  },
+  {
+   "query": "如何执行 A* 搜索",
+   "type": "function",
+   "note": "算法执行",
+   "expect_any": [
+    {
+     "id": "CAP_fe791001",
+     "kind": "capability",
+     "en": "Discrete Grid A* Search",
+     "zh": "离散栅格A*搜索"
+    },
+    {
+     "id": "CAP_89a8c59a",
+     "kind": "capability",
+     "en": "Grid Based A* Path Planning",
+     "zh": "栅格A*路径规划"
+    }
+   ]
+  },
+  {
+   "query": "行为树怎么建模机器人任务",
+   "type": "function",
+   "note": "BT 建模",
+   "expect_any": [
+    {
+     "id": "CAP_15c12fdf",
+     "kind": "capability",
+     "en": "Behavior Tree Action Execution",
+     "zh": "行为树动作执行"
+    },
+    {
+     "id": "CAP_7eb85b21",
+     "kind": "capability",
+     "en": "Behavior-Tree-Orchestrated Replanning",
+     "zh": "行为树编排重规划"
+    }
+   ]
+  },
+  {
+   "query": "Hybrid A* 的启发式是怎么算的",
+   "type": "function",
+   "note": "机制类，答案在 chain 文档/step 卡片里，不在实体描述里",
+   "expect_match": {
+    "topic_kw": "a_star_path_planning",
+    "contains": [
+     "启发"
+    ]
+   }
+  },
+  {
+   "query": "Theta* 的 line-of-sight 检查怎么做",
+   "type": "function",
+   "note": "机制类",
+   "expect_match": {
+    "topic_kw": "a_star_path_planning",
+    "contains": [
+     "Line-of-Sight"
+    ]
+   }
+  },
+  {
+   "query": "Jump Point Search 怎么剪枝",
+   "type": "function",
+   "note": "机制类",
+   "expect_match": {
+    "topic_kw": "a_star_path_planning",
+    "contains": [
+     "Jump Point"
+    ]
+   }
+  },
+  {
+   "query": "栅格地图膨胀需要什么输入",
+   "type": "io",
+   "note": "★ 审计中被'需要'误判成 context 的用例",
+   "expect_match": {
+    "topic_kw": "a_star_path_planning",
+    "doc_type": "step_card",
+    "contains": [
+     "膨胀"
+    ]
+   }
+  },
+  {
+   "query": "A* 主循环的输入和输出分别是什么",
+   "type": "io",
+   "note": "step 卡片的结构化字段",
+   "expect_match": {
+    "topic_kw": "a_star_path_planning",
+    "doc_type": "step_card",
+    "contains": [
+     "【输入】",
+     "【输出】"
+    ]
+   }
+  },
+  {
+   "query": "open set 初始化这一步的前置依赖是什么",
+   "type": "io",
+   "note": "前置依赖字段",
+   "expect_match": {
+    "topic_kw": "a_star_path_planning",
+    "doc_type": "step_card",
+    "contains": [
+     "【前置依赖】"
+    ]
+   }
+  },
+  {
+   "query": "路径回溯步骤的性能指标",
+   "type": "io",
+   "note": "性能指标字段",
+   "expect_match": {
+    "topic_kw": "a_star_path_planning",
+    "doc_type": "step_card",
+    "contains": [
+     "【性能指标】"
+    ]
+   }
+  },
+  {
+   "query": "车辆足迹碰撞检测的约束条件",
+   "type": "io",
+   "note": "约束字段",
+   "expect_match": {
+    "topic_kw": "a_star_path_planning",
+    "doc_type": "step_card",
+    "contains": [
+     "【约束】"
+    ]
+   }
+  },
+  {
+   "query": "用什么库算机器人刚体动力学",
+   "type": "selection",
+   "note": "动力学库",
+   "expect_any": [
+    {
+     "id": "AST_3070ed6a",
+     "kind": "asset",
+     "en": "Pinocchio"
+    }
+   ]
+  },
+  {
+   "query": "GPU 加速的机械臂运动规划库",
+   "type": "selection",
+   "note": "GPU 规划",
+   "expect_any": [
+    {
+     "id": "AST_6c304058",
+     "kind": "asset",
+     "en": "cuRobo"
+    }
+   ]
+  },
+  {
+   "query": "开放词汇目标检测用什么模型",
+   "type": "selection",
+   "note": "开放词汇检测",
+   "expect_any": [
+    {
+     "id": "AST_ec3e8b68",
+     "kind": "asset",
+     "en": "GroundingDINO"
+    },
+    {
+     "id": "AST_14095160",
+     "kind": "asset",
+     "en": "DETIC"
+    }
+   ]
+  },
+  {
+   "query": "点云处理用什么库",
+   "type": "selection",
+   "note": "点云库",
+   "expect_any": [
+    {
+     "id": "AST_f57280c8",
+     "kind": "asset",
+     "en": "PCL"
+    },
+    {
+     "id": "AST_d593af76",
+     "kind": "asset",
+     "en": "Open3D"
+    }
+   ]
+  },
+  {
+   "query": "激光雷达 SLAM 用什么框架",
+   "type": "selection",
+   "note": "激光 SLAM",
+   "expect_any": [
+    {
+     "id": "AST_709fcc3f",
+     "kind": "asset",
+     "en": "Cartographer"
+    }
+   ]
+  },
+  {
+   "query": "抓取检测用什么预训练模型",
+   "type": "selection",
+   "note": "抓取模型",
+   "expect_any": [
+    {
+     "id": "AST_96cd0636",
+     "kind": "asset",
+     "en": "Contact-GraspNet"
+    },
+    {
+     "id": "AST_64cc9117",
+     "kind": "asset",
+     "en": "AnyGrasp"
+    }
+   ]
+  },
+  {
+   "query": "非线性 MPC 求解器选哪个",
+   "type": "selection",
+   "note": "MPC 求解器",
+   "expect_any": [
+    {
+     "id": "AST_a4bcc29f",
+     "kind": "asset",
+     "en": "acados"
+    },
+    {
+     "id": "AST_c61e96a1",
+     "kind": "asset",
+     "en": "CasADi"
+    }
+   ]
+  },
+  {
+   "query": "机械臂硬件接口用哪个 ROS2 控制框架",
+   "type": "selection",
+   "note": "控制框架",
+   "expect_any": [
+    {
+     "id": "AST_2f4df4c3",
+     "kind": "asset",
+     "en": "ros2_control"
+    }
+   ]
+  },
+  {
+   "query": "采样式运动规划用什么库",
+   "type": "selection",
+   "note": "采样规划",
+   "expect_any": [
+    {
+     "id": "AST_22510105",
+     "kind": "asset",
+     "en": "OMPL"
+    }
+   ]
+  },
+  {
+   "query": "因子图后端优化选什么",
+   "type": "selection",
+   "note": "SLAM 后端",
+   "expect_any": [
+    {
+     "id": "AST_f6dc9b09",
+     "kind": "asset",
+     "en": "GTSAM"
+    }
+   ]
+  },
+  {
+   "query": "三维占据栅格建图用什么",
+   "type": "selection",
+   "note": "3D 建图",
+   "expect_any": [
+    {
+     "id": "AST_18cd0259",
+     "kind": "asset",
+     "en": "OctoMap"
+    }
+   ]
+  },
+  {
+   "query": "学 A* 有什么可运行的参考实现",
+   "type": "selection",
+   "note": "教学实现 vs 生产实现",
+   "expect_any": [
+    {
+     "id": "AST_39091472",
+     "kind": "asset",
+     "en": "PythonRobotics"
+    },
+    {
+     "id": "AST_7506fff4",
+     "kind": "asset",
+     "en": "nav2_smac_planner"
+    }
+   ]
+  },
+  {
+   "query": "ROS2 里生产级的 A* 规划器是哪个",
+   "type": "selection",
+   "note": "生产级限定",
+   "expect_any": [
+    {
+     "id": "AST_7506fff4",
+     "kind": "asset",
+     "en": "nav2_smac_planner"
+    }
+   ]
+  },
+  {
+   "query": "检测桌上的杯子并生成抓取位姿",
+   "type": "multihop",
+   "note": "检测→抓取两跳",
+   "expect_any": [
+    {
+     "id": "AST_ec3e8b68",
+     "kind": "asset",
+     "en": "GroundingDINO"
+    },
+    {
+     "id": "AST_96cd0636",
+     "kind": "asset",
+     "en": "Contact-GraspNet"
+    }
+   ]
+  },
+  {
+   "query": "建图然后用粒子滤波定位导航",
+   "type": "multihop",
+   "note": "建图→定位",
+   "expect_any": [
+    {
+     "id": "AST_709fcc3f",
+     "kind": "asset",
+     "en": "Cartographer"
+    },
+    {
+     "id": "AST_9165c401",
+     "kind": "asset",
+     "en": "AMCL"
+    }
+   ]
+  },
+  {
+   "query": "语音指令识别然后分配任务给多台机器人",
+   "type": "multihop",
+   "note": "跨 scope：asset + cap",
+   "expect_any": [
+    {
+     "id": "AST_125b77d6",
+     "kind": "asset",
+     "en": "OpenAI Whisper"
+    },
+    {
+     "id": "CAP_dfab5634",
+     "kind": "capability",
+     "en": "Heterogeneous Robot Task Allocation",
+     "zh": "异构机器人任务分配"
+    }
+   ]
+  },
+  {
+   "query": "视觉伺服对准之后再抓取",
+   "type": "multihop",
+   "note": "伺服→抓取",
+   "expect_any": [
+    {
+     "id": "CAP_a1aab207",
+     "kind": "capability",
+     "en": "Visual Servoing Tool Alignment",
+     "zh": "视觉伺服工具对准"
+    },
+    {
+     "id": "CAP_0b09c047",
+     "kind": "capability",
+     "en": "Grasp Pose Computation from Features",
+     "zh": "基于特征的抓取位姿计算"
+    }
+   ]
+  },
+  {
+   "query": "碰撞检测触发后怎么保护性停机",
+   "type": "multihop",
+   "note": "检测→响应",
+   "expect_any": [
+    {
+     "id": "CAP_7beea3fc",
+     "kind": "capability",
+     "en": "Collision Detection Auto Reset",
+     "zh": "碰撞检测与自动重置"
+    }
+   ]
+  },
+  {
+   "query": "先用 MoveIt 规划再用 ros2_control 执行",
+   "type": "multihop",
+   "note": "规划→执行工具链",
+   "expect_any": [
+    {
+     "id": "AST_0c5223ee",
+     "kind": "asset",
+     "en": "MoveIt 2"
+    },
+    {
+     "id": "AST_2f4df4c3",
+     "kind": "asset",
+     "en": "ros2_control"
+    }
+   ]
+  },
+  {
+   "query": "Hybrid A* 规划出来的路径怎么平滑",
+   "type": "multihop",
+   "note": "跨主题边界（平滑属兄弟主题），测会不会越界",
+   "expect_match": {
+    "topic_kw": "a_star_path_planning",
+    "contains": [
+     "平滑"
+    ]
+   }
+  },
+  {
+   "query": "语音识别",
+   "type": "negative",
+   "note": "跨领域负例",
+   "reject": [
+    {
+     "id": "AST_f57280c8",
+     "kind": "asset",
+     "en": "PCL"
+    },
+    {
+     "id": "AST_22510105",
+     "kind": "asset",
+     "en": "OMPL"
+    }
+   ]
+  },
+  {
+   "query": "SISTEMA IFA tool ISO 13849-1 PL calculation download",
+   "type": "negative",
+   "note": "★ 这是 chain 文档'检索日志'节里的真实 WebSearch query 文本，长得像技术问题。P0 重建后不该再召回任何 search_log/registry 节",
+   "reject_match": {
+    "section_key": "search_log"
+   }
+  },
+  {
+   "query": "lookup 命中 CAP 建议复用还是新建",
+   "type": "negative",
+   "note": "★ 注册表 lookup 留痕不该可检索",
+   "reject_match": {
+    "section_key": "registry"
+   }
+  },
+  {
+   "query": "A* 的可采纳性定理出自哪篇论文",
+   "type": "evidence",
+   "note": "论文溯源",
+   "expect_match": {
+    "topic_kw": "a_star_path_planning",
+    "contains": [
+     "Hart"
+    ]
+   }
+  },
+  {
+   "query": "Reeds-Shepp 曲线在 Hybrid A* 里起什么作用",
+   "type": "evidence",
+   "note": "机制",
+   "expect_match": {
+    "topic_kw": "a_star_path_planning",
+    "contains": [
+     "Reeds-Shepp"
+    ]
+   }
+  },
+  {
+   "query": "Nav2 的 SmacPlanner2D 用什么启发式",
+   "type": "evidence",
+   "note": "真实系统定位节",
+   "expect_match": {
+    "topic_kw": "a_star_path_planning",
+    "contains": [
+     "Nav2"
+    ]
+   }
+  },
+  {
+   "query": "PythonRobotics 的 A* 实现用什么数据结构存 open set",
+   "type": "evidence",
+   "note": "GitHub 仓库说明节",
+   "expect_match": {
+    "topic_kw": "a_star_path_planning",
+    "contains": [
+     "heapq"
+    ]
+   }
+  },
+  {
+   "query": "A* 路径规划这条主题有哪几条任务链",
+   "type": "evidence",
+   "note": "chain 卡片专属",
+   "expect_match": {
+    "topic_kw": "a_star_path_planning",
+    "doc_type": "chain_card",
+    "contains": [
+     "【阶段序列】"
+    ]
+   }
+  },
+  {
+   "query": "ORB-SLAM2 的回环检测用了什么相似性变换",
+   "type": "evidence",
+   "note": "论文原文层",
+   "expect_match": {
+    "doc_type": "paper",
+    "contains": [
+     "ORB-SLAM2"
+    ]
+   }
+  },
+  {
+   "query": "DAgger 为什么能解决模仿学习的分布漂移",
+   "type": "evidence",
+   "note": "论文原文层，跨主题",
+   "expect_match": {
+    "doc_type": "paper",
+    "contains": [
+     "DAgger"
+    ]
+   }
+  },
+  {
+   "query": "PPO 的 clipped surrogate objective",
+   "type": "evidence",
+   "note": "★ 1707.06347 是 ar5iv 空壳会被过滤掉，这条应命中其他引用 PPO 的论文；用来验证空壳过滤没有误伤",
+   "expect_match": {
+    "doc_type": "paper"
+   }
+  },
+  {
+   "query": "BoW 词袋向量是怎么算出来的",
+   "type": "function",
+   "note": "经典回环第一步",
+   "expect_match": {
+    "topic_kw": "visual_loop_closure",
+    "contains": [
+     "BoW"
+    ]
+   }
+  },
+  {
+   "query": "ORB 描述子提取这一步输入什么输出什么",
+   "type": "io",
+   "note": "step 卡片 IO",
+   "expect_match": {
+    "topic_kw": "visual_loop_closure",
+    "doc_type": "step_card",
+    "contains": [
+     "ORB"
+    ]
+   }
+  },
+  {
+   "query": "CNN 全局描述子做回环检测和词袋法有什么不同",
+   "type": "evidence",
+   "note": "两条链的对比，需要跨 chain 文档",
+   "expect_match": {
+    "topic_kw": "visual_loop_closure"
+   }
+  },
+  {
+   "query": "回环候选的几何验证怎么做",
+   "type": "function",
+   "note": "验证环节",
+   "expect_match": {
+    "topic_kw": "visual_loop_closure",
+    "contains": [
+     "几何"
+    ]
+   }
+  },
+  {
+   "query": "视觉回环检测有哪几条技术路线",
+   "type": "evidence",
+   "note": "chain 卡片：路线全景",
+   "expect_match": {
+    "topic_kw": "visual_loop_closure",
+    "doc_type": "chain_card"
+   }
+  },
+  {
+   "query": "ICP 配准之前为什么要做体素降采样",
+   "type": "function",
+   "note": "预处理动机",
+   "expect_match": {
+    "topic_kw": "slam_point_cloud_registration",
+    "contains": [
+     "体素"
+    ]
+   }
+  },
+  {
+   "query": "FPFH 描述子计算需要哪些前置输入",
+   "type": "io",
+   "note": "step 卡片 IO",
+   "expect_match": {
+    "topic_kw": "slam_point_cloud_registration",
+    "doc_type": "step_card",
+    "contains": [
+     "FPFH"
+    ]
+   }
+  },
+  {
+   "query": "NDT 和 ICP 在点云配准上的取舍",
+   "type": "selection",
+   "note": "跨链选型",
+   "expect_match": {
+    "topic_kw": "slam_point_cloud_registration",
+    "contains": [
+     "NDT"
+    ]
+   }
+  },
+  {
+   "query": "法向量估计这一步的约束是什么",
+   "type": "io",
+   "note": "约束字段",
+   "expect_match": {
+    "topic_kw": "slam_point_cloud_registration",
+    "doc_type": "step_card",
+    "contains": [
+     "【约束】"
+    ]
+   }
+  },
+  {
+   "query": "学习型点云配准相比传统方法的边界在哪",
+   "type": "evidence",
+   "note": "适用边界",
+   "expect_match": {
+    "topic_kw": "slam_point_cloud_registration"
+   }
+  },
+  {
+   "query": "手眼标定的闭式解怎么求",
+   "type": "function",
+   "note": "闭式求解链",
+   "expect_match": {
+    "topic_kw": "eye_hand_calibration",
+    "contains": [
+     "闭式"
+    ]
+   }
+  },
+  {
+   "query": "标定板检测这一步的输入输出",
+   "type": "io",
+   "note": "step 卡片 IO",
+   "expect_match": {
+    "topic_kw": "eye_hand_calibration",
+    "doc_type": "step_card",
+    "contains": [
+     "【输入】"
+    ]
+   }
+  },
+  {
+   "query": "eye-in-hand 和 eye-to-hand 的区别",
+   "type": "concept",
+   "note": "配置差异",
+   "expect_match": {
+    "topic_kw": "eye_hand_calibration"
+   }
+  },
+  {
+   "query": "机器人世界-手眼联合标定解决什么问题",
+   "type": "evidence",
+   "note": "chain 卡片",
+   "expect_match": {
+    "topic_kw": "eye_hand_calibration",
+    "doc_type": "chain_card"
+   }
+  },
+  {
+   "query": "图像去畸变为什么要放在标定流程最前面",
+   "type": "function",
+   "note": "顺序因果",
+   "expect_match": {
+    "topic_kw": "eye_hand_calibration",
+    "contains": [
+     "畸变"
+    ]
+   }
+  },
+  {
+   "query": "无靶标外参标定是怎么做的",
+   "type": "function",
+   "note": "targetless 链",
+   "expect_match": {
+    "topic_kw": "extrinsic_calibration"
+   }
+  },
+  {
+   "query": "在线自标定和离线标定各自适用什么场景",
+   "type": "selection",
+   "note": "三条链选型",
+   "expect_match": {
+    "topic_kw": "extrinsic_calibration"
+   }
+  },
+  {
+   "query": "内在好奇心驱动的探索是怎么给奖励的",
+   "type": "function",
+   "note": "ICM 类",
+   "expect_match": {
+    "topic_kw": "exploration_strategy",
+    "contains": [
+     "内在"
+    ]
+   }
+  },
+  {
+   "query": "探索超参数配置这一步输出什么",
+   "type": "io",
+   "note": "step 卡片",
+   "expect_match": {
+    "topic_kw": "exploration_strategy",
+    "doc_type": "step_card"
+   }
+  },
+  {
+   "query": "随机动作扰动探索的局限在哪",
+   "type": "evidence",
+   "note": "适用边界",
+   "expect_match": {
+    "topic_kw": "exploration_strategy"
+   }
+  },
+  {
+   "query": "手眼标定",
+   "type": "concept",
+   "note": "标定；同时测不该召回规划/求解器",
+   "expect_any": [
+    {
+     "id": "CAP_15150995",
+     "kind": "capability",
+     "en": "Hand-Eye Coordinate Transform",
+     "zh": "手眼坐标变换"
+    }
+   ],
+   "reject": [
+    {
+     "id": "AST_22510105",
+     "kind": "asset",
+     "en": "OMPL"
+    },
+    {
+     "id": "AST_a4bcc29f",
+     "kind": "asset",
+     "en": "acados"
+    }
+   ]
+  },
+  {
+   "query": "扫描子图匹配",
+   "type": "concept",
+   "note": "SLAM 前端",
+   "expect_any": [
+    {
+     "id": "CAP_78e41ba7",
+     "kind": "capability",
+     "en": "Real-Time Scan to Submap Matching",
+     "zh": "实时扫描子图匹配"
+    }
+   ]
+  },
+  {
+   "query": "分支定界全局定位",
+   "type": "concept",
+   "note": "全局定位",
+   "expect_any": [
+    {
+     "id": "CAP_31dcd5bd",
+     "kind": "capability",
+     "en": "2D Branch-and-Bound Global Scan Matching",
+     "zh": "2D 分支定界全局扫描匹配"
+    },
+    {
+     "id": "CAP_41eef1b4",
+     "kind": "capability",
+     "en": "3D Branch-and-Bound Global Localization",
+     "zh": "3D 分支定界全局定位"
+    }
+   ]
+  },
+  {
+   "query": "BoW 描述符提取",
+   "type": "concept",
+   "note": "回环前端",
+   "expect_any": [
+    {
+     "id": "CAP_1b865bf1",
+     "kind": "capability",
+     "en": "BoW Descriptor Extraction",
+     "zh": "BoW 描述符提取"
+    }
+   ]
+  },
+  {
+   "query": "三维概率八叉树建图",
+   "type": "concept",
+   "note": "建图",
+   "expect_any": [
+    {
+     "id": "CAP_47c17fda",
+     "kind": "capability",
+     "en": "3D Probabilistic Octree Mapping",
+     "zh": "三维概率八叉树建图"
+    }
+   ]
+  },
+  {
+   "query": "动力学前馈补偿",
+   "type": "concept",
+   "note": "控制",
+   "expect_any": [
+    {
+     "id": "CAP_abaf1aca",
+     "kind": "capability",
+     "en": "Dynamics Feedforward Compensation",
+     "zh": "动力学前馈补偿"
+    }
+   ]
+  },
+  {
+   "query": "机械臂逆运动学与轨迹规划",
+   "type": "concept",
+   "note": "长中文名精确",
+   "expect_any": [
+    {
+     "id": "CAP_655d3409",
+     "kind": "capability",
+     "en": "Arm Inverse Kinematics and Trajectory Planning",
+     "zh": "机械臂逆运动学与轨迹规划"
+    }
+   ]
+  },
+  {
+   "query": "膨胀启发式加权 A*",
+   "type": "concept",
+   "note": "算法变体",
+   "expect_any": [
+    {
+     "id": "CAP_81b2aa0f",
+     "kind": "capability",
+     "en": "Inflated Heuristic Weighted A* Search",
+     "zh": "膨胀启发式加权 A* 搜索"
+    }
+   ]
+  },
+  {
+   "query": "搜索型随时重规划",
+   "type": "concept",
+   "note": "anytime 规划",
+   "expect_any": [
+    {
+     "id": "CAP_ad5419c8",
+     "kind": "capability",
+     "en": "Search-Based Anytime Replanning",
+     "zh": "搜索型随时重规划"
+    }
+   ]
+  },
+  {
+   "query": "可供性抓取姿态生成",
+   "type": "concept",
+   "note": "抓取",
+   "expect_any": [
+    {
+     "id": "CAP_7f53ab88f9",
+     "kind": "capability",
+     "en": "Grasp Pose Generation for Affordance",
+     "zh": "可供性抓取姿态生成"
+    }
+   ]
+  },
+  {
+   "query": "A* 路径规划",
+   "type": "negative",
+   "note": "规划查询不该召回感知/仿真",
+   "expect_any": [
+    {
+     "id": "CAP_89a8c59a",
+     "kind": "capability",
+     "en": "Grid Based A* Path Planning",
+     "zh": "栅格A*路径规划"
+    },
+    {
+     "id": "CAP_fe791001",
+     "kind": "capability",
+     "en": "Discrete Grid A* Search",
+     "zh": "离散栅格A*搜索"
+    }
+   ],
+   "reject": [
+    {
+     "id": "AST_125b77d6",
+     "kind": "asset",
+     "en": "OpenAI Whisper"
+    },
+    {
+     "id": "AST_4cfb5ead",
+     "kind": "asset",
+     "en": "Segment Anything Model"
+    },
+    {
+     "id": "AST_8d60f52a",
+     "kind": "asset",
+     "en": "MuJoCo"
+    }
+   ]
+  },
+  {
+   "query": "WebSearch 共 15 次 WebFetch 共 4 次",
+   "type": "negative",
+   "note": "★ A/B 段调研统计文本，属审计留痕，不该可检索",
+   "reject_match": {
+    "section_key": "search_log"
+   }
+  },
+  {
+   "query": "该能力建议新建还是复用已有 CAP",
+   "type": "negative",
+   "note": "★ 注册表留痕",
+   "reject_match": {
+    "section_key": "registry"
+   }
+  },
+  {
+   "query": "拓扑可视化 概览 任务链 阶段 步骤 能力 资产",
+   "type": "negative",
+   "note": "★ overview 表格渲染节，P0 白名单后不该再存在于索引里",
+   "reject_match": {
+    "section_key": "render_overview"
+   }
+  },
+  {
+   "query": "Isaac Gym",
+   "type": "identity",
+   "note": "与 Isaac Sim 成对，测两者不串",
+   "expect": [
+    {
+     "id": "AST_e06c9639",
+     "kind": "asset",
+     "en": "Isaac Gym"
+    }
+   ]
+  },
+  {
+   "query": "DETIC",
+   "type": "identity",
+   "note": "全大写",
+   "expect": [
+    {
+     "id": "AST_14095160",
+     "kind": "asset",
+     "en": "DETIC"
+    }
+   ]
+  },
+  {
+   "query": "MoveIt Task Constructor",
+   "type": "identity",
+   "note": "长名，与 MoveIt 2 成对，测长短名不串",
+   "expect": [
+    {
+     "id": "AST_8b00a410",
+     "kind": "asset",
+     "en": "MoveIt Task Constructor"
+    }
+   ]
+  },
+  {
+   "query": "nav2_theta_star_planner",
+   "type": "identity",
+   "note": "ROS2 包名",
+   "expect": [
+    {
+     "id": "AST_1c25a4ce",
+     "kind": "asset",
+     "en": "nav2_theta_star_planner"
+    }
+   ]
+  },
+  {
+   "query": "pymoveit2",
+   "type": "identity",
+   "note": "小写带数字",
+   "expect": [
+    {
+     "id": "AST_879a9aeb",
+     "kind": "asset",
+     "en": "pymoveit2"
+    }
+   ]
+  },
+  {
+   "query": "moveit_msgs",
+   "type": "identity",
+   "note": "消息包，测不被 MoveIt 2 吃掉",
+   "expect": [
+    {
+     "id": "AST_b1726b30",
+     "kind": "asset",
+     "en": "moveit_msgs"
+    }
+   ]
+  }
+ ]
+}

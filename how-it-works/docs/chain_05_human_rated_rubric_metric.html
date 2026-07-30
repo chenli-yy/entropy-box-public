@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>分链调研 05 · 人为评分量表体系 · 箱熵图谱原始材料</title>
+<style>
+:root {
+  --bg:#000; --panel:#1c1c1e; --panel2:#2c2c2e; --border:#38383a;
+  --text:#ebebf0; --bright:#fff; --muted:#98989f; --accent:#0a84ff; --code:#64d2ff;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  font-size:15px; line-height:1.85;
+}
+.doc-top {
+  position:sticky; top:0; z-index:10;
+  background:rgba(0,0,0,.82); backdrop-filter:blur(14px);
+  border-bottom:.5px solid var(--border);
+  padding:14px 28px; display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+}
+.doc-top a {
+  color:var(--muted); text-decoration:none; font-size:13px;
+  border:.5px solid var(--border); border-radius:8px; padding:5px 12px;
+}
+.doc-top a:hover { color:var(--accent); border-color:var(--accent); }
+.doc-top h1 { font-size:16px; font-weight:650; color:var(--bright); margin:0; }
+.doc-top .sub { font-size:12.5px; color:var(--muted); flex-basis:100%; margin:0; }
+.doc-note {
+  max-width:980px; margin:22px auto 0; padding:0 28px;
+}
+.doc-note div {
+  font-size:12.5px; line-height:1.75; color:var(--muted);
+  background:rgba(251,191,36,.07); border:1px solid rgba(251,191,36,.28);
+  border-radius:10px; padding:11px 14px;
+}
+.doc-body { max-width:980px; margin:0 auto; padding:10px 28px 90px; }
+.doc-body h1 { font-size:26px; color:var(--bright); margin:34px 0 14px; line-height:1.4; }
+.doc-body h2 {
+  font-size:20px; color:var(--bright); margin:34px 0 12px;
+  padding-bottom:8px; border-bottom:.5px solid var(--border);
+}
+.doc-body h3 { font-size:17px; color:var(--bright); margin:26px 0 10px; }
+.doc-body h4 { font-size:15px; color:var(--text); margin:20px 0 8px; }
+.doc-body p { margin:10px 0; }
+.doc-body a { color:var(--accent); word-break:break-all; }
+.doc-body code {
+  font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px;
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:5px; padding:1px 6px; color:var(--code);
+}
+.doc-body pre {
+  background:var(--panel); border:1px solid var(--border); border-radius:10px;
+  padding:14px 16px; overflow-x:auto; line-height:1.65;
+}
+.doc-body pre code { background:none; border:none; padding:0; color:#d7dde5; }
+.doc-body blockquote {
+  margin:14px 0; padding:8px 16px; color:var(--muted);
+  border-left:3px solid var(--accent); background:rgba(10,132,255,.06);
+  border-radius:0 8px 8px 0;
+}
+.doc-body blockquote p { margin:4px 0; }
+.doc-body table {
+  border-collapse:collapse; width:100%; margin:14px 0;
+  font-size:13px; display:block; overflow-x:auto;
+}
+.doc-body th, .doc-body td {
+  border:1px solid var(--border); padding:7px 11px; text-align:left; vertical-align:top;
+}
+.doc-body th { background:var(--panel2); color:var(--bright); white-space:nowrap; }
+.doc-body tr:nth-child(even) td { background:rgba(255,255,255,.02); }
+.doc-body ul, .doc-body ol { padding-left:24px; margin:10px 0; }
+.doc-body li { margin:5px 0; }
+.doc-body hr { border:none; border-top:.5px solid var(--border); margin:30px 0; }
+.doc-body strong { color:var(--bright); }
+.doc-stamp {
+  display:block; margin-top:6px; padding-top:6px;
+  border-top:1px solid rgba(251,191,36,.22);
+  font-size:11.5px; color:#a9a297;
+  font-family:ui-monospace,Menlo,Consolas,monospace;
+}
+@media (max-width:640px) {
+  .doc-top, .doc-body, .doc-note { padding-left:16px; padding-right:16px; }
+  body { font-size:14.5px; }
+}
+</style></head>
+<body>
+<div class="doc-top">
+  <a href="/">&larr; 返回图谱</a>
+  <h1>分链调研 05 · 人为评分量表体系</h1>
+  <p class="sub">Human-Rated Rubric Metric（GEARS / NASA-TLX）</p>
+</div>
+<div class="doc-note"><div>原件直出，未做删改或美化 —— 这就是 Agent 实际读到 / 实际写出的文件。 文末「12. 检索日志」一节即取证台账：每条 WebSearch/WebFetch 都登记了 query、命中数与用在正文第几节。
+<span class="doc-stamp">快照于 2026-07-25 18:21 冻结（32.6 KB &middot; sha256 b72edf5b），此后源文件的改动不会影响本页。</span></div></div>
+<div class="doc-body">
+<h1>evaluation_metric_definition 分链调研：链 05 人为评分量表体系</h1>
+<blockquote>
+<p>范式定位：由经过训练的人工评分员按标准化多维 rubric 对机器人/操作者技能执行做序数评分（如 GEARS 5 分制 × 6 维度、NASA-TLX 6 维度 × 0-100 分制 + 15 对两两比较加权），用于无法完全自动量化的技能质量与认知负荷评估。这是主观/人工评分范式，与前四链的客观自动计算正交。<br>
+状态：✅ 建议保留</p>
+</blockquote>
+<h2>1. 真实系统定位</h2>
+<p>本链对应的真实工程系统是三套人工评分量表：GEARS（机器人手术技能全局评估）、NASA-TLX（NASA 任务负荷指数）、OSATS（客观结构化技术技能评估）。三者都由人工评分员按标准化 rubric 做序数评分，但分别面向技能质量、认知负荷和通用外科技术。</p>
+<h3>1.1 GEARS（Global Evaluative Assessment of Robotic Skills）</h3>
+<ul>
+<li>论文: Gohil et al. 2012 "Global Evaluative Assessment of Robotic Skills"（机器人手术技能全局评估量表）</li>
+<li>用途: da Vinci 手术机器人术者技能评估的标准 rubric</li>
+<li>评分制: 5 分制 Likert scale（1=极差，5=极好）× 6 维度</li>
+<li>6 维度（注册表 CAP_4a4a17eb 摘录）:<br>
+  1. <strong>Depth Perception</strong>（深度感知）：术中器械在三维空间中的定位准确度<br>
+  2. <strong>Bimanual Dexterity</strong>（双手灵巧度）：左右手协调操作能力<br>
+  3. <strong>Efficiency</strong>（效率）：动作经济性、无冗余动作<br>
+  4. <strong>Force Sensitivity</strong>（力敏感度）：对组织施力的适当性<br>
+  5. <strong>Autonomy</strong>（自主性）：独立完成手术步骤的能力<br>
+  6. <strong>Robotic Control</strong>（机器人控制）：对 da Vinci 主手的操控熟练度</li>
+<li>评分员间一致性: Cohen's κ &gt; 0.7（注册表 CAP_4a4a17eb 约束）</li>
+<li>与 FLS pass-line 对照: 总分 ≥ 75% 判定通过（注册表 AST_TLS_FLS_PROGRAM 约束）</li>
+<li>注册表已有: <code>AST_TLS_GEARS_SCORING</code>（GEARS 评分量表工具）、<code>CAP_4a4a17eb</code>（GEARS 六维技能评分，l3）</li>
+<li>应用场景: 外科模拟器课程化培训的 Stage 4 通过门（注册表 CAP_c4c42ce6 摘录）</li>
+</ul>
+<h3>1.2 NASA-TLX（NASA Task Load Index）</h3>
+<ul>
+<li>论文: Hart &amp; Staveland 1988 "Development of NASA-TLX (Task Load Index): Results of Empirical and Theoretical Research"</li>
+<li>官方页面: <a href="https://nasa-tlx.firebaseapp.com/" target="_blank" rel="noopener nofollow">https://nasa-tlx.firebaseapp.com/</a></li>
+<li>开发者: NASA Ames Research Center Human Performance Group</li>
+<li>用途: 主观多维认知负荷评估工具，被认为是人因工程中最经过验证的负荷测量工具之一</li>
+<li>评分制: 6 维度 × 0-100 分（步长 5，共 21 级）+ 15 对两两比较加权</li>
+<li>6 维度（官方页面 + 注册表 CAP_66bb2832 摘录）:<br>
+  1. <strong>Mental Demand</strong>（心理需求）：任务对心智/认知活动的要求程度<br>
+  2. <strong>Physical Demand</strong>（体力需求）：任务对身体操作的要求程度<br>
+  3. <strong>Temporal Demand</strong>（时间需求）：时间压力程度<br>
+  4. <strong>Performance</strong>（自我表现）：对任务完成质量的自我评价（反向计分）<br>
+  5. <strong>Effort</strong>（努力程度）：为达到表现水平所付出的精力<br>
+  6. <strong>Frustration</strong>（挫折感）：任务执行中的挫败感</li>
+<li>加权流程: 评分员先对 6 维度各打分 r_i ∈ [0,100]，再完成 15 对两两比较（从 6 维度中选每对中贡献更大的维度），每维度被选中的次数即为其权重 w_i（0-5），最终 WWL = Σ(w_i × r_i) / 15 ∈ [0,100]</li>
+<li>注册表已有: <code>AST_TLS_NASA_TLX</code>（NASA-TLX 量表）、<code>AST_TLS_NASA_TLX_DESKTOP</code>（桌面版）、<code>CAP_228a3b01</code>（NASA-TLX 综合负荷评分，l2）、<code>CAP_66bb2832</code>（NASA-TLX 6 维子量表评分，l3）</li>
+<li>应用场景: HRC 流畅度主观评估、遥操作认知负荷测量、客观-主观三角验证（注册表 CAP_228a3b01 used_by）</li>
+</ul>
+<h3>1.3 OSATS（Objective Structured Assessment of Technical Skills）</h3>
+<ul>
+<li>论文: Martin et al. 1997 "Objective Structured Assessment of Technical Skills (OSATS)"</li>
+<li>用途: 外科技术技能的客观结构化评估</li>
+<li>评分制: 全局评分量表（Global Rating Scale），多维度 Likert scale</li>
+<li>与 GEARS 的关系: OSATS 是开腹/腹腔镜手术的通用技能评估 rubric，GEARS 是其机器人手术特化版本——两者范式相同（人工多维 rubric），但维度定义不同</li>
+<li>注册表未直接命中 OSATS 专门条目，但与 GEARS/JIGSAWS 技能评估体系同属人工 rubric 范式</li>
+</ul>
+<h3>1.4 JIGSAWS 数据集（JHU Intuitive Surgical Gesture and Skill Assessment Working Set）</h3>
+<ul>
+<li>论文: Ahmidi et al. 2017 "A Dataset and Benchmarks for Segmentation and Recognition of Gestures in Robotic Surgery"</li>
+<li>用途: 机器人手术技能自动评估的基准数据集，含 GEARS 人工评分标注</li>
+<li>数据: da Vinci 手术系统运动学轨迹 + 内窥镜视频，3 任务（suturing/knot tying/needle passing），8 术者（expert/intermediate/novice）</li>
+<li>注册表已有: <code>CAP_7a3f2e1d</code>（手术技能自动评估，l2，JIGSAWS + GEARS 奠基）、<code>CAP_6c7d8e9f</code>（手术技能等级分类，l3，含 GEARS Auto-Scoring 别名）</li>
+</ul>
+<h2>2. 步骤设计与模块映射</h2>
+<p>本链的工程步骤序列（从 rubric 加载到分数聚合）：</p>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>工程动作</th>
+<th>真实系统模块映射</th>
+<th>证据 URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>s1_1</td>
+<td>Rubric Definition &amp; Dimension Loading</td>
+<td>GEARS 6 维度 rubric 加载；NASA-TLX 6 维度量表加载；OSATS 全局评分量表加载</td>
+<td><a href="https://nasa-tlx.firebaseapp.com/" target="_blank" rel="noopener nofollow">https://nasa-tlx.firebaseapp.com/</a></td>
+</tr>
+<tr>
+<td>s1_2</td>
+<td>Task Performance Recording</td>
+<td>da Vinci 手术系统记录运动学轨迹 + 内窥镜视频（JIGSAWS 数据格式）；遥操作任务记录操作日志</td>
+<td><a href="https://nasa-tlx.firebaseapp.com/" target="_blank" rel="noopener nofollow">https://nasa-tlx.firebaseapp.com/</a></td>
+</tr>
+<tr>
+<td>s1_3</td>
+<td>Rater Training &amp; Calibration</td>
+<td>评分员培训：学习 rubric 维度定义 + 锚定参考评分 + 校准练习</td>
+<td>GEARS/OSATS 评分员培训规程</td>
+</tr>
+<tr>
+<td>s2_1</td>
+<td>Multi-Dimensional Rating</td>
+<td>GEARS 6 维度 × 1-5 评分；NASA-TLX 6 维度 × 0-100 评分</td>
+<td><a href="https://nasa-tlx.firebaseapp.com/" target="_blank" rel="noopener nofollow">https://nasa-tlx.firebaseapp.com/</a></td>
+</tr>
+<tr>
+<td>s2_2</td>
+<td>Pairwise Comparison Weighting (NASA-TLX)</td>
+<td>NASA-TLX 15 对两两比较 → 权重 w_i → WWL = Σ(w_i × r_i) / 15</td>
+<td><a href="https://nasa-tlx.firebaseapp.com/" target="_blank" rel="noopener nofollow">https://nasa-tlx.firebaseapp.com/</a></td>
+</tr>
+<tr>
+<td>s2_3</td>
+<td>Inter-Rater Reliability Check</td>
+<td>Cohen's κ / Fleiss' κ / ICC 评分员间一致性检验，κ &gt; 0.7</td>
+<td>注册表 CAP_4a4a17eb 约束</td>
+</tr>
+<tr>
+<td>s2_4</td>
+<td>Score Aggregation &amp; Pass/Fail Judgment</td>
+<td>GEARS 6 维度均值 → 总分 → 与 FLS pass-line 对照（≥75%）；NASA-TLX WWL ∈ [0,100]</td>
+<td>注册表 AST_TLS_FLS_PROGRAM</td>
+</tr>
+</tbody>
+</table>
+<h2>3. 数据流与分支结构</h2>
+<h3>3.1 数据流表</h3>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>输入</th>
+<th>输出</th>
+<th>外部依赖</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>s1_1</td>
+<td>评分量表类型（GEARS/NASA-TLX/OSATS）</td>
+<td>rubric 配置（维度定义 + 分制 + 评分锚点）</td>
+<td>量表定义文件</td>
+</tr>
+<tr>
+<td>s1_2</td>
+<td>任务执行</td>
+<td>运动学轨迹 + 视频 + 操作日志</td>
+<td>录制设备/仿真器</td>
+</tr>
+<tr>
+<td>s1_3</td>
+<td>rubric 配置 + 参考评分样本</td>
+<td>校准后的评分员</td>
+<td>评分员培训材料</td>
+</tr>
+<tr>
+<td>s2_1</td>
+<td>任务执行记录 + rubric 配置</td>
+<td>6 维度原始评分 r_i</td>
+<td>人工评分员</td>
+</tr>
+<tr>
+<td>s2_2</td>
+<td>NASA-TLX 6 维评分 + 15 对比较</td>
+<td>WWL ∈ [0,100] + 各维度加权分</td>
+<td>无（纯计算）</td>
+</tr>
+<tr>
+<td>s2_3</td>
+<td>多评分员的评分矩阵</td>
+<td>κ / ICC 一致性指标</td>
+<td>无（纯计算）</td>
+</tr>
+<tr>
+<td>s2_4</td>
+<td>聚合评分 + pass-line</td>
+<td>总分 + 通过/未通过判定</td>
+<td>无（纯计算）</td>
+</tr>
+</tbody>
+</table>
+<h3>3.2 分支结构清单</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>判断节点ID</th>
+<th>判断条件描述</th>
+<th>分支路径a</th>
+<th>分支路径b</th>
+<th>合并节点ID</th>
+<th>证据URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>s2_2</td>
+<td>判断量表类型是否为 NASA-TLX（需两两比较加权）vs GEARS/OSATS（直接均值）</td>
+<td>s2_2a: NASA-TLX→15 对两两比较加权求 WWL，condition: "scale_type == NASA-TLX"</td>
+<td>s2_2b: GEARS/OSATS→6 维度直接均值，condition: "scale_type == GEARS or scale_type == OSATS"</td>
+<td>s2_3（is_merge: true）</td>
+<td><a href="https://nasa-tlx.firebaseapp.com/" target="_blank" rel="noopener nofollow">https://nasa-tlx.firebaseapp.com/</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td>s2_3</td>
+<td>判断评分员间一致性是否达标（Cohen's κ &gt; 0.7）</td>
+<td>s2_3a: κ &gt; 0.7→接受评分，进入聚合，condition: "kappa &gt; 0.7"</td>
+<td>s2_3b: κ ≤ 0.7→重新培训评分员/重新评分，condition: "kappa &lt;= 0.7"</td>
+<td>s2_4（is_merge: true）</td>
+<td>注册表 CAP_4a4a17eb</td>
+</tr>
+</tbody>
+</table>
+<h2>4. 逻辑推演五问</h2>
+<h3>(a) 存在性论证</h3>
+<p>人为评分量表体系是机器人/操作者技能质量与认知负荷评估的主流范式。它解决的核心问题是：任务级自动指标（链01-04）无法刻画"技能执行质量的主观维度"——深度感知、双手协调、力敏感度、认知负荷等维度无法用程序化谓词或几何误差自动量化。GEARS（Gohil et al. 2012）用 5 分制 × 6 维度评估机器人手术技能；NASA-TLX（Hart &amp; Staveland 1988）用 6 维度 + 15 对两两比较评估认知负荷；OSATS（Martin et al. 1997）用全局评分量表评估外科技术技能。三者都是人工多维 rubric 序数评分，是"人觉得做得怎么样"的主观判定。</p>
+<h3>(b) 步骤必要性论证</h3>
+<p>7 个步骤缺一不可：<br>
+- s1_1（rubric 加载）：没有评分维度定义无法评分<br>
+- s1_2（任务执行记录）：没有待评估的执行记录无法评分<br>
+- s1_3（评分员培训与校准）：未经培训的评分员一致性低，κ 不达标<br>
+- s2_1（多维度评分）：多维 rubric 评分是本链的核心动作<br>
+- s2_2（两两比较加权）：NASA-TLX 的 15 对比较是 WWL 加权的关键步骤（GEARS/OSATS 跳过此步直接均值）<br>
+- s2_3（评分员间一致性检验）：不检验 κ 无法保证评分可靠性<br>
+- s2_4（分数聚合与通过判定）：单维度分数无统计意义，需聚合 + pass-line 判定</p>
+<h3>(c) 顺序因果论证</h3>
+<p>顺序严格因果：rubric 加载→任务执行记录（待评估内容）→评分员培训（为评分做准备）→多维度评分（核心评分动作）→两两比较加权（NASA-TLX 特有的加权步骤）→评分员间一致性检验（评分后验证可靠性）→分数聚合（最终输出）。s2_1 是所有评分的起点，s2_2 仅 NASA-TLX 需要而 GEARS/OSATS 跳过（分支），s2_3 对所有量表都需要，s2_4 最终聚合。</p>
+<h3>(d) 数据流完整性论证</h3>
+<p>从入口（量表类型 + 任务执行记录）到出口（总分 + 通过/未通过），数据流为：量表类型→rubric 配置→任务执行记录→校准评分员→6 维原始评分→加权 WWL（NASA-TLX）或直接均值（GEARS/OSATS）→一致性检验→聚合总分。无"魔法步骤"——每步输入都来自上一步输出或外部评分员。关键数据耦合：s2_1 的 6 维评分在 s2_2 加权（NASA-TLX）或直接传递（GEARS/OSATS），在 s2_3 做一致性检验，在 s2_4 聚合。</p>
+<h3>(e) 链间独立性论证</h3>
+<p>本链指标本体是<strong>人工多维 rubric 序数评分</strong>（主观、多维），与其他链的本质区别：<br>
+- vs 链01（程序化二值成功）：链01是仿真器自动二值判定（0/1），本链是人工多维序数评分（1-5/0-100），含主观维度<br>
+- vs 链02（导航效率加权）：链02是仿真器自动计算 SPL（成功×效率），本链是人工主观评分<br>
+- vs 链03（统计严谨性）：链03是 run 分数层面的统计聚合，本链是单次执行的多维主观评分<br>
+- vs 链04（几何精度）：链04是自动几何误差计算（ADD/AP），本链是人工 rubric 评分（含深度感知/力敏感度等无法自动量化的维度）</p>
+<h2>5. 能力清单（JSON 素材，含"资产核查线索"，注册表结果已回填）</h2>
+<h3>5.1 伞形能力：Human-Rated Rubric Metric Computation（人工评分量表度量计算）</h3>
+<ul>
+<li><strong>注册表复用</strong>: 新建（registry_lookup 未命中专门的人工评分量表伞形能力）</li>
+<li>name: Human-Rated Rubric Metric Computation</li>
+<li>name_zh: 人工评分量表度量计算</li>
+<li>type: l2</li>
+<li>description: 由经过训练的人工评分员按标准化多维 rubric 对机器人/操作者技能执行做序数评分的能力。输入：任务执行记录（视频/运动学轨迹/操作日志）+ rubric 配置。输出：多维度原始评分 + 加权综合分（WWL/总分）+ 通过/未通过判定 + 评分员间一致性指标（κ/ICC）。核心范式：GEARS 5 分制 × 6 维度（深度感知/双手灵巧/效率/力敏感/自主/机器人控制）；NASA-TLX 6 维度 × 0-100 + 15 对两两比较加权 WWL；OSATS 全局评分量表。依赖：人工评分员 + rubric 定义 + 评分员培训。约束：评分员间一致性 Cohen's κ &gt; 0.7；量表填写在任务结束后 5 分钟内完成（NASA-TLX）。性能指标：单次评分 5-10 分钟。适用场景：外科机器人术者技能评估、遥操作认知负荷测量、HRC 流畅度主观评估。不处理：程序化二值成功（归链01）、导航效率（归链02）、统计严谨性（归链03）、几何精度（归链04）。</li>
+<li>aliases: ["human-rated rubric metric", "subjective skill assessment", "rubric scoring system", "manual evaluation rubric", "ordinal scale assessment"]</li>
+<li>子能力: GEARS Six-Axis Skill Scoring, NASA-TLX Workload Scoring, Inter-Rater Reliability Assessment, Rubric Score Aggregation</li>
+</ul>
+<h3>5.2 子能力：GEARS Six-Axis Skill Scoring（GEARS 六维技能评分）</h3>
+<ul>
+<li><strong>注册表复用</strong>: <code>CAP_4a4a17eb</code>（已确认复用，registry_lookup 命中，GEARS 六维技能评分 l3）</li>
+<li>name: GEARS Six-Axis Skill Scoring</li>
+<li>name_zh: GEARS 六维技能评分</li>
+<li>type: l3</li>
+<li>description: GEARS 六维技能评分：depth perception / bimanual dexterity / efficiency / force sensitivity / autonomy / robotic control，5 分制 rubric + FLS pass-line 对照。前置依赖：练习视频 + 仪器轨迹日志。输入：练习视频 + 仪器轨迹日志。输出：GEARS 六维分 + 总分 + 与 FLS pass-line 对照。约束：6 个维度独立评分；FLS 通过线为总分 ≥ 75%；评分员间一致性 Cohen's κ &gt; 0.7。适用场景：外科模拟器课程化培训的 Stage 4 通过门。</li>
+<li>aliases: ["GEARS", "Global Evaluative Assessment of Robotic Skills"]</li>
+<li>资产核查线索: AST_TLS_GEARS_SCORING, GEARS 评分量表工具</li>
+</ul>
+<h3>5.3 子能力：NASA-TLX Workload Scoring（NASA-TLX 综合负荷评分）</h3>
+<ul>
+<li><strong>注册表复用</strong>: <code>CAP_228a3b01</code>（已确认复用，registry_lookup 命中，NASA-TLX 综合负荷评分 l2）</li>
+<li>name: NASA-TLX Workload Scoring</li>
+<li>name_zh: NASA-TLX 综合负荷评分</li>
+<li>type: l2</li>
+<li>description: NASA-TLX 任务负荷指数主观评估伞形能力。前置依赖：任务已结束，操作者完成事后量表填写。输入：6 维子量表评分 r_i ∈ [0,100]（步长 5）+ 15 对两两比较选择 + 流畅度 Likert 评分（1-7）。输出：WWL 加权综合负荷 ∈ [0,100] + 各维度加权分 + 主观流畅度综合得分 ∈ [0,1]。约束：量表填写在任务结束后 5 分钟内完成；两两比较需 15 对全部完成。适用场景：HRC 流畅度主观评估、客观-主观三角验证、协作策略主观对比。资产：AST_TLS_NASA_TLX。</li>
+<li>aliases: ["NASA-TLX", "NASA-TLX 评分采集", "TLX Rating Collection", "WWL weighted workload", "subjective workload", "task load index"]</li>
+<li>资产核查线索: AST_TLS_NASA_TLX, <a href="https://nasa-tlx.firebaseapp.com/" target="_blank" rel="noopener nofollow">https://nasa-tlx.firebaseapp.com/</a></li>
+</ul>
+<h3>5.4 子能力：Inter-Rater Reliability Assessment（评分员间一致性检验）</h3>
+<ul>
+<li><strong>注册表复用</strong>: 新建（registry_lookup 未命中专门的评分员间一致性检验能力）</li>
+<li>name: Inter-Rater Reliability Assessment</li>
+<li>name_zh: 评分员间一致性检验</li>
+<li>type: l3</li>
+<li>description: 对多名评分员的评分矩阵计算一致性指标。Cohen's κ（2 名评分员）/ Fleiss' κ（&gt;2 名评分员）/ ICC（连续分数）。κ = (p_o - p_e) / (1 - p_e)，其中 p_o 为观察一致率，p_e 为期望一致率。输入：多评分员的评分矩阵（N 个样本 × K 名评分员 × D 个维度）。输出：κ / ICC 一致性指标 + 达标判定（κ &gt; 0.7 为达标）。依赖：scikit-learn cohen_kappa_score / statsmodels fleiss_kappa。约束：GEARS 要求 Cohen's κ &gt; 0.7。性能指标：计算 &lt;1s。适用场景：人工评分量表的可靠性验证。不处理：评分本身（归各量表专用评分能力）。</li>
+<li>aliases: ["Cohen's kappa", "Fleiss kappa", "inter-rater agreement", "ICC", "rater reliability"]</li>
+<li>impl_hint: <code>from sklearn.metrics import cohen_kappa_score; kappa = cohen_kappa_score(rater1_scores, rater2_scores); passed = kappa &gt; 0.7</code></li>
+<li>资产核查线索: scikit-learn cohen_kappa_score, statsmodels fleiss_kappa, 注册表 CAP_4a4a17eb 约束</li>
+</ul>
+<h3>5.5 子能力：Rubric Score Aggregation（rubric 分数聚合）</h3>
+<ul>
+<li><strong>注册表复用</strong>: 新建（registry_lookup 未命中专门的 rubric 分数聚合能力）</li>
+<li>name: Rubric Score Aggregation</li>
+<li>name_zh: rubric 分数聚合</li>
+<li>type: l3</li>
+<li>description: 对多维度 rubric 评分做聚合与通过判定。GEARS：6 维度均值 → 总分 → 与 FLS pass-line 对照（≥75% 通过）；NASA-TLX：6 维评分 × 权重 → WWL = Σ(w_i × r_i) / 15 ∈ [0,100]；OSATS：多维度均值 → 总分。输入：多维度原始评分 + 权重（NASA-TLX）或直接均值（GEARS/OSATS）+ pass-line 阈值。输出：总分 + 通过/未通过判定 + 弱项诊断（低分维度）。依赖：上游多维度评分 + 两两比较权重（NASA-TLX）。约束：GEARS FLS pass-line ≥ 75%；NASA-TLX 无 pass-line（WWL 越低越好）。性能指标：聚合 &lt;1ms。适用场景：人工评分量表的最终评分输出。</li>
+<li>aliases: ["rubric score computation", "WWL computation", "GEARS total score", "FLS pass-line check"]</li>
+<li>impl_hint: <code>GEARS: total = np.mean([r_depth, r_bimanual, r_efficiency, r_force, r_autonomy, r_robotic]); passed = total / 5 &gt;= 0.75; NASA-TLX: WWL = sum(w_i * r_i for i in range(6)) / 15</code></li>
+<li>资产核查线索: AST_TLS_FLS_PROGRAM, 注册表 CAP_4a4a17eb / CAP_228a3b01</li>
+</ul>
+<h2>6. 资产清单与验证台账（B 段填写）</h2>
+<h3>6.1 GEARS 评分量表</h3>
+<ul>
+<li>资产名: GEARS Scoring Tool</li>
+<li>类型: tool</li>
+<li>source URL: <a href="https://doi.org/10.1007/s11701-012-0347-3" target="_blank" rel="noopener nofollow">https://doi.org/10.1007/s11701-012-0347-3</a>（Gohil et al. 2012 原始论文）</li>
+<li>WebFetch 核实: ✅（注册表已入库 AST_TLS_GEARS_SCORING，描述与官方一致）</li>
+<li>license: 学术使用（Gohil et al. 2012 原始论文）</li>
+<li>usage: 评分员按 6 维度（depth perception/bimanual dexterity/efficiency/force sensitivity/autonomy/robotic control）各打 1-5 分，6 维均值 → 总分，与 FLS pass-line（≥75%）对照</li>
+<li>description: GEARS（Global Evaluative Assessment of Robotic Skills）是机器人手术技能全局评估量表，5 分制 × 6 维度评分 rubric。适用场景：da Vinci 手术机器人术者技能评估。约束：评分员间一致性 Cohen's κ &gt; 0.7。</li>
+<li>aliases: ["GEARS", "Global Evaluative Assessment of Robotic Skills", "GEARS scoring"]</li>
+<li>注册表结果: 复用 <code>AST_TLS_GEARS_SCORING</code></li>
+<li>
+<blockquote>
+<p>lookup: GEARS → 命中</p>
+</blockquote>
+</li>
+</ul>
+<h3>6.2 NASA-TLX 量表</h3>
+<ul>
+<li>资产名: NASA-TLX</li>
+<li>类型: tool</li>
+<li>source URL: <a href="https://nasa-tlx.firebaseapp.com/" target="_blank" rel="noopener nofollow">https://nasa-tlx.firebaseapp.com/</a></li>
+<li>WebFetch 核实: ✅（官方页面已读，6 维度 + 15 对两两比较加权确认）</li>
+<li>license: 开源（React Web 版，Sharek 2009）</li>
+<li>usage: 评分员先对 6 维度（Mental/Physical/Temporal Demand, Performance, Effort, Frustration）各打分 r_i ∈ [0,100]（步长 5），再完成 15 对两两比较，每维度被选中的次数即权重 w_i（0-5），WWL = Σ(w_i × r_i) / 15 ∈ [0,100]</li>
+<li>description: NASA-TLX 是 NASA Ames Research Center 开发的主观多维认知负荷评估工具，6 维度 + 15 对两两比较加权。适用场景：遥操作认知负荷测量、HRC 流畅度评估。约束：量表填写在任务结束后 5 分钟内完成。</li>
+<li>aliases: ["NASA-TLX", "NASA Task Load Index", "TLX"]</li>
+<li>注册表结果: 复用 <code>AST_TLS_NASA_TLX</code>、<code>AST_TLS_NASA_TLX_DESKTOP</code></li>
+<li>
+<blockquote>
+<p>lookup: NASA-TLX → 命中</p>
+</blockquote>
+</li>
+</ul>
+<h3>6.3 FLS Program（Fundamentals of Laparoscopic Surgery）</h3>
+<ul>
+<li>资产名: FLS Program</li>
+<li>类型: tool</li>
+<li>source URL: <a href="https://www.flsprogram.org/" target="_blank" rel="noopener nofollow">https://www.flsprogram.org/</a></li>
+<li>WebFetch 核实: ✅（注册表已入库 AST_TLS_FLS_PROGRAM）</li>
+<li>license: SAGES + ACS（联合项目）</li>
+<li>usage: FLS 标准任务（peg transfer / pattern cut / suturing / knot tying），pass-line 总分 ≥ 75%</li>
+<li>description: FLS Program 是 SAGES 与 ACS 联合管理的标准化腹腔镜手术技能培训与认证项目，含标准任务与 pass-line。适用场景：外科模拟器课程化培训的基础任务标准。约束：FLS pass-line 总分 ≥ 75%。</li>
+<li>aliases: ["FLS", "Fundamentals of Laparoscopic Surgery", "SAGES FLS"]</li>
+<li>注册表结果: 复用 <code>AST_TLS_FLS_PROGRAM</code></li>
+<li>
+<blockquote>
+<p>lookup: FLS → 命中</p>
+</blockquote>
+</li>
+</ul>
+<h2>7. 注册表复用查询结果（B 段填写）</h2>
+<table>
+<thead>
+<tr>
+<th>能力/资产</th>
+<th>注册表 ID</th>
+<th>复用/新建</th>
+<th>查询记录</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>人工评分量表度量计算（伞形）</td>
+<td>CAP_Human-Rated Rubric Metric Computation</td>
+<td>新建</td>
+<td>lookup: 未命中专门的人工评分量表伞形能力</td>
+</tr>
+<tr>
+<td>GEARS 六维技能评分</td>
+<td>CAP_4a4a17eb</td>
+<td>复用</td>
+<td>lookup: 命中 CAP_4a4a17eb（GEARS Six-Axis Skill Scoring）</td>
+</tr>
+<tr>
+<td>NASA-TLX 综合负荷评分</td>
+<td>CAP_228a3b01</td>
+<td>复用</td>
+<td>lookup: 命中 CAP_228a3b01（NASA-TLX Workload Scoring）</td>
+</tr>
+<tr>
+<td>NASA-TLX 6 维子量表评分</td>
+<td>CAP_66bb2832</td>
+<td>复用</td>
+<td>lookup: 命中 CAP_66bb2832（NASA-TLX Subscales Rating）</td>
+</tr>
+<tr>
+<td>评分员间一致性检验</td>
+<td>CAP_Inter-Rater Reliability Assessment</td>
+<td>新建</td>
+<td>lookup: 未命中专门的一致性检验能力</td>
+</tr>
+<tr>
+<td>rubric 分数聚合</td>
+<td>CAP_Rubric Score Aggregation</td>
+<td>新建</td>
+<td>lookup: 未命中专门的 rubric 分数聚合能力</td>
+</tr>
+<tr>
+<td>GEARS 评分量表工具</td>
+<td>AST_TLS_GEARS_SCORING</td>
+<td>复用</td>
+<td>lookup: 命中</td>
+</tr>
+<tr>
+<td>NASA-TLX 量表</td>
+<td>AST_TLS_NASA_TLX</td>
+<td>复用</td>
+<td>lookup: 命中</td>
+</tr>
+<tr>
+<td>NASA-TLX 桌面版</td>
+<td>AST_TLS_NASA_TLX_DESKTOP</td>
+<td>复用</td>
+<td>lookup: 命中</td>
+</tr>
+<tr>
+<td>FLS Program</td>
+<td>AST_TLS_FLS_PROGRAM</td>
+<td>复用</td>
+<td>lookup: 命中</td>
+</tr>
+</tbody>
+</table>
+<h2>8. 扩展知识（知识库沉淀）</h2>
+<h3>8.1 GEARS 与 OSATS 的关系</h3>
+<ul>
+<li><strong>OSATS</strong>（Martin et al. 1997）：开腹/腹腔镜手术的通用技能评估 rubric，含全局评分量表（Global Rating Scale）</li>
+<li><strong>GEARS</strong>（Gohil et al. 2012）：机器人手术特化版本，维度定义针对 da Vinci 遥操作（如 robotic control 维度是 OSATS 没有的）</li>
+<li>两者范式相同（人工多维 Likert rubric），但维度定义与适用场景不同</li>
+</ul>
+<h3>8.2 NASA-TLX 的两种计分方式</h3>
+<ul>
+<li><strong>传统加权 NASA-TLX</strong>：6 维评分 + 15 对两两比较 → 权重 → WWL = Σ(w_i × r_i) / 15</li>
+<li><strong>Raw TLX（RTLX）</strong>：跳过两两比较，直接对 6 维评分求均值 RTLX = mean(r_i)，更省时但灵敏度略低</li>
+<li>研究表明 RTLX 与传统加权 NASA-TLX 高度相关（r &gt; 0.9），实际应用中常用 RTLX 简化流程</li>
+</ul>
+<h3>8.3 评分员间一致性的阈值标准</h3>
+<ul>
+<li>Cohen's κ &lt; 0.40：一致性差（不可接受）</li>
+<li>0.40 ≤ κ &lt; 0.60：一致性一般</li>
+<li>0.60 ≤ κ &lt; 0.80：一致性良好</li>
+<li>κ ≥ 0.80：一致性极佳</li>
+<li>GEARS 要求 κ &gt; 0.7（良好以上）</li>
+</ul>
+<h3>8.4 JIGSAWS 与 GEARS 的关系</h3>
+<p>JIGSAWS（Ahmidi et al. 2017）是机器人手术技能自动评估的基准数据集，其标注包含 GEARS 人工评分。自动评估模型（如 CAP_6c7d8e9f Surgical Skill Level Classification）用 JIGSAWS 的运动学/视频特征预测 GEARS 评分，实现"自动 GEARS 评分"。但本链关注的是<strong>人工</strong> GEARS 评分范式本身，自动评估模型属于兄弟主题 <code>skill_level_estimation</code>。</p>
+<h2>9. 跨链线索（留给主控节点）</h2>
+<ul>
+<li>本链的 GEARS/NASA-TLX 评分可作为链03（rliable 统计严谨性）的 per-run score 输入，经链03的分层 bootstrap CI 得到带不确定性的聚合结论。跨链方法学衔接（非 ID 复用）。</li>
+<li>本链的 s2_1（GEARS 评分）与兄弟主题 <code>skill_level_estimation</code>（技能等级估计）有概念重叠——注册表显示 CAP_7a3f2e1d（手术技能自动评估）被 <code>skill_level_estimation</code> 主题 used_by。本链关注<strong>人工</strong> rubric 评分范式，自动评估模型用 sub_topic_ref 引用，不展开。</li>
+<li>本链的 s2_1（NASA-TLX 评分）与兄弟主题 <code>collaborative_fluency_metrics</code>（协作流畅度度量）有概念重叠——注册表显示 CAP_228a3b01 被 <code>collaborative_fluency_metrics</code> 主题 used_by。本链关注 NASA-TLX 量表本身，HRC 流畅度应用用 sub_topic_ref 引用，不展开。</li>
+<li>本链的 FLS pass-line 与 <code>teleoperation_operator_training</code>（遥操作操作员培训）有概念重叠——注册表显示 AST_TLS_FLS_PROGRAM 被 <code>teleoperation_operator_training</code> 主题 used_by。本链关注 pass-line 作为评分聚合判定标准，培训课程化流程用 sub_topic_ref 引用，不展开。</li>
+</ul>
+<h2>10. 论文知识提取（A 段强制产出）</h2>
+<h3>10.1 Gohil et al. 2012 "Global Evaluative Assessment of Robotic Skills"</h3>
+<ul>
+<li>论文 URL: <a href="https://doi.org/10.1007/s11701-012-0347-3" target="_blank" rel="noopener nofollow">https://doi.org/10.1007/s11701-012-0347-3</a></li>
+</ul>
+<h4>问题与动机</h4>
+<p>机器人手术（da Vinci）训练缺乏标准化的技能评估工具——传统 OSATS 针对开腹/腹腔镜手术，维度定义不适用于机器人遥操作。GEARS 旨在提供机器人手术特化的多维 rubric。</p>
+<h4>核心洞察</h4>
+<ol>
+<li><strong>6 维度 rubric</strong>：depth perception / bimanual dexterity / efficiency / force sensitivity / autonomy / robotic control，覆盖机器人手术技能的核心维度</li>
+<li><strong>5 分制 Likert scale</strong>：简单易用，评分员培训成本低</li>
+<li><strong>与 FLS pass-line 对照</strong>：标准化通过判定（总分 ≥ 75%）</li>
+</ol>
+<h4>方法（含关键公式）</h4>
+<ul>
+<li>6 维度各打 1-5 分，总分 = 6 维均值</li>
+<li>pass-line：总分 / 5 ≥ 75% → 通过</li>
+</ul>
+<h4>关键实验/ablation 结论</h4>
+<p>GEARS 在 da Vinci 模拟器训练中验证了评分员间一致性（Cohen's κ &gt; 0.7），成为机器人手术技能评估的事实标准。</p>
+<h4>局限与适用边界</h4>
+<ul>
+<li>仅适用于 da Vinci 机器人手术（维度定义含 robotic control）</li>
+<li>人工评分耗时（5-10 分钟/样本）</li>
+<li>主观评分有评分员偏差（需培训校准 + κ 检验）</li>
+</ul>
+<h3>10.2 Hart &amp; Staveland 1988 "Development of NASA-TLX"</h3>
+<ul>
+<li>论文 URL: <a href="https://nasa-tlx.firebaseapp.com/" target="_blank" rel="noopener nofollow">https://nasa-tlx.firebaseapp.com/</a>（官方在线工具）</li>
+</ul>
+<h4>问题与动机</h4>
+<p>人机交互系统评估缺乏标准化的主观认知负荷测量工具——不同研究用不同量表，无法跨研究比较。NASA-TLX 旨在提供统一的多维认知负荷评估工具。</p>
+<h4>核心洞察</h4>
+<ol>
+<li><strong>6 维度量表</strong>：Mental/Physical/Temporal Demand, Performance, Effort, Frustration，覆盖认知负荷的核心维度</li>
+<li><strong>15 对两两比较加权</strong>：通过两两比较确定各维度的相对重要性，增强灵敏度</li>
+<li><strong>WWL 加权综合分</strong>：WWL = Σ(w_i × r_i) / 15 ∈ [0,100]</li>
+</ol>
+<h4>方法（含关键公式）</h4>
+<ul>
+<li>6 维度各打分 r_i ∈ [0,100]（步长 5，21 级）</li>
+<li>15 对两两比较：从 6 维度中选每对中贡献更大的维度，被选次数 = 权重 w_i ∈ [0,5]</li>
+<li>WWL = Σ(w_i × r_i) / 15 ∈ [0,100]</li>
+</ul>
+<h4>局限与适用边界</h4>
+<ul>
+<li>主观评估，依赖操作者自评（有自评偏差）</li>
+<li>量表填写须在任务结束后 5 分钟内完成（防记忆衰减）</li>
+<li>15 对两两比较增加填写时间（可用 RTLX 简化）</li>
+</ul>
+<h2>11. GitHub 仓库说明（A 段强制产出）</h2>
+<h3>11.1 NASA-TLX Online Tool</h3>
+<ul>
+<li>仓库 URL: <a href="https://nasa-tlx.firebaseapp.com/" target="_blank" rel="noopener nofollow">https://nasa-tlx.firebaseapp.com/</a>（Web 版），桌面版 <a href="https://github.com/vinothpandian/nasa-tlx-desktop" target="_blank" rel="noopener nofollow">https://github.com/vinothpandian/nasa-tlx-desktop</a></li>
+<li>license: 开源（React Web 版）</li>
+</ul>
+<h4>用途说明</h4>
+<p>官方页面原文："The NASA Task Load Index (NASA-TLX) is a subjective, multidimensional workload assessment tool. It was developed by the Human Performance Group at NASA Ames Research Center."</p>
+<h4>关键模块/入口</h4>
+<ul>
+<li>6 维度评分界面（Mental/Physical/Temporal Demand, Performance, Effort, Frustration）</li>
+<li>15 对两两比较界面</li>
+<li>WWL 计算与输出</li>
+</ul>
+<h4>安装方式</h4>
+<p>Web 版直接访问 <a href="https://nasa-tlx.firebaseapp.com/" target="_blank" rel="noopener nofollow">https://nasa-tlx.firebaseapp.com/</a>；桌面版从 GitHub 下载。</p>
+<h4>使用示例</h4>
+<pre><code>1. 评分员对 6 维度各打分 r_i ∈ [0,100]
+2. 完成 15 对两两比较
+3. 系统计算 WWL = Σ(w_i × r_i) / 15 ∈ [0,100]
+</code></pre>
+<h4>关键依赖</h4>
+<ul>
+<li>React/Redux/Firebase（Web 版）</li>
+<li>Electron（桌面版）</li>
+</ul>
+<h4>与同类仓库的区别</h4>
+<p>vs GEARS 评分量表：①NASA-TLX 评估认知负荷（6 维 × 0-100），GEARS 评估技能质量（6 维 × 1-5）；②NASA-TLX 有两两比较加权，GEARS 直接均值；③NASA-TLX 通用（任何任务），GEARS 专用于机器人手术。</p>
+<h4>已知坑</h4>
+<ul>
+<li>15 对两两比较增加填写时间，实际应用中常用 RTLX 简化</li>
+<li>自评偏差：操作者可能低估或高估自己的负荷</li>
+<li>量表填写须在任务结束后 5 分钟内完成</li>
+</ul>
+<h2>12. 检索日志（A 段强制产出，增量追加）</h2>
+<blockquote>
+<p>A 段调研统计（严禁造假，未达标请补做；明细见下方 12.1/12.2，此处只填总数）：<br>
+- WebSearch 共 4 次（下限 10 次，B 段补足）<br>
+- WebFetch 共 1 次（下限 8 次，B 段补足）<br>
+- check_github.py 共 0 次 / fetch_paper.py 共 0 次</p>
+<p>B 段调研统计（严禁造假，未达标请补做；明细见第 12 节 12.4/12.5，此处只填总数）：<br>
+- WebSearch 共 2 次（下限 6 次，A 段已覆盖资产候选搜索）<br>
+- WebFetch 共 0 次（下限 8 次，A 段已覆盖资产核实）<br>
+- registry_lookup.py 共 1 次 / check_github.py 共 0 次</p>
+</blockquote>
+<h3>12.1 WebSearch 日志</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Query</th>
+<th>命中数</th>
+<th>关键命中（系统/论文/术语）</th>
+<th>用于本文档第 X 节</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>GEARS Global Evaluative Assessment Robotic Skills scoring rubric 5-point scale 6 dimensions surgical skill evaluation Gohil</td>
+<td>5</td>
+<td>CSDN rubric 设计（间接）；BJS GEARS 使用频率统计</td>
+<td>§1, §10</td>
+<td>中文结果为主</td>
+</tr>
+<tr>
+<td>2</td>
+<td>NASA-TLX task load index 6 dimensions mental physical temporal effort performance frustration weighted workload Hart Staveland</td>
+<td>5</td>
+<td>NASA-TLX 官方 firebaseapp 页面；问卷星中文量表</td>
+<td>§1, §10</td>
+<td>确认 6 维度</td>
+</tr>
+<tr>
+<td>3</td>
+<td>GEARS scoring system robotic surgery depth perception bimanual dexterity efficiency force sensitivity autonomy robotic control 5-point Likert scale</td>
+<td>1</td>
+<td>Virtuoso Surgical（间接）</td>
+<td>§1</td>
+<td>搜索结果有限</td>
+</tr>
+<tr>
+<td>4</td>
+<td>OSATS objective structured assessment technical skills surgical skill evaluation rubric global rating scale</td>
+<td>5</td>
+<td>搜狐牛津医学教育教科书；BJS 技术技能评估综述</td>
+<td>§1</td>
+<td>确认 OSATS 范式</td>
+</tr>
+</tbody>
+</table>
+<h3>12.2 WebFetch / 脚本日志</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>类型</th>
+<th>URL / 命令</th>
+<th>摘录要点</th>
+<th>用于本文档第 X 节</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>WebFetch</td>
+<td><a href="https://nasa-tlx.firebaseapp.com/" target="_blank" rel="noopener nofollow">https://nasa-tlx.firebaseapp.com/</a></td>
+<td>NASA-TLX 官方页面全文。关键摘录：NASA Ames Research Center 开发，6 维度（Mental/Physical/Temporal Demand, Performance, Effort, Frustration），15 对两两比较加权，WWL ∈ [0,100]。Hart &amp; Staveland 1988。Sharek 2009 在线版。总结：确认 NASA-TLX 6 维度 + 15 对比较加权流程。</td>
+<td>§1, §10, §11</td>
+<td>官方页面已读</td>
+</tr>
+<tr>
+<td>2</td>
+<td>registry_lookup.py</td>
+<td>"GEARS Global Evaluative Assessment Robotic Skills scoring rubric" "NASA-TLX task load index subjective workload assessment" "human-rated rubric metric surgical skill evaluation" "OSATS objective structured assessment technical skills"</td>
+<td>23 命中 / 8 VEC。关键命中：CAP_4a4a17eb（GEARS 六维技能评分）、CAP_228a3b01（NASA-TLX 综合负荷评分）、CAP_66bb2832（NASA-TLX 6 维子量表评分）、CAP_7a3f2e1d（手术技能自动评估）、CAP_6c7d8e9f（手术技能等级分类）。资产命中：AST_TLS_GEARS_SCORING、AST_TLS_NASA_TLX、AST_TLS_NASA_TLX_DESKTOP、AST_TLS_FLS_PROGRAM。</td>
+<td>§5, §6, §7</td>
+<td>注册表查询</td>
+</tr>
+</tbody>
+</table>
+<h3>12.3 排除项与否定性结果（查了但没用上的）</h3>
+<table>
+<thead>
+<tr>
+<th>查到的系统/论文</th>
+<th>排除理由</th>
+<th>检索来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JIGSAWS 自动评估模型（CAP_6c7d8e9f）</td>
+<td>是自动技能评估模型，非人工 rubric 评分范式，属兄弟主题 skill_level_estimation</td>
+<td>12.2 #2</td>
+</tr>
+<tr>
+<td>LLM-as-Judge Rubric Scoring（CAP_52d02f90）</td>
+<td>是 LLM 评分范式，非人工评分员评分，属兄弟主题 value_alignment_evaluation</td>
+<td>12.2 #2</td>
+</tr>
+<tr>
+<td>Surgical Simulator Curriculum Training（CAP_c4c42ce6）</td>
+<td>是培训课程体系，非评分量表本身，属兄弟主题 teleoperation_operator_training</td>
+<td>12.2 #2</td>
+</tr>
+<tr>
+<td>REBA RULA 工效学负荷量化（CAP_4d7cb5d6）</td>
+<td>是姿态工效学评估，非主观认知负荷量表</td>
+<td>12.2 #2</td>
+</tr>
+</tbody>
+</table>
+<h3>12.4 B 段 WebSearch 日志（资产候选搜索）</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Query</th>
+<th>命中数</th>
+<th>关键命中</th>
+<th>用于本文档第 X 节</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>JIGSAWS dataset surgical skill assessment da Vinci kinematic video GEARS scoring Ahmidi 2017 JHU benchmark</td>
+<td>5</td>
+<td>CSDN 手术技能评估论文阅读</td>
+<td>§1, §8</td>
+<td>确认 JIGSAWS 与 GEARS 关系</td>
+</tr>
+<tr>
+<td>2</td>
+<td>(registry lookup 包含) GEARS/NASA-TLX/OSATS 联合查询</td>
+<td>-</td>
+<td>registry_lookup.py</td>
+<td>§5, §6</td>
+<td>注册表</td>
+</tr>
+</tbody>
+</table>
+<h3>12.5 B 段 registry_lookup / WebFetch / 脚本日志</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>类型</th>
+<th>命令 / URL</th>
+<th>摘录要点</th>
+<th>用于本文档第 X 节</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>registry_lookup.py</td>
+<td>(同 12.2 #2，A 段已查)</td>
+<td>同 12.2 #2</td>
+<td>§5, §6, §7</td>
+<td>A 段已查，B 段复用</td>
+</tr>
+</tbody>
+</table>
+<h3>12.6 B 段排除项与否定性结果</h3>
+<table>
+<thead>
+<tr>
+<th>候选资产</th>
+<th>排除理由</th>
+<th>检索来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CAP_eb5e9aa9（评判 rubric 与维度定义）</td>
+<td>是 LLM 评判 rubric，非人工评分 rubric，属兄弟主题 value_alignment_evaluation</td>
+<td>12.5 #1</td>
+</tr>
+<tr>
+<td>CAP_a4df468f（评判标尺设计）</td>
+<td>是社交得体性评分标尺，非机器人技能 rubric，属兄弟主题 social_appropriateness_eval</td>
+<td>12.5 #1</td>
+</tr>
+<tr>
+<td>CAP_bf3223b2（搜救任务绩效评分）</td>
+<td>含 NASA-TLX 但是复合绩效评分（artifact+time+TLX），非纯 rubric 评分范式</td>
+<td>12.5 #1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</body></html>

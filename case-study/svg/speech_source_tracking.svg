@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="914" height="3332"
+ viewBox="0 0 914 3332"
+ shape-rendering="geometricPrecision" text-rendering="optimizeLegibility">
+<!--SV-THEME--><style>/* 一份 SVG 两种主题 */@media (prefers-color-scheme: light){[fill="#0B0D16"]{fill:#F6F3EC}[stroke="#0B0D16"]{stroke:#F6F3EC}[fill="#0D1D28"]{fill:#E4F1F8}[stroke="#0D1D28"]{stroke:#E4F1F8}[fill="#0D1F2C"]{fill:#E4F3F8}[stroke="#0D1F2C"]{stroke:#E4F3F8}[fill="#0E2019"]{fill:#E3F5EC}[stroke="#0E2019"]{stroke:#E3F5EC}[fill="#12162A"]{fill:#EFEBE2}[stroke="#12162A"]{stroke:#EFEBE2}[fill="#151A2B"]{fill:#FFFFFF}[stroke="#151A2B"]{stroke:#FFFFFF}[fill="#161A26"]{fill:#F0EEE8}[stroke="#161A26"]{stroke:#F0EEE8}[fill="#1A1430"]{fill:#EFEAFB}[stroke="#1A1430"]{stroke:#EFEAFB}[fill="#231A0C"]{fill:#FAF2DF}[stroke="#231A0C"]{stroke:#FAF2DF}[fill="#2A0F1E"]{fill:#FBE6EF}[stroke="#2A0F1E"]{stroke:#FBE6EF}[fill="#2A3050"]{fill:#DFD8CC}[stroke="#2A3050"]{stroke:#DFD8CC}[fill="#39406A"]{fill:#C7BDAD}[stroke="#39406A"]{stroke:#C7BDAD}[fill="#3FC5E8"]{fill:#0E6E8C}[stroke="#3FC5E8"]{stroke:#0E6E8C}[fill="#3FD6E8"]{fill:#0E6E8C}[stroke="#3FD6E8"]{stroke:#0E6E8C}[fill="#4FA8FF"]{fill:#1668A8}[stroke="#4FA8FF"]{stroke:#1668A8}[fill="#4FB3E8"]{fill:#1668A8}[stroke="#4FB3E8"]{stroke:#1668A8}[fill="#4FC08D"]{fill:#1F7A55}[stroke="#4FC08D"]{stroke:#1F7A55}[fill="#5C6480"]{fill:#8A8378}[stroke="#5C6480"]{stroke:#8A8378}[fill="#5FD08A"]{fill:#1F7A55}[stroke="#5FD08A"]{stroke:#1F7A55}[fill="#6E7796"]{fill:#A9A196}[stroke="#6E7796"]{stroke:#A9A196}[fill="#6FD3A6"]{fill:#166344}[stroke="#6FD3A6"]{stroke:#166344}[fill="#7A87A8"]{fill:#5A637C}[stroke="#7A87A8"]{stroke:#5A637C}[fill="#7B8BFF"]{fill:#3A46B0}[stroke="#7B8BFF"]{stroke:#3A46B0}[fill="#8A93B0"]{fill:#7B7368}[stroke="#8A93B0"]{stroke:#7B7368}[fill="#8FA3B8"]{fill:#4E5F70}[stroke="#8FA3B8"]{stroke:#4E5F70}[fill="#9B87FF"]{fill:#5B3FD4}[stroke="#9B87FF"]{stroke:#5B3FD4}[fill="#A9B0C8"]{fill:#5A5349}[stroke="#A9B0C8"]{stroke:#5A5349}[fill="#B08D7A"]{fill:#6D5546}[stroke="#B08D7A"]{stroke:#6D5546}[fill="#B98BFF"]{fill:#5B3FD4}[stroke="#B98BFF"]{stroke:#5B3FD4}[fill="#D6DAE8"]{fill:#2E2A25}[stroke="#D6DAE8"]{stroke:#2E2A25}[fill="#E8A33D"]{fill:#9A6C0B}[stroke="#E8A33D"]{stroke:#9A6C0B}[fill="#EDE7DD"]{fill:#191714}[stroke="#EDE7DD"]{stroke:#191714}[fill="#FF5FA8"]{fill:#B02063}[stroke="#FF5FA8"]{stroke:#B02063}[fill="#FF6B6B"]{fill:#C0392B}[stroke="#FF6B6B"]{stroke:#C0392B}[fill="#FF8FC2"]{fill:#8F1B4E}[stroke="#FF8FC2"]{stroke:#8F1B4E}[fill="#FFB03D"]{fill:#9A6C0B}[stroke="#FFB03D"]{stroke:#9A6C0B}}html[data-theme="light"] [fill="#0B0D16"]{fill:#F6F3EC}html[data-theme="light"] [stroke="#0B0D16"]{stroke:#F6F3EC}html[data-theme="light"] [fill="#0D1D28"]{fill:#E4F1F8}html[data-theme="light"] [stroke="#0D1D28"]{stroke:#E4F1F8}html[data-theme="light"] [fill="#0D1F2C"]{fill:#E4F3F8}html[data-theme="light"] [stroke="#0D1F2C"]{stroke:#E4F3F8}html[data-theme="light"] [fill="#0E2019"]{fill:#E3F5EC}html[data-theme="light"] [stroke="#0E2019"]{stroke:#E3F5EC}html[data-theme="light"] [fill="#12162A"]{fill:#EFEBE2}html[data-theme="light"] [stroke="#12162A"]{stroke:#EFEBE2}html[data-theme="light"] [fill="#151A2B"]{fill:#FFFFFF}html[data-theme="light"] [stroke="#151A2B"]{stroke:#FFFFFF}html[data-theme="light"] [fill="#161A26"]{fill:#F0EEE8}html[data-theme="light"] [stroke="#161A26"]{stroke:#F0EEE8}html[data-theme="light"] [fill="#1A1430"]{fill:#EFEAFB}html[data-theme="light"] [stroke="#1A1430"]{stroke:#EFEAFB}html[data-theme="light"] [fill="#231A0C"]{fill:#FAF2DF}html[data-theme="light"] [stroke="#231A0C"]{stroke:#FAF2DF}html[data-theme="light"] [fill="#2A0F1E"]{fill:#FBE6EF}html[data-theme="light"] [stroke="#2A0F1E"]{stroke:#FBE6EF}html[data-theme="light"] [fill="#2A3050"]{fill:#DFD8CC}html[data-theme="light"] [stroke="#2A3050"]{stroke:#DFD8CC}html[data-theme="light"] [fill="#39406A"]{fill:#C7BDAD}html[data-theme="light"] [stroke="#39406A"]{stroke:#C7BDAD}html[data-theme="light"] [fill="#3FC5E8"]{fill:#0E6E8C}html[data-theme="light"] [stroke="#3FC5E8"]{stroke:#0E6E8C}html[data-theme="light"] [fill="#3FD6E8"]{fill:#0E6E8C}html[data-theme="light"] [stroke="#3FD6E8"]{stroke:#0E6E8C}html[data-theme="light"] [fill="#4FA8FF"]{fill:#1668A8}html[data-theme="light"] [stroke="#4FA8FF"]{stroke:#1668A8}html[data-theme="light"] [fill="#4FB3E8"]{fill:#1668A8}html[data-theme="light"] [stroke="#4FB3E8"]{stroke:#1668A8}html[data-theme="light"] [fill="#4FC08D"]{fill:#1F7A55}html[data-theme="light"] [stroke="#4FC08D"]{stroke:#1F7A55}html[data-theme="light"] [fill="#5C6480"]{fill:#8A8378}html[data-theme="light"] [stroke="#5C6480"]{stroke:#8A8378}html[data-theme="light"] [fill="#5FD08A"]{fill:#1F7A55}html[data-theme="light"] [stroke="#5FD08A"]{stroke:#1F7A55}html[data-theme="light"] [fill="#6E7796"]{fill:#A9A196}html[data-theme="light"] [stroke="#6E7796"]{stroke:#A9A196}html[data-theme="light"] [fill="#6FD3A6"]{fill:#166344}html[data-theme="light"] [stroke="#6FD3A6"]{stroke:#166344}html[data-theme="light"] [fill="#7A87A8"]{fill:#5A637C}html[data-theme="light"] [stroke="#7A87A8"]{stroke:#5A637C}html[data-theme="light"] [fill="#7B8BFF"]{fill:#3A46B0}html[data-theme="light"] [stroke="#7B8BFF"]{stroke:#3A46B0}html[data-theme="light"] [fill="#8A93B0"]{fill:#7B7368}html[data-theme="light"] [stroke="#8A93B0"]{stroke:#7B7368}html[data-theme="light"] [fill="#8FA3B8"]{fill:#4E5F70}html[data-theme="light"] [stroke="#8FA3B8"]{stroke:#4E5F70}html[data-theme="light"] [fill="#9B87FF"]{fill:#5B3FD4}html[data-theme="light"] [stroke="#9B87FF"]{stroke:#5B3FD4}html[data-theme="light"] [fill="#A9B0C8"]{fill:#5A5349}html[data-theme="light"] [stroke="#A9B0C8"]{stroke:#5A5349}html[data-theme="light"] [fill="#B08D7A"]{fill:#6D5546}html[data-theme="light"] [stroke="#B08D7A"]{stroke:#6D5546}html[data-theme="light"] [fill="#B98BFF"]{fill:#5B3FD4}html[data-theme="light"] [stroke="#B98BFF"]{stroke:#5B3FD4}html[data-theme="light"] [fill="#D6DAE8"]{fill:#2E2A25}html[data-theme="light"] [stroke="#D6DAE8"]{stroke:#2E2A25}html[data-theme="light"] [fill="#E8A33D"]{fill:#9A6C0B}html[data-theme="light"] [stroke="#E8A33D"]{stroke:#9A6C0B}html[data-theme="light"] [fill="#EDE7DD"]{fill:#191714}html[data-theme="light"] [stroke="#EDE7DD"]{stroke:#191714}html[data-theme="light"] [fill="#FF5FA8"]{fill:#B02063}html[data-theme="light"] [stroke="#FF5FA8"]{stroke:#B02063}html[data-theme="light"] [fill="#FF6B6B"]{fill:#C0392B}html[data-theme="light"] [stroke="#FF6B6B"]{stroke:#C0392B}html[data-theme="light"] [fill="#FF8FC2"]{fill:#8F1B4E}html[data-theme="light"] [stroke="#FF8FC2"]{stroke:#8F1B4E}html[data-theme="light"] [fill="#FFB03D"]{fill:#9A6C0B}html[data-theme="light"] [stroke="#FFB03D"]{stroke:#9A6C0B}</style>
+<defs>
+  <marker id="arr" markerWidth="12" markerHeight="9" refX="10" refY="4.5" orient="auto">
+    <polygon points="0 0,12 4.5,0 9" fill="#5C6480"/>
+  </marker>
+  <marker id="arr-gray" markerWidth="12" markerHeight="9" refX="10" refY="4.5" orient="auto">
+    <polygon points="0 0,12 4.5,0 9" fill="#39406A"/>
+  </marker>
+</defs>
+<rect width="100%" height="100%" fill="#0B0D16" rx="0"/>
+<rect x="0.0" y="0.0" width="914.0" height="100.0" rx="0" fill="#101528" stroke="none" stroke-width="0"/>
+  <text x="457.0" y="52.0" font-size="20" fill="#EDE7DD" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="457.0" dy="0">语音声源追踪  (Speech Source Tracking)</tspan></text>
+  <rect x="163.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.5"/>
+  <text x="185.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="185.0" dy="0">阶段</tspan></text>
+  <rect x="247.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#231A0C" stroke="#E8A33D" stroke-width="1.5"/>
+  <text x="269.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="269.0" dy="0">步骤</tspan></text>
+  <rect x="331.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#0D1D28" stroke="#4FB3E8" stroke-width="1.5"/>
+  <text x="353.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="353.0" dy="0">子链</tspan></text>
+  <rect x="415.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="1.5"/>
+  <text x="437.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="437.0" dy="0">判断</tspan></text>
+  <rect x="499.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#1A1430" stroke="#9B87FF" stroke-width="1.5"/>
+  <text x="521.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="521.0" dy="0">分支</tspan></text>
+  <rect x="583.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#0E2019" stroke="#4FC08D" stroke-width="1.5"/>
+  <text x="605.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="605.0" dy="0">合并</tspan></text>
+  <rect x="667.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#161A26" stroke="#7A87A8" stroke-width="1.5"/>
+  <text x="689.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="689.0" dy="0">编码</tspan></text>
+  <rect x="36.0" y="164.0" width="576.0" height="956.0" rx="8" fill="#151A2B" stroke="#2A3050" stroke-width="2.0"/>
+  <rect x="36.0" y="164.0" width="576.0" height="48.0" rx="8" fill="#16223A" stroke="none" stroke-width="0"/>
+  <rect x="36.0" y="188.0" width="576.0" height="24.0" rx="0" fill="#16223A" stroke="none" stroke-width="0"/>
+  <text x="324.0" y="189.0" font-size="15" fill="#7FD9F0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="324.0" dy="0">任务链 1: Bayesian Multi-Frame Acoustic Source Tracking</tspan></text>
+  <rect x="56.0" y="232.0" width="536.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="232.0" width="536.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="252.0" width="536.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="324.0" y="253.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="324.0" dy="0">s1 — 音频采集与帧分</tspan></text>
+  <rect x="56.0" y="404.0" width="536.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="404.0" width="536.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="424.0" width="536.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="324.0" y="425.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="324.0" dy="0">s2 — 瞬时DOA候选估计</tspan></text>
+  <rect x="56.0" y="576.0" width="536.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="576.0" width="536.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="596.0" width="536.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="324.0" y="597.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="324.0" dy="0">s3 — 贝叶斯滤波状态预测</tspan></text>
+  <rect x="56.0" y="748.0" width="536.0" height="180.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="748.0" width="536.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="768.0" width="536.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="324.0" y="769.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="324.0" dy="0">s4 — 多源数据关联与滤波更新</tspan></text>
+  <rect x="56.0" y="944.0" width="536.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="944.0" width="536.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="964.0" width="536.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="324.0" y="965.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="324.0" dy="0">s5 — 轨迹生命周期管理与输出</tspan></text>
+  <rect x="36.0" y="1152.0" width="576.0" height="932.0" rx="8" fill="#151A2B" stroke="#2A3050" stroke-width="2.0"/>
+  <rect x="36.0" y="1152.0" width="576.0" height="48.0" rx="8" fill="#16223A" stroke="none" stroke-width="0"/>
+  <rect x="36.0" y="1176.0" width="576.0" height="24.0" rx="0" fill="#16223A" stroke="none" stroke-width="0"/>
+  <text x="324.0" y="1177.0" font-size="15" fill="#7FD9F0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="324.0" dy="0">任务链 2: Audio-Visual Active Speaker Tracking</tspan></text>
+  <rect x="56.0" y="1220.0" width="536.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="1220.0" width="536.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="1240.0" width="536.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="324.0" y="1241.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="324.0" dy="0">s1 — 音视频采集与预处理</tspan></text>
+  <rect x="56.0" y="1392.0" width="536.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="1392.0" width="536.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="1412.0" width="536.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="324.0" y="1413.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="324.0" dy="0">s2 — 人脸检测与轨迹嵌入</tspan></text>
+  <rect x="56.0" y="1564.0" width="536.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="1564.0" width="536.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="1584.0" width="536.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="324.0" y="1585.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="324.0" dy="0">s3 — 视听跨模态编码融合</tspan></text>
+  <rect x="56.0" y="1736.0" width="536.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="1736.0" width="536.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="1756.0" width="536.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="324.0" y="1757.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="324.0" dy="0">s4 — 主动说话者评分</tspan></text>
+  <rect x="56.0" y="1908.0" width="536.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="1908.0" width="536.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="1928.0" width="536.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="324.0" y="1929.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="324.0" dy="0">s5 — 主动说话者选择与HRI输出</tspan></text>
+  <rect x="36.0" y="2116.0" width="842.0" height="1140.0" rx="8" fill="#151A2B" stroke="#2A3050" stroke-width="2.0"/>
+  <rect x="36.0" y="2116.0" width="842.0" height="48.0" rx="8" fill="#16223A" stroke="none" stroke-width="0"/>
+  <rect x="36.0" y="2140.0" width="842.0" height="24.0" rx="0" fill="#16223A" stroke="none" stroke-width="0"/>
+  <text x="457.0" y="2141.0" font-size="15" fill="#7FD9F0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="457.0" dy="0">任务链 3: Speaker Diarization Identity Tracking</tspan></text>
+  <rect x="56.0" y="2184.0" width="802.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="2184.0" width="802.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="2204.0" width="802.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="457.0" y="2205.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="457.0" dy="0">s1 — 音频预处理与神经说话人分割</tspan></text>
+  <rect x="56.0" y="2356.0" width="802.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="2356.0" width="802.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="2376.0" width="802.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="457.0" y="2377.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="457.0" dy="0">s2 — 说话人声纹embedding提取</tspan></text>
+  <rect x="56.0" y="2528.0" width="802.0" height="364.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="2528.0" width="802.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="2548.0" width="802.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="457.0" y="2549.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="457.0" dy="0">s3 — 说话人聚类与身份分配</tspan></text>
+  <rect x="56.0" y="2908.0" width="802.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="2908.0" width="802.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="2928.0" width="802.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="457.0" y="2929.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="457.0" dy="0">s4 — Turn边界检测与时间轴对齐</tspan></text>
+  <rect x="56.0" y="3080.0" width="802.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="3080.0" width="802.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="3100.0" width="802.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="457.0" y="3101.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="457.0" dy="0">s5 — 评测与置信度评估</tspan></text>
+  <line x1="287.0" y1="330.0" x2="321.0" y2="330.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 437.0 368.0 L 437.0 416.0 L 171.0 416.0 L 171.0 464.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="171.0" y1="540.0" x2="171.0" y2="636.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 171.0 712.0 L 171.0 760.0 L 136.0 760.0 L 136.0 808.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="217.0" y1="858.0" x2="251.0" y2="858.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 136.0 908.0 L 136.0 956.0 L 171.0 956.0 L 171.0 1004.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 352.0 890.0 L 352.0 947.0 L 171.0 947.0 L 171.0 1004.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="1042.0" x2="321.0" y2="1042.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="1318.0" x2="321.0" y2="1318.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 437.0 1356.0 L 437.0 1404.0 L 171.0 1404.0 L 171.0 1452.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="171.0" y1="1528.0" x2="171.0" y2="1624.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="1662.0" x2="321.0" y2="1662.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 437.0 1700.0 L 437.0 1748.0 L 171.0 1748.0 L 171.0 1796.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="171.0" y1="1872.0" x2="171.0" y2="1968.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="2006.0" x2="321.0" y2="2006.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="2282.0" x2="321.0" y2="2282.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="553.0" y1="2282.0" x2="587.0" y2="2282.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 703.0 2320.0 L 703.0 2368.0 L 171.0 2368.0 L 171.0 2416.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="2454.0" x2="321.0" y2="2454.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 437.0 2492.0 L 437.0 2540.0 L 274.0 2540.0 L 274.0 2588.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 2688.0 L 274.0 2702.0 L 156.0 2702.0 L 156.0 2716.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 2688.0 L 274.0 2702.0 L 392.0 2702.0 L 392.0 2716.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 156.0 2780.0 L 156.0 2794.0 L 274.0 2794.0 L 274.0 2808.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 2780.0 L 392.0 2794.0 L 274.0 2794.0 L 274.0 2808.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 274.0 2872.0 L 274.0 2920.0 L 171.0 2920.0 L 171.0 2968.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="3006.0" x2="321.0" y2="3006.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="553.0" y1="3006.0" x2="587.0" y2="3006.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 703.0 3044.0 L 703.0 3092.0 L 171.0 3092.0 L 171.0 3140.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="3178.0" x2="321.0" y2="3178.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <g class="step-node" data-sid="s1_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Multi-channel Synchronous Audio Capture
+N通道麦克风阵列同步采样。ODAS raw.nChannels=8/16，hopSize=128/512，fS=16000/44100，nBits=16。模块对应：ODAS src/general/raw_in.cpp。输入：声学传感器；输出：每帧8/16通道采样块。约束：需ALSA/PulseAudio声卡IO。
+CAP_da631e9b</title>
+  <rect x="56.0" y="292.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="329.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">多通道音频采集</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>STFT Framing + Stationary Noise Estimation
+对每通道做STFT(frameSize=256, hopSize=128, sine window, 50% overlap)+MCRA静态噪声估计。模块对应：ODAS src/general/frame.c、src/sne/mcra.c。输入：多通道时域采样块；输出：复频谱+噪声功率谱。约束：STFT结果被SSL与SSS共用降低计算量。
+CAP_3db5116d</title>
+  <rect x="322.0" y="292.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="329.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">STFT频谱帧分</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1" data-sub-topic="acoustic_doa_localization" data-sub-chain="" style="cursor:pointer;">
+  <title>Per-frame DOA Candidate Estimation
+子链：由acoustic_doa_localization主题的任务链承接。用GCC-PHAT计算每对麦克风互相关，在双尺度单位球上扫描SRP-PHAT能量，返回最多4个潜在DOA(az/el/energy/prob)。输入：复频谱+噪声谱；输出：potential DOAs列表。</title>
+  <rect x="56.0" y="464.0" width="230.0" height="76.0" rx="6" fill="#0D1D28" stroke="#4FB3E8" stroke-width="2.5"/>
+  <text x="171.0" y="492.0" font-size="13" fill="#4FB3E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">Per-frame DOA Candidat…</tspan></text>
+  <text x="171.0" y="514.0" font-size="10.5" fill="#4FB3E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold;font-style:italic"><tspan x="171.0" dy="0">↳ 子链: acoustic doa localization</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Bayesian Filter State Prediction
+对每条tracked source按运动模型(constant velocity/static/accelerate混合)做状态预测。M3K Kalman: 6维笛卡尔(位置+速度)，状态归一化到单位球，过程噪声sigmaQ=0.001。Particle: 1000粒子三状态采样(st_ratio=0.5/ve_ratio=0.3/ac_ratio=0.2)。模块对应：ODAS src/tracking/kalman.c、particle.c。输入：上一帧state+covariance；输出：predicted state+累积协方差。约束：predict step必须在measurement update之前。适用场景：Bayesian多源追踪的预测阶段。
+CAP_1675745b</title>
+  <rect x="56.0" y="636.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="673.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">贝叶斯滤波状态预测</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Multi-source Data Association
+判断：对每条SSL输出的潜在DOA，计算与各tracked source的相干源闭式似然，按GNN风格做关联。三分类：matched(Ptrack=0.8)、new(Pnew=0.1)、false(Pfalse=0.1)。阈值：theta_new=0.9, theta_prob=0.8。模块对应：ODAS src/tracking/association.c、probabilities.c。输入：potential DOAs+predicted states；输出：观测→轨匹配决策(matched/new/false)。约束：JPDA替代方案需已知源数，本能力用GNN+概率阈值避免该假设。适用场景：多说话人场景下的瞬时观测归属。
+CAP_3babf344</title>
+  <polygon points="136.0,808.0 216.0,858.0 136.0,908.0 56.0,858.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="136.0" y="858.0" font-size="13" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="136.0" dy="0">多源数据关联</tspan></text>
+  <rect x="114.0" y="798.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="136.0" y="806.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="136.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Filter Measurement Update
+matched路径。对每条已关联观测做加权Kalman增益更新(M3K核心：weighted update of mean and covariance)。观测噪声sigmaR2_active=0.0225/sigmaR2_target=0.0025/sigmaR2_prob=0.0025。模块对应：ODAS src/tracking/kalman.c update step。输入：matched观测+predicted state；输出：updated state estimate+后验协方差。约束：必须严格在predict后做。适用场景：贝叶斯多源追踪的更新阶段。
+CAP_776cf3fc</title>
+  <rect x="252.0" y="826.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="352.0" y="857.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="352.0" dy="0">贝叶斯滤波观测更新</tspan></text>
+  <rect x="258.0" y="830.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="275.0" y="841.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="275.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Track Birth/Death Lifecycle Management
+维护每条tracked source的出生与死亡。出生判据：连续N_prob=5帧观测累计概率超theta_prob=0.8则确认为active。死亡判据：连续N_inactive=(150,200,250,250)帧无观测且失活概率&gt;=theta_inactive=0.9则释放slot。维护active/inactive状态高斯混合权重(active.mu=0.3, sigma2=0.0025; inactive.mu=0.15, sigma2=0.0025)。模块对应：ODAS src/tracking/track.c。输入：updated state+观测匹配历史；输出：active tracked source列表(source ID, az/el/x/y/z, energy, activity)。约束：N_inactive按source slot索引分别设定。适用场景：长时会话中追踪源在静默/复现时的ID持续性。
+CAP_ed2d81ea</title>
+  <rect x="56.0" y="1004.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="1041.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">声源轨迹生命周期管理</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Tracked Source Output
+将active tracked source列表打包为标准格式输出到下游。三种sink：(a)JSON to terminal/file/TCP socket(ODAS内置)；(b)ROS2话题/odas/sst(odas_ros封装，消息含xyz单位球坐标+energy+source ID)；(c)单位球可视化(odas_web Electron GUI)。输入：active tracked source list；输出：JSON/socket/ROS topic/可视化。约束：输出格式与下游消费者契约对齐。impl_hint: 基于ROS2 rclpy Publisher发布自定义msg，话题命名/&lt;robot&gt;/sst，消息字段=[source_id, x, y, z, energy, activity]。
+CAP_fa842a86</title>
+  <rect x="322.0" y="1004.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="1041.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">追踪源轨迹输出</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Synchronized Video Frame + Audio Capture
+同步采集视频帧(25fps)与音频(16kHz wav)。模块对应：TalkNet demoTalkNet.py的video loading+ffmpeg audio extraction。输入：视频文件/摄像头+麦克风流；输出：视频帧序列+16kHz wav。
+CAP_5f5515a5</title>
+  <rect x="56.0" y="1280.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="1317.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">视听说话者特征融合</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Audio MFCC + STFT Extraction
+对音频做STFT提取复数谱(含power-law归一化)，并提取80-dim MFCC作为audio frontend输入。模块对应：TalkNet talkNet.py audio frontend+dataLoader.py MFCC提取。输入：16kHz wav；输出：复数谱+80-dim MFCC序列(10ms step)。
+CAP_187cec10</title>
+  <rect x="322.0" y="1280.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="1317.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">说话者音频频谱提取</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Face Detection + Trajectory Tracking + Embedding
+MTCNN/SFD检测每帧人脸bbox→跨帧跟踪成轨迹(IoU/SORT)→每帧人脸crop经3D Conv+ResNet18提取视觉特征序列→V-TCN(5层残差dilated 1D Conv)做长时序视觉特征聚合(感受野21 frames=840ms)。模块对应：TalkNet talkNet.py visual_frontend(3D Conv+ResNet18)+visual_tc(V-TCN)。输入：视频帧序列；输出：每条人脸轨迹的视觉特征序列(N_faces×T×D_visual)。
+CAP_ebba8b3d</title>
+  <rect x="56.0" y="1452.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="1489.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">人脸轨迹嵌入</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Cross-Attention Audio-Visual Fusion
+2层cross-attention沿时间维做audio→visual与visual→audio互查。audio embedding作为query查visual key/value，反之亦然。模块对应：TalkNet talkNet.py cross_attention模块。输入：audio features(T_a×D_a)+visual features per face(T_v×D_v)；输出：cross-attended audio+visual features。
+CAP_e9d37325</title>
+  <rect x="56.0" y="1624.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="1661.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">视听说话者编码</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Self-Attention Long-Term Temporal Aggregation
+1层transformer(8 attention heads)对cross-attended特征做长时序全局聚合，捕捉远距离帧间依赖(audio感受野1.89s+video 0.84s)。模块对应：TalkNet talkNet.py self_attention模块。输入：cross-attended features；输出：长时序聚合的融合视听特征per face。此步是TalkNet关键创新——长时序temporal features是其在AVA上mAP 92.3的核心。
+CAP_e9d37325</title>
+  <rect x="322.0" y="1624.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="1661.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">视听说话者编码</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Per-Frame Per-Face Speaking Probability Classification
+FC+softmax分类头从融合特征输出每帧每张脸的speaking概率(0-1)。训练用cross-entropy frame-level loss+负采样增强(batch内随机取另一视频音频作为负样本，强制模型学视听同步而非纯音频VAD)。模块对应：TalkNet talkNet.py classifier模块。输入：融合视听特征per face；输出：per-frame per-face speaking probability。性能指标：AVA val mAP 92.3/test 90.8；Columbia ASD avg F1 96.3。
+CAP_46916b8f</title>
+  <rect x="56.0" y="1796.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="1833.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">主动说话者评分</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Active Speaker Selection with Temporal Smoothing
+对ASD分类头输出的per-frame per-face speaking probabilities做时序平滑(median filter~1s窗口)+多脸argmax选择+hysteresis(新脸概率需超当前active+margin才切换，避免快速抖动)，输出单一active speaker face ID+confidence+bbox供HRI头部朝向。输入：per-frame per-face speaking probabilities(来自CAP_46916b8f)。输出：active speaker face ID+confidence+bbox。约束：hysteresis margin典型0.1-0.2，平滑窗口~1s(25 frames@25fps)。适用场景：HRI持续面向说话者、多方会话说话人选择、凝视分配调度上游。
+CAP_3ec5008b</title>
+  <rect x="56.0" y="1968.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="2005.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">主动说话者选择与时序平滑</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>HRI Active Speaker Output
+将active speaker face ID+bbox+confidence发布为ROS2话题或JSON/socket供下游HRI控制器(头部朝向伺服、凝视分配等)消费。输入：s5_1 active speaker selection。输出：ROS2话题/JSON。impl_hint: 基于ROS2 rclpy Publisher发布自定义msg，话题命名/&lt;robot&gt;/active_speaker，消息字段=[uint32 face_id, float32[4] bbox, float32 confidence, builtin_interfaces/Time timestamp]。
+CAP_3ec5008b</title>
+  <rect x="322.0" y="1968.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="2005.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">主动说话者选择与时序平滑</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Audio Loading + Mono Resampling
+torchcodec+torchaudio.load读取任意格式音频，若多声道沿通道维取均值降混为mono，若采样率非16kHz做重采样。输入：任意采样率/声道音频文件；输出：16kHz mono waveform tensor。约束：pyannote.audio内部由torchcodec+torchaudio自动完成。
+CAP_395c5b9a</title>
+  <rect x="56.0" y="2244.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="2281.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">说话人日志化身份追踪流水线</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Neural Speaker Segmentation Inference
+SincNet卷积前端+序列模型对5s滑窗(步长500ms)做推理，输出per-frame per-speaker概率矩阵(T≈313帧×Kmax=4@16ms)。Powerset multi-class cross entropy损失训练。模块对应：pyannote/segmentation模型。输入：5s×16kHz waveform(80000 samples)；输出：(T, Kmax)概率矩阵。约束：Kmax=4，permutation-invariant training。
+CAP_d67e039c</title>
+  <rect x="322.0" y="2244.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="2281.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">神经说话人分割</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_3" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Sliding Window Aggregation + VAD
+滑窗概率序列→全文件per-frame per-speaker活动标注。VAD=max over speakers(Bredin 2021 eq.2: y_t^VAD=max_k y_t^k)+hysteresis thresholding(onset/offset/min_duration_on/min_duration_off)。模块对应：pyannote.audio Inference(window=sliding)+内置hysteresis。输入：滑窗概率序列；输出：全文件per-frame per-speaker活动标注。
+CAP_d67e039c</title>
+  <rect x="588.0" y="2244.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="703.0" y="2281.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="703.0" dy="0">神经说话人分割</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Sliding Window Segmentation + Speaker Activity Masking
+pyannote.audio Inference(model=embedding, window=sliding, duration=3.0, step=1.0)对5s音频块+该块segmentation掩码切出每个活跃说话人的子段waveform。输入：5s音频块+segmentation掩码；输出：每说话人子段waveform。
+CAP_f6d91354</title>
+  <rect x="56.0" y="2416.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="2453.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">说话人声纹embedding提取</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Speaker Embedding Model Inference
+WeSpeaker ResNet34+attentive statistics pooling→256维embedding；或ECAPA-TDNN(1D SE-Res2Blocks+MFA+通道与上下文相关统计池化)→192维embedding。VoxCeleb 1+2训练，Large Margin/Additive Margin Softmax损失。模块对应：pyannote/wespeaker-voxceleb-resnet34-LM或speechbrain/spkrec-ecapa-voxceleb。输入：每说话人子段waveform；输出：固定维度embedding向量。性能：ECAPA-TDNN VoxCeleb1-test Cleaned EER 0.80%。
+CAP_f6d91354</title>
+  <rect x="322.0" y="2416.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="2453.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">说话人声纹embedding提取</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Cosine Distance Matrix
+scipy.spatial.distance.cdist(embeddings, metric=cosine)计算(N,N)余弦距离矩阵。模块对应：scipy cdist。输入：N个embedding向量；输出：(N,N)余弦距离矩阵。
+CAP_77eaa0ec</title>
+  <polygon points="274.0,2588.0 354.0,2638.0 274.0,2688.0 194.0,2638.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="274.0" y="2629.2" font-size="13" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">说话人凝聚层次</tspan><tspan x="274.0" dy="17.6">聚类</tspan></text>
+  <rect x="252.0" y="2578.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="274.0" y="2586.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Agglomerative Hierarchical Clustering (Default)
+sklearn.cluster.AgglomerativeClustering对(N,N)距离矩阵按阈值做凝聚层次聚类(AHC)。pyannote.audio community-1默认clustering模块。模块对应：sklearn AgglomerativeClustering。输入：(N,N)距离矩阵+阈值；输出：N个聚类标签。约束：阈值需在dev set用Pipeline.optimization调参。
+CAP_77eaa0ec</title>
+  <rect x="56.0" y="2716.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="2747.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">说话人凝聚层次聚类</tspan></text>
+  <rect x="62.0" y="2720.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="2731.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_3" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>VBx Bayesian HMM Clustering (Alternative)
+以AHC输出为初始化，在embedding序列上跑变分贝叶斯HMM(VBx)，输出每帧speaker标签的HMM状态序列。相比纯AHC，VBx显式建模时序转移与说话人数量不确定性。模块对应：BUTSpeechFIT/VBx。输入：embedding序列+AHC初始化标签；输出：HMM状态序列。约束：长音频(&gt;30min)AHC初始化慢，可用random_N替代。
+CAP_5bd41d07</title>
+  <rect x="292.0" y="2716.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="2738.2" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">VBx变分贝叶斯HMM说话</tspan><tspan x="392.0" dy="17.6">人聚类</tspan></text>
+  <rect x="298.0" y="2720.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="2731.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_4" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Speaker Count Estimation
+合并：汇聚AHC和VBx两条路径，按num_speakers/min_speakers/max_speakers参数或聚类阈值决定最终聚类数K。VBx路径通过HMM隐状态数自动估计。
+CAP_395c5b9a</title>
+  <rect x="174.0" y="2808.0" width="200.0" height="64.0" rx="6" fill="#0E2019" stroke="#4FC08D" stroke-width="2.2"/>
+  <text x="274.0" y="2830.2" font-size="13" fill="#4FC08D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="274.0" dy="0">说话人日志化身份追踪流</tspan><tspan x="274.0" dy="17.6">水线</tspan></text>
+  <rect x="180.0" y="2812.0" width="34.0" height="20.0" rx="10" fill="#4FC08D44" stroke="#4FC08D" stroke-width="1"/>
+  <text x="197.0" y="2823.0" font-size="10" fill="#4FC08D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="197.0" dy="0">合并</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Turn Boundary Hysteresis Refinement
+对聚类标签按时间排序聚合为Annotation，对每个speaker活动序列做onset/offset双阈值hysteresis thresholding(Bredin 2021图2)，填充&lt;min_duration_off间隙(桥接短停顿)，删除&lt;min_duration_on孤立段(去抖动)。模块对应：pyannote.audio内置后处理。输入：聚类标签+segmentation概率；输出：精修后的turn边界。
+CAP_395c5b9a</title>
+  <rect x="56.0" y="2968.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="3005.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">说话人日志化身份追踪流水线</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Overlap-Aware Resegmentation
+以baseline diarization为参考，对5s滑窗找segmentation输出与baseline的最佳permutation，把重叠语音区域重新分配给多说话人标签。Bredin 2021 §2.4提出，相对VBx baseline在AMI/DIHARD3/VoxConverse上DER相对改进17%/13%/13%。模块对应：pyannote.audio.pipelines.Resegmentation。输入：baseline diarization+segmentation模型；输出：重叠区域多人标注的精修diarization。约束：5s滑窗，permutation-invariant。
+CAP_650c3b93</title>
+  <rect x="322.0" y="2968.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="3005.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">重叠感知说话人再分割</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_3" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>RTTM Timeline Output
+pyannote.core.Annotation.to_rttm()把Annotation输出为RTTM文件(speaker_id onset duration)。diart流式版用diart.sinks.RTTMWriter。输入：Annotation；输出：RTTM文件。
+CAP_395c5b9a</title>
+  <rect x="588.0" y="2968.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="703.0" y="3005.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="703.0" dy="0">说话人日志化身份追踪流水线</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>DER Calculation
+pyannote.metrics计算DER=(FA+Miss+Confusion)/Total speech，分解误报/漏检/说话人混淆三分量。完全自动处理，无forgiveness collar(DIHARD3/AMI Full协议)。模块对应：pyannote.metrics.DiarizationErrorRate。输入：预测RTTM+参考RTTM；输出：DER%+confusion矩阵分解。
+CAP_51b035b2</title>
+  <rect x="56.0" y="3140.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="3177.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">说话人日志化DER评测</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s5_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Speaker Count Accuracy + Ablation
+pyannote.metrics DER的confusion矩阵分解，计算说话人数量准确率。输入：DER分解结果；输出：说话人数量准确率。
+CAP_51b035b2</title>
+  <rect x="322.0" y="3140.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="3177.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">说话人日志化DER评测</tspan></text>
+  </g>
+</svg>

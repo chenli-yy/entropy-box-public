@@ -1,0 +1,2765 @@
+{
+ "topic": {
+  "keyword": "region_partition_coordination",
+  "en": "Region Partition Coordination",
+  "zh": "区域划分协调",
+  "domain": "MULTI_ROBOT",
+  "description": "将工作空间划分为多个子区域分配给不同的机器人团队，各团队在子区域内独立协调，通过区域边界交互实现全局协调。涵盖离散栅格迭代分区（DARP）、连续域Voronoi/CVT覆盖控制、去中心化在线分层分解（RACER）、拓扑细胞分解（Boustrophedon）、图论优化划分（spectral/k-cut/平衡连通分区）五大技术范式。输入：环境边界与障碍物、机器人数量、初始位置。输出：各机器人类子区域分配、覆盖/巡逻/探索路径。约束：已知环境下支持离线最优划分，未知环境下支持在线动态分解；支持机器人故障后的重分配。适用场景：多机器人协同全覆盖（清扫、农业喷洒、环境监测）、安防巡逻、未知环境探索。不处理：分布式任务分解（归decentralized_task_decomposition兄弟主题）、分层协调框架（归hierarchical_coordination_framework兄弟主题）。"
+ },
+ "chains": [
+  {
+   "name": "DARP 几何迭代分区 + STC 覆盖协调",
+   "steps": [
+    {
+     "id": "s0",
+     "name": "栅格环境建模",
+     "description": "把作业环境离散化为占据栅格（free/occupied），障碍物标记为不可通行，为 DARP 分区与 STC 覆盖路径提供统一环境表征。输入：环境边界 + 障碍物几何 + 机器人数量 K。输出：占据栅格地图 + 机器人初始位置。前置依赖：传感器/先验地图。约束：栅格分辨率需匹配机器人覆盖工具宽度。适用场景：已知结构化环境的多机器人覆盖任务。",
+     "caps": [
+      "Occupancy Grid Environment Modeling"
+     ],
+     "next": [
+      "s1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s1",
+     "name": "距离评估矩阵计算",
+     "description": "计算每个机器人的距离评估矩阵 E_i，表示每个栅格 cell 与第 i 个机器人初始位置的欧氏距离，作为 DARP 坐标下降优化的目标函数基础。输入：占据栅格地图 + K 个机器人初始位置。输出：K 个距离评估矩阵。约束：评估矩阵与栅格同尺寸。",
+     "caps": [
+      "DARP Iterative Geometric Partition"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2",
+     "name": "坐标下降面积均衡迭代",
+     "description": "DARP 核心迭代：循环更新面积均衡乘子 m_i，通过 wavefront 传播确保连通性，用 argmin 确定每 cell 归属。输入：距离评估矩阵 + 初始 m_i。输出：收敛后的标签矩阵。约束：迭代步长 η 控制收敛速度；连通性约束用 BFS/wavefront 保证。性能指标：迭代次数与栅格尺寸线性相关；存在最优解时收敛到最优解。",
+     "caps": [
+      "Coordinate Descent Area Balance Iteration"
+     ],
+     "next": [
+      "s2_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2_1",
+     "name": "收敛性判断",
+     "description": "判断：DARP 迭代是否收敛（各子区域面积差 < 阈值 AND 连通性满足）。",
+     "caps": [
+      "Coordinate Descent Area Balance Iteration"
+     ],
+     "next": [
+      "s2_1a",
+      "s2_1b"
+     ],
+     "condition": "迭代收敛判定",
+     "is_merge": false
+    },
+    {
+     "id": "s2_1a",
+     "name": "条件：收敛",
+     "description": "条件：面积差 < 阈值且所有子区域连通，迭代收敛完成。",
+     "caps": [
+      "Coordinate Descent Area Balance Iteration"
+     ],
+     "next": [
+      "s2_2"
+     ],
+     "condition": "area_diff < threshold AND all_connected",
+     "is_merge": false
+    },
+    {
+     "id": "s2_1b",
+     "name": "条件：未收敛",
+     "description": "条件：连通性不满足，需调整子区域边界（迭代调整逻辑在s2步骤description中描述）。",
+     "caps": [
+      "Coordinate Descent Area Balance Iteration"
+     ],
+     "next": [
+      "s2_2a"
+     ],
+     "condition": "area_diff >= threshold OR not all_connected",
+     "is_merge": false
+    },
+    {
+     "id": "s2_2",
+     "name": "解存在性判断",
+     "description": "判断：当前地图拓扑和机器人数量下是否存在等面积连通分区最优解。",
+     "caps": [
+      "DARP Iterative Geometric Partition"
+     ],
+     "next": [
+      "s2_2a",
+      "s2_2b"
+     ],
+     "condition": "最优解存在性",
+     "is_merge": false
+    },
+    {
+     "id": "s2_2a",
+     "name": "条件：存在最优解",
+     "description": "条件：存在等面积连通分区最优解，继续正常分区流程。",
+     "caps": [
+      "DARP Iterative Geometric Partition"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": "optimal_solution_exists",
+     "is_merge": false
+    },
+    {
+     "id": "s2_2b",
+     "name": "条件：无最优解",
+     "description": "条件：地图拓扑或机器人数导致无等面积连通最优解，使用 non-equal portions 近似分区。",
+     "caps": [
+      "DARP Iterative Geometric Partition"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": "no_optimal_solution",
+     "is_merge": false
+    },
+    {
+     "id": "s3",
+     "name": "子区域分配与边界提取",
+     "description": "对每个 cell 取 argmin 评估矩阵确定归属，提取各子区域的连通分量轮廓作为多边形边界。输入：收敛后的标签矩阵。输出：K 个连通子区域 + 各子区域多边形边界。约束：连通分量需用 BFS/DFS 提取。",
+     "caps": [
+      "Sub-region Assignment and Boundary Extraction"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": null,
+     "is_merge": true
+    },
+    {
+     "id": "s4",
+     "name": "Mega Cell 2×2 粗化",
+     "description": "STC 第一步：将子区域栅格 2×2 粗化为 mega cell，构建 spanning graph H，为生成树覆盖提供数学结构基础。输入：各子区域栅格。输出：2×2 mega cell spanning graph。约束：粗化后需保证连通性；这是 STC 竞争比保证的数学前提。",
+     "caps": [
+      "STC Spanning Tree Coverage Path Generation"
+     ],
+     "next": [
+      "s5"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s5",
+     "name": "范式选择判断",
+     "description": "判断：使用 DARP+STC 独立分区范式还是 MSTC*/TMSTC* 共享生成树范式。",
+     "caps": [
+      "Spatial Area Partition for Multi-Robot Coverage"
+     ],
+     "next": [
+      "s5_1a",
+      "s5_1b"
+     ],
+     "condition": "分区范式选择",
+     "is_merge": false
+    },
+    {
+     "id": "s5_1a",
+     "name": "条件：DARP+STC 范式",
+     "description": "条件：mode == DARP，各子区域独立构建 MST + 独立环绕覆盖。",
+     "caps": [
+      "STC Spanning Tree Coverage Path Generation"
+     ],
+     "next": [
+      "s5_2a"
+     ],
+     "condition": "mode == DARP",
+     "is_merge": false
+    },
+    {
+     "id": "s5_1b",
+     "name": "条件：MSTC*/TMSTC* 范式",
+     "description": "条件：mode == MSTC，共享生成树 + 拓扑环均衡划分相遇点。",
+     "caps": [
+      "Cooperative Spanning Tree Sweep Planning"
+     ],
+     "next": [
+      "s5_2b"
+     ],
+     "condition": "mode == MSTC",
+     "is_merge": false
+    },
+    {
+     "id": "s5_2a",
+     "name": "独立子区域生成树构建",
+     "description": "在各子区域的 mega cell 图上独立构建最小生成树（Prim/Kruskal），为 STC 环绕路径提供骨架。输入：各子区域 spanning graph H_i。输出：K 棵生成树 T_i。性能指标：Prim 算法 O(V²)，Kruskal O(E log V)。",
+     "caps": [
+      "Spanning Tree Construction"
+     ],
+     "next": [
+      "s6"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s5_2b",
+     "name": "TMSTC* 砖块划分判断",
+     "description": "判断：TMSTC* 最小砖块划分是否可用 DINIC 最大流求解。",
+     "caps": [
+      "Turn-Aware Brick Spanning Tree Construction"
+     ],
+     "next": [
+      "s5_2b_a",
+      "s5_2b_b"
+     ],
+     "condition": "DINIC 可行性",
+     "is_merge": false
+    },
+    {
+     "id": "s5_2b_a",
+     "name": "条件：DINIC 可用",
+     "description": "条件：DINIC 最大流可行，用 DINIC 求二分图最大独立集实现最小砖块划分。",
+     "caps": [
+      "Turn-Aware Brick Spanning Tree Construction"
+     ],
+     "next": [
+      "s5_2b_merge"
+     ],
+     "condition": "dinic_feasible",
+     "is_merge": false
+    },
+    {
+     "id": "s5_2b_b",
+     "name": "条件：DINIC 不可用",
+     "description": "条件：DINIC 不可行，降级使用其他 MST 形状（DFS/Kruskal/ACO 等）。",
+     "caps": [
+      "Spanning Tree Construction"
+     ],
+     "next": [
+      "s5_2b_merge"
+     ],
+     "condition": "dinic_not_feasible",
+     "is_merge": false
+    },
+    {
+     "id": "s5_2b_merge",
+     "name": "合并：生成树完成",
+     "description": "合并：生成树构建完成（DINIC 砖块划分或降级 MST）。",
+     "caps": [
+      "Cooperative Spanning Tree Sweep Planning"
+     ],
+     "next": [
+      "s5_3"
+     ],
+     "condition": null,
+     "is_merge": true
+    },
+    {
+     "id": "s5_3",
+     "name": "拓扑环均衡划分",
+     "description": "MSTC* 协同核心：生成树周界形成闭合环路，在环上找 K 个相遇点使各机器人路径权重（cell 数 + 转弯数）均衡，贪心搜索最优均衡划分。输入：生成树 T + 机器人数量 K + 砖块路径权重。输出：K 个相遇点。约束：划分点在树节点上；各机器人路径权重均衡。",
+     "caps": [
+      "Topology Loop Equilibrium Division"
+     ],
+     "next": [
+      "s6"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s6",
+     "name": "环绕路径生成",
+     "description": "沿生成树边按右手法则生成环绕路径，每个 mega cell 被恰好覆盖一次。TMSTC* 变体通过贪婪合并相邻砖块最小化转弯次数。输入：生成树 T + 机器人根节点（+ 相遇点，MSTC*模式）。输出：覆盖路径 waypoint 序列。性能指标：O(n) 最优（n 为栅格尺寸）；STC 竞争比上界 O(A/ε²)。",
+     "caps": [
+      "Circumnavigation Path Generation"
+     ],
+     "next": [
+      "s7"
+     ],
+     "condition": null,
+     "is_merge": true
+    },
+    {
+     "id": "s7",
+     "name": "多机器人并行覆盖执行",
+     "description": "各机器人独立执行各自子区域的覆盖路径，DARP 模式下正常作业无需机间通信；MSTC* 模式下相遇即停。输入：各机器人覆盖路径 + 机器人状态。输出：全覆盖完成 + 覆盖度量。前置依赖：ROS 导航栈/move_base。适用场景：已知环境的多机器人协同全覆盖（清扫、农业喷洒、环境监测）。",
+     "caps": [
+      "Sub-area Coverage Planning and Execution"
+     ],
+     "next": [
+      "s7_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s7_1",
+     "name": "故障检测判断",
+     "description": "判断：覆盖执行中某机器人是否故障/超时。",
+     "caps": [
+      "Multi-Robot Failure Region Re-partition"
+     ],
+     "next": [
+      "s7_1a",
+      "s7_1b"
+     ],
+     "condition": "机器人故障检测",
+     "is_merge": false
+    },
+    {
+     "id": "s7_1a",
+     "name": "条件：无故障",
+     "description": "条件：所有机器人正常运行，继续执行覆盖直至完成。",
+     "caps": [
+      "Sub-area Coverage Planning and Execution"
+     ],
+     "next": [
+      "s7_end"
+     ],
+     "condition": "no_failure",
+     "is_merge": false
+    },
+    {
+     "id": "s7_1b",
+     "name": "条件：机器人故障",
+     "description": "条件：某机器人故障/超时，对剩余未覆盖区域重新运行 DARP 分区给其他可用机器人。",
+     "caps": [
+      "Multi-Robot Failure Region Re-partition"
+     ],
+     "next": [
+      "s7_end"
+     ],
+     "condition": "robot_failure",
+     "is_merge": false
+    },
+    {
+     "id": "s7_end",
+     "name": "合并：覆盖完成",
+     "description": "合并：全覆盖任务完成（正常完成或故障重分配后完成）。",
+     "caps": [
+      "Spatial Area Partition for Multi-Robot Coverage"
+     ],
+     "next": [],
+     "condition": null,
+     "is_merge": true
+    }
+   ]
+  },
+  {
+   "name": "Voronoi/Power-diagram 等量分区 + 分布式覆盖控制",
+   "steps": [
+    {
+     "id": "s0",
+     "name": "密度函数环境建模",
+     "description": "将连续环境表示为密度函数，描述各点覆盖重要性。输入：环境边界+障碍物+重要性分布。输出：密度函数phi(q)。约束：密度函数非负可积。适用场景：环境监测、农业喷洒、污染追踪等非均匀覆盖任务。",
+     "caps": [
+      "Voronoi Tessellation and Centroid Computation"
+     ],
+     "next": [
+      "s1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s1",
+     "name": "Voronoi分区与质心计算",
+     "description": "给定机器人位置和连续域，计算Voronoi分区、每个cell的质量和质心。仅需Delaunay邻居信息即可分布式计算。输入：机器人位置+密度函数。输出：Voronoi分区+质心+质量。性能指标：每步O(k log k)，k为邻居数通常O(1)。",
+     "caps": [
+      "Voronoi Tessellation and Centroid Computation"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2",
+     "name": "Lloyd梯度覆盖控制",
+     "description": "基于质心Voronoi镶嵌的分布式覆盖控制律，梯度下降驱动机器人向质心移动，收敛到CVT最优配置。输入：Voronoi分区+质心+质量+当前位置。输出：速度控制指令。约束：凸环境假设；非凸需测地距离扩展。性能指标：收敛到CVT；仅需Delaunay邻居通信。",
+     "caps": [
+      "Lloyd Gradient Coverage Deployment"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s3",
+     "name": "环境凸性判断",
+     "description": "判断：工作环境是否为凸集（决定欧氏距离还是测地距离）。",
+     "caps": [
+      "Voronoi Tessellation and Centroid Computation"
+     ],
+     "next": [
+      "s3_a",
+      "s3_b"
+     ],
+     "condition": "环境凸性检测",
+     "is_merge": false
+    },
+    {
+     "id": "s3_a",
+     "name": "条件：凸环境",
+     "description": "条件：环境为凸集，使用欧氏距离标准Voronoi。",
+     "caps": [
+      "Voronoi Tessellation and Centroid Computation"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": "convex_environment",
+     "is_merge": false
+    },
+    {
+     "id": "s3_b",
+     "name": "条件：非凸环境",
+     "description": "条件：环境非凸或含障碍物，使用测地距离Voronoi分区。",
+     "caps": [
+      "Geodesic Distance Non-Convex Coverage Partitioning"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": "non_convex_environment",
+     "is_merge": false
+    },
+    {
+     "id": "s4",
+     "name": "Power权重等量分区",
+     "description": "使用带权Voronoi(power diagram)实现等量分区，通过分布式控制律更新power权重使各机器人加权工作量相等。支持异构机器人能力。输入：机器人位置+初始权重+工作量函数。输出：等量power diagram分区+收敛权重。",
+     "caps": [
+      "Power Diagram Equitable Partition"
+     ],
+     "next": [
+      "s5"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s5",
+     "name": "连通性感知分区修正",
+     "description": "当power diagram分区产生不连通分量时，通过连通性感知算法修正分区，确保每个分区为单连通分量。输入：初始power diagram分区。输出：连通性修正后的分区。 迭代更新power权重直到等量分区收敛（各机器人加权工作量差<阈值epsilon）。",
+     "caps": [
+      "Connectivity-Aware Partition Refinement"
+     ],
+     "next": [
+      "s7"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s7",
+     "name": "覆盖类型判断",
+     "description": "判断：覆盖任务类型是持续覆盖还是静态部署。",
+     "caps": [
+      "Spatial Area Partition for Multi-Robot Coverage"
+     ],
+     "next": [
+      "s7_a",
+      "s7_b"
+     ],
+     "condition": "覆盖任务类型",
+     "is_merge": false
+    },
+    {
+     "id": "s7_a",
+     "name": "条件：持续覆盖",
+     "description": "条件：持续覆盖，覆盖质量随时间衰减，需在线重规划路径。",
+     "caps": [
+      "Persistent Coverage Decay Model"
+     ],
+     "next": [
+      "s7_1"
+     ],
+     "condition": "persistent_coverage",
+     "is_merge": false
+    },
+    {
+     "id": "s7_b",
+     "name": "条件：静态部署",
+     "description": "条件：静态部署，机器人一次性到达质心位置即完成。",
+     "caps": [
+      "Lloyd Gradient Coverage Deployment"
+     ],
+     "next": [
+      "s8"
+     ],
+     "condition": "static_deployment",
+     "is_merge": false
+    },
+    {
+     "id": "s7_1",
+     "name": "图基覆盖路径在线规划",
+     "description": "在分区内构建扫掠路径图，将覆盖误差作为边权重，用Bellman-Ford变种算法在线求最优覆盖路径。支持开放路径。输入：分区+覆盖误差场。输出：最优覆盖路径waypoint序列。",
+     "caps": [
+      "Graph-Based Coverage Path Online Planning"
+     ],
+     "next": [
+      "s8"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s8",
+     "name": "分布式覆盖执行",
+     "description": "各机器人在自己的Voronoi/power cell内独立执行覆盖任务，通过Delaunay邻居通信同步分区边界变化。静态部署时停留在质心；持续覆盖时按规划路径运动并实时更新覆盖误差场。输入：分区+覆盖路径+机器人状态。输出：覆盖完成状态+覆盖质量。约束：通信仅需Delaunay邻居；分布式无中心节点。适用场景：大规模多机器人环境监测、农业喷洒、污染追踪。",
+     "caps": [
+      "Spatial Area Partition for Multi-Robot Coverage"
+     ],
+     "next": [
+      "s8_1"
+     ],
+     "condition": null,
+     "is_merge": true
+    },
+    {
+     "id": "s8_1",
+     "name": "故障检测判断",
+     "description": "判断：覆盖执行中某机器人是否故障/离线。",
+     "caps": [
+      "Power Diagram Equitable Partition"
+     ],
+     "next": [
+      "s8_1a",
+      "s8_1b"
+     ],
+     "condition": "机器人故障检测",
+     "is_merge": false
+    },
+    {
+     "id": "s8_1a",
+     "name": "条件：无故障",
+     "description": "条件：所有机器人正常运行，继续执行覆盖。",
+     "caps": [
+      "Spatial Area Partition for Multi-Robot Coverage"
+     ],
+     "next": [
+      "s8_end"
+     ],
+     "condition": "no_failure",
+     "is_merge": false
+    },
+    {
+     "id": "s8_1b",
+     "name": "条件：机器人故障",
+     "description": "条件：某机器人故障/离线，剩余机器人重新触发power diagram分区接管故障区域。",
+     "caps": [
+      "Power Diagram Equitable Partition"
+     ],
+     "next": [
+      "s8_end"
+     ],
+     "condition": "robot_failure",
+     "is_merge": false
+    },
+    {
+     "id": "s8_end",
+     "name": "合并：覆盖完成",
+     "description": "合并：覆盖任务完成（静态部署到位或持续覆盖周期完成）。",
+     "caps": [
+      "Spatial Area Partition for Multi-Robot Coverage"
+     ],
+     "next": [],
+     "condition": null,
+     "is_merge": true
+    }
+   ]
+  },
+  {
+   "name": "在线前沿区域分解探索协调",
+   "steps": [
+    {
+     "id": "s0",
+     "name": "未知环境感知与建图",
+     "description": "各机传感器流（深度相机/激光）进行局部占据栅格/体素地图构建，VIO/SLAM状态估计提供位姿。输入：各机传感器流+位姿估计。输出：局部占据栅格/体素地图+机器人位姿。约束：需各机具备VIO/SLAM状态估计能力。适用场景：未知环境多机器人协同探索（搜救、灾后响应、地下探索）。",
+     "caps": [
+      "Decentralized Collaborative UAV Exploration"
+     ],
+     "next": [
+      "s1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s1",
+     "name": "分区方式判断",
+     "description": "判断：采用hgrid分解还是动态Voronoi分区还是图Voronoi分区。",
+     "caps": [
+      "Decentralized Collaborative UAV Exploration"
+     ],
+     "next": [
+      "s1_1a",
+      "s1_1b"
+     ],
+     "condition": "分区机制选择",
+     "is_merge": false
+    },
+    {
+     "id": "s1_1a",
+     "name": "条件：hgrid分解",
+     "description": "条件：hgrid，RACER层次网格分解。",
+     "caps": [
+      "Hgrid Space Decomposition"
+     ],
+     "next": [
+      "s1_hgrid"
+     ],
+     "condition": "hgrid_decomposition",
+     "is_merge": false
+    },
+    {
+     "id": "s1_1b",
+     "name": "条件：Voronoi分区",
+     "description": "条件：Voronoi，CURE动态Voronoi或GVP-MREP图Voronoi。",
+     "caps": [
+      "Dynamic Voronoi Exploration Partition"
+     ],
+     "next": [
+      "s1_voronoi"
+     ],
+     "condition": "voronoi_partition",
+     "is_merge": false
+    },
+    {
+     "id": "s1_hgrid",
+     "name": "在线Hgrid空间分解",
+     "description": "RACER核心：整个未知空间在线递归分层分解为粗粒度区域单元，保证各机同步探索不同区域。整个未知空间不断按预定义边界划分为多个网格，并不断细分成包含不同大小的网格单元，这些网格单元作为分配任务的基本单元。当某区域被探索超过阈值（如70%）时自动细分，完全探索的区域从活动列表移除，不可达区域被智能过滤。输入：未知空间体素/栅格。输出：hgrid区域单元。约束：粗粒度全局覆盖+局部细化。性能指标：线性数组存储O(1)查询，比八叉树快3-5倍。",
+     "caps": [
+      "Hgrid Space Decomposition"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s1_voronoi",
+     "name": "动态Voronoi/图Voronoi探索分区",
+     "description": "CURE/GVP-MREP变体：CURE用动态Voronoi图对正在被探索的空间进行分区，每机负责自己的Voronoi cell，随机器人位置和已知区域变化动态更新；GVP-MREP在多机器人动态拓扑图（MR-DTG）上用图Voronoi分区将节点分配给最近UAV，考虑实际运动代价。输入：已知/未知区域边界+机器人位置或MR-DTG。输出：各机器人Voronoi分区或图节点分配。",
+     "caps": [
+      "Dynamic Voronoi Exploration Partition",
+      "Graph Voronoi Partition Exploration Allocation"
+     ],
+     "next": [
+      "s2_v"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2",
+     "name": "成对交互区域分配",
+     "description": "邻近UAV对之间异步协商区域划分：选最久未交互邻居，计算最优划分并发request，双重检查防冲突。RACER的请求-响应方案解决不公平交互机会和冲突交互问题。仅需邻近两机异步通信，无需全网稳定通信。输入：hgrid单元+邻居相对位姿+通信。输出：更新的网格单元所有权分配。约束：需异步通信链路；双重检查防冲突。 重试机制：若配对交互失败则选择下一个最久未交互邻居重试，直到成功或无更多邻居。",
+     "caps": [
+      "Pairwise Region Allocation"
+     ],
+     "next": [
+      "s2_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2_1",
+     "name": "配对交互结果判断",
+     "description": "判断：配对交互是否成功（邻居在线且无冲突）。",
+     "caps": [
+      "Pairwise Region Allocation"
+     ],
+     "next": [
+      "s2_1a",
+      "s2_1b"
+     ],
+     "condition": "交互结果",
+     "is_merge": false
+    },
+    {
+     "id": "s2_1a",
+     "name": "条件：交互成功",
+     "description": "条件：成功，更新网格所有权。",
+     "caps": [
+      "Pairwise Region Allocation"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": "interaction_success",
+     "is_merge": false
+    },
+    {
+     "id": "s2_1b",
+     "name": "条件：交互失败",
+     "description": "条件：交互失败，选择下一个最久未交互邻居重试（重试逻辑在s2步骤description中描述）。",
+     "caps": [
+      "Pairwise Region Allocation"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": "interaction_failure",
+     "is_merge": false
+    },
+    {
+     "id": "s2_v",
+     "name": "质心检测与前沿分配",
+     "description": "CURE/rrt_exploration变体：CURE检测未知连通区域的质心，设计参数不敏感效用函数评估质心信息量，分层全局/局部探索窗口检测；rrt_exploration用RRT随机树检测前沿点，基于revenue评分分配给各机器人。输入：已知/未知区域地图或占据栅格+机器人状态。输出：质心/前沿目标分配。",
+     "caps": [
+      "Unknown Region Centroid Detection and Evaluation",
+      "RRT-Based Frontier Detection and Assignment"
+     ],
+     "next": [
+      "s3_v"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s3",
+     "name": "CVRP负载均衡",
+     "description": "将每机视为带容量车辆，CVRP最小化所有覆盖路径总长度并均衡负载，LKH-3求解。有效防止重复探索和不公平的工作负载分配。输入：各机hgrid单元+视点+容量约束。输出：均衡的覆盖路径（CP）序列。约束：CVRP为NP-hard，区域数极大时求解时间增长；使用稀疏图路径搜索降级。",
+     "caps": [
+      "CVRP Workload Balancing"
+     ],
+     "next": [
+      "s3_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s3_1",
+     "name": "CVRP可行性判断",
+     "description": "判断：CVRP是否可行（区域数不超过求解器限制）。",
+     "caps": [
+      "CVRP Workload Balancing"
+     ],
+     "next": [
+      "s3_1a",
+      "s3_1b"
+     ],
+     "condition": "CVRP可行性",
+     "is_merge": false
+    },
+    {
+     "id": "s3_1a",
+     "name": "条件：CVRP可行",
+     "description": "条件：可行，LKH-3求解均衡CP。",
+     "caps": [
+      "CVRP Workload Balancing"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": "cvrp_feasible",
+     "is_merge": false
+    },
+    {
+     "id": "s3_1b",
+     "name": "条件：CVRP不可行",
+     "description": "条件：不可行，稀疏图路径搜索降级。",
+     "caps": [
+      "Decentralized Collaborative UAV Exploration"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": "cvrp_infeasible",
+     "is_merge": false
+    },
+    {
+     "id": "s3_v",
+     "name": "分层探索窗口判断",
+     "description": "判断：局部探索窗口中是否存在质心（CURE变体）。",
+     "caps": [
+      "Unknown Region Centroid Detection and Evaluation"
+     ],
+     "next": [
+      "s4_1a",
+      "s4_1b"
+     ],
+     "condition": "质心检测",
+     "is_merge": false
+    },
+    {
+     "id": "s4_1a",
+     "name": "条件：局部质心存在",
+     "description": "条件：存在，局部窗口质心引导。",
+     "caps": [
+      "Unknown Region Centroid Detection and Evaluation"
+     ],
+     "next": [
+      "s5"
+     ],
+     "condition": "local_centroid_exists",
+     "is_merge": false
+    },
+    {
+     "id": "s4_1b",
+     "name": "条件：全局窗口激活",
+     "description": "条件：不存在，激活全局探索窗口找质心。",
+     "caps": [
+      "Unknown Region Centroid Detection and Evaluation"
+     ],
+     "next": [
+      "s5"
+     ],
+     "condition": "global_window_activated",
+     "is_merge": false
+    },
+    {
+     "id": "s4",
+     "name": "增量FIS更新",
+     "description": "FIS增量维护前沿簇、视点、代价链表，AABB宽/窄两阶段检测前沿簇，PCA聚类分裂大簇，圆柱采样视点，支撑高频重规划。FUEL提出的FIS维持整个空间中探索规划所需的关键信息，当空间被探索时可快速增量更新。RACER继承并扩展FIS到多机场景。输入：体素/栅格地图更新。输出：FIS（前沿簇+视点+代价链表）。约束：更新计算量与局部更新区域相关。性能指标：支持高频重规划，FUEL比SOTA快3-8倍。",
+     "caps": [
+      "Incremental Frontier Information Structure"
+     ],
+     "next": [
+      "s5"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s5",
+     "name": "分层探索规划",
+     "description": "从FUEL扩展的分层规划器结合全局覆盖路径引导，依次执行：全局覆盖路径规划（TSP排序）→局部视点细化→最短时间轨迹生成，集成互相避碰机制。输入：FIS + CP引导 + 各机状态。输出：探索路径+细化视点+最短时间轨迹。约束：需B样条轨迹优化。",
+     "caps": [
+      "Decentralized Collaborative UAV Exploration"
+     ],
+     "next": [
+      "s5_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s5_1",
+     "name": "路径更新判断",
+     "description": "判断：覆盖路径是否需要更新（新区域发现/区域完成）。",
+     "caps": [
+      "Decentralized Collaborative UAV Exploration"
+     ],
+     "next": [
+      "s5_1a",
+      "s5_1b"
+     ],
+     "condition": "路径更新触发",
+     "is_merge": false
+    },
+    {
+     "id": "s5_1a",
+     "name": "条件：需更新路径",
+     "description": "条件：需要更新，重新规划CP + CVRP重分配。",
+     "caps": [
+      "CVRP Workload Balancing"
+     ],
+     "next": [
+      "s6"
+     ],
+     "condition": "cp_update_needed",
+     "is_merge": false
+    },
+    {
+     "id": "s5_1b",
+     "name": "条件：无需更新",
+     "description": "条件：不需要，继续当前路径执行。",
+     "caps": [
+      "Multi-UAV Trajectory Execution"
+     ],
+     "next": [
+      "s6"
+     ],
+     "condition": "cp_current",
+     "is_merge": false
+    },
+    {
+     "id": "s6",
+     "name": "多机器人并发探索执行",
+     "description": "各UAV独立执行各自覆盖路径和探索轨迹，异步通信交换预测轨迹实现多机避碰。输入：探索轨迹 + 邻居预测轨迹。输出：飞行运动 + 新传感数据。前置依赖：机载控制器跟踪B样条轨迹。适用场景：通信受限的大规模UAV团队探索。",
+     "caps": [
+      "Multi-UAV Trajectory Execution"
+     ],
+     "next": [
+      "s7"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s7",
+     "name": "在线区域细化与重分配",
+     "description": "随探索推进，已完成区域从活动列表移除，新发现区域触发hgrid细化和重新分配。当某区域被探索超过阈值（如70%）时自动细分。输入：探索进度+已完成区域+新发现区域。输出：精化的hgrid单元+重新分配的区域。约束：在线网格更新触发条件需调参。 闭环迭代：探索推进后新区域发现触发hgrid细化和重新分配，形成持续的在线适应循环（s7→s1→s2→s3→s4→s5→s6→s7）。",
+     "caps": [
+      "Hgrid Space Decomposition"
+     ],
+     "next": [
+      "s7_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s7_1",
+     "name": "探索进度判断",
+     "description": "判断：某区域被探索是否超过阈值（如70%）。",
+     "caps": [
+      "Hgrid Space Decomposition"
+     ],
+     "next": [
+      "s7_1a",
+      "s7_1b"
+     ],
+     "condition": "探索完成度",
+     "is_merge": false
+    },
+    {
+     "id": "s7_1a",
+     "name": "条件：超过阈值",
+     "description": "条件：超过阈值，自动细分/移除已完成区域（在线细化重分配的迭代逻辑在s7步骤description中描述）。",
+     "caps": [
+      "Hgrid Space Decomposition"
+     ],
+     "next": [
+      "s7_end"
+     ],
+     "condition": "explored_above_threshold",
+     "is_merge": false
+    },
+    {
+     "id": "s7_1b",
+     "name": "条件：未超阈值",
+     "description": "条件：未超过阈值，保持当前粒度，继续探索。",
+     "caps": [
+      "Decentralized Collaborative UAV Exploration"
+     ],
+     "next": [
+      "s7_end"
+     ],
+     "condition": "explored_below_threshold",
+     "is_merge": false
+    },
+    {
+     "id": "s7_end",
+     "name": "合并：探索完成",
+     "description": "合并：探索任务完成（探索完整个未知空间或任务终止）。",
+     "caps": [
+      "Decentralized Collaborative UAV Exploration"
+     ],
+     "next": [],
+     "condition": null,
+     "is_merge": true
+    }
+   ]
+  },
+  {
+   "name": "Boustrophedon 细胞分解 + 工作负载分配协调",
+   "steps": [
+    {
+     "id": "s0",
+     "name": "多边形环境建模",
+     "description": "将作业环境表示为含孔洞多边形（PWH），输入机器人数量、工具宽度、重叠率等参数。输入：环境边界+障碍物几何+机器人数量NR+工具宽度w。输出：含孔洞多边形PWH+机器人初始位置。约束：要求已知多边形环境（非在线）。适用场景：任意形状多边形区域的多机器人覆盖路径规划。",
+     "caps": [
+      "Boustrophedon Cellular Decomposition"
+     ],
+     "next": [
+      "s1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s1",
+     "name": "扫掠线临界点检测",
+     "description": "用垂直扫掠线从左到右扫过工作空间，检测障碍物边界连通性变化点（IN/OUT/MIDDLE事件）作为critical points。输入：含孔洞多边形PWH。输出：critical points列表（IN/OUT/MIDDLE事件）。性能指标：扫掠线算法O(n log n)，n为多边形顶点数。",
+     "caps": [
+      "Boustrophedon Cellular Decomposition",
+      "Critical Point Triggered Cell Transition"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2",
+     "name": "细胞分解与邻接图构建",
+     "description": "在critical points处切分工作空间为cells，构建cell邻接图（Reeb graph）表示细胞间空间相邻关系。输入：critical points + PWH。输出：cell列表 + Reeb邻接图G_adj。约束：分解为精确细胞分解（exact cellular decomposition），提供完备覆盖保证。",
+     "caps": [
+      "Boustrophedon Cellular Decomposition",
+      "Cell Adjacency Graph Construction"
+     ],
+     "next": [
+      "s2_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2_1",
+     "name": "环境复杂度判断",
+     "description": "判断：环境是否含孔洞/障碍物（决定单cell还是多cell分解）。",
+     "caps": [
+      "Boustrophedon Cellular Decomposition"
+     ],
+     "next": [
+      "s2_1a",
+      "s2_1b"
+     ],
+     "condition": "环境孔洞/障碍物检测",
+     "is_merge": false
+    },
+    {
+     "id": "s2_1a",
+     "name": "条件：无障碍单cell",
+     "description": "条件：环境不含孔洞/障碍物，单cell分解，直接进入swath生成。",
+     "caps": [
+      "Boustrophedon Coverage Path Generation"
+     ],
+     "next": [
+      "s3_merge"
+     ],
+     "condition": "no_obstacles",
+     "is_merge": false
+    },
+    {
+     "id": "s2_1b",
+     "name": "条件：含障碍多cell",
+     "description": "条件：环境含孔洞/障碍物，多cell分解 + 邻接图构建。",
+     "caps": [
+      "Cell Adjacency Graph Construction"
+     ],
+     "next": [
+      "s3_merge"
+     ],
+     "condition": "has_obstacles",
+     "is_merge": false
+    },
+    {
+     "id": "s3_merge",
+     "name": "合并：细胞分解完成",
+     "description": "合并：细胞分解完成（单cell或多cell+邻接图）。",
+     "caps": [
+      "Boustrophedon Cellular Decomposition"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": null,
+     "is_merge": true
+    },
+    {
+     "id": "s3",
+     "name": "Boustrophedon Swath生成",
+     "description": "在每个cell内沿扫掠方向生成平行boustrophedon swath，间距d_swath = 2r(1-η)。输入：cells + 工具宽度w + 重叠率η。输出：每cell内平行swath集合。约束：swath方向可优化；复杂拓扑需先做细胞分解。",
+     "caps": [
+      "Boustrophedon Coverage Path Generation"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s4",
+     "name": "方向优化判断",
+     "description": "判断：是否需要全局扫掠方向优化（能耗最小化）。",
+     "caps": [
+      "Turn-Minimizing Swath Generation"
+     ],
+     "next": [
+      "s4a",
+      "s4b"
+     ],
+     "condition": "能耗优化需求",
+     "is_merge": false
+    },
+    {
+     "id": "s4a",
+     "name": "条件：方向优化",
+     "description": "条件：需要能耗优化，用旋转卡尺算法计算最小面积外接矩形确定全局最优扫掠方向。",
+     "caps": [
+      "Turn-Minimizing Swath Generation"
+     ],
+     "next": [
+      "s5_merge"
+     ],
+     "condition": "energy_optimal",
+     "is_merge": false
+    },
+    {
+     "id": "s4b",
+     "name": "条件：固定方向",
+     "description": "条件：固定方向，使用默认或用户指定方向。",
+     "caps": [
+      "Boustrophedon Coverage Path Generation"
+     ],
+     "next": [
+      "s5_merge"
+     ],
+     "condition": "fixed_direction",
+     "is_merge": false
+    },
+    {
+     "id": "s5_merge",
+     "name": "合并：Swath生成完成",
+     "description": "合并：swath生成完成（固定方向或优化方向）。",
+     "caps": [
+      "Boustrophedon Coverage Path Generation"
+     ],
+     "next": [
+      "s5"
+     ],
+     "condition": null,
+     "is_merge": true
+    },
+    {
+     "id": "s5",
+     "name": "E-GTSP/TSP顺序优化",
+     "description": "将多cell的swath顺序问题建模为E-GTSP或TSP：每cell内多个可选sweep方向构成cluster，求解访问所有cluster的最短路径。Gutin-Karapetyan memetic solver求解E-GTSP，或GeneticTSP/Concorde求解标准TSP。输入：swath集合 + cell邻接图 + 转移代价矩阵。输出：全局最优swath访问顺序。约束：E-GTSP/TSP为NP-hard。",
+     "caps": [
+      "E-GTSP Swath Ordering Optimization",
+      "Cell Visiting Order TSP Optimization"
+     ],
+     "next": [
+      "s5_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s5_1",
+     "name": "cell数量判断",
+     "description": "判断：cell数量是否多到需要联合方向+顺序优化（E-GTSP）还是仅需顺序优化（TSP）。",
+     "caps": [
+      "E-GTSP Swath Ordering Optimization"
+     ],
+     "next": [
+      "s5_1a",
+      "s5_1b"
+     ],
+     "condition": "cell数量与复杂度",
+     "is_merge": false
+    },
+    {
+     "id": "s5_1a",
+     "name": "条件：多cell E-GTSP",
+     "description": "条件：多cell，用E-GTSP联合优化swath方向+访问顺序。",
+     "caps": [
+      "E-GTSP Swath Ordering Optimization"
+     ],
+     "next": [
+      "s6_merge"
+     ],
+     "condition": "multi_cell_gtsp",
+     "is_merge": false
+    },
+    {
+     "id": "s5_1b",
+     "name": "条件：少cell TSP",
+     "description": "条件：少cell，用标准TSP优化cell访问顺序。",
+     "caps": [
+      "Cell Visiting Order TSP Optimization"
+     ],
+     "next": [
+      "s6_merge"
+     ],
+     "condition": "simple_tsp",
+     "is_merge": false
+    },
+    {
+     "id": "s6_merge",
+     "name": "合并：顺序优化完成",
+     "description": "合并：swath顺序优化完成（E-GTSP或TSP）。",
+     "caps": [
+      "Minimum Energy Coverage Ordering (TSP)"
+     ],
+     "next": [
+      "s6"
+     ],
+     "condition": null,
+     "is_merge": true
+    },
+    {
+     "id": "s6",
+     "name": "mTSP多机器人负载分配",
+     "description": "用mTSP求解器将swath分配给NR个机器人，均衡负载并最小化任务时间。目标函数：min_Π Σ L_r，约束|T_r| ≥ floor(N_S/N_R), ∀r。输入：swath访问顺序 + 机器人数量。输出：各机器人swath子集（负载均衡）。约束：mTSP为NP-hard。",
+     "caps": [
+      "Multi-Robot Load-Balanced Cell Assignment",
+      "CVRP Workload Balancing",
+      "Minimum Energy Coverage Ordering (TSP)"
+     ],
+     "next": [
+      "s6_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s6_1",
+     "name": "机器人数量判断",
+     "description": "判断：机器人数量是否大于1（需要多机分配还是单机）。",
+     "caps": [
+      "Multi-Robot Load-Balanced Cell Assignment"
+     ],
+     "next": [
+      "s6_1a",
+      "s6_1b"
+     ],
+     "condition": "机器人数量",
+     "is_merge": false
+    },
+    {
+     "id": "s6_1a",
+     "name": "条件：多机分配",
+     "description": "条件：多机器人，mTSP求解器分配 + 负载均衡。",
+     "caps": [
+      "Multi-Robot Load-Balanced Cell Assignment"
+     ],
+     "next": [
+      "s7_merge"
+     ],
+     "condition": "multi_robot",
+     "is_merge": false
+    },
+    {
+     "id": "s6_1b",
+     "name": "条件：单机",
+     "description": "条件：单机器人，所有swath分配给一个机器人。",
+     "caps": [
+      "Boustrophedon Coverage Path Generation"
+     ],
+     "next": [
+      "s7_merge"
+     ],
+     "condition": "single_robot",
+     "is_merge": false
+    },
+    {
+     "id": "s7_merge",
+     "name": "合并：分配完成",
+     "description": "合并：多机器人负载分配完成（mTSP或单机）。",
+     "caps": [
+      "Multi-Robot Load-Balanced Cell Assignment"
+     ],
+     "next": [
+      "s7"
+     ],
+     "condition": null,
+     "is_merge": true
+    },
+    {
+     "id": "s7",
+     "name": "VG不相交段连接",
+     "description": "用增强visibility graph（VG）算法连接被障碍物裁剪的不相交swath段为连续扫掠路径。增加采样边界点，使用航向驱动的入/出口选择规则，确保过渡在安全缓冲区内。输入：各机器人swath子集 + 自由空间F' + 安全缓冲区。输出：连续碰撞安全覆盖路径waypoint序列。",
+     "caps": [
+      "Modified Visibility Graph Disjoint Segment Connection"
+     ],
+     "next": [
+      "s7_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s7_1",
+     "name": "不相交段判断",
+     "description": "判断：swath间是否存在不相交段需要visibility graph连接。",
+     "caps": [
+      "Modified Visibility Graph Disjoint Segment Connection"
+     ],
+     "next": [
+      "s7_1a",
+      "s7_1b"
+     ],
+     "condition": "swath不相交检测",
+     "is_merge": false
+    },
+    {
+     "id": "s7_1a",
+     "name": "条件：不相交段",
+     "description": "条件：存在不相交段，修改VG连接 + 航向驱动遍历。",
+     "caps": [
+      "Modified Visibility Graph Disjoint Segment Connection"
+     ],
+     "next": [
+      "s8_merge"
+     ],
+     "condition": "disjoint_segments",
+     "is_merge": false
+    },
+    {
+     "id": "s7_1b",
+     "name": "条件：连续swath",
+     "description": "条件：所有swath连续，直接输出路径。",
+     "caps": [
+      "Boustrophedon Coverage Path Generation"
+     ],
+     "next": [
+      "s8_merge"
+     ],
+     "condition": "continuous",
+     "is_merge": false
+    },
+    {
+     "id": "s8_merge",
+     "name": "合并：路径生成完成",
+     "description": "合并：覆盖路径生成完成（VG连接或直接连续）。",
+     "caps": [
+      "Boustrophedon Cellular Decomposition"
+     ],
+     "next": [
+      "s8"
+     ],
+     "condition": null,
+     "is_merge": true
+    },
+    {
+     "id": "s8",
+     "name": "多机器人并行覆盖执行",
+     "description": "各机器人独立执行各自swath序列的覆盖路径，正常作业无需机间通信。输入：各机器人覆盖路径 + 机器人状态。输出：全覆盖完成 + 覆盖度量。前置依赖：ROS导航栈/move_base或等效路径跟踪控制器。适用场景：已知多边形环境的多机器人协同全覆盖（农业喷洒、航测、环境监测）。",
+     "caps": [
+      "Spatial Area Partition for Multi-Robot Coverage"
+     ],
+     "next": [
+      "s9"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s9",
+     "name": "故障检测与传播式重分配",
+     "description": "检测机器人故障/低电量，通过邻接树（adjacency tree）将故障机器人的覆盖路径迭代传播给邻近机器人：每轮传播将部分路径分配给邻居，邻居再传播给其邻居，直到负载均衡。输入：故障信号 + 当前覆盖状态 + 邻接树。输出：重分配后的各机器人覆盖路径。约束：仅需少量传播循环即可完成，适合实时应用。",
+     "caps": [
+      "Propagation-Based Failure Coverage Redistribution"
+     ],
+     "next": [
+      "s9_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s9_1",
+     "name": "故障检测判断",
+     "description": "判断：覆盖执行中某机器人是否故障/低电量。",
+     "caps": [
+      "Propagation-Based Failure Coverage Redistribution"
+     ],
+     "next": [
+      "s9_1a",
+      "s9_1b"
+     ],
+     "condition": "机器人故障检测",
+     "is_merge": false
+    },
+    {
+     "id": "s9_1a",
+     "name": "条件：无故障",
+     "description": "条件：所有机器人正常运行，正常完成覆盖。",
+     "caps": [
+      "Spatial Area Partition for Multi-Robot Coverage"
+     ],
+     "next": [
+      "s9_end"
+     ],
+     "condition": "no_failure",
+     "is_merge": false
+    },
+    {
+     "id": "s9_1b",
+     "name": "条件：机器人故障",
+     "description": "条件：某机器人故障/低电量，邻接树传播式重分配故障路径给邻近机器人。",
+     "caps": [
+      "Propagation-Based Failure Coverage Redistribution"
+     ],
+     "next": [
+      "s9_end"
+     ],
+     "condition": "robot_failure",
+     "is_merge": false
+    },
+    {
+     "id": "s9_end",
+     "name": "合并：覆盖完成",
+     "description": "合并：全覆盖任务完成（正常完成或故障重分配后完成）。",
+     "caps": [
+      "Spatial Area Partition for Multi-Robot Coverage"
+     ],
+     "next": [],
+     "condition": null,
+     "is_merge": true
+    }
+   ]
+  },
+  {
+   "name": "拓扑图划分巡逻协调",
+   "steps": [
+    {
+     "id": "s0",
+     "name": "拓扑图环境建模",
+     "description": "将巡逻环境（路网/航点/关键位置）建模为带权拓扑图G=(V,E)，节点V为关键位置/航点，边E为可通行路径，边权w(e)为通行时间/距离。输入：环境路网/航点列表+通行关系+机器人数量k。输出：带权拓扑图+机器人数量。约束：要求环境拓扑已知（非在线探索）。适用场景：安防巡逻、基础设施监控、边境巡逻。",
+     "caps": [
+      "Topological Graph Environment Modeling"
+     ],
+     "next": [
+      "s1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s1",
+     "name": "巡逻策略类型判断",
+     "description": "判断：采用确定性巡逻还是随机（马尔可夫链）巡逻策略。",
+     "caps": [
+      "Spatial Area Partition for Multi-Robot Coverage"
+     ],
+     "next": [
+      "s1_1a",
+      "s1_1b"
+     ],
+     "condition": "巡逻策略类型",
+     "is_merge": false
+    },
+    {
+     "id": "s1_1a",
+     "name": "条件：确定性策略",
+     "description": "条件：确定性策略，进入环形/分区轨迹设计。",
+     "caps": [
+      "Refresh Time Optimal Trajectory Design"
+     ],
+     "next": [
+      "s1_2"
+     ],
+     "condition": "deterministic",
+     "is_merge": false
+    },
+    {
+     "id": "s1_1b",
+     "name": "条件：随机策略",
+     "description": "条件：随机（马尔可夫链）策略，进入图划分流程。",
+     "caps": [
+      "Maximum k-Cut Graph Partitioning"
+     ],
+     "next": [
+      "s2_0"
+     ],
+     "condition": "stochastic",
+     "is_merge": false
+    },
+    {
+     "id": "s1_2",
+     "name": "图拓扑类型判断",
+     "description": "判断：拓扑图是链图、树图还是环图（决定多项式最优还是近似算法）。",
+     "caps": [
+      "Refresh Time Optimal Trajectory Design"
+     ],
+     "next": [
+      "s1_2a",
+      "s1_2b"
+     ],
+     "condition": "图拓扑结构",
+     "is_merge": false
+    },
+    {
+     "id": "s1_2a",
+     "name": "条件：链图/树图",
+     "description": "条件：链图/树图，多项式时间最优算法计算最优refresh time环形轨迹。",
+     "caps": [
+      "Refresh Time Optimal Trajectory Design"
+     ],
+     "next": [
+      "s6"
+     ],
+     "condition": "chain_or_tree",
+     "is_merge": false
+    },
+    {
+     "id": "s1_2b",
+     "name": "条件：环图",
+     "description": "条件：环图，NP-hard，用常数因子近似算法。",
+     "caps": [
+      "Refresh Time Optimal Trajectory Design"
+     ],
+     "next": [
+      "s6"
+     ],
+     "condition": "cyclic",
+     "is_merge": false
+    },
+    {
+     "id": "s2_0",
+     "name": "分区方式判断",
+     "description": "判断：采用预计算分区还是涌现式分区。",
+     "caps": [
+      "Spatial Area Partition for Multi-Robot Coverage"
+     ],
+     "next": [
+      "s2_1a",
+      "s2_1b"
+     ],
+     "condition": "分区方式",
+     "is_merge": false
+    },
+    {
+     "id": "s2_1a",
+     "name": "条件：预计算分区",
+     "description": "条件：预计算分区，进入图划分（maximum k-cut / MSP均衡分割）。",
+     "caps": [
+      "Maximum k-Cut Graph Partitioning"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": "precomputed_partition",
+     "is_merge": false
+    },
+    {
+     "id": "s2_1b",
+     "name": "条件：涌现式分区",
+     "description": "条件：涌现式分区，LR-PT局部反应式 + 自主领地涌现。",
+     "caps": [
+      "Emergent Area Partitioning Patrol"
+     ],
+     "next": [
+      "s7"
+     ],
+     "condition": "emergent_partition",
+     "is_merge": false
+    },
+    {
+     "id": "s2",
+     "name": "Maximum k-Cut图划分",
+     "description": "将拓扑图G切为k个子图{G_1,...,G_k}，最大化跨子图边权重之和max Σ w(E_ij)。对于无权完全图等价于经典maximum k-cut问题（NP-hard）。利用最优解特殊结构开发启发式下降算法，有限步收敛。输入：拓扑图+机器人数量k。输出：k个子图划分。约束：NP-hard，大规模图需启发式近似。",
+     "caps": [
+      "Maximum k-Cut Graph Partitioning"
+     ],
+     "next": [
+      "s2_b"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2_b",
+     "name": "均衡图分割（MSP变体）",
+     "description": "MSP变体：使用均衡图分割算法（多级子图分割）将拓扑图切为k个大小近似相等的子图，每个机器人负责一个子图。均衡约束确保各机器人工作负载近似相等。输入：拓扑图+机器人数量。输出：k个均衡子图。约束：均衡分割是NP-hard，使用多级启发式近似。",
+     "caps": [
+      "Balanced Graph Partitioning Territory Allocation"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s3",
+     "name": "马尔可夫链转移矩阵设计",
+     "description": "为每个子图G_i设计马尔可夫链转移矩阵P_i，使平稳分布覆盖所有节点且mean first hitting time最小。转移概率P_i(u,v)决定机器人在节点u时选择下一节点v的概率。随机性策略防止对抗者预测巡逻模式。输入：子图+节点重要性权重。输出：转移矩阵P_i。约束：转移矩阵须满足不可约性+非周期性以保证平稳分布存在。",
+     "caps": [
+      "Markov Chain Patrol Strategy Design"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s4",
+     "name": "Mean First Hitting Time计算",
+     "description": "计算各子图马尔可夫链的mean first hitting time H_i（从随机起始点到任意目标点的期望首次到达时间），优化目标为最小化最大子图的H_max = max_i H_i。利用Kemeny常数等图论工具分析。输入：各子图转移矩阵{P_i}。输出：{H_i} + 最大值H_max。约束：H_i的精确计算需矩阵求逆，大规模图需近似。",
+     "caps": [
+      "Mean First Hitting Time Optimization"
+     ],
+     "next": [
+      "s5"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s5",
+     "name": "启发式下降分区优化",
+     "description": "利用最优解特殊结构（每个子图是一个连通分量且跨子图边最大化），启发式下降算法迭代交换节点以改进目标。有限步收敛且有次优性保证。输入：当前划分 + {H_i}。输出：优化后的划分（启发式下降改进）。约束：迭代次数受节点数限制。",
+     "caps": [
+      "Maximum k-Cut Graph Partitioning",
+      "Mean First Hitting Time Optimization"
+     ],
+     "next": [
+      "s5_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s5_1",
+     "name": "收敛判断",
+     "description": "判断：启发式下降算法是否收敛（划分改进小于阈值）。",
+     "caps": [
+      "Maximum k-Cut Graph Partitioning"
+     ],
+     "next": [
+      "s5_1a",
+      "s5_1b"
+     ],
+     "condition": "收敛判定",
+     "is_merge": false
+    },
+    {
+     "id": "s5_1a",
+     "name": "条件：已收敛",
+     "description": "条件：改进小于阈值，输出最终划分。",
+     "caps": [
+      "Maximum k-Cut Graph Partitioning"
+     ],
+     "next": [
+      "s8_merge"
+     ],
+     "condition": "converged",
+     "is_merge": false
+    },
+    {
+     "id": "s5_1b",
+     "name": "条件：未收敛",
+     "description": "条件：改进大于等于阈值，继续迭代下降（迭代逻辑在s5启发式下降步骤的description中描述）。",
+     "caps": [
+      "Maximum k-Cut Graph Partitioning"
+     ],
+     "next": [
+      "s8_merge"
+     ],
+     "condition": "not_converged",
+     "is_merge": false
+    },
+    {
+     "id": "s6",
+     "name": "环形/分区轨迹设计（确定性变体）",
+     "description": "确定性变体：在拓扑图上设计最小refresh time的团队巡逻轨迹。链图/树图：多项式时间算法计算最优轨迹 + 分布式控制律收敛到最优；环图：NP-hard，常数因子近似算法。输入：拓扑图+机器人数量。输出：各机器人巡逻轨迹。约束：环图NP-hard需近似。",
+     "caps": [
+      "Refresh Time Optimal Trajectory Design"
+     ],
+     "next": [
+      "s8_merge"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s7",
+     "name": "Idleness驱动分布式目标选择",
+     "description": "各机器人基于局部idleness信息（节点自上次访问以来的时间）独立选择下一访问节点——选择idleness最高的节点或基于期望idleness的概率选择。LR-PT变体将巡逻需求和回连基站紧迫性整合为统一效用函数。输入：各机器人当前位置+局部idleness信息。输出：下一访问节点。约束：需局部通信获取邻居idleness信息。",
+     "caps": [
+      "Idleness-Driven Distributed Target Selection"
+     ],
+     "next": [
+      "s7_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s7_1",
+     "name": "基站连通性判断",
+     "description": "判断：是否需要兼顾基站连通性（回连报告）。",
+     "caps": [
+      "Idleness-Driven Distributed Target Selection"
+     ],
+     "next": [
+      "s7_1a",
+      "s7_1b"
+     ],
+     "condition": "基站连通性需求",
+     "is_merge": false
+    },
+    {
+     "id": "s7_1a",
+     "name": "条件：需基站连通",
+     "description": "条件：需要，LR-PT统一效用函数（巡逻 + 回连）。",
+     "caps": [
+      "Emergent Area Partitioning Patrol"
+     ],
+     "next": [
+      "s8_merge"
+     ],
+     "condition": "bs_connectivity_required",
+     "is_merge": false
+    },
+    {
+     "id": "s7_1b",
+     "name": "条件：纯idleness",
+     "description": "条件：不需要，纯idleness驱动目标选择。",
+     "caps": [
+      "Idleness-Driven Distributed Target Selection"
+     ],
+     "next": [
+      "s8_merge"
+     ],
+     "condition": "pure_idleness",
+     "is_merge": false
+    },
+    {
+     "id": "s8_merge",
+     "name": "合并：策略确定",
+     "description": "合并：巡逻策略确定（随机马尔可夫/确定性环形/涌现式LR-PT）。",
+     "caps": [
+      "Spatial Area Partition for Multi-Robot Coverage"
+     ],
+     "next": [
+      "s8"
+     ],
+     "condition": null,
+     "is_merge": true
+    },
+    {
+     "id": "s8",
+     "name": "多机器人并发巡逻执行",
+     "description": "各机器人在各自子图上独立执行巡逻策略，正常作业无需全局通信。持续更新idleness统计。输入：各机器人巡逻策略+状态。输出：持续巡逻执行 + idleness统计。前置依赖：ROS导航栈/运动控制器。适用场景：安防巡逻、基础设施监控、边境巡逻。",
+     "caps": [
+      "Spatial Area Partition for Multi-Robot Coverage"
+     ],
+     "next": [
+      "s8_1"
+     ],
+     "condition": null,
+     "is_merge": true
+    },
+    {
+     "id": "s8_1",
+     "name": "故障检测判断",
+     "description": "判断：巡逻执行中某机器人是否故障/离线。",
+     "caps": [
+      "Balanced Graph Partitioning Territory Allocation"
+     ],
+     "next": [
+      "s8_1a",
+      "s8_1b"
+     ],
+     "condition": "机器人故障检测",
+     "is_merge": false
+    },
+    {
+     "id": "s8_1a",
+     "name": "条件：无故障",
+     "description": "条件：所有机器人正常运行，正常巡逻。",
+     "caps": [
+      "Spatial Area Partition for Multi-Robot Coverage"
+     ],
+     "next": [
+      "s8_end"
+     ],
+     "condition": "no_failure",
+     "is_merge": false
+    },
+    {
+     "id": "s8_1b",
+     "name": "条件：机器人故障",
+     "description": "条件：某机器人故障/离线，剩余机器人重新划分受影响子图。",
+     "caps": [
+      "Balanced Graph Partitioning Territory Allocation"
+     ],
+     "next": [
+      "s8_end"
+     ],
+     "condition": "robot_failure",
+     "is_merge": false
+    },
+    {
+     "id": "s8_end",
+     "name": "合并：巡逻完成",
+     "description": "合并：巡逻任务持续进行（正常巡逻或故障重分配后继续）。",
+     "caps": [
+      "Spatial Area Partition for Multi-Robot Coverage"
+     ],
+     "next": [],
+     "condition": null,
+     "is_merge": true
+    }
+   ]
+  }
+ ],
+ "capabilities": [
+  {
+   "en": "Spatial Area Partition for Multi-Robot Coverage",
+   "zh": "多机器人覆盖空间分区",
+   "level": "l2",
+   "description": "将目标作业区域按空间 cell 粒度划分给多个机器人，实现覆盖负载均衡的链级伞形能力。涵盖环境栅格离散化、DARP 迭代几何分区、STC 覆盖路径生成与失效重分区。输入：环境边界 + 障碍物 + 机器人数量。输出：各机器人子区域分配 + 覆盖路径。约束：要求地图已知（非在线），机器人数量 ≥2。适用场景：多机器人协同全覆盖任务（环境监测、农业喷洒、清扫作业）。不处理：未知环境在线探索（归 frontier_exploration 兄弟主题）、持续覆盖控制（归 voronoi_coverage_control 兄弟主题）。",
+   "aliases": [
+    "Multi-Robot Coverage Space Partition",
+    "区域覆盖空间分区"
+   ],
+   "parent": null,
+   "children": [
+    "Power Diagram Equitable Partition",
+    "Idleness-Driven Distributed Target Selection",
+    "Multi-Robot Load-Balanced Cell Assignment",
+    "Emergent Area Partitioning Patrol",
+    "Balanced Graph Partitioning Territory Allocation",
+    "Sub-area Coverage Planning and Execution",
+    "Cell Visiting Order TSP Optimization",
+    "Multi-Robot Failure Region Re-partition",
+    "Boustrophedon Cellular Decomposition",
+    "DARP Iterative Geometric Partition",
+    "Voronoi Tessellation and Centroid Computation",
+    "Modified Visibility Graph Disjoint Segment Connection",
+    "Circumnavigation Path Generation",
+    "Turn-Minimizing Swath Generation",
+    "CVRP Workload Balancing",
+    "Spanning Tree Construction",
+    "Minimum Energy Coverage Ordering (TSP)",
+    "Maximum k-Cut Graph Partitioning",
+    "Persistent Coverage Decay Model",
+    "Markov Chain Patrol Strategy Design",
+    "Decentralized Collaborative UAV Exploration",
+    "E-GTSP Swath Ordering Optimization",
+    "Cooperative Spanning Tree Sweep Planning",
+    "Propagation-Based Failure Coverage Redistribution",
+    "Mean First Hitting Time Optimization",
+    "Refresh Time Optimal Trajectory Design",
+    "Lloyd Gradient Coverage Deployment",
+    "Topological Graph Shortest Path Search",
+    "Topological Graph Environment Modeling",
+    "GVG Non-Convex Region Load-Balancing Partition",
+    "Occupancy Grid Environment Modeling",
+    "Graph-Based Coverage Path Online Planning",
+    "STC Spanning Tree Coverage Path Generation"
+   ],
+   "assets": []
+  },
+  {
+   "en": "DARP Iterative Geometric Partition",
+   "zh": "DARP迭代几何分区",
+   "level": "l2",
+   "description": "基于机器人初始位置，通过坐标下降法迭代更新评估矩阵，收敛到面积近似相等且连通的子区域划分。评估矩阵包含距离代价、面积均衡乘子与连通性约束三重约束联合优化。输入：占据栅格地图 + 机器人初始位置。输出：标签矩阵（每个cell归属的机器人ID）。约束：要求地图已知（非在线），机器人数量≥2。性能指标：实际规模输入复杂度被多项式曲线界住；存在最优解时收敛到最优解。适用场景：多机器人协同全覆盖任务（环境监测、农业喷洒、清扫作业）。不处理：未知环境在线分区（归在线前沿探索主题）。",
+   "aliases": [
+    "DARP",
+    "Divide Areas Algorithm",
+    "Divide Areas Algorithm for Optimal Multi-Robot Coverage Path Planning",
+    "多机器人区域划分"
+   ],
+   "parent": "Spatial Area Partition for Multi-Robot Coverage",
+   "children": [
+    "Coordinate Descent Area Balance Iteration",
+    "Sub-region Assignment and Boundary Extraction"
+   ],
+   "assets": [
+    "DARP"
+   ]
+  },
+  {
+   "en": "Coordinate Descent Area Balance Iteration",
+   "zh": "坐标下降面积均衡迭代",
+   "level": "l3",
+   "description": "循环更新每个机器人的评估矩阵：先更新面积均衡乘子 m_i^(k+1)=m_i^k+η×(A_i-A_target)，再通过 wavefront 传播确保连通性，最后用 argmin 确定每 cell 归属。三重约束（距离代价+面积均衡+连通性）联合迭代优化。输入：距离评估矩阵 + 初始位置。输出：收敛后的标签矩阵。约束：迭代步长 η 控制收敛速度；连通性约束用 wavefront/BFS 保证。性能指标：迭代次数与栅格尺寸线性相关；20×20栅格3机器人场景可快速收敛。",
+   "aliases": [
+    "Coordinate Descent Partition",
+    "面积均衡迭代"
+   ],
+   "parent": "DARP Iterative Geometric Partition",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "Occupancy Grid Environment Modeling",
+   "zh": "占据栅格环境建模",
+   "level": "l3",
+   "description": "把作业环境离散化为占据栅格（occupied/free cell），障碍物标记为不可通行，为 DARP 分区与 STC 覆盖路径提供统一环境表征。输入：环境边界 + 障碍物几何。输出：占据栅格地图。约束：栅格分辨率需匹配机器人覆盖工具宽度；分辨率过粗影响精度，过细增加计算量。适用场景：结构化室内/室外环境的覆盖路径规划前置步骤。",
+   "aliases": [
+    "Grid Map",
+    "Occupancy Grid"
+   ],
+   "parent": "Spatial Area Partition for Multi-Robot Coverage",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "Sub-region Assignment and Boundary Extraction",
+   "zh": "子区域分配与边界提取",
+   "level": "l3",
+   "description": "对每个 cell 取 argmin 评估矩阵确定归属，然后提取各子区域的连通分量轮廓作为多边形边界。输入：K 个最终评估矩阵或标签矩阵。输出：标签矩阵 + 各子区域多边形边界。约束：连通分量需用 BFS/DFS 提取；边界提取可用 OpenCV findContours。",
+   "aliases": [
+    "Region Assignment",
+    "Boundary Extraction"
+   ],
+   "parent": "DARP Iterative Geometric Partition",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "STC Spanning Tree Coverage Path Generation",
+   "zh": "STC生成树覆盖路径生成",
+   "level": "l3",
+   "description": "在子区域内构建 2×2 砖块的生成树，沿树边生成环绕路径实现全覆盖，每个砖块被恰好覆盖一次。输入：子区域栅格。输出：覆盖路径 waypoint 序列。适用于 DARP 分区后的子区域覆盖。性能指标：O(n) 最优（n 为栅格尺寸）；STC 竞争比上界 O(A/ε²)，其中 A 为区域面积，ε 为栅格边长与障碍物最小特征尺寸之比。",
+   "aliases": [
+    "Preorder Circumnavigation",
+    "STC",
+    "STC Path Generation",
+    "Spanning Tree Coverage",
+    "Spiral STC"
+   ],
+   "parent": "Spatial Area Partition for Multi-Robot Coverage",
+   "children": [],
+   "assets": [
+    "DARP"
+   ]
+  },
+  {
+   "en": "Spanning Tree Construction",
+   "zh": "生成树构建",
+   "level": "l3",
+   "description": "在图 G=(V,E) 上构建最小生成树 T，确保树覆盖所有图节点且总权重最小。STC 覆盖路径的骨架基础。输入：图 G=(V,E) 带边权重。输出：最小生成树 T。依赖：已构建的 mega cell 砖块图。性能指标：Prim 算法 O(V²)，Kruskal 算法 O(E log V)。",
+   "aliases": [
+    "MST Construction",
+    "Minimum Spanning Tree Construction"
+   ],
+   "parent": "Spatial Area Partition for Multi-Robot Coverage",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "Circumnavigation Path Generation",
+   "zh": "子树环绕路径生成",
+   "level": "l3",
+   "description": "对每棵子树沿树边按右手法则生成环绕路径，机器人从根节点出发沿树边右侧行走，绕每个 mega cell 砖块一圈。TMSTC* 变体通过贪婪合并相邻砖块最小化转弯次数。输入：子树 T_i + 根节点（+ 相遇点，MSTC*模式）。输出：覆盖路径 waypoint 序列。约束：路径需恰好覆盖每个 cell 一次；转弯仅发生在砖块连接处。",
+   "aliases": [
+    "STC Circumnavigation",
+    "Tree Perimeter Traversal"
+   ],
+   "parent": "Spatial Area Partition for Multi-Robot Coverage",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "Multi-Robot Failure Region Re-partition",
+   "zh": "多机器人失效区域重划分",
+   "level": "l3",
+   "description": "当某机器人在覆盖执行中故障/超时，DARP 对剩余未覆盖区域重新划分给其他可用机器人，保证群体鲁棒性。DARP 支持动态机器人数量变更。输入：当前覆盖状态 + 可用机器人列表 + 未覆盖区域。输出：重新分区后的标签矩阵。约束：需实时监控机器人状态；重分配需保证剩余子区域连通。适用场景：多机器人覆盖系统的故障容错与鲁棒性保障。",
+   "aliases": [
+    "Failure Re-partition",
+    "Dynamic Robot Count DARP",
+    "失效重分区"
+   ],
+   "parent": "Spatial Area Partition for Multi-Robot Coverage",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "Cooperative Spanning Tree Sweep Planning",
+   "zh": "协同生成树扫掠规划",
+   "level": "l2",
+   "description": "多机器人在已知栅格上共享同一棵生成树的协同扫掠规划范式——构建转弯感知生成树并在树拓扑环上均衡划分相遇点，区别于 area_partition 的树切割分区。涵盖砖块虚拟化、转弯感知生成树构建（TMSTC* DINIC 最大流最小矩形划分 + 贪心合并）、拓扑环均衡划分（MSTC* 相遇点确定）。输入：占据栅格 + 机器人数量 K。输出：生成树 + 相遇点划分。约束：需已知环境（offline）；转弯代价纳入路径权重。适用场景：已知结构化环境（农田、仓库、停车场）的多机器人协同全覆盖。不处理：DARP 式独立分区覆盖（归 DARP 迭代几何分区能力）。",
+   "aliases": [
+    "MSTC* cooperative planning",
+    "TMSTC* planning",
+    "spanning tree cooperative sweep"
+   ],
+   "parent": "Spatial Area Partition for Multi-Robot Coverage",
+   "children": [
+    "Turn-Aware Brick Spanning Tree Construction",
+    "Topology Loop Equilibrium Division",
+    "Cooperative Perimeter Traversal with Meet-and-Stop"
+   ],
+   "assets": [
+    "TMSTC-Star"
+   ]
+  },
+  {
+   "en": "Turn-Aware Brick Spanning Tree Construction",
+   "zh": "转弯感知砖块生成树构建",
+   "level": "l3",
+   "description": "TMSTC* 将转弯最小化转化为最小矩形覆盖问题——用最大流（DINIC）算法将自由区域划分为最小数量矩形砖块作为生成树枝干，再贪心合并相邻砖块形成完整生成树。输入：2×2 砖块图 + 机器人数量 K。输出：以砖块为节点的生成树 T。约束：转弯代价纳入路径权重；砖块合并需保持连通性。性能指标：DINIC 最大流 O(V²E)，实际栅格规模下计算效率可接受。",
+   "aliases": [
+    "TMSTC* tree construction",
+    "DINIC rectangular partition",
+    "turn-minimizing spanning tree"
+   ],
+   "parent": "Cooperative Spanning Tree Sweep Planning",
+   "children": [],
+   "assets": [
+    "TMSTC-Star"
+   ]
+  },
+  {
+   "en": "Topology Loop Equilibrium Division",
+   "zh": "拓扑环均衡划分",
+   "level": "l3",
+   "description": "MSTC* 协同核心：生成树 T 的周界形成闭合环路，在环上找 K 个相遇点使各机器人从根节点沿环绕行到下一相遇点的路径权重（cell 数 + 转弯数）均衡，贪心搜索最优均衡划分。输入：生成树 T + 机器人数量 K + 砖块路径权重。输出：K 个机器人在树周界上的相遇点。约束：划分点在树节点上；各机器人路径权重均衡。",
+   "aliases": [
+    "MSTC* loop division",
+    "equilibrium division",
+    "meet point determination"
+   ],
+   "parent": "Cooperative Spanning Tree Sweep Planning",
+   "children": [],
+   "assets": [
+    "TMSTC-Star"
+   ]
+  },
+  {
+   "en": "Cooperative Perimeter Traversal with Meet-and-Stop",
+   "zh": "相遇即停协同周界遍历",
+   "level": "l3",
+   "description": "每个机器人从自己的根节点出发沿生成树周界按右手法则绕行（环绕每个砖块一圈），行进到自己的相遇点即停止。多机器人并发执行，路径在共享树上不重叠（由相遇点划分保证）。输入：生成树 + 相遇点 + 机器人根节点。输出：各机器人覆盖路径 waypoint 序列。约束：路径覆盖整棵树无遗漏；相遇点处两机器人路径衔接。",
+   "aliases": [
+    "meet-and-stop traversal",
+    "cooperative circumnavigation",
+    "shared tree perimeter traversal"
+   ],
+   "parent": "Cooperative Spanning Tree Sweep Planning",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "Sub-area Coverage Planning and Execution",
+   "zh": "子区域覆盖路径规划与执行",
+   "level": "l2",
+   "description": "在各子区域内独立执行单机器人覆盖路径规划，生成全覆盖路径后由各机器人执行路径跟踪。DARP 模式下各机完全独立无需通信；MSTC* 模式下相遇即停。输入：子区域栅格 + 机器人位置 + 覆盖路径。输出：覆盖完成状态 + 覆盖度量。前置依赖：ROS 导航栈/move_base 或等效路径跟踪控制器。适用场景：多机器人协同全覆盖任务的执行层。",
+   "aliases": [
+    "Sub-area Coverage Execution",
+    "并行覆盖执行"
+   ],
+   "parent": "Spatial Area Partition for Multi-Robot Coverage",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "Voronoi Tessellation and Centroid Computation",
+   "zh": "Voronoi划分与质心计算",
+   "level": "l3",
+   "description": "给定n个机器人位置和连续域Q，计算Voronoi分区、每个cell的质量和质心。仅需Delaunay邻居信息即可分布式计算。输入：机器人位置+密度函数。输出：Voronoi分区+质心+质量。约束：凸环境用欧氏距离；非凸环境需测地距离扩展。性能指标：每步O(k log k)，k为Delaunay邻居数通常O(1)。适用场景：分布式覆盖控制、资源分配、设施选址。",
+   "aliases": [
+    "Voronoi Partition",
+    "Voronoi Diagram",
+    "Centroid Computation"
+   ],
+   "parent": "Spatial Area Partition for Multi-Robot Coverage",
+   "children": [],
+   "assets": [
+    "voronoi_hsi"
+   ]
+  },
+  {
+   "en": "Lloyd Gradient Coverage Deployment",
+   "zh": "Lloyd梯度覆盖部署",
+   "level": "l3",
+   "description": "基于Voronoi分区和Lloyd质心迭代的分布式覆盖控制律，以梯度下降驱动机器人向质心移动，收敛到质心Voronoi镶嵌(CVT)配置。输入：连续域+密度函数+机器人位置。输出：机器人运动控制指令。约束：凸环境或需测地距离扩展。性能指标：收敛到CVT配置；分布式仅需Delaunay邻居信息。适用场景：静态传感器部署、最优覆盖部署。",
+   "aliases": [
+    "Lloyd Algorithm",
+    "Centroidal Voronoi Tessellation",
+    "CVT Coverage",
+    "Voronoi Centroid Control"
+   ],
+   "parent": "Spatial Area Partition for Multi-Robot Coverage",
+   "children": [],
+   "assets": [
+    "voronoi_hsi"
+   ]
+  },
+  {
+   "en": "Power Diagram Equitable Partition",
+   "zh": "Power Diagram等量分区",
+   "level": "l3",
+   "description": "使用带权Voronoi(power diagram)实现等量分区，通过分布式控制律更新power权重使各机器人加权工作量相等。支持非凸环境(测地距离)和异构机器人能力。输入：机器人位置+权重+工作量函数。输出：等量power diagram分区。约束：需迭代收敛；初始权重影响收敛速度。",
+   "aliases": [
+    "Power Diagram",
+    "Weighted Voronoi",
+    "Equitable Partition",
+    "Power Diagram Partition"
+   ],
+   "parent": "Spatial Area Partition for Multi-Robot Coverage",
+   "children": [
+    "Geodesic Distance Non-Convex Coverage Partitioning",
+    "Connectivity-Aware Partition Refinement"
+   ],
+   "assets": []
+  },
+  {
+   "en": "Geodesic Distance Non-Convex Coverage Partitioning",
+   "zh": "测地距离非凸覆盖分区",
+   "level": "l3",
+   "description": "在非凸带障碍环境中，用测地距离替代欧氏距离计算Voronoi/power diagram分区，使分区与障碍物形状一致。测地距离通过wavefront传播或Fast Marching Method计算。输入：非凸环境+障碍物+机器人位置。输出：测地Voronoi分区。约束：需预计算测地距离场；计算开销高于欧氏Voronoi。适用场景：含障碍物的室内/室外连续空间覆盖。",
+   "aliases": [
+    "Geodesic Voronoi",
+    "Non-Convex Voronoi Partition",
+    "Geodesic Partition"
+   ],
+   "parent": "Power Diagram Equitable Partition",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "Connectivity-Aware Partition Refinement",
+   "zh": "连通性感知分区修正",
+   "level": "l3",
+   "description": "当power diagram分区产生不连通分量时，通过连通性感知算法修正分区，确保每个分区为单连通分量。输入：初始power diagram分区+环境拓扑。输出：连通性修正后的分区。约束：修正后工作量均衡度可能略有下降。",
+   "aliases": [
+    "Connectivity-Aware Partitioning",
+    "Connected Partition"
+   ],
+   "parent": "Power Diagram Equitable Partition",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "Persistent Coverage Decay Model",
+   "zh": "持续覆盖衰减模型",
+   "level": "l3",
+   "description": "描述覆盖质量随时间衰减的动力学模型，衰减率d(q)在(0,1)区间，覆盖误差驱动机器人重访。输入：衰减率场+目标覆盖+机器人覆盖作用。输出：时变覆盖误差场。适用场景：持续覆盖任务（灰尘积累、污染扩散、环境监测等）。",
+   "aliases": [
+    "Coverage Decay",
+    "Persistent Coverage Model",
+    "Time-Varying Coverage"
+   ],
+   "parent": "Spatial Area Partition for Multi-Robot Coverage",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "Graph-Based Coverage Path Online Planning",
+   "zh": "图基覆盖路径在线规划",
+   "level": "l3",
+   "description": "在分区内构建扫掠路径图，将覆盖误差作为边权重，用Bellman-Ford变种算法在线求最优覆盖路径（单位距离覆盖质量最大化）。支持开放路径。输入：分区+覆盖误差场。输出：最优覆盖路径waypoint序列。约束：需实时更新误差场；路径随覆盖进度动态调整。",
+   "aliases": [
+    "Graph-Based Coverage Planning",
+    "Bellman-Ford Coverage Path",
+    "Online Coverage Replanning"
+   ],
+   "parent": "Spatial Area Partition for Multi-Robot Coverage",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "GVG Non-Convex Region Load-Balancing Partition",
+   "zh": "GVG非凸区域负载均衡划分",
+   "level": "l3",
+   "description": "使用广义Voronoi图(GVG)将非凸区域划分为子区域，加权负载均衡算法考虑子区域质量差异，迭代优化机器人分配比例实现负载平衡。输入：非凸环境+机器人数量。输出：负载均衡的子区域划分。约束：需GVG构建；适用于复杂拓扑非凸环境。",
+   "aliases": [
+    "GVG Partition",
+    "Generalized Voronoi Graph Coverage",
+    "Load-Balancing Partition"
+   ],
+   "parent": "Spatial Area Partition for Multi-Robot Coverage",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "Decentralized Collaborative UAV Exploration",
+   "zh": "去中心化协同无人机探索",
+   "level": "l2",
+   "description": "完全去中心化多无人机协同探索：无中心控制器，各机异步受限通信下自主决策，通过hgrid区域分解+成对交互+CVRP负载均衡实现团队规模可扩展。输入：各机传感+邻近通信。输出：多机协同探索覆盖轨迹。约束：仅邻近两机异步通信，无需全网稳定。适用场景：通信受限的大规模UAV团队探索。",
+   "aliases": [
+    "RACER Exploration",
+    "Decentralized Multi-UAV Exploration"
+   ],
+   "parent": "Spatial Area Partition for Multi-Robot Coverage",
+   "children": [
+    "Hgrid Space Decomposition",
+    "Pairwise Region Allocation",
+    "CVRP Workload Balancing",
+    "Incremental Frontier Information Structure",
+    "Multi-UAV Trajectory Execution",
+    "Dynamic Voronoi Exploration Partition",
+    "Unknown Region Centroid Detection and Evaluation",
+    "Graph Voronoi Partition Exploration Allocation",
+    "RRT-Based Frontier Detection and Assignment"
+   ],
+   "assets": [
+    "RACER"
+   ]
+  },
+  {
+   "en": "Hgrid Space Decomposition",
+   "zh": "分层栅格空间分解",
+   "level": "l3",
+   "description": "在线递归分层分解未知空间为粗粒度区域单元，保证各机同步探索不同区域。RACER中整个未知空间不断按预定义边界划分为多个网格，并不断细分成包含不同大小的网格单元，这些网格单元作为分配任务的基本单元。当某区域被探索超过阈值（如70%）时自动细分，完全探索的区域从活动列表移除，不可达区域被智能过滤。输入：未知空间体素。输出：hgrid区域单元。约束：粗粒度全局覆盖+局部细化。性能指标：线性数组存储O(1)查询，比八叉树快3-5倍。",
+   "aliases": [
+    "hgrid Decomposition",
+    "Hierarchical Grid Decomposition",
+    "online grid decomposition"
+   ],
+   "parent": "Decentralized Collaborative UAV Exploration",
+   "children": [],
+   "assets": [
+    "RACER"
+   ]
+  },
+  {
+   "en": "Pairwise Region Allocation",
+   "zh": "成对区域分配",
+   "level": "l3",
+   "description": "邻近UAV对之间异步协商区域划分：选最久未交互邻居，计算最优划分并发request，双重检查防冲突。RACER的请求-响应方案解决不公平交互机会和冲突交互问题。仅需邻近两机异步通信，无需全网稳定通信。输入：hgrid单元+邻居相对位姿+通信。输出：更新的网格单元所有权分配。约束：需异步通信链路；双重检查防冲突。",
+   "aliases": [
+    "pairwise interaction",
+    "request-response allocation",
+    "pairwise hgrid negotiation"
+   ],
+   "parent": "Decentralized Collaborative UAV Exploration",
+   "children": [],
+   "assets": [
+    "RACER"
+   ]
+  },
+  {
+   "en": "CVRP Workload Balancing",
+   "zh": "CVRP负载均衡",
+   "level": "l3",
+   "description": "将每机视为带容量车辆，CVRP最小化所有覆盖路径总长度并均衡负载，LKH-3求解。RACER中CVRP公式最小化多个全局覆盖路径（CP）长度，平衡分配给每个四旋翼的工作负载，有效防止重复探索和不公平的工作负载分配。输入：分配区域+视点+容量。输出：均衡的覆盖路径。约束：CVRP为NP-hard，区域数极大时求解时间增长；使用稀疏图路径搜索降级。",
+   "aliases": [
+    "Capacitated VRP Balancing",
+    "Workload Balancing",
+    "CVRP coverage path optimization"
+   ],
+   "parent": "Decentralized Collaborative UAV Exploration",
+   "children": [],
+   "assets": [
+    "RACER"
+   ]
+  },
+  {
+   "en": "Incremental Frontier Information Structure",
+   "zh": "增量前沿信息结构",
+   "level": "l3",
+   "description": "FIS增量维护：AABB宽/窄两阶段检测前沿簇，PCA聚类分裂大簇，圆柱采样视点，支撑高频重规划。FUEL提出的FIS维持整个空间中探索规划所需的关键信息（前沿簇、视点、代价链表），当空间被探索时可快速增量更新。RACER继承并扩展FIS到多机场景。输入：体素地图更新。输出：FIS（前沿簇+视点+代价链表）。约束：更新计算量与局部更新区域相关。性能指标：支持高频重规划，FUEL比SOTA快3-8倍。",
+   "aliases": [
+    "FIS",
+    "Frontier Information Structure",
+    "incremental frontier update"
+   ],
+   "parent": "Decentralized Collaborative UAV Exploration",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "Multi-UAV Trajectory Execution",
+   "zh": "多机轨迹执行",
+   "level": "l3",
+   "description": "机载控制器跟踪B样条轨迹，异步通信交换邻居预测轨迹实现多机避碰。RACER中分层规划器生成最短时间轨迹后，各UAV独立执行，通过异步通信交换预测轨迹避免碰撞。输入：B样条轨迹+邻居预测。输出：飞行运动+新传感数据。约束：异步通信交换预测轨迹。",
+   "aliases": [
+    "multi-UAV trajectory tracking",
+    "decentralized trajectory execution"
+   ],
+   "parent": "Decentralized Collaborative UAV Exploration",
+   "children": [],
+   "assets": [
+    "RACER"
+   ]
+  },
+  {
+   "en": "Dynamic Voronoi Exploration Partition",
+   "zh": "动态Voronoi探索分区",
+   "level": "l3",
+   "description": "在探索过程中用动态Voronoi图对正在被探索的空间进行分区，每个机器人负责自己的Voronoi分区。随机器人位置和已知区域变化，Voronoi分区动态更新。CURE的核心：突破前沿方法的局部视野局限，用未知区域质心引导探索。输入：已知/未知区域边界+机器人位置。输出：各机器人的Voronoi分区。约束：非凸环境中Voronoi cell需特殊处理。性能指标：CURE比先进RRT方法探索时间降低50.7%、路径成本降低34.4%。",
+   "aliases": [
+    "dynamic Voronoi partition",
+    "CURE partition",
+    "Voronoi exploration"
+   ],
+   "parent": "Decentralized Collaborative UAV Exploration",
+   "children": [],
+   "assets": [
+    "CURE1"
+   ]
+  },
+  {
+   "en": "Unknown Region Centroid Detection and Evaluation",
+   "zh": "未知区域质心检测与评估",
+   "level": "l3",
+   "description": "检测未知连通区域的质心，设计参数不敏感效用函数评估质心信息量，引导机器人探索未知区域。CURE的核心创新：前沿只看到已知-未知边界，质心指向整个未知区域的重心，突破局部视野局限。分层全局/局部探索窗口：局部窗口检测质心，无质心时激活全局窗口。输入：已知/未知区域地图。输出：质心候选+效用评估。约束：需连通区域检测；质心计算依赖区域形状。",
+   "aliases": [
+    "centroid of unknown regions",
+    "CURE centroid detection",
+    "region-guided exploration"
+   ],
+   "parent": "Decentralized Collaborative UAV Exploration",
+   "children": [],
+   "assets": [
+    "CURE1"
+   ]
+  },
+  {
+   "en": "Graph Voronoi Partition Exploration Allocation",
+   "zh": "图Voronoi分区探索分配",
+   "level": "l3",
+   "description": "在多机器人动态拓扑图（MR-DTG）上用图Voronoi分区将节点分配给最近的UAV，考虑实际运动代价。MR-DTG节点表示已探索和正在探索的区域，边连接节点。通过MR-DTG实现高效通信——只传输探索规划所需的信息。GVP-MREP的核心：首次将图Voronoi分区用于多无人机探索。输入：MR-DTG + UAV位置。输出：各UAV分配的图节点。约束：图Voronoi分区需Dijkstra多源最短路径。性能指标：探索时间降低38.3%、通信量降低95.5%。",
+   "aliases": [
+    "graph Voronoi partition",
+    "GVP-MREP",
+    "MR-DTG allocation"
+   ],
+   "parent": "Decentralized Collaborative UAV Exploration",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "RRT-Based Frontier Detection and Assignment",
+   "zh": "RRT前沿检测与分配",
+   "level": "l3",
+   "description": "使用RRT随机树在占据栅格上检测前沿点，图像处理（OpenCV）辅助提取前沿点，基于revenue = info_gain × info_multiplier − cost + hysteresis_gain × I(in_hysteresis_radius)的滞后分配机制将前沿点分配给各机器人。rrt_exploration的核心：5个ROS节点（全局/局部RRT检测、过滤、分配、OpenCV检测）。输入：占据栅格+机器人状态。输出：各机器人前沿目标分配。约束：Python 2.7，ROS Kinetic/Indigo；需地图合并节点。",
+   "aliases": [
+    "rrt_exploration",
+    "RRT frontier detection",
+    "hysteresis frontier assignment"
+   ],
+   "parent": "Decentralized Collaborative UAV Exploration",
+   "children": [],
+   "assets": [
+    "rrt_exploration"
+   ]
+  },
+  {
+   "en": "Boustrophedon Cellular Decomposition",
+   "zh": "Boustrophedon单元分解",
+   "level": "l2",
+   "description": "通过sweep line扫描检测障碍物临界点（IN/OUT/MIDDLE），将多边形区域分解为互不重叠的简单多边形单元，构建单元邻接图（Reeb graph）。输入：多边形区域（含孔洞）。输出：单元列表+邻接图。约束：要求已知多边形区域（非在线）。适用场景：任意形状多边形区域的覆盖路径规划。",
+   "aliases": [
+    "BCD",
+    "Boustrophedon Decomposition",
+    "sweep-line decomposition"
+   ],
+   "parent": "Spatial Area Partition for Multi-Robot Coverage",
+   "children": [
+    "Cell Adjacency Graph Construction",
+    "Critical Point Triggered Cell Transition",
+    "Boustrophedon Coverage Path Generation"
+   ],
+   "assets": [
+    "polygon_coverage_planning",
+    "ipa_coverage_planning"
+   ]
+  },
+  {
+   "en": "Boustrophedon Coverage Path Generation",
+   "zh": "牛耕覆盖路径生成",
+   "level": "l3",
+   "description": "按工具半径与重叠率生成boustrophedon（牛耕）覆盖路径，相邻swath间距d_swath = 2r(1-η)。输入：工作区边界与工具参数。输出：笛卡尔路径点序列。约束：复杂拓扑需cells decomposition。适用场景：Morse单元内覆盖图案生成。",
+   "aliases": [
+    "back-and-forth coverage",
+    "boustrophedon path",
+    "zigzag coverage",
+    "牛耕覆盖路径规划"
+   ],
+   "parent": "Boustrophedon Cellular Decomposition",
+   "children": [],
+   "assets": [
+    "polygon_coverage_planning",
+    "ipa_coverage_planning"
+   ]
+  },
+  {
+   "en": "Cell Adjacency Graph Construction",
+   "zh": "Cell邻接图构建",
+   "level": "l3",
+   "description": "根据BCD分解结果为每个Cell创建图节点，通过相邻列连通区域的重叠关系判定相邻边，构建无向图表示Cell间的空间邻接关系。输入：Cell集合+每列连通区域信息。输出：Cell邻接图（节点=Cell ID，边=相邻关系）。约束：邻接判定依赖列间重叠检测精度。",
+   "aliases": [
+    "cell graph construction",
+    "adjacency graph",
+    "Reeb graph"
+   ],
+   "parent": "Boustrophedon Cellular Decomposition",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "Critical Point Triggered Cell Transition",
+   "zh": "临界点触发单元转移与重新分解",
+   "level": "l3",
+   "description": "当牛耕覆盖中检测到新临界点，终止当前单元覆盖，Reeb图加新节点/边，规划转移到相邻未覆盖单元（沿Reeb图边过渡），在新单元开始牛耕覆盖。循环检测临界点→更新Reeb图→转移→覆盖，直到Reeb图遍历完成。输入：新临界点+Reeb图+当前位姿。输出：单元转移路径+新单元覆盖起点。",
+   "aliases": [
+    "cell transition coverage",
+    "Morse cell switch",
+    "coverage region transition"
+   ],
+   "parent": "Boustrophedon Cellular Decomposition",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "E-GTSP Swath Ordering Optimization",
+   "zh": "等式广义旅行商swath顺序优化",
+   "level": "l3",
+   "description": "将多cell的swath顺序问题建模为等式广义旅行商问题（E-GTSP）：每cell内多个可选sweep方向构成一个cluster，求解访问所有cluster且每cluster恰选一条swath的最短路径。使用Gutin-Karapetyan memetic solver求解。输入：各cell的swath候选集 + cell间转移代价矩阵。输出：全局最优swath访问顺序。约束：E-GTSP为NP-hard。",
+   "aliases": [
+    "E-GTSP coverage",
+    "GTSP swath ordering",
+    "Gutin-Karapetyan memetic solver"
+   ],
+   "parent": "Spatial Area Partition for Multi-Robot Coverage",
+   "children": [],
+   "assets": [
+    "polygon_coverage_planning"
+   ]
+  },
+  {
+   "en": "Cell Visiting Order TSP Optimization",
+   "zh": "cell遍历顺序TSP优化",
+   "level": "l3",
+   "description": "将BCD分解后的cell邻接图转化为旅行商问题（TSP），使用GeneticTSPSolver/NearestNeighborTSP/ConcordeTSP求解覆盖所有cell的最短访问顺序，规划cell间过渡路径。输入：cell邻接图 + 各cell质心坐标。输出：cell访问顺序 + cell间过渡路径。约束：TSP为NP-hard。",
+   "aliases": [
+    "cell TSP ordering",
+    "GeneticTSPSolver",
+    "coverage TSP"
+   ],
+   "parent": "Spatial Area Partition for Multi-Robot Coverage",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "Multi-Robot Load-Balanced Cell Assignment",
+   "zh": "多机器人负载均衡单元分配",
+   "level": "l2",
+   "description": "将N个单元按覆盖负载均衡分配给K个机器人，目标是最小化makespan。输入：单元列表+覆盖路径+机器人数量。输出：各机器人完整覆盖路径。适用场景：Boustrophedon分解后的多机器人覆盖分配。",
+   "aliases": [
+    "Load-Balanced Assignment",
+    "Multi-Robot Coverage Assignment"
+   ],
+   "parent": "Spatial Area Partition for Multi-Robot Coverage",
+   "children": [
+    "CVRP Workload Balancing",
+    "Propagation-Based Failure Coverage Redistribution"
+   ],
+   "assets": [
+    "MRCPP (Energy-Efficient MRCPP)"
+   ]
+  },
+  {
+   "en": "Turn-Minimizing Swath Generation",
+   "zh": "转弯最小化swath生成",
+   "level": "l3",
+   "description": "使用旋转卡尺算法计算最小面积外接矩形确定全局最优扫掠方向，沿最优方向生成平行swath以最小化转弯数和总路径长度。可选目标：NSwath（swath数=转弯数代理）、FieldCoverage（覆盖率）、Overlaps（重叠率）、SwathLength（总长度）。输入：可作业区多边形+覆盖宽度+swath角度。输出：swath集合。约束：角度任意；swath数受田块几何约束。",
+   "aliases": [
+    "Swath Generation",
+    "NSwath Optimization",
+    "rotating calipers swath"
+   ],
+   "parent": "Spatial Area Partition for Multi-Robot Coverage",
+   "children": [],
+   "assets": [
+    "MRCPP (Energy-Efficient MRCPP)"
+   ]
+  },
+  {
+   "en": "Minimum Energy Coverage Ordering (TSP)",
+   "zh": "最小能耗覆盖排序（TSP）",
+   "level": "l3",
+   "description": "将swath访问顺序建模为TSP（单机），目标函数为能耗最小化（总能耗=Σ(转弯能耗+段能耗)），受电池容量约束。多机扩展（mSTSP）属多机器人覆盖分配。输入：swath集合+能耗代价矩阵。输出：最优swath访问顺序。约束：总能耗≤电池容量×t_r；TSP为NP-hard。",
+   "aliases": [
+    "Min Energy TSP",
+    "Energy Optimal Swath Ordering"
+   ],
+   "parent": "Spatial Area Partition for Multi-Robot Coverage",
+   "children": [],
+   "assets": [
+    "MRCPP (Energy-Efficient MRCPP)"
+   ]
+  },
+  {
+   "en": "Propagation-Based Failure Coverage Redistribution",
+   "zh": "传播式失效覆盖重分配",
+   "level": "l3",
+   "description": "当某机器人在覆盖执行中故障/低电量，通过邻接树（adjacency tree）将其覆盖路径迭代传播给邻近机器人：每轮传播将部分路径分配给邻居，邻居再传播给其邻居，直到负载均衡。仅需少量传播循环即可完成，适合实时应用。输入：故障信号+当前覆盖状态+邻接树。输出：重分配后的各机器人覆盖路径。约束：邻接树构建依赖BCD邻接图；传播需保证不遗漏未覆盖区域。",
+   "aliases": [
+    "propagation redistribution",
+    "resilient coverage redistribution",
+    "adjacency tree propagation"
+   ],
+   "parent": "Multi-Robot Load-Balanced Cell Assignment",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "Modified Visibility Graph Disjoint Segment Connection",
+   "zh": "修改可见性图不相交段连接",
+   "level": "l3",
+   "description": "在非凸环境中，swath被障碍物裁剪为不相交段。用增强visibility graph（VG）算法连接不相交段为连续扫掠路径：在VG节点集中增加采样边界点，使用航向驱动（heading-driven）的入/出口选择规则，确保所有过渡保持在安全缓冲区内。输入：不相交swath段+自由空间+安全缓冲区。输出：连续碰撞安全覆盖路径。",
+   "aliases": [
+    "modified visibility graph",
+    "VG detouring",
+    "heading-driven swath connection"
+   ],
+   "parent": "Spatial Area Partition for Multi-Robot Coverage",
+   "children": [],
+   "assets": [
+    "MRCPP (Energy-Efficient MRCPP)"
+   ]
+  },
+  {
+   "en": "Topological Graph Shortest Path Search",
+   "zh": "拓扑图最短路径搜索",
+   "level": "l3",
+   "description": "在拓扑图G=(V,E)上以v_current为源、v_goal为汇跑Dijkstra（或A*）最短路径搜索，输出节点序列路径。edge weight可为测距/时序距离。本能力跨链共享。",
+   "aliases": [
+    "topological Dijkstra",
+    "topological graph path search",
+    "graph node shortest path"
+   ],
+   "parent": "Spatial Area Partition for Multi-Robot Coverage",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "Topological Graph Environment Modeling",
+   "zh": "拓扑图环境建模",
+   "level": "l3",
+   "description": "将巡逻环境（路网/航点/关键位置）建模为带权拓扑图G=(V,E)，节点V为关键位置/航点，边E为可通行路径，边权w(e)为通行时间/距离。输入：环境路网/航点列表+通行关系。输出：带权拓扑图。约束：要求环境拓扑已知（非在线探索）。",
+   "aliases": [
+    "topological map",
+    "patrol graph",
+    "road network graph"
+   ],
+   "parent": "Spatial Area Partition for Multi-Robot Coverage",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "Maximum k-Cut Graph Partitioning",
+   "zh": "最大k割图划分",
+   "level": "l3",
+   "description": "将拓扑图G切为k个子图{G_1,...,G_k}，最大化跨子图边权重之和max Σ w(E_ij)。对于无权完全图等价于经典maximum k-cut问题（NP-hard）。利用最优解特殊结构开发启发式下降算法，有限步收敛。输入：拓扑图+机器人数量k。输出：k个子图划分。约束：NP-hard，大规模图需启发式近似。",
+   "aliases": [
+    "maximum k-cut",
+    "graph partitioning patrol",
+    "k-cut partition"
+   ],
+   "parent": "Spatial Area Partition for Multi-Robot Coverage",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "Markov Chain Patrol Strategy Design",
+   "zh": "马尔可夫链巡逻策略设计",
+   "level": "l3",
+   "description": "为每个子图G_i设计马尔可夫链转移矩阵P_i，使平稳分布覆盖所有节点且mean first hitting time最小。转移概率P_i(u,v)决定机器人在节点u时选择下一节点v的概率。随机性策略防止对抗者预测巡逻模式。输入：子图+节点重要性。输出：转移矩阵P_i。约束：转移矩阵须满足不可约性+非周期性以保证平稳分布存在。",
+   "aliases": [
+    "Markov chain surveillance",
+    "stochastic patrol strategy",
+    "random walk patrol"
+   ],
+   "parent": "Spatial Area Partition for Multi-Robot Coverage",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "Mean First Hitting Time Optimization",
+   "zh": "平均首次到达时间优化",
+   "level": "l3",
+   "description": "计算各子图马尔可夫链的mean first hitting time H_i（从随机起始点到任意目标点的期望首次到达时间），优化目标为最小化最大子图的H_max = max_i H_i。利用Kemeny常数等图论工具分析。输入：各子图转移矩阵{P_i}。输出：{H_i} + 优化方向。约束：H_i的精确计算需矩阵求逆，大规模图需近似。",
+   "aliases": [
+    "MFHT optimization",
+    "Kemeny constant patrol",
+    "first hitting time"
+   ],
+   "parent": "Spatial Area Partition for Multi-Robot Coverage",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "Balanced Graph Partitioning Territory Allocation",
+   "zh": "均衡图分割领地分配",
+   "level": "l3",
+   "description": "使用均衡图分割算法（MSP多级子图分割）将拓扑图切为k个大小近似相等的子图，每个机器人负责一个子图。均衡约束确保各机器人工作负载近似相等。输入：拓扑图+机器人数量。输出：k个均衡子图。约束：均衡分割是NP-hard，使用多级启发式近似。",
+   "aliases": [
+    "MSP algorithm",
+    "balanced graph partition",
+    "territory allocation patrol"
+   ],
+   "parent": "Spatial Area Partition for Multi-Robot Coverage",
+   "children": [],
+   "assets": [
+    "patrolling_sim"
+   ]
+  },
+  {
+   "en": "Idleness-Driven Distributed Target Selection",
+   "zh": "空闲度驱动分布式目标选择",
+   "level": "l3",
+   "description": "各机器人基于局部idleness信息（节点自上次访问以来的时间）独立选择下一访问节点——选择idleness最高的节点或基于期望idleness的概率选择。分布式决策无需全局通信。LR-PT变体将巡逻需求和回连基站紧迫性整合为统一效用函数。输入：各机器人当前位置+局部idleness信息。输出：下一访问节点。约束：需局部通信获取邻居idleness信息。",
+   "aliases": [
+    "expected idleness",
+    "conscientious reactive",
+    "LR-PT utility function"
+   ],
+   "parent": "Spatial Area Partition for Multi-Robot Coverage",
+   "children": [],
+   "assets": [
+    "patrolling_sim"
+   ]
+  },
+  {
+   "en": "Refresh Time Optimal Trajectory Design",
+   "zh": "刷新时间最优轨迹设计",
+   "level": "l3",
+   "description": "在拓扑图上设计最小refresh time的团队巡逻轨迹。链图/树图：多项式时间算法计算最优轨迹+分布式控制律收敛到最优；环图：NP-hard，常数因子近似算法。输入：拓扑图+机器人数量。输出：各机器人巡逻轨迹。约束：环图NP-hard需近似。",
+   "aliases": [
+    "optimal patrol trajectory",
+    "refresh time minimization",
+    "cyclic patrol"
+   ],
+   "parent": "Spatial Area Partition for Multi-Robot Coverage",
+   "children": [],
+   "assets": [
+    "patrolling_sim"
+   ]
+  },
+  {
+   "en": "Emergent Area Partitioning Patrol",
+   "zh": "涌现式区域划分巡逻",
+   "level": "l3",
+   "description": "不预先做图划分，而是通过机器人局部交互和统一效用函数（巡逻需求+回连基站紧迫性）自主涌现领地划分。LR-PT算法的核心：机器人独立选择巡逻目标，区域划分作为涌现行为自然形成，避免局部最优。输入：局部信息+效用函数参数。输出：涌现的领地划分+巡逻决策。约束：需局部通信；涌现过程可能需要一定收敛时间。",
+   "aliases": [
+    "LR-PT",
+    "emergent partition",
+    "local reactive patrol"
+   ],
+   "parent": "Spatial Area Partition for Multi-Robot Coverage",
+   "children": [],
+   "assets": []
+  }
+ ],
+ "assets": [
+  {
+   "name": "DARP",
+   "type": "package",
+   "source": "https://github.com/athakapo/DARP",
+   "description": "DARP（Divide Areas Algorithm for Optimal Multi-Robot Coverage Path Planning）官方实现，提供 Java GUI 版和 Python 版，基于坐标下降法迭代实现等面积连通子区域划分，分区后用 STC 生成树覆盖路径。输入：占据栅格地图 + 机器人初始位置。输出：分区结果 + 覆盖路径。约束：要求地图已知（离线）；Java 版需 JRE，Python 版需 OpenCV/Pygame/Scipy。适用场景：多机器人协同全覆盖路径规划（环境监测、农业喷洒、清扫作业）。license: Other。",
+   "usage": "python3 multiRobotPathPlanner.py\n# 或 Python 版带参数：\npython3 darpinPoly.py -grid 20 20 -in_pos 10 55 174 -vis",
+   "implements": [
+    "DARP Iterative Geometric Partition",
+    "STC Spanning Tree Coverage Path Generation"
+   ]
+  },
+  {
+   "name": "TMSTC-Star",
+   "type": "ros_package",
+   "source": "https://github.com/CourierLo/TMSTC-Star",
+   "description": "TMSTC*（Turn-Minimizing Multi-robot Spanning Tree Coverage）算法的 ROS package 实现，支持 DARP 和 MSTC 两种分配方法，提供 7 种生成树形状选择（DINIC 为 TMSTC* 核心最小砖块划分），转弯最小化协同覆盖。输入：占据栅格地图 + 机器人数量。输出：生成树 + 相遇点 + 覆盖路径。约束：ROS Kinetic/Melodic（Noetic 有 robot pose publisher 兼容问题）；需 Gazebo 完整模型。适用场景：已知结构化环境的多机器人转弯最小化协同全覆盖。license: GPLv3。",
+   "usage": "roslaunch MSTC_Star_update main.launch\n# 参数：/robot_number, /allocate_method (DARP/MSTC), /MST_shape",
+   "implements": [
+    "Cooperative Spanning Tree Sweep Planning",
+    "Turn-Aware Brick Spanning Tree Construction",
+    "Topology Loop Equilibrium Division"
+   ]
+  },
+  {
+   "name": "voronoi_hsi",
+   "type": "ros_package",
+   "source": "https://github.com/lucascoelhof/voronoi_hsi",
+   "description": "lucascoelhof/voronoi_hsi ROS包，实现基于Voronoi分区的多机器人覆盖控制，支持Lloyd梯度控制律和Human-Swarm Interaction。输入：机器人位置+环境边界。输出：速度控制指令。约束：凸环境假设；需ROS环境。适用场景：多机器人覆盖部署与人群交互研究。",
+   "usage": "roslaunch voronoi_hsi voronoi_coverage.launch",
+   "implements": [
+    "Lloyd Gradient Coverage Deployment",
+    "Voronoi Tessellation and Centroid Computation"
+   ]
+  },
+  {
+   "name": "RACER",
+   "type": "framework",
+   "source": "https://github.com/SYSU-STAR/RACER",
+   "description": "RACER（Zhou, Xu, Shen T-RO 2023）完全去中心化多UAV协同探索框架：基于在线hgrid空间分解+成对交互（pairwise interaction）调度，各机探索不同区域，仅异步受限通信；用CVRP优化覆盖路径并均衡各机工作负载；分层规划器生成最短时间轨迹。2023 T-RO King-Sun Fu最佳论文。输入：各机深度相机+邻近通信。输出：多机协同探索轨迹。约束：需各机具备VIO/SLAM；通信完全中断时退化为各自独立探索。",
+   "usage": "参见 github.com/SYSU-STAR/RACER",
+   "implements": [
+    "Decentralized Collaborative UAV Exploration",
+    "Hgrid Space Decomposition",
+    "Pairwise Region Allocation",
+    "CVRP Workload Balancing",
+    "Multi-UAV Trajectory Execution"
+   ]
+  },
+  {
+   "name": "rrt_exploration",
+   "type": "ros_package",
+   "source": "https://github.com/hasauino/rrt_exploration",
+   "description": "hasauino/rrt_exploration ROS包，Umari & Mukhopadhyay IROS 2017论文的官方实现。基于RRT的多机器人地图探索算法，使用OpenCV图像处理提取前沿点。5个ROS节点：全局/局部RRT前沿检测、过滤、分配、OpenCV检测。输入：占据栅格地图+机器人数量。输出：前沿目标分配+探索路径。约束：仅支持ROS 1（Kinetic/Indigo）；Python 2.7；需要multirobot_map_merge包。",
+   "usage": "roslaunch rrt_exploration multiple_robots.launch",
+   "implements": [
+    "RRT-Based Frontier Detection and Assignment"
+   ]
+  },
+  {
+   "name": "CURE1",
+   "type": "ros_package",
+   "source": "https://github.com/NKU-MobFly-Robotics/CURE1",
+   "description": "NKU-MobFly-Robotics/CURE1 ROS包，首创\"区域引导\"未知环境探索的多机器人自主探索规划器。基于动态Voronoi图分区和未知连通区域质心引导，突破前沿方法的局部视野局限。分层全局/局部探索窗口。比先进RRT方法探索时间降低50.7%、路径成本降低34.4%。输入：占据栅格+机器人数量。输出：质心引导探索路径。约束：目前仅适用于室内平坦场景；需ROS Noetic + OpenCV 4。",
+   "usage": "roslaunch cure cure_multi_robot.launch robot_num:=10",
+   "implements": [
+    "Dynamic Voronoi Exploration Partition",
+    "Unknown Region Centroid Detection and Evaluation"
+   ]
+  },
+  {
+   "name": "polygon_coverage_planning",
+   "type": "ros_package",
+   "source": "https://github.com/ethz-asl/polygon_coverage_planning",
+   "description": "ETH Zurich ASL实验室的C++ ROS包，实现含孔洞一般多边形（PWH）的覆盖路径规划。核心为boustrophedon分解 + E-GTSP swath排序优化。输入：多边形区域+工具宽度。输出：覆盖路径waypoint序列。约束：依赖CGAL，编译安装复杂；E-GTSP求解cell数量大时计算时间长。适用场景：户外/航测多边形区域覆盖。",
+   "usage": "roslaunch polygon_coverage_planners polygon_coverage_planner.launch",
+   "implements": [
+    "Boustrophedon Cellular Decomposition",
+    "E-GTSP Swath Ordering Optimization",
+    "Boustrophedon Coverage Path Generation"
+   ]
+  },
+  {
+   "name": "ipa_coverage_planning",
+   "type": "ros_package",
+   "source": "https://github.com/ipa320/ipa_coverage_planning",
+   "description": "Fraunhofer IPA室内覆盖路径规划包，提供房间分割（ipa_room_segmentation）和boustrophedon覆盖路径生成，适用于室内清扫/消毒机器人。输入：室内栅格地图。输出：房间分割+覆盖路径。约束：主要为ROS 1，ROS 2适配有限；房间分割依赖OpenCV图像处理。",
+   "usage": "roslaunch ipa_coverage_planning ipa_coverage_planning.launch",
+   "implements": [
+    "Boustrophedon Cellular Decomposition",
+    "Boustrophedon Coverage Path Generation"
+   ]
+  },
+  {
+   "name": "MRCPP (Energy-Efficient MRCPP)",
+   "type": "framework",
+   "source": "https://mrc-pp.github.io/",
+   "description": "Raxit et al. 2026提出的能耗高效多机器人覆盖路径规划框架，面向非凸ROI。五步流水线：方向优化（旋转卡尺MAR）→平行swath生成→安全缓冲区→mTSP swath分配→修改VG连接不相交段。3机团队平均总能耗降低3%-40%，计算时间降低一个数量级。开源在mrc-pp.github.io。",
+   "usage": "参见 mrc-pp.github.io",
+   "implements": [
+    "Turn-Minimizing Swath Generation",
+    "Minimum Energy Coverage Ordering (TSP)",
+    "Modified Visibility Graph Disjoint Segment Connection",
+    "Multi-Robot Load-Balanced Cell Assignment"
+   ]
+  },
+  {
+   "name": "patrolling_sim",
+   "type": "ros_package",
+   "source": "https://github.com/davidbsp/patrolling_sim",
+   "description": "David Portugal开发的ROS多机器人巡逻仿真包，实现了11种巡逻算法，是巡逻算法对比研究的标准测试平台。包含Random、HPCC、CR、HCR、CGG、MSP、GBS、SEBS、CBLS、DTAG、DTAP等算法。输入：拓扑图地图+机器人数量。输出：巡逻仿真+idleness性能统计。约束：仅支持ROS 1；地图格式为自定义拓扑图。",
+   "usage": "roslaunch patrolling_sim msp_patrol.launch map:=map1 robots:=3",
+   "implements": [
+    "Balanced Graph Partitioning Territory Allocation",
+    "Idleness-Driven Distributed Target Selection",
+    "Refresh Time Optimal Trajectory Design"
+   ]
+  }
+ ],
+ "evidence": {
+  "chain_documents": 5,
+  "ledgers": 5,
+  "websearch_total": 50,
+  "webfetch_total": 40,
+  "with_negative_results": 5
+ }
+}

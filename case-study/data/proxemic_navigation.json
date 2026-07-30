@@ -1,0 +1,1337 @@
+{
+ "topic": {
+  "keyword": "proxemic_navigation",
+  "en": "Proxemic Navigation",
+  "zh": "近距社交导航",
+  "domain": "NAVIGATION",
+  "description": "基于Hall近距学（Proxemics）理论的社交导航范式，将人类社交空间偏好（亲密区<0.45m、个人区0.45-1.2m、社交区1.2-3.5m、公共区>3.5m）建模为机器人运动规划中的可量化约束，使机器人在人群密集环境中导航时主动保持社交舒适距离，避免侵入行人个人空间。该主题包含三条本质不同的技术路线：高斯代价地图路线（将非对称高斯函数叠加到costmap_2d层，通过ROS导航栈全局/局部规划器生成社交合规路径，是当前ROS生态最成熟的部署方案）；社会力模型路线（基于Helbing-Molnarar社会力模型，将行人排斥力、目标驱动力、障碍物排斥力通过牛顿力学积分直接输出速度指令，物理可解释性强但需要非完整约束投影）；深度强化学习路线（端到端训练PPO/SARL/DRL-VO策略，奖励函数编码proxemic惩罚项，通过大量仿真交互学习隐式社交行为，泛化性强但sim-to-real迁移是主要挑战）。输入：激光雷达点云/深度图像、RGB行人检测结果、全局路径/目标点、机器人当前位姿。输出：符合社交距离约束的速度指令/cmd_vel。前置依赖：ROS/ROS2导航栈（costmap_2d、global_planner、local_planner）、行人检测与跟踪模块（YOLO+DeepSORT或leg_detector）、占据栅格地图。约束：个人空间阈值σ_h=0.45m/σ_s=1.2m/σ_r=3.6m（可跨文化调整）；激光雷达更新频率5-20Hz；规划周期50-200ms；机器人需为差速/全向移动底盘（人形/车载需调整运动模型）。性能指标：最小行人距离≥0.2m（碰撞硬约束）；社交距离违反率<10%（个人区侵入比例）；导航成功率≥85%（密集场景）；规划延迟<200ms/步。适用场景：服务机器人（酒店/医院/商场配送/导览）、人机协作工厂、助老/助残机器人在人群环境中的导航；不适用于空旷环境（用普通navigation）、高速行驶场景（用autonomous_driving）、紧密协作操作（需HRC专用主题）。边界：不涵盖pedestrian_detection（行人检测算法归perception兄弟主题）、social_intention_prediction（行人轨迹预测归prediction兄弟主题）、multi_robot_coordination（多机器人协调归multi_agent兄弟主题）。"
+ },
+ "chains": [
+  {
+   "name": "Proxemic Gaussian Costmap Navigation",
+   "steps": [
+    {
+     "id": "s1",
+     "name": "行人感知与状态估计",
+     "description": "从传感器检测行人并变换到costmap坐标系。",
+     "caps": [
+      "Proxemic Gaussian Costmap Navigation"
+     ],
+     "next": [
+      "s1_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s1_1",
+     "name": "Detect and Track Pedestrians",
+     "description": "从激光雷达/RGB-D/RGB图像中实时检测行人位置和速度，发布people_msgs/People消息供ProxemicLayer订阅。激光方案常用leg_detector检测腿部模式，视觉方案常用YOLO+DeepSORT。输入：激光/RGB-D/RGB传感器原始数据。输出：people_msgs/People（每个行人position+velocity）。约束：leg_detector室内检测率>85%，跟踪频率≥10Hz；YOLOv5+DeepSORT mAP>50%，跟踪≥15FPS（GPU）。适用场景：室内服务机器人社交导航的前置感知。",
+     "caps": [
+      "Pedestrian Detection and Tracking for Proxemic Navigation"
+     ],
+     "next": [
+      "s1_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s1_2",
+     "name": "Transform People to Costmap Frame",
+     "description": "通过TF坐标变换将行人位姿从传感器坐标系变换到costmap坐标系（map/odom），确保高斯中心与栅格对齐。输入：people_msgs/People（传感器坐标系）。输出：transformed_people_（costmap坐标系行人列表）。约束：TF变换超时<10ms否则丢弃过期行人数据。适用场景：所有基于costmap的社交导航插件。",
+     "caps": [
+      "Pedestrian Detection and Tracking for Proxemic Navigation"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2",
+     "name": "Proxemic高斯代价计算",
+     "description": "参数加载、边界更新与高斯代价栅格写入。",
+     "caps": [
+      "Proxemic Gaussian Costmap Navigation"
+     ],
+     "next": [
+      "s2_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2_1",
+     "name": "Initialize Proxemic Parameters",
+     "description": "加载ProxemicLayer参数（cutoff/amplitude/covariance/factor）并初始化dynamic_reconfigure动态调参服务。输入：ROS参数服务器配置。输出：成员变量cutoff_/amplitude_/covar_/factor_/server_。约束：amplitude必须大于cutoff（默认77>10），否则高斯函数恒低于阈值无效果。适用场景：ProxemicLayer插件初始化阶段。",
+     "caps": [
+      "Social Costmap Layer Plugin Integration"
+     ],
+     "next": [
+      "s2_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2_2",
+     "name": "Update Costmap Bounds from People",
+     "description": "遍历每个行人，根据高斯有效半径公式r=sqrt(-2*var*log(cutoff/A))计算影响范围，扩展costmap更新窗口边界，确保行人附近栅格进入updateCosts计算范围。输入：transformed_people_。输出：min_x/min_y/max_x/max_y边界参数。约束：运动行人的factor会放大前方半径，边界必须按放大后的半径计算。适用场景：ProxemicLayer每次updateCosts前的边界计算。",
+     "caps": [
+      "Proxemic Gaussian Cost Computation"
+     ],
+     "next": [
+      "s2_3a"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2_3a",
+     "name": "判断：ProxemicLayer是否启用",
+     "description": "判断：ProxemicLayer插件是否启用。",
+     "caps": [
+      "Social Costmap Layer Plugin Integration"
+     ],
+     "next": [
+      "s2_3b",
+      "s3"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2_3b",
+     "name": "判断：是否检测到行人",
+     "description": "判断：当前是否有行人在场景中。",
+     "caps": [
+      "Proxemic Gaussian Cost Computation"
+     ],
+     "next": [
+      "s2_3c",
+      "s3"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2_3c",
+     "name": "判断：高斯参数是否合法",
+     "description": "判断：cutoff是否小于amplitude（参数合法性检查）。",
+     "caps": [
+      "Proxemic Gaussian Cost Computation"
+     ],
+     "next": [
+      "s2_3",
+      "s3"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2_3",
+     "name": "Compute and Write Gaussian Costs",
+     "description": "逐栅格遍历更新窗口，对每个栅格计算高斯函数值：以行人位置为中心，静止/后方使用圆形高斯gaussian(x,y,cx,cy,A,covar,covar,0)，运动前方使用拉伸高斯gaussian(x,y,cx,cy,A,covar*factor,covar,angle)。高斯值≥cutoff时取max写入costmap，跳过NO_INFORMATION栅格。输入：transformed_people_+master_grid+边界参数。输出：更新后的costmap（高斯代价栅格）。约束：单次updateCosts在5m×5m@0.05m分辨率（10000栅格）内毫秒级完成；栅格代价取max与已有代价叠加。适用场景：ProxemicLayer核心代价写入。",
+     "caps": [
+      "Proxemic Gaussian Cost Computation",
+      "Asymmetric Gaussian Comfort Zone Modeling",
+      "Adaptive Proxemic Area with Group Detection"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3",
+     "name": "分层代价地图融合",
+     "description": "多图层代价融合与膨胀处理。",
+     "caps": [
+      "Proxemic Gaussian Costmap Navigation"
+     ],
+     "next": [
+      "s3_1"
+     ],
+     "condition": "",
+     "is_merge": true
+    },
+    {
+     "id": "s3_1",
+     "name": "Fuse Layered Costmaps",
+     "description": "按plugin注册顺序依次调用各Layer的updateBounds/updateCosts（StaticLayer→ObstacleLayer→ProxemicLayer→InflationLayer），将各层代价叠加到master_grid。输入：各Layer独立代价数据。输出：融合后的master costmap。约束：plugin顺序决定叠加顺序，ProxemicLayer在InflationLayer之前。适用场景：ROS costmap_2d分层架构的标准融合流程。",
+     "caps": [
+      "Social Costmap Layer Plugin Integration"
+     ],
+     "next": [
+      "s3_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3_2",
+     "name": "Inflate Costs Around Obstacles",
+     "description": "InflationLayer对所有已标记栅格（含ProxemicLayer写入的社交代价）按cost_scaling_factor和inflation_radius做指数衰减膨胀，提供安全渐变距离。输入：master costmap（含各层原始代价）。输出：膨胀后costmap（含安全距离衰减）。约束：膨胀半径需与ProxemicLayer高斯半径协调，避免社交区域被过度膨胀。适用场景：导航栈安全基础层，不可省略。",
+     "caps": [
+      "Social Costmap Layer Plugin Integration"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4",
+     "name": "路径规划与速度输出",
+     "description": "全局路径搜索、局部轨迹优化与速度指令发布。",
+     "caps": [
+      "Proxemic Gaussian Costmap Navigation"
+     ],
+     "next": [
+      "s4_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4_1",
+     "name": "Global Path Planning (A*/Dijkstra)",
+     "description": "在融合了ProxemicLayer高斯代价的全局costmap上运行A*或Dijkstra图搜索，生成社交合规全局路径。路径自然绕开行人前方和个人区，但不阻断通道（软约束），狭窄走廊可穿越社交区。输入：global costmap+起点位姿+目标位姿。输出：nav_msgs/Path全局路径点序列。约束：A*在1024×1024栅格上规划<100ms；路径倾向保持≥1.2m距离，空间不足时可缩至0.45m。适用场景：结构化室内环境全局社交路径规划。",
+     "caps": [
+      "Socially Compliant Global Path Planning"
+     ],
+     "next": [
+      "s4_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4_2",
+     "name": "Local Trajectory Optimization",
+     "description": "局部规划器（DWA或TEB）在local costmap滚动窗口内采样/优化可行轨迹。DWA在速度空间采样评分选最优；TEB通过g2o优化时间弹性带多目标代价函数（路径/时间/障碍/社交/动力学），自然感知costmap中的ProxemicLayer高斯代价。输入：local costmap+全局路径+当前位姿+里程计。输出：局部最优轨迹+速度指令。约束：DWA控制频率5-10Hz；TEB典型5-10Hz，min_obstacle_dist建议≥0.5m。",
+     "caps": [
+      "TEB Local Trajectory Optimization with Social Costs"
+     ],
+     "next": [
+      "s4_2a"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4_2a",
+     "name": "Configure Local Planner Type",
+     "description": "根据部署配置选择DWA或TEB作为局部规划器插件：DWA适合计算资源受限的嵌入式平台，TEB适合需要更平滑轨迹和社交约束的服务机器人场景。两种规划器均从proxemic social costmap读取代价，最终均输出速度指令至/cmd_vel。输入：部署配置参数+局部代价地图+全局路径。输出：选定的局部规划器输出速度指令。约束：ROS中同一时间只能激活一个local_planner插件；切换需重启move_base。适用场景：ROS导航栈部署时的规划器选型环节。",
+     "caps": [
+      "TEB Local Trajectory Optimization with Social Costs"
+     ],
+     "next": [
+      "s4_3"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4_3",
+     "name": "Publish Velocity Commands",
+     "description": "move_base将局部规划器输出的速度指令发布为geometry_msgs/Twist到/cmd_vel话题，驱动底盘执行。输入：局部最优速度指令。输出：geometry_msgs/Twist→/cmd_vel。约束：发布频率与局部规划器一致（5-20Hz）。适用场景：所有ROS导航栈的最终速度输出环节。",
+     "caps": [
+      "Proxemic Gaussian Costmap Navigation"
+     ],
+     "next": [],
+     "condition": "",
+     "is_merge": false
+    }
+   ]
+  },
+  {
+   "name": "Social Force Model Proxemic Navigation",
+   "steps": [
+    {
+     "id": "s1",
+     "name": "行人状态感知与目标设定",
+     "description": "检测行人并设定导航目标。",
+     "caps": [
+      "Social Force Model Proxemic Navigation"
+     ],
+     "next": [
+      "s1_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s1_1",
+     "name": "Detect and Track Pedestrians",
+     "description": "从传感器检测行人位置和速度，与链01共享上游感知模块。输入：LiDAR/RGB-D数据。输出：行人列表（位置px,py+速度vx,vy+半径r）。约束：检测延迟<50ms，跟踪帧率≥20Hz。适用场景：所有社交导航范式的共享前置感知。",
+     "caps": [
+      "Pedestrian Detection and Tracking for Proxemic Navigation"
+     ],
+     "next": [
+      "s1_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s1_2",
+     "name": "Set Navigation Goal",
+     "description": "接收用户/RViz设定的导航目标点坐标。输入：move_base SimpleActionGoal或RViz clicked_point。输出：目标位置坐标(gx,gy)。约束：目标点必须在自由空间内（非障碍/非致命cost区域）。适用场景：SFM导航的目标输入环节。",
+     "caps": [
+      "Social Force Model Proxemic Navigation"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2",
+     "name": "社会力计算",
+     "description": "计算四类力分量：驱动力、社交排斥力、障碍排斥力、群组力。",
+     "caps": [
+      "Social Force Model Proxemic Navigation"
+     ],
+     "next": [
+      "s2_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2_1",
+     "name": "Compute Desired Driving Force",
+     "description": "计算机器人朝向目标的自驱动力f_drive=m(v0*e_i-v_i)/τ，模拟行人想走到目的地的意图。v0为期望速度（典型1.0-1.5m/s），τ为弛豫时间（典型0.5s），e_i为目标方向单位向量。输入：当前速度+目标位置。输出：驱动力向量(2D)。约束：goal_threshold=0.2m（到达目标判定距离）。适用场景：SFM目标趋向力的标准计算。",
+     "caps": [
+      "Driving Force to Goal"
+     ],
+     "next": [
+      "s2_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2_2",
+     "name": "Compute Social Repulsive Force",
+     "description": "计算行人对机器人的社交排斥力f_soc=A*exp((r_ij-d_ij)/B)*n_ij，是proxemic约束的核心编码。Extended SFM引入速度依赖项（lambda_importance=2.0，位置力是速度力的2倍）和角度依赖项（gamma=0.35, n=2, n'=3）。先判断行人间距是否小于社交力作用阈值（约2.0m），超出则力为0跳过。输入：自身位置+行人位置/速度。输出：社交排斥力向量数组(2D×N_ped)。约束：A和B参数决定排斥强度和衰减速率；社交力factor=5.1，是驱动力的5倍；B≈0.5-1.0m对应个人区→社交区过渡。适用场景：proxemic距离在SFM中的核心编码环节。",
+     "caps": [
+      "Social Repulsive Force Computation"
+     ],
+     "next": [
+      "s2_3"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2_3",
+     "name": "Compute Obstacle Repulsive Force",
+     "description": "计算墙壁和静态障碍物对机器人的排斥力，参数sigma=0.2m（障碍物力标准差）、threshold=3.0m（触发距离）、factor=10.0（力缩放因子，大于社交力5.1确保硬障碍避让优先）。先判断障碍物距离是否小于阈值，超出则力为0。输入：自身位置+障碍物线段位置。输出：障碍物排斥力向量数组(2D×N_obs)。约束：障碍物表示为线段，计算到最近线段的距离和法向。适用场景：SFM导航中硬障碍避让的安全基础。",
+     "caps": [
+      "Obstacle Repulsive Force for Navigation"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3",
+     "name": "力融合与动力学积分",
+     "description": "合力求和、非完整投影、速度积分与限幅。",
+     "caps": [
+      "Social Force Model Proxemic Navigation"
+     ],
+     "next": [
+      "s3_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3_1",
+     "name": "Sum Forces and Compute Acceleration",
+     "description": "将所有分力向量叠加求合力F_total=f_drive+Σf_soc+Σf_wall+Σf_group，通过F=ma计算加速度。输入：所有分力向量。输出：合力向量(2D)+加速度。约束：力的向量叠加遵循牛顿第二定律；各分力可并行计算。适用场景：SFM每步仿真的核心计算环节。",
+     "caps": [
+      "Social Repulsive Force Computation",
+      "Driving Force to Goal",
+      "Obstacle Repulsive Force for Navigation"
+     ],
+     "next": [
+      "s3_2a"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3_2a",
+     "name": "判断：机器人是否为非完整约束",
+     "description": "判断：机器人运动学类型（全向/非完整约束差速/阿克曼）。",
+     "caps": [
+      "Nonholonomic SFM Projection"
+     ],
+     "next": [
+      "s3_2",
+      "s3_3"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3_2",
+     "name": "Project to Nonholonomic Constraints",
+     "description": "条件：NMR（差速/阿克曼机器人）。将全向SFM的2D合力投影到差速机器人可行运动方向：纵向力直接映射为线加速度a_x=F_x/m，横向力映射为转向力矩M=F_y*L（L为轴距参数），避免产生侧向滑动指令。TSFM（Projected Time-to-collision SFM）额外将碰撞时间投影到力计算中。输入：合力+当前航向θ+运动学类型。输出：可行方向力向量(2D)。约束：Ferrer et al.直接将全向SFM用于NMR被批评为'ignoring the inconsistency'；Jafari et al. 2026证明在boundedly nonpassive行人假设下的Lyapunov稳定性。适用场景：差速/阿克曼服务机器人部署SFM的必要投影步骤。",
+     "caps": [
+      "Nonholonomic SFM Projection"
+     ],
+     "next": [
+      "s3_3"
+     ],
+     "condition": "kinematics == nonholonomic",
+     "is_merge": false
+    },
+    {
+     "id": "s3_3",
+     "name": "Integrate Velocity with Clipping",
+     "description": "通过前向欧拉积分计算期望速度v_des=v+F_total/m*dt，然后裁剪到机器人运动学可行范围(v_max, ω_max)。判断积分后速度是否超限，超限则限幅。输入：可行力+当前速度+dt+速度/加速度限幅。输出：期望速度(v,ω)。约束：v_max典型0.5-1.5m/s（人行走速度），ω_max典型1.0-2.0rad/s；dt典型0.1-0.25s。适用场景：SFM力到速度指令的转换环节。",
+     "caps": [
+      "Social Force Model Proxemic Navigation"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": "",
+     "is_merge": true
+    },
+    {
+     "id": "s4",
+     "name": "安全约束与速度输出",
+     "description": "ORCA安全过滤和/DWA融合，输出速度指令。",
+     "caps": [
+      "Social Force Model Proxemic Navigation"
+     ],
+     "next": [
+      "s4_1a"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4_1a",
+     "name": "判断：是否启用ORCA安全过滤",
+     "description": "判断：是否叠加ORCA互惠避碰作为安全过滤层。",
+     "caps": [
+      "ORCA-SFM Hybrid Collision Avoidance"
+     ],
+     "next": [
+      "s4_1",
+      "s4_2a"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4_1",
+     "name": "Apply ORCA Velocity Constraints",
+     "description": "条件：启用ORCA。将SFM期望速度作为ORCA的preferred velocity，用RVO2库求解ORCA半平面交集内的最近可行速度，解决纯SFM在正面相遇时的振荡和死锁问题。输入：期望速度+行人速度/位置+邻域半径。输出：ORCA可行速度(v,ω)。约束：ORCA在密集人群中保证互惠无碰撞（所有智能体都使用ORCA假设下）；交集为空时按距离放弃最远邻居约束（降级处理）。适用场景：密集人群中SFM导航的安全兜底层。",
+     "caps": [
+      "ORCA-SFM Hybrid Collision Avoidance"
+     ],
+     "next": [
+      "s4_3"
+     ],
+     "condition": "use_orca == true",
+     "is_merge": false
+    },
+    {
+     "id": "s4_2a",
+     "name": "判断：是否与DWA融合",
+     "description": "判断：是否将SFM力融入DWA评分函数。",
+     "caps": [
+      "SFM-Augmented DWA Local Planning"
+     ],
+     "next": [
+      "s4_2",
+      "s4_3"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4_2",
+     "name": "Fuse SFM with DWA Scoring",
+     "description": "条件：DWA融合模式。将SFM排斥力信息融入DWA轨迹评分函数：在DWA采样多组(v,ω)速度并模拟轨迹时，额外加入SFM行人排斥力代价项cost+=weight_sfm*(1-exp(-d_ped/sigma))，使评分同时考虑目标距离、障碍物距离和社交距离。输入：SFM期望速度+costmap+全局路径。输出：DWA最优速度(v,ω)。约束：SFM-DWA融合相比纯DWA在行人密集场景避障效率提升约25%；可提前0.8-1.5s预测行人走向避让。适用场景：需要兼顾全局一致性和局部力场反应性的SFM部署。",
+     "caps": [
+      "SFM-Augmented DWA Local Planning"
+     ],
+     "next": [
+      "s4_3"
+     ],
+     "condition": "fusion_mode == DWA",
+     "is_merge": false
+    },
+    {
+     "id": "s4_3",
+     "name": "Publish Velocity Commands",
+     "description": "将最终速度指令发布为geometry_msgs/Twist到/cmd_vel话题，驱动底盘执行。输入：最终速度指令。输出：geometry_msgs/Twist→/cmd_vel。约束：发布频率10-20Hz。适用场景：SFM导航最终速度输出。",
+     "caps": [
+      "Social Force Model Proxemic Navigation"
+     ],
+     "next": [],
+     "condition": "",
+     "is_merge": true
+    }
+   ]
+  },
+  {
+   "name": "Deep Reinforcement Learning Proxemic Navigation",
+   "steps": [
+    {
+     "id": "s1",
+     "name": "观测构建与特征生成",
+     "description": "收集多模态数据并组装观测张量。",
+     "caps": [
+      "Deep Reinforcement Learning Proxemic Navigation"
+     ],
+     "next": [
+      "s1_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s1_1",
+     "name": "Get Pedestrian States",
+     "description": "从行人检测器/跟踪器或仿真环境获取每个行人的位置(px,py)、速度(vx,vy)和半径r。CrowdNav中通过Human.get_observable_state()获取完美状态，DRL-VO中从pedsim_ros行人话题订阅。输入：传感器/跟踪器数据。输出：行人状态列表[(px,py,vx,vy,r)×N]。约束：CrowdNav假设完美行人状态（仿真直接提供）；真机部署需接入YOLO+DeepSORT/MHT检测器，检测延迟<100ms。适用场景：DRL社交导航策略的环境观测输入。",
+     "caps": [
+      "Pedestrian Detection and Tracking for Proxemic Navigation"
+     ],
+     "next": [
+      "s1_2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s1_2",
+     "name": "Process Sensor Data",
+     "description": "处理激光雷达扫描数据，堆叠短历史帧（3-5帧），转换为局部坐标系下的occupancy grid表示（DRL-VO的80×80激光网格），提供静态障碍物和环境几何信息。纯agent-level方法（SARL/CADRL）可跳过本步（无激光输入）。输入：LiDAR扫描序列。输出：激光历史网格/原始scan向量。约束：网格分辨率0.05-0.1m；历史长度3-5帧覆盖0.75-1.25s运动。适用场景：需要处理静态障碍物的DRL导航（DRL-VO风格），agent-level方法（SARL）无此步。",
+     "caps": [
+      "Lidar-History-Goal Multi-Modal Observation for DRL Navigation"
+     ],
+     "next": [
+      "s1_3"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s1_3",
+     "name": "Generate Subgoal Point",
+     "description": "由全局规划器（A*/Dijkstra）提供局部目标点，转换到机器人局部坐标系(gx,gy)，为策略提供导航方向指引。CrowdNav直接使用goal position，DRL-VO使用global planner输出的subgoal编码为方向指示网格。输入：全局路径+当前位姿。输出：子目标点（局部坐标系）。约束：子目标点典型距离机器人2-5m，过远失去局部引导意义，过近频繁更新。适用场景：所有DRL社交导航策略的方向指引输入。",
+     "caps": [
+      "Lidar-History-Goal Multi-Modal Observation for DRL Navigation"
+     ],
+     "next": [
+      "s1_4"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s1_4",
+     "name": "Assemble Observation Tensor",
+     "description": "将机器人自身状态、行人列表、传感器数据和子目标点对齐到机器人局部坐标系，拼接/编码为统一观测张量o_t。CrowdNav拼接joint state s_t^jn=[s_t,w_t]，DRL-VO拼接三通道80×80网格o_t=[l_t;P_t;g_t]。输入：机器人状态+行人列表+sensor数据+子目标点。输出：观测张量o_t（统一格式）。约束：所有数据必须在机器人局部坐标系表示（DRL-VO论文明确这是sim-to-real关键设计）；数值归一化到合理范围。适用场景：DRL策略网络输入层的前置组装。",
+     "caps": [
+      "Lidar-History-Goal Multi-Modal Observation for DRL Navigation"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2",
+     "name": "策略网络推理",
+     "description": "神经网络前向传播推理动作。",
+     "caps": [
+      "Deep Reinforcement Learning Proxemic Navigation"
+     ],
+     "next": [
+      "s2_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2_1",
+     "name": "Extract Features",
+     "description": "通过CNN或MLP从观测张量中提取高级特征。SARL使用MLP计算人-人、人-机器人pairwise features；DRL-VO使用CNN主干从80×80三通道网格提取空间特征；GA3C-CADRL使用MLP编码单个行人状态。输入：观测张量o_t。输出：高级特征向量/特征图。约束：特征维度典型64-256；CNN特征提取在GPU上<5ms。适用场景：所有DRL导航策略的特征提取环节。",
+     "caps": [
+      "Attention-based Crowd-Robot Interaction Modeling",
+      "Lidar-History-Goal Multi-Modal Observation for DRL Navigation"
+     ],
+     "next": [
+      "s2_2a"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2_2",
+     "name": "Model Crowd-Robot Interactions",
+     "description": "条件：有行人时执行。通过Self-Attention（SARL）、LSTM（GA3C-CADRL）、CNN空间编码（DRL-VO）或GNN（MultiSoc）建模人-机器人（HR）和人-人（HH）交互关系。SARL的self-attention pooling计算每个行人对机器人决策的重要性权重；GA3C-CADRL用LSTM顺序编码变长行人输入；DRL-VO的CNN网格隐式编码空间交互。输入：高级特征。输出：交互编码（attention权重/LSTM隐藏状态/图嵌入）。约束：SARL的attention复杂度O(N log N)优于CADRL的O(N²)；LSTM隐藏维度典型64-128。适用场景：多行人环境中的社交交互建模，是DRL proxemic导航区别于普通避障DRL的核心环节。",
+     "caps": [
+      "Attention-based Crowd-Robot Interaction Modeling",
+      "Lidar-History-Goal Multi-Modal Observation for DRL Navigation"
+     ],
+     "next": [
+      "s2_3"
+     ],
+     "condition": "num_humans > 0",
+     "is_merge": false
+    },
+    {
+     "id": "s2_2a",
+     "name": "判断：场景中是否有行人",
+     "description": "判断：当前观测中是否检测到行人。",
+     "caps": [
+      "Attention-based Crowd-Robot Interaction Modeling"
+     ],
+     "next": [
+      "s2_2",
+      "s2_3"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s2_3",
+     "name": "Select Action",
+     "description": "根据交互建模结果组装动作特征向量，经策略网络输出层产生原始动作a_t。训练模式从策略分布采样（加入高斯噪声保证探索）；部署模式取分布均值作为确定性动作输出。输入：交互特征向量。输出：原始线速度v和角速度ω（单位：m/s, rad/s）。约束：动作范围v∈[0,1.0]m/s, ω∈[-1.0,1.0]rad/s；策略前向推理延迟<10ms/步（GPU）；部署时禁用dropout保持确定性。",
+     "caps": [
+      "Deep Reinforcement Learning Proxemic Navigation"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": "",
+     "is_merge": true
+    },
+    {
+     "id": "s3",
+     "name": "安全过滤与动作执行",
+     "description": "动作限幅、安全防护层判断和速度指令发布。",
+     "caps": [
+      "Deep Reinforcement Learning Proxemic Navigation"
+     ],
+     "next": [
+      "s3_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3_1",
+     "name": "Clip Action to Kinematic Limits",
+     "description": "将网络输出的原始动作裁剪到机器人运动学可行范围：线速度裁剪到[v_min,v_max]（典型0-1.0m/s），角速度裁剪到[-ω_max,ω_max]（典型±1.0rad/s），加速度限制通过a_max约束。输入：原始动作a_t。输出：裁剪后动作(v_clipped,ω_clipped)。约束：神经网络输出不受物理约束，必须限幅；限幅后动作需满足非完整运动学约束（差速机器人不能侧向移动）。适用场景：所有DRL导航策略的动作后处理。",
+     "caps": [
+      "Deep Reinforcement Learning Proxemic Navigation"
+     ],
+     "next": [
+      "s3_2a"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3_2a",
+     "name": "判断：是否启用安全防护层",
+     "description": "判断：是否启用ORCA碰撞检查或紧急制动策略作为DRL输出的安全兜底层。",
+     "caps": [
+      "Deep Reinforcement Learning Proxemic Navigation"
+     ],
+     "next": [
+      "s3_2",
+      "s3_3"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s3_2",
+     "name": "Apply Safety Fallback",
+     "description": "条件：启用安全防护层时执行。检查裁剪后动作是否将导致（即将）碰撞，若是则切换为ORCA可行速度或触发紧急制动（v=0,ω=0）。DRL-VO不使用显式ORCA层（VO信息编码在奖励中），部分ROS实现添加emergency stop。输入：(v_clipped,ω_clipped)+障碍物/行人状态。输出：安全动作(v_safe,ω_safe)。约束：安全层以DRL输出为主，仅在碰撞危险时覆盖；紧急制动反应时间<100ms。适用场景：安全性要求高的真机部署场景弥补DRL策略缺乏形式化安全保证的短板。",
+     "caps": [
+      "Deep Reinforcement Learning Proxemic Navigation"
+     ],
+     "next": [
+      "s3_3"
+     ],
+     "condition": "safety_layer == true",
+     "is_merge": false
+    },
+    {
+     "id": "s3_3",
+     "name": "Publish Velocity Commands",
+     "description": "将最终速度指令发布为geometry_msgs/Twist到/cmd_vel话题驱动底盘执行。CrowdNav中Step环境直接使用v_t=a_t（瞬间速度假设），ROS部署通过ROS bridge node发布。输入：最终速度指令。输出：geometry_msgs/Twist→/cmd_vel。约束：发布频率与推理频率一致（4-10Hz，CrowdNav默认4Hz time_step=0.25s）。适用场景：DRL导航策略的最终动作输出环节。",
+     "caps": [
+      "Deep Reinforcement Learning Proxemic Navigation"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": "",
+     "is_merge": true
+    },
+    {
+     "id": "s4",
+     "name": "训练阶段：奖励计算与策略更新",
+     "description": "计算奖励、存储经验并更新策略网络（训练模式专属）。",
+     "caps": [
+      "Deep Reinforcement Learning Proxemic Navigation"
+     ],
+     "next": [
+      "s4_1a"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4_1a",
+     "name": "判断：是否到达目标",
+     "description": "判断：执行动作后机器人是否到达导航目标位置。",
+     "caps": [
+      "Proxemic Reward Shaping for DRL Navigation"
+     ],
+     "next": [
+      "s4_1",
+      "s4_1b"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4_1b",
+     "name": "判断：是否发生碰撞",
+     "description": "判断：执行动作后是否与行人或障碍物发生碰撞。",
+     "caps": [
+      "Proxemic Reward Shaping for DRL Navigation",
+      "VO-Augmented DRL Reward for Active Collision Avoidance"
+     ],
+     "next": [
+      "s4_1",
+      "s4_1c"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4_1c",
+     "name": "判断：是否侵入个人空间",
+     "description": "未碰撞且未到达目标时，计算机器人与最近行人的距离d_min，与discomfort_dist=0.2m阈值比较，施加个人空间侵入惩罚奖励-0.1+d_min/2（距离越近惩罚越大）；d_min≥discomfort_dist时奖励为0。奖励值写入当前transition记录。输入：当前观测o_t+动作a_t+新观测o_{t+1}。输出：标量奖励r_t∈{(-0.1,0]}。约束：discomfort_dist默认0.2m（可调至0.3m高密度场景）；奖励函数在d_min=0处与碰撞奖励-0.25平滑衔接。",
+     "caps": [
+      "Proxemic Reward Shaping for DRL Navigation"
+     ],
+     "next": [
+      "s4_1"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4_1",
+     "name": "Compute Proxemic Reward",
+     "description": "根据状态判断结果赋值分段奖励：到达目标+1（或+10），碰撞-0.25（或-5.0），侵入个人区（0≤d_t<0.2m）线性惩罚-0.1+d_t/2（距离越近惩罚越大），VO锥内额外惩罚（DRL-VO），其他时间步0。奖励函数是proxemic约束在DRL中的唯一编码点——没有discomfort_dist惩罚项策略不会主动保持社交距离。输入：新状态s_{t+1}+最小行人距离d_t。输出：奖励值r_t+done标志。约束：discomfort_dist=0.2m对应Hall个人区内圈边界，高密度场景可调至0.3m；CrowdNav默认success_reward=10.0/collision_penalty=-5.0/discomfort_penalty_factor=-10.0；SARL论文分段奖励collision:-0.25/discomfort:-0.1+d/2/goal:+1。适用场景：DRL社交导航策略训练的奖励信号计算。",
+     "caps": [
+      "Proxemic Reward Shaping for DRL Navigation",
+      "VO-Augmented DRL Reward for Active Collision Avoidance"
+     ],
+     "next": [
+      "s4_2"
+     ],
+     "condition": "",
+     "is_merge": true
+    },
+    {
+     "id": "s4_2",
+     "name": "Store Experience in Replay Buffer",
+     "description": "将当前时间步的transition (o_t, a_t, r_t, o_{t+1}, done)存入经验回放池E。CrowdNav回放池容量100,000步，FIFO溢出淘汰。输入：transition元组。输出：更新后的回放池。约束：容量100,000步（CrowdNav默认）；训练前需收集足够warm-up经验（IL阶段或随机策略）。适用场景：off-policy DRL算法（DQN/Deep V-learning/PPO）的经验存储。",
+     "caps": [
+      "Deep Reinforcement Learning Proxemic Navigation"
+     ],
+     "next": [
+      "s4_3"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4_3",
+     "name": "Update Policy Network",
+     "description": "从经验回放池采样mini-batch（典型100样本），计算TD-error或PPO clipped surrogate loss，执行梯度下降（Adam优化器）更新策略网络参数θ。SARL使用Deep V-learning（TD target+target network），DRL-VO使用PPO actor-critic梯度更新。训练通常需50万步交互经验（普通GPU约1-3天）。输入：mini-batch经验。输出：更新后的网络参数θ。约束：学习率RL阶段0.001（IL warm start 0.01）；ε-greedy从0.5线性衰减到0.1；target network更新频率C=1000步。适用场景：DRL策略训练的参数优化环节；部署模式不执行。",
+     "caps": [
+      "Deep Reinforcement Learning Proxemic Navigation",
+      "Lidar-History-Goal Multi-Modal Observation for DRL Navigation",
+      "Lidar-History-Goal Multi-Modal Observation for DRL Navigation"
+     ],
+     "next": [],
+     "condition": "",
+     "is_merge": false
+    }
+   ]
+  }
+ ],
+ "capabilities": [
+  {
+   "en": "Proxemic Gaussian Costmap Navigation",
+   "zh": "高斯代价地图近距导航",
+   "level": "l2",
+   "description": "基于Hall近距学理论，在ROS分层costmap_2d上以高斯/非对称高斯函数建模行人周围社交舒适区域，通过全局规划器（A*/Dijkstra）和局部规划器（DWA/TEB）搜索社交合规路径的导航范式。社交代价以软约束形式叠加，允许机器人在必要时穿越社交区但不侵入亲密区。前置依赖：行人检测/跟踪模块、ROS Navigation Stack。输入：传感器数据+目标位姿。输出：geometry_msgs/Twist速度指令。约束：ProxemicLayer需在InflationLayer之前注册；默认参数社交效果弱需调参。性能指标：ProxemicLayer单次updateCosts毫秒级完成（10000栅格）；Medina Sánchez et al. 2023自适应方法计算速度比SOTA快≥8倍。适用场景：室内服务机器人在有人环境中的社交合规导航，是ROS生态中工程部署最广的proxemic导航范式；不适用：高密度人群（>10人）场景纯高斯costmap易出现冻结机器人问题。",
+   "aliases": [
+    "高斯社交代价地图导航",
+    "Proxemic Layer Navigation",
+    "Gaussian Social Costmap Navigation"
+   ],
+   "parent": null,
+   "children": [
+    "Pedestrian Detection and Tracking for Proxemic Navigation",
+    "Proxemic Gaussian Cost Computation",
+    "Asymmetric Gaussian Comfort Zone Modeling",
+    "Adaptive Proxemic Area with Group Detection",
+    "Social Costmap Layer Plugin Integration",
+    "Socially Compliant Global Path Planning",
+    "TEB Local Trajectory Optimization with Social Costs"
+   ],
+   "assets": []
+  },
+  {
+   "en": "Pedestrian Detection and Tracking for Proxemic Navigation",
+   "zh": "近距导航行人检测与跟踪",
+   "level": "l3",
+   "description": "从激光雷达/RGB-D/RGB图像中实时检测行人位置和速度，发布people_msgs/People消息供ProxemicLayer订阅。激光方案常用leg_detector检测腿部模式，视觉方案常用YOLO+DeepSORT。输入：激光/RGB-D/RGB传感器数据。输出：people_msgs/People（每个行人geometry_msgs/Point位置+geometry_msgs/Vector3速度）。前置依赖：LiDAR或RGB-D相机驱动。约束：leg_detector室内检测率>85%，跟踪频率≥10Hz；YOLOv5+DeepSORT行人检测mAP>50%，跟踪≥15FPS（GPU）。适用场景：proxemic导航的前置感知模块，也可用于链02/03共享上游；不包含：行人轨迹预测（属pedestrian_trajectory_prediction主题）。",
+   "aliases": [
+    "Pedestrian Tracking for Social Navigation",
+    "People Detection ROS",
+    "行人检测跟踪社交导航"
+   ],
+   "parent": "Proxemic Gaussian Costmap Navigation",
+   "children": [],
+   "assets": [
+    "leg_detector"
+   ]
+  },
+  {
+   "en": "Proxemic Gaussian Cost Computation",
+   "zh": "近距高斯代价计算",
+   "level": "l3",
+   "description": "以行人位置为中心、以速度方向为前向，计算各向异性二维高斯函数值作为costmap栅格代价。静止行人使用圆形高斯（varx=vary=covar），运动行人前方使用拉伸高斯（varx=covar*factor, vary=covar, skew=angle），后方使用圆形高斯。核心公式：gaussian(x,y,x0,y0,A,varx,vary,skew)=A*exp(-(mx^2/(2*varx)+my^2/(2*vary)))，mx/my为旋转到skew方向后的坐标。有效半径r=sqrt(-2*var*log(cutoff/A))。输入：行人位置列表+速度+参数（cutoff/amplitude/covar/factor）。输出：costmap栅格代价值（0-252）。约束：cutoff必须小于amplitude否则高斯无效；默认参数cutoff=10/amplitude=77/covar=0.25/factor=5.0（半径约0.7m），社区推荐cutoff=126/amplitude=254/covar=1.35（半径约1.3m）。适用场景：social_navigation_layers ProxemicLayer核心代价计算；与CAP_a9f77ebe（简化圆形高斯）的区别：本能力支持运动方向拉伸的各向异性高斯。",
+   "aliases": [
+    "Proxemic Cost Function",
+    "Gaussian Social Cost",
+    "近距高斯代价函数",
+    "非对称高斯社交代价"
+   ],
+   "parent": "Proxemic Gaussian Costmap Navigation",
+   "children": [],
+   "assets": [
+    "social_navigation_layers"
+   ]
+  },
+  {
+   "en": "Asymmetric Gaussian Comfort Zone Modeling",
+   "zh": "非对称高斯舒适空间建模",
+   "level": "l3",
+   "description": "考虑行人视线/运动方向，将社交舒适空间建模为前后拼接的非对称半高斯曲面。前向半高斯在运动方向拉伸（标准差放大v_h倍），后向半高斯压缩（标准差缩小v_h倍），静止时退化为标准二维正态分布。相比对称高斯，避免侵入行人前方视线空间和行走路径。前向N_front=A^h*exp(-((d*cos(θ-θ_h)/(√2*σ_0))^2+(d*sin(θ-θ_h)/(√2*v_h*σ_0))^2))，后向N_back=A^h*exp(-((v_h*d*cos(θ-θ_h)/(√2*σ_0))^2+(d*sin(θ-θ_h)/(√2*σ_0))^2))。输入：行人位置+视线/运动方向+速度。输出：非对称高斯代价场。约束：σ_0典型值0.3-0.8m（个人空间半径）；A^h=254（LETHAL_OBSTACLE-1）。适用场景：需要精确建模行人前方空间偏好的社交导航；social_navigation_layers的ProxemicLayer已实现简化版前向拉伸，完整前后半面拼接需自定义插件。",
+   "aliases": [
+    "Asymmetric Gaussian Proxemics",
+    "Directional Personal Space Model",
+    "非对称个人空间模型",
+    "方向敏感社交空间"
+   ],
+   "parent": "Proxemic Gaussian Costmap Navigation",
+   "children": [],
+   "assets": [
+    "social_navigation_layers"
+   ]
+  },
+  {
+   "en": "Adaptive Proxemic Area with Group Detection",
+   "zh": "自适应近距区域与群组检测",
+   "level": "l3",
+   "description": "根据实时场景密度、行人速度和社交关系动态调整proxemic区域大小，同时检测行人群组（基于O-space/P-space模型——群组内部形成O-space交互空间，外围为P-space活动空间），对群组整体构建社交区域而非单个行人叠加。引入个人和群组轨迹预测和社交冲突解决策略。输入：行人状态列表+场景密度信息。输出：自适应proxemic区域参数+群组标签。约束：群组检测基于距离+朝向聚类；高密度场景可能误聚类。性能指标：计算速度比SOTA快≥8倍（IROS 2023仿真结果）；支持Gazebo仿真和真机部署。适用场景：高密度人群中需要群组感知的自适应社交导航。",
+   "aliases": [
+    "Adaptive Social Space",
+    "Group-Aware Proxemic Navigation",
+    "自适应社交区域",
+    "群组感知近距导航"
+   ],
+   "parent": "Proxemic Gaussian Costmap Navigation",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "Social Costmap Layer Plugin Integration",
+   "zh": "社交代价地图插件集成",
+   "level": "l3",
+   "description": "将ProxemicLayer作为pluginlib插件注册到ROS costmap_2d分层框架中，配置插件顺序（StaticLayer→ObstacleLayer→ProxemicLayer→InflationLayer），设置全局/局部costmap参数（update_frequency/publish_frequency/rolling_window等），通过dynamic_reconfigure实时调参。输入：ROS参数服务器配置+各层插件。输出：融合社交代价的costmap。约束：ProxemicLayer在plugin顺序中必须在InflationLayer之前（否则膨胀层无法感知社交代价）；global costmap update_frequency典型1-5Hz，local costmap 5-10Hz。适用场景：所有基于ROS costmap_2d的社交导航集成。",
+   "aliases": [
+    "Costmap Plugin Configuration",
+    "social_navigation_layers配置",
+    "代价地图社交层集成"
+   ],
+   "parent": "Proxemic Gaussian Costmap Navigation",
+   "children": [],
+   "assets": [
+    "social_navigation_layers",
+    "human_aware_navigation"
+   ]
+  },
+  {
+   "en": "Socially Compliant Global Path Planning",
+   "zh": "社交合规全局路径规划",
+   "level": "l3",
+   "description": "在融合了ProxemicLayer高斯代价的全局costmap上运行A*或Dijkstra图搜索算法，生成从起点到目标点的最小代价全局路径。社交代价使规划器自然绕开行人前方和个人空间，但不会完全阻断通道（软约束特性），狭窄走廊中可穿越社交区。输入：global costmap+起点位姿+目标位姿。输出：nav_msgs/Path全局路径点序列。前置依赖：已构建的proxemic costmap。约束：A*启发式必须可采纳才能保证最优性；路径倾向与行人保持≥1.2m距离（Hall社交区边界），空间不足时可缩至0.45m（个人区边界）。性能指标：global_planner A*在1024×1024栅格地图上<100ms。适用场景：室内结构化环境的社交合规全局路径规划；复用CAP_f390816f的核心A*社交规划能力，但本能力针对proxemic高斯costmap场景特化。",
+   "aliases": [
+    "A* Social Path Planning",
+    "社交A*路径规划",
+    "Proxemic-Aware Global Planning"
+   ],
+   "parent": "Proxemic Gaussian Costmap Navigation",
+   "children": [],
+   "assets": [
+    "human_aware_navigation",
+    "navfn"
+   ]
+  },
+  {
+   "en": "TEB Local Trajectory Optimization with Social Costs",
+   "zh": "社交代价TEB局部轨迹优化",
+   "level": "l3",
+   "description": "TEB（Timed Elastic Band）局部规划器在局部滚动窗口costmap上，将轨迹建模为带时间戳的离散位姿序列B=(Q,τ)，通过g2o稀疏优化最小化多目标代价函数（路径长度、时间、障碍物/社交代价、速度加速度约束、非完整运动学约束），输出满足动力学可行性的平滑轨迹和速度指令。TEB读取costmap中的ProxemicLayer高斯代价作为避障项输入（AddEdgesObstacles），自然感知社交约束。输入：local costmap+全局路径+当前位姿+里程计。输出：局部最优轨迹+速度指令。约束：TEB典型控制频率5-10Hz；min_obstacle_dist默认0.25m，社交场景建议≥0.5m；weight_obstacle权重增大更积极避让行人。适用场景：精度优先的动态环境中社交局部轨迹优化；DWA通过costmap评分间接感知社交代价，TEB通过g2o优化边直接响应。",
+   "aliases": [
+    "TEB Social Navigation",
+    "Timed Elastic Band社交避障",
+    "g2o轨迹优化社交导航"
+   ],
+   "parent": "Proxemic Gaussian Costmap Navigation",
+   "children": [],
+   "assets": [
+    "teb_local_planner",
+    "dwa_local_planner"
+   ]
+  },
+  {
+   "en": "Social Force Model Proxemic Navigation",
+   "zh": "社会力模型近距导航",
+   "level": "l2",
+   "description": "基于Helbing-Molnár社会力模型，将行人社交排斥力、目标驱动力、障碍物排斥力通过牛顿第二定律积分生成速度指令的导航范式。机器人模仿行人的力场避让模式自然穿行人群，可与ORCA互惠避碰、DWA/MPC规划融合提升安全性和全局一致性，支持全向和非完整约束（NMR）机器人。前置依赖：行人检测/跟踪模块。输入：行人位置/速度+障碍物位置+目标位置+机器人状态。输出：geometry_msgs/Twist速度指令。约束：纯SFM在正面对抗场景存在振荡死锁需ORCA辅助；NMR需运动学投影；参数(A/B/τ)需场景标定。性能指标：SFM单步力计算复杂度O(N)（N为行人数量），更新频率10-20Hz；PySocialForce支持30-60行人实时仿真；TSFM主观舒适度Q1评分统计显著优于SFM(p<0.05)。适用场景：密集人群中类人反应式导航，需要自然避让行为的服务机器人；不适用：需要全局最优路径保证的场景（需与A*/DWA融合）。",
+   "aliases": [
+    "SFM Social Navigation",
+    "Social Force Based Proxemic Navigation",
+    "力场社交导航",
+    "人工势场社交导航"
+   ],
+   "parent": null,
+   "children": [
+    "Social Repulsive Force Computation",
+    "Driving Force to Goal",
+    "Obstacle Repulsive Force for Navigation",
+    "Nonholonomic SFM Projection",
+    "ORCA-SFM Hybrid Collision Avoidance",
+    "SFM-Augmented DWA Local Planning",
+    "Extended Social Force Group Modeling"
+   ],
+   "assets": [
+    "pedsim_ros"
+   ]
+  },
+  {
+   "en": "Social Repulsive Force Computation",
+   "zh": "社交排斥力计算",
+   "level": "l3",
+   "description": "计算行人对机器人的社交排斥力，是proxemic约束在SFM中的核心编码。力大小随距离指数衰减f_soc=A*exp((r_ij-d_ij)/B)*n_ij，方向从行人指向机器人外侧。Extended SFM引入速度依赖项（lambda_importance=2.0，gamma=0.35, n=2, n'=3）和角度依赖项（考虑行人视野方向）。proxemic距离通过指数衰减参数隐式编码：亲密区(<0.45m)力急剧增大几乎不可能进入，个人区(0.45-1.2m)力中等大，社交区(1.2-3.6m)力较小自然绕开。输入：自身位置+行人位置/速度+λ/gamma/n/n'参数。输出：社交排斥力向量数组。约束：社交力factor=5.1（驱动力的5倍）；作用范围约2.0m（行人社交区外沿）；B≈0.5-1.0m对应个人区→社交区过渡。适用场景：SFM导航中proxemic社交距离的核心编码；与CAP_c8080ef4（Zone-Based Repulsive Force）的区别：本能力基于连续指数衰减而非分区参数映射。",
+   "aliases": [
+    "Pedestrian Repulsive Force",
+    "Personal Space Force",
+    "Proxemic Repulsion",
+    "行人间排斥力",
+    "个人空间力场"
+   ],
+   "parent": "Social Force Model Proxemic Navigation",
+   "children": [],
+   "assets": [
+    "PySocialForce",
+    "pedsim_ros"
+   ]
+  },
+  {
+   "en": "Driving Force to Goal",
+   "zh": "目标驱动力计算",
+   "level": "l3",
+   "description": "计算机器人朝向目标的自驱动力f_drive=m(v0*e_i-v_i)/τ，模拟行人想走到目的地的意图。力大小与当前速度和期望速度差值成正比，方向指向目标，经弛豫时间τ平滑。输入：当前速度向量+目标位置+期望速度v0+弛豫时间τ。输出：驱动力向量(2D)。约束：v0典型1.0-1.5m/s（人步行速度），τ=0.5s（速度调整时间常数），goal_threshold=0.2m。适用场景：SFM导航的目标趋向力，驱动机器人向目标移动。",
+   "aliases": [
+    "Goal Attraction Force",
+    "Desired Force",
+    "目标吸引力",
+    "期望速度力"
+   ],
+   "parent": "Social Force Model Proxemic Navigation",
+   "children": [],
+   "assets": [
+    "PySocialForce"
+   ]
+  },
+  {
+   "en": "Obstacle Repulsive Force for Navigation",
+   "zh": "导航障碍物排斥力",
+   "level": "l3",
+   "description": "计算墙壁和静态障碍物对机器人的排斥力，防止碰撞。与社交排斥力类似但参数不同：sigma=0.2m（力标准差），threshold=3.0m（触发距离），factor=10.0（力缩放因子，大于社交力factor=5.1表示硬障碍避让优先于社交避让）。输入：自身位置+障碍物线段列表+sigma/threshold/factor参数。输出：障碍物排斥力向量数组。约束：factor=10.0是社交力5.1的约2倍，符合不撞墙比不打扰人更重要的安全直觉；障碍物表示为线段，计算到最近线段的距离和法向。适用场景：SFM导航的安全基础，避免与墙壁/静态障碍物碰撞。",
+   "aliases": [
+    "Wall Repulsive Force",
+    "Obstacle Potential Field",
+    "墙体力",
+    "障碍势场"
+   ],
+   "parent": "Social Force Model Proxemic Navigation",
+   "children": [],
+   "assets": [
+    "PySocialForce"
+   ]
+  },
+  {
+   "en": "Nonholonomic SFM Projection",
+   "zh": "非完整约束SFM投影",
+   "level": "l3",
+   "description": "将全向SFM计算的2D合力投影到非完整约束机器人（差速/阿克曼）可行运动方向上，解决全向力模型应用于差速机器人时产生侧向滑动指令的不一致问题。Jafari et al. 2026专门为NMR设计了SFM/TSFM框架：纵向力直接映射为线加速度a_x=F_x/m，横向力映射为转向力矩M=F_y*L；TSFM（Projected Time-to-collision SFM）将碰撞时间(PTTC)投影到力计算中，更直接关联行人安全感。输入：全向合力+当前航向θ+机器人运动学类型+轴距参数L。输出：可行方向力向量/转向力矩。约束：TSFM在主观舒适度Q1评分上统计显著优于SFM(p<0.05)；系统稳定性证明要求力函数有界且Lipschitz连续。性能指标：SFM速度略快于TSFM，两者均不如人工遥控舒适但优于ORCA基线。适用场景：差速/阿克曼服务机器人（配送/清扫机器人）部署SFM的必要步骤；全向底盘可跳过。",
+   "aliases": [
+    "NMR Social Force",
+    "Differential Drive SFM",
+    "TSFM",
+    "Projected TTC Social Force",
+    "非完整SFM",
+    "碰撞时间社会力"
+   ],
+   "parent": "Social Force Model Proxemic Navigation",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "ORCA-SFM Hybrid Collision Avoidance",
+   "zh": "ORCA-SFM混合避碰",
+   "level": "l3",
+   "description": "将Optimal Reciprocal Collision Avoidance（ORCA）作为安全过滤层叠加在SFM输出之上。SFM产生自然的类人避让速度，ORCA通过线性规划求解互惠速度半平面交集保证多智能体无碰撞性，解决纯SFM正面相遇时的振荡死锁问题。Daza et al. 2021将Proxemics+ORCA+Social Momentum+A*组合处理人-人/人-机器人/机器人-机器人交互。输入：SFM期望速度作为preferred velocity+行人位置/速度+邻域半径。输出：ORCA约束下的无碰撞可行速度。约束：ORCA保证互惠无碰撞（所有智能体使用ORCA假设下）；Python-RVO2库提供求解器；交集为空时降级放弃最远邻居约束。适用场景：密集人群SFM导航的安全兜底层；ORCA在链03 DRL框架中也用作仿真行人策略和基线方法。",
+   "aliases": [
+    "ORCA Social Navigation",
+    "Reciprocal Velocity Obstacle Social Force",
+    "互惠避碰社交导航",
+    "SFM-ORCA融合"
+   ],
+   "parent": "Social Force Model Proxemic Navigation",
+   "children": [],
+   "assets": [
+    "Python-RVO2",
+    "RVO2 Library"
+   ]
+  },
+  {
+   "en": "SFM-Augmented DWA Local Planning",
+   "zh": "SFM增强DWA局部规划",
+   "level": "l3",
+   "description": "将社会力模型的排斥力信息融入Dynamic Window Approach的轨迹评分函数。在DWA采样多组(v,ω)速度并模拟轨迹时，额外加入SFM行人排斥力代价项cost+=weight_sfm*(1-exp(-d_ped/sigma))，使评分同时考虑目标距离、障碍物距离和社交距离。东南大学专利CN202111609239.5进一步在宽阔区域将SFM预测行人未来位置加入DWA评价函数，狭长廊道仅调整速度。输入：SFM力场+costmap+全局路径。输出：DWA最优速度(v,ω)。约束：SFM-DWA融合相比纯DWA行人密集场景避障效率提升≥25%；可提前0.8-1.5s预测避让；Mozzarelli et al. ECC 2024实现了Socially Aware DWA。适用场景：需要兼顾SFM自然避让和DWA全局一致性的局部规划；与链01的costmap+DWA方式区别：链01通过costmap高斯代价间接影响DWA评分，本能力通过力场评分项直接融合。",
+   "aliases": [
+    "Socially Aware DWA",
+    "Social Force DWA",
+    "SFM-DWA融合",
+    "社会力增强动态窗口"
+   ],
+   "parent": "Social Force Model Proxemic Navigation",
+   "children": [],
+   "assets": [
+    "dwa_local_planner"
+   ]
+  },
+  {
+   "en": "Extended Social Force Group Modeling",
+   "zh": "扩展社会力群组建模",
+   "level": "l3",
+   "description": "在原始SFM基础上增加群组交互力：group_coherence_force（factor=3.0凝聚力，保持成员在一起）、group_repulsive_force（factor=1.0, threshold=0.55m防止过度靠近）、group_gaze_force（factor=4.0, fov_phi=90度视线力，使成员朝向群组前方）。模拟行人群组（朋友同行/家人）的集体V形/梯形编队行走行为。输入：群组成员关系+各成员状态+fov_phi。输出：群组力向量数组。约束：Moussaïd et al. 2010扩展SFM可复现2-5人群组编队模式；无群组时group force factor=0。适用场景：需要处理行人群组（如家人/朋友结伴行走）的社交导航场景。",
+   "aliases": [
+    "Group Social Force",
+    "Moussaid Extended SFM",
+    "群组社会力",
+    "Extended SFM"
+   ],
+   "parent": "Social Force Model Proxemic Navigation",
+   "children": [],
+   "assets": [
+    "PySocialForce"
+   ]
+  },
+  {
+   "en": "Deep Reinforcement Learning Proxemic Navigation",
+   "zh": "深度强化学习近距导航",
+   "level": "l2",
+   "description": "使用深度强化学习（PPO/DQN/Actor-Critic/GNN-Attention）端到端训练社交导航策略，奖励函数中编码proxemic社交距离惩罚项（侵入个人区discomfort_dist=0.2m内给负奖励），策略网络从观测（机器人状态+行人运动学+激光/点云+子目标点）直接映射到速度指令，通过仿真环境中的大量交互学习隐式的社交合规行为。支持自适应社交距离（Socially Integrated范式）和零样本sim-to-real迁移。前置依赖：行人检测/跟踪模块、仿真训练环境（CrowdSim/Gazebo/Pedsim）。输入：传感器数据+目标位姿。输出：geometry_msgs/Twist速度指令。约束：需大量训练交互（约50万步，GPU 1-3天）；sim-to-real gap是部署主要挑战；策略缺乏形式化安全保证需安全兜底层。性能指标：SARL策略推理时间<10ms/步（GPU）；DRL-VO在55行人场景导航成功率优于ORCA/SARL/LSTM-RL等基线；CrowdNav经验回放池容量100,000步；discomfort_dist=0.2m对应Hall个人区内圈边界。适用场景：高密度人群中自适应社交导航，需要从交互中学习复杂行人行为模式的场景；不适用：安全苛求场景（需叠加安全层）、计算资源极度受限平台（推理需GPU/NPU）。",
+   "aliases": [
+    "DRL Social Navigation",
+    "Learning-based Proxemic Navigation",
+    "End-to-End Social Navigation Policy",
+    "深度强化学习社交导航",
+    "端到端社交导航策略"
+   ],
+   "parent": null,
+   "children": [
+    "Proxemic Reward Shaping for DRL Navigation",
+    "Attention-based Crowd-Robot Interaction Modeling",
+    "Lidar-History-Goal Multi-Modal Observation for DRL Navigation",
+    "VO-Augmented DRL Reward for Active Collision Avoidance",
+    "Lidar-History-Goal Multi-Modal Observation for DRL Navigation",
+    "Lidar-History-Goal Multi-Modal Observation for DRL Navigation",
+    "Lidar-History-Goal Multi-Modal Observation for DRL Navigation"
+   ],
+   "assets": [
+    "CrowdNav",
+    "drl_vo_nav"
+   ]
+  },
+  {
+   "en": "Proxemic Reward Shaping for DRL Navigation",
+   "zh": "DRL导航proxemic奖励塑形",
+   "level": "l3",
+   "description": "在DRL导航的奖励函数中设计社交距离相关惩罚项，引导策略学习proxemic合规行为。经典实现（SARL/CADRL）使用分段奖励：到达目标+10或+1，碰撞-5.0或-0.25，侵入个人区（d<discomfort_dist=0.2~0.3m）线性惩罚-0.1+d_t/2，其他时间步0。DRL-VO扩展为基于Velocity Obstacles的一阶奖励项引导主动避让。Socially Integrated方法通过交互中其他社交智能体的个体反馈实现自适应奖励。proxemic约束在DRL中的唯一编码点就是奖励函数——没有discomfort_dist惩罚项策略不会主动保持社交距离。输入：新状态s_{t+1}+最小行人距离d_t+碰撞标志。输出：标量奖励r_t。约束：CrowdNav默认reward参数：success_reward=10.0,collision_penalty=-5.0,discomfort_dist=0.2m,discomfort_penalty_factor=-10.0；SARL论文分段奖励：collision -0.25,discomfort -0.1+d/2,goal +1；高密度场景建议discomfort_dist调至0.3m以减少绕行。适用场景：DRL社交导航策略训练的奖励信号设计，是proxemic行为能否涌现的关键。",
+   "aliases": [
+    "Social Distance Reward",
+    "Discomfort Penalty Reward",
+    "Proxemic Reward Function",
+    "社交距离奖励函数",
+    "个人空间惩罚奖励"
+   ],
+   "parent": "Deep Reinforcement Learning Proxemic Navigation",
+   "children": [],
+   "assets": [
+    "CrowdNav",
+    "gym-collision-avoidance"
+   ]
+  },
+  {
+   "en": "Attention-based Crowd-Robot Interaction Modeling",
+   "zh": "注意力机制人群-机器人交互建模",
+   "level": "l3",
+   "description": "使用自注意力机制（Self-Attention）联合建模人-机器人（HR）和人-人（HH）交互，计算每个行人相对于机器人未来状态的重要性权重，通过attentive pooling聚合crowd的集体影响。相比maximin算子（CADRL）或LSTM顺序编码（GA3C-CADRL），attention机制能更好地捕捉密集人群中行人之间的间接交互对机器人决策的影响。SARL先计算每对人-人、人-机器人的交互特征e_ij，通过self-attention计算权重α_ij=softmax(W·e_ij)，加权求和得到crowd上下文。输入：行人特征+机器人特征。输出：交互编码向量（attention加权聚合的crowd特征）。约束：计算复杂度O(N log N)（N为行人数量），优于CADRL的O(N²)；attention权重可视化显示机器人能正确关注迎面而来的关键行人。性能指标：SARL在5-10人场景导航成功率显著优于CADRL和LSTM-RL。适用场景：多行人密集环境中的crowd交互建模，是SARL等attention-based DRL方法的核心创新。",
+   "aliases": [
+    "Social Attention Reinforcement Learning",
+    "SARL",
+    "Self-Attention Crowd Navigation",
+    "Attentive Pooling",
+    "社交注意力强化学习",
+    "自注意力人群导航"
+   ],
+   "parent": "Deep Reinforcement Learning Proxemic Navigation",
+   "children": [],
+   "assets": [
+    "CrowdNav"
+   ]
+  },
+  {
+   "en": "Lidar-History-Goal Multi-Modal Observation for DRL Navigation",
+   "zh": "DRL导航激光-历史-目标多模态观测",
+   "level": "l3",
+   "description": "DRL-VO提出的观测表示方法，融合三种预处理数据模态：①激光雷达短历史（l_t），提供静态障碍物和环境几何信息；②附近行人运动学（P_t），提供动态障碍物位置速度（高斯blob网格表示）；③子目标点（g_t），提供导航方向指引。所有数据转换到机器人局部坐标系的80×80网格表示，对定位错误鲁棒，并通过手工高级特征提高新环境泛化性。纯agent-level方法（SARL/CADRL）仅使用行人运动学状态（无激光/网格），无法处理静态障碍物。输入：LiDAR扫描+行人状态+子目标点。输出：三通道80×80观测网格（或等价的多模态张量）。约束：观测为3通道80×80网格；激光历史长度3-5帧；所有数据在机器人局部坐标系表示。性能指标：在55行人3D仿真中训练的策略可直接零样本迁移到校园室内外真机；获得ICRA 2022 BARN挑战赛仿真第1名、硬件第3名。适用场景：需要同时处理静态障碍和动态行人的DRL社交导航工程部署；与纯agent-level观测（SARL）相比泛化性更强。",
+   "aliases": [
+    "DRL-VO Observation",
+    "Multi-Modal DRL Input",
+    "Grid-based DRL Observation",
+    "多模态DRL观测",
+    "网格DRL输入"
+   ],
+   "parent": "Deep Reinforcement Learning Proxemic Navigation",
+   "children": [],
+   "assets": [
+    "drl_vo_nav",
+    "drl_vo_nav",
+    "gym-collision-avoidance"
+   ]
+  },
+  {
+   "en": "VO-Augmented DRL Reward for Active Collision Avoidance",
+   "zh": "速度障碍增强DRL主动避碰奖励",
+   "level": "l3",
+   "description": "DRL-VO提出的奖励函数创新，将Velocity Obstacles理论引入DRL奖励项中。传统DRL导航的奖励是零阶的（仅基于当前距离），VO奖励是一阶的（基于相对速度和碰撞锥），惩罚将导致未来碰撞的航向，引导机器人主动调整方向避让行人，而非等到接近时才被动反应。当机器人当前速度位于行人的Velocity Obstacle锥内（即保持当前速度将在TTC时间内导致碰撞），根据碰撞时间给予惩罚。该设计解决了纯碰撞惩罚导致的被动避碰和过于保守的问题。输入：当前速度+行人位置/速度。输出：VO惩罚奖励项。约束：VO锥计算基于相对速度和碰撞几何；TTC越小惩罚越大。性能指标：在55行人场景中，DRL-VO相比ORCA、SA-CADRL、CNN-LSTM取得更高成功率和更快平均速度；在不同人群规模（5-55人）和未见环境中泛化更好。适用场景：需要主动避让能力的高密度人群DRL导航，弥补纯距离奖励的短视缺陷。",
+   "aliases": [
+    "Velocity Obstacle Reward",
+    "First-Order Collision Reward",
+    "DRL-VO Reward",
+    "VO奖励DRL",
+    "一阶避碰奖励"
+   ],
+   "parent": "Deep Reinforcement Learning Proxemic Navigation",
+   "children": [],
+   "assets": [
+    "drl_vo_nav"
+   ]
+  }
+ ],
+ "assets": [
+  {
+   "name": "social_navigation_layers",
+   "type": "ros_package",
+   "source": "https://github.com/DLu/navigation_layers",
+   "description": "DLu/navigation_layers提供的ROS Navigation Stack costmap_2d插件包，包含ProxemicLayer（高斯近距层）和PassingLayer（左侧通行层）两个pluginlib插件。以BSD许可证发布，支持ROS Hydro/Indigo/Jade/Kinetic/Melodic多版本，是ROS生态中proxemic导航最经典的开源工程实现（164 stars）。ProxemicLayer实现了静止圆形高斯+运动方向拉伸高斯的各向异性社交代价，订阅/people话题。适用场景：ROS1服务机器人社交导航costmap层的直接集成。约束：仅维护到ROS1 Melodic/Noetic（2022-09最后push），ROS2 Nav2无官方移植；默认参数社交效果弱需调参；不支持群组检测和后向压缩全非对称高斯。",
+   "usage": "在costmap_common_params.yaml中添加plugins: [{name: proxemic_layer, type: 'social_navigation_layers::ProxemicLayer'}]，配置proxemic_layer参数cutoff=126.0/amplitude=254.0/covariance=1.35/factor=5.0",
+   "implements": [
+    "Proxemic Gaussian Cost Computation",
+    "Social Costmap Layer Plugin Integration",
+    "Asymmetric Gaussian Comfort Zone Modeling"
+   ]
+  },
+  {
+   "name": "human_aware_navigation",
+   "type": "ros_package",
+   "source": "https://github.com/marinaKollmitz/human_aware_navigation",
+   "description": "LAAS/CNRS（Sisbot et al.）开发的ROS包，在标准costmap上叠加多个社交代价图层（个人空间、方向性、可见性），使用时间依赖A*规划器，显式建模机器人应保持在行人视野内的可见性约束。与social_navigation_layers的区别：human_aware_navigation包含自己的规划器和三种代价层（个人空间+方向性+可见性），而navigation_layers只提供高斯costmap插件。适用场景：需要可见性约束和多社交代价层的HRI导航研究。约束：仅支持ROS Indigo/Kinetic，更新较慢。",
+   "usage": "roslaunch human_aware_navigation demo.launch",
+   "implements": [
+    "Socially Compliant Global Path Planning",
+    "Social Costmap Layer Plugin Integration"
+   ]
+  },
+  {
+   "name": "teb_local_planner",
+   "type": "ros_package",
+   "source": "https://github.com/rst-tu-dortmund/teb_local_planner",
+   "description": "TU Dortmund大学开发的ROS局部规划器（1327 stars, BSD-3-Clause），基于g2o图优化框架实现Timed Elastic Band算法。支持差速/阿克曼/全向底盘，支持动态障碍物和多拓扑轨迹优化（homotopy class planning）。AddEdgesObstacles边将costmap中的障碍/社交代价转化为优化约束，可直接感知ProxemicLayer高斯代价。适用场景：动态环境中精度优先的社交局部轨迹优化。约束：g2o依赖suitesparse，ARM平台编译困难；10+个权重参数需要经验调优。",
+   "usage": "TebLocalPlannerROS: {include_dynamic_obstacles: true, min_obstacle_dist: 0.5, weight_obstacle: 50.0}",
+   "implements": [
+    "TEB Local Trajectory Optimization with Social Costs"
+   ]
+  },
+  {
+   "name": "dwa_local_planner",
+   "type": "ros_package",
+   "source": "https://github.com/ros-planning/navigation/tree/noetic-devel/dwa_local_planner",
+   "description": "ROS1 Navigation栈中的DWA局部规划器包（BSD-3-Clause），封装DWAPlannerROS类，在速度空间(v,ω)采样多组速度前向模拟轨迹，用costmap对轨迹评分选最优。社交代价表现为穿过高斯区域的轨迹得分低，响应较平滑但可能陷入局部最优。适用场景：差速/全向底盘的局部导航，计算开销低于TEB。约束：仅支持ROS1，依赖base_local_planner库。",
+   "usage": "ROS launch base_local_planner: dwa_local_planner/DWAPlannerROS",
+   "implements": [
+    "TEB Local Trajectory Optimization with Social Costs",
+    "SFM-Augmented DWA Local Planning"
+   ]
+  },
+  {
+   "name": "leg_detector",
+   "type": "ros_package",
+   "source": "http://wiki.ros.org/leg_detector",
+   "description": "ROS官方行人检测包（BSD），从2D激光雷达扫描数据中检测行人腿部模式，使用机器学习分类器识别腿部集群。发布people_msgs/PositionMeasurement和people_msgs/People消息，是ProxemicLayer订阅/people话题的经典上游。适用场景：室内2D LiDAR行人检测，无需GPU。约束：依赖sensor_msgs/LaserScan输入；检测率在拥挤场景下降；仅检测腿部不检测上半身。",
+   "usage": "rosrun leg_detector leg_detector _scan:=/base_scan",
+   "implements": [
+    "Pedestrian Detection and Tracking for Proxemic Navigation"
+   ]
+  },
+  {
+   "name": "navfn",
+   "type": "ros_package",
+   "source": "https://github.com/ros-planning/navigation/tree/noetic-devel/navfn",
+   "description": "ROS1 Navigation Stack的核心全局规划器包（BSD-3-Clause），实现3-bucket优先队列Dijkstra+二次插值势场+梯度下降路径提取。NavFn类提供setCostmap/setupNavFn/propNavFnDijkstra/calcPath接口，可在proxemic costmap上规划社交合规全局路径。适用场景：栅格地图Dijkstra全局路径规划的ROS1标准实现。约束：ROS1包，Nav2中为nav2_navfn_planner。",
+   "usage": "roslaunch navfn navfn_node.launch",
+   "implements": [
+    "Socially Compliant Global Path Planning"
+   ]
+  },
+  {
+   "name": "PySocialForce",
+   "type": "package",
+   "source": "https://github.com/yuxiang-gao/PySocialForce",
+   "description": "yuxiang-gao/PySocialForce出品的Extended Social Force Model（含群组行为）Python实现包（183 stars, MIT），基于Helbing 1995+Moussaïd 2010模型，计算desired/social/obstacle/group四个力分量并欧拉积分输出确定性轨迹。提供Simulator类和forces.py完整力函数实现，支持个体行人、社会群组和环境障碍物的行人动力学仿真。适用场景：SFM导航算法原型验证、人群仿真基线、SFM力计算参考实现。约束：仅行人仿真非机器人导航（无到达目标停止逻辑需自行修改）；全向模型不支持NMR；障碍物仅线段表示；无ROS接口。",
+   "usage": "from pysocialforce import Simulator; sim = Simulator(initial_state, obstacles=obstacles, groups=groups); sim.step(n=50); states = sim.get_states()",
+   "implements": [
+    "Social Repulsive Force Computation",
+    "Driving Force to Goal",
+    "Obstacle Repulsive Force for Navigation",
+    "Extended Social Force Group Modeling"
+   ]
+  },
+  {
+   "name": "Python-RVO2",
+   "type": "tool",
+   "source": "https://github.com/sybrenstuvel/Python-RVO2",
+   "description": "ORCA最优互惠碰撞避免算法的Python Cython绑定（sybrenstuvel/Python-RVO2，基于Apache-2.0 RVO2库），提供几何碰撞避免。SFM的互补安全组件，保证最小碰撞距离。适用场景：SFM导航的ORCA安全过滤层、CrowdNav等DRL框架的仿真行人策略。约束：依赖C++编译环境（CMake+Cython）。输入：多智能体状态（位置/速度/半径/期望速度）。输出：各智能体无碰撞速度。",
+   "usage": "import rvo2; sim = rvo2.PyRVOSimulator(1/60., 1.5, 5, 1.5, 2, 0.4, 2); sim.addAgent((0,0)); sim.doStep()",
+   "implements": [
+    "ORCA-SFM Hybrid Collision Avoidance"
+   ]
+  },
+  {
+   "name": "RVO2 Library",
+   "type": "tool",
+   "source": "https://github.com/snape/RVO2",
+   "description": "UNC Chapel Hill GAMMA Group出品的ORCA算法官方C++98实现（Apache-2.0, 954 stars），提供RVOSimulator构造/doStep仿真推进/getAgentORCALine半平面查询等完整API。KD-tree加速邻居查询，OpenMP并行LP求解，5000智能体毫秒级求解。适用场景：密集群体分布式避障的工业级C++实现与ORCA基线。约束：2D速度空间，reciprocal假设。",
+   "usage": "git clone https://github.com/snape/RVO2; cmake . && make; 链接libRVO.so; RVOSimulator sim(timeStep, neighborDist, maxNeighbors, timeHorizon, radius, maxSpeed); sim.doStep();",
+   "implements": [
+    "ORCA-SFM Hybrid Collision Avoidance"
+   ]
+  },
+  {
+   "name": "pedsim_ros",
+   "type": "ros_package",
+   "source": "https://github.com/srl-freiburg/pedsim_ros",
+   "description": "srl-freiburg/pedsim_ros出品的ROS社会力行人仿真与预测包（BSD-2-Clause），提供SFM行人仿真器+预测轨迹ROS话题接口（MarkerArray/PedState），可与nav2 costmap_2d衔接做动态障碍注入。底层依赖libpedsim（LGPL C++ SFM库）。适用场景：SFM预测轨迹发布与机器人costmap动态障碍注入；链03 DRL训练的Gazebo仿真环境。约束：ROS Noetic/ROS2兼容。",
+   "usage": "roslaunch pedsim_simulator pedsim_simulator.launch; rostopic echo /pedsim/agents_states",
+   "implements": [
+    "Social Force Model Proxemic Navigation",
+    "Social Repulsive Force Computation"
+   ]
+  },
+  {
+   "name": "CrowdNav",
+   "type": "framework",
+   "source": "https://github.com/vita-epfl/CrowdNav",
+   "description": "EPFL VITA实验室（Changan Chen et al.）出品的基于自注意力机制的DRL人群导航框架（728 stars, MIT License），ICRA 2019论文SARL的官方实现。提供CrowdSim 2D人群仿真环境，实现SARL（Self-Attention RL）、CADRL、LSTM-RL、ORCA等多种人群导航策略的完整训练和测试框架，支持模仿学习warm start+RL精调两阶段训练。是DRL人群导航领域最广泛使用的基准平台之一。适用场景：DRL社交导航算法研发、SARL策略训练、crowd导航基准测试。约束：2D仿真环境无静态障碍物；假设完美行人状态（无检测器噪声）；Python 3.6+和较旧PyTorch/Gym版本；最后push 2022-08-26，后续工作转移到RelationalGraphLearning和social-nce仓库。",
+   "usage": "git clone https://github.com/vita-epfl/CrowdNav; pip install -r requirements.txt; python crowd_nav/train.py --policy sarl --output_dir data/sarl_results; python crowd_nav/test.py --policy sarl --model_dir data/sarl_results --visualize",
+   "implements": [
+    "Deep Reinforcement Learning Proxemic Navigation",
+    "Proxemic Reward Shaping for DRL Navigation",
+    "Attention-based Crowd-Robot Interaction Modeling"
+   ]
+  },
+  {
+   "name": "drl_vo_nav",
+   "type": "framework",
+   "source": "https://github.com/TempleRAIL/drl_vo_nav",
+   "description": "Temple RAIL实验室（Xie & Dames）出品的DRL-VO导航控制策略实现（307 stars, GPL-3.0 License），T-RO 2023论文官方代码。包含3D人-机交互Gazebo仿真环境（依赖TempleRAIL/pedsim_ros_with_gazebo），使用PPO训练融合激光雷达历史+行人运动学+子目标点的80×80三通道网格观测策略，支持VO一阶奖励项，支持sim-to-real零样本迁移。已发布ROS2 Humble版本（nav2py_drl_vo分支）与Nav2生态集成。获得ICRA 2022 BARN挑战赛仿真第1名、硬件第3名。适用场景：3D仿真DRL社交导航训练、激光融合导航策略、sim-to-real部署。约束：开源版直接使用Gazebo精确行人信息而非YOLO+MHT管线（MHT商业许可限制），训练结果与论文有差异；GPL-3.0 License（比MIT更严格，修改后代码必须开源）；ROS/Gazebo依赖重，需6.9GB Singularity容器或完整ROS环境；训练时间长（3D仿真比2D慢）。",
+   "usage": "git clone https://github.com/TempleRAIL/drl_vo_nav.git; git clone https://github.com/TempleRAIL/pedsim_ros_with_gazebo.git; catkin build; pip install -r requirements.txt; python train.py --config configs/drl_vo_config.yaml; ros2 launch nav2py_drl_vo drl_vo_nav.launch.py (ROS2)",
+   "implements": [
+    "Deep Reinforcement Learning Proxemic Navigation",
+    "Lidar-History-Goal Multi-Modal Observation for DRL Navigation",
+    "VO-Augmented DRL Reward for Active Collision Avoidance",
+    "Lidar-History-Goal Multi-Modal Observation for DRL Navigation"
+   ]
+  },
+  {
+   "name": "gym-collision-avoidance",
+   "type": "package",
+   "source": "https://github.com/mit-acl/gym-collision-avoidance",
+   "description": "MIT ACL实验室（Everett, Chen & How）出品的OpenAI Gym兼容多智能体避障环境包（323 stars, MIT License），CADRL/SA-CADRL/GA3C-CADRL论文官方实现（IEEE Access 2021期刊版+IROS 2018会议版）。提供CADRL（Deep Q-network两智能体）、SA-CADRL（多智能体社交感知）、GA3C-CADRL（LSTM变长输入）等策略实现和预训练模型，是DRL人群导航领域最早的开源基准之一。支持pip安装（gym-collision-avoidance v0.0.3），提供readthedocs文档。适用场景：DRL避障算法基准测试、GA3C-CADRL LSTM变长编码参考、OpenAI Gym兼容环境快速原型。约束：2D point-mass智能体模型，不考虑非完整运动学约束和传感器噪声，sim-to-real gap大；无静态障碍物（开放平面）；GA3C-CADRL训练代码在独立仓库mit-acl/rl_collision_avoidance；2023年更新到Python 3.10+TensorFlow 2（部分旧代码有TF1→TF2迁移问题）。",
+   "usage": "pip install gym-collision-avoidance; import gym; import gym_collision_avoidance; env = gym.make('CollisionAvoidance-v0'); obs = env.reset(); action = env.action_space.sample(); obs, reward, done, info = env.step(action)",
+   "implements": [
+    "Lidar-History-Goal Multi-Modal Observation for DRL Navigation",
+    "Proxemic Reward Shaping for DRL Navigation"
+   ]
+  }
+ ],
+ "evidence": {
+  "chain_documents": 3,
+  "ledgers": 3,
+  "websearch_total": 59,
+  "webfetch_total": 39,
+  "with_negative_results": 3
+ }
+}

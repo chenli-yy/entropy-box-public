@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://chenli-yy.github.io/entropy-box-public/sitemap.xml

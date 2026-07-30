@@ -1,0 +1,1220 @@
+{
+ "topic": {
+  "keyword": "speech_source_tracking",
+  "en": "Speech Source Tracking",
+  "zh": "语音声源追踪",
+  "domain": "LOCALIZATION",
+  "description": "在交互过程中持续追踪说话人的位置变化，使人机交互始终面向说话者。"
+ },
+ "chains": [
+  {
+   "name": "Bayesian Multi-Frame Acoustic Source Tracking",
+   "steps": [
+    {
+     "id": "s1",
+     "name": "音频采集与帧分",
+     "description": "多通道麦克风阵列同步采样与STFT帧分，输出复频谱供下游DOA估计。输入：声学传感器多通道音频；输出：每帧复频谱+噪声功率谱。约束：采样率16kHz/44.1kHz，hopSize=128/512。",
+     "caps": [
+      "Audio Sensing and Framing"
+     ],
+     "next": [
+      "s1_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s1_1",
+     "name": "Multi-channel Synchronous Audio Capture",
+     "description": "N通道麦克风阵列同步采样。ODAS raw.nChannels=8/16，hopSize=128/512，fS=16000/44100，nBits=16。模块对应：ODAS src/general/raw_in.cpp。输入：声学传感器；输出：每帧8/16通道采样块。约束：需ALSA/PulseAudio声卡IO。",
+     "caps": [
+      "Multi-channel Audio Capture"
+     ],
+     "next": [
+      "s1_2"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s1_2",
+     "name": "STFT Framing + Stationary Noise Estimation",
+     "description": "对每通道做STFT(frameSize=256, hopSize=128, sine window, 50% overlap)+MCRA静态噪声估计。模块对应：ODAS src/general/frame.c、src/sne/mcra.c。输入：多通道时域采样块；输出：复频谱+噪声功率谱。约束：STFT结果被SSL与SSS共用降低计算量。",
+     "caps": [
+      "STFT Spectral Framing"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2",
+     "name": "瞬时DOA候选估计",
+     "description": "每帧SRP-PHAT-HSDA声源定位。本阶段完整链路属于兄弟主题acoustic_doa_localization，以sub_topic_ref承接。输出：potential DOAs列表(az/el/energy/prob)。约束：双尺度单位球搜索，nPots=4, probMin=0.3。",
+     "caps": [
+      "Bayesian Acoustic Source Tracking"
+     ],
+     "next": [
+      "s2_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2_1",
+     "name": "Per-frame DOA Candidate Estimation",
+     "description": "子链：由acoustic_doa_localization主题的任务链承接。用GCC-PHAT计算每对麦克风互相关，在双尺度单位球上扫描SRP-PHAT能量，返回最多4个潜在DOA(az/el/energy/prob)。输入：复频谱+噪声谱；输出：potential DOAs列表。",
+     "caps": [],
+     "next": [
+      "s3"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s3",
+     "name": "贝叶斯滤波状态预测",
+     "description": "对每条tracked source按运动模型做贝叶斯滤波状态预测。Kalman模式6维笛卡尔状态+归一化；Particle模式1000粒子三状态混合采样。输入：上一帧状态+协方差；输出：预测状态+膨胀协方差。",
+     "caps": [
+      "Bayesian Acoustic Source Tracking"
+     ],
+     "next": [
+      "s3_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s3_1",
+     "name": "Bayesian Filter State Prediction",
+     "description": "对每条tracked source按运动模型(constant velocity/static/accelerate混合)做状态预测。M3K Kalman: 6维笛卡尔(位置+速度)，状态归一化到单位球，过程噪声sigmaQ=0.001。Particle: 1000粒子三状态采样(st_ratio=0.5/ve_ratio=0.3/ac_ratio=0.2)。模块对应：ODAS src/tracking/kalman.c、particle.c。输入：上一帧state+covariance；输出：predicted state+累积协方差。约束：predict step必须在measurement update之前。适用场景：Bayesian多源追踪的预测阶段。",
+     "caps": [
+      "Bayesian Filter State Prediction"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s4",
+     "name": "多源数据关联与滤波更新",
+     "description": "GNN风格多源数据关联(三分类：matched/new/false)后接加权Kalman更新。输入：potential DOAs+预测状态；输出：每条tracked source更新后状态。约束：Pfalse=0.1, Pnew=0.1, Ptrack=0.8。",
+     "caps": [
+      "Bayesian Acoustic Source Tracking"
+     ],
+     "next": [
+      "s4_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s4_1",
+     "name": "Multi-source Data Association",
+     "description": "判断：对每条SSL输出的潜在DOA，计算与各tracked source的相干源闭式似然，按GNN风格做关联。三分类：matched(Ptrack=0.8)、new(Pnew=0.1)、false(Pfalse=0.1)。阈值：theta_new=0.9, theta_prob=0.8。模块对应：ODAS src/tracking/association.c、probabilities.c。输入：potential DOAs+predicted states；输出：观测→轨匹配决策(matched/new/false)。约束：JPDA替代方案需已知源数，本能力用GNN+概率阈值避免该假设。适用场景：多说话人场景下的瞬时观测归属。",
+     "caps": [
+      "Multi-Source Data Association"
+     ],
+     "next": [
+      "s4_2",
+      "s5"
+     ],
+     "condition": "",
+     "is_merge": false
+    },
+    {
+     "id": "s4_2",
+     "name": "Filter Measurement Update",
+     "description": "matched路径。对每条已关联观测做加权Kalman增益更新(M3K核心：weighted update of mean and covariance)。观测噪声sigmaR2_active=0.0225/sigmaR2_target=0.0025/sigmaR2_prob=0.0025。模块对应：ODAS src/tracking/kalman.c update step。输入：matched观测+predicted state；输出：updated state estimate+后验协方差。约束：必须严格在predict后做。适用场景：贝叶斯多源追踪的更新阶段。",
+     "caps": [
+      "Bayesian Filter Measurement Update"
+     ],
+     "next": [
+      "s5"
+     ],
+     "condition": "matched path (Ptrack=0.8)",
+     "is_merge": false
+    },
+    {
+     "id": "s5",
+     "name": "轨迹生命周期管理与输出",
+     "description": "合并：汇聚matched更新路径(new path直接进birth buffer)和false丢弃路径。轨迹出生/死亡判据管理，输出active tracked source列表。",
+     "caps": [
+      "Bayesian Acoustic Source Tracking"
+     ],
+     "next": [
+      "s5_1"
+     ],
+     "condition": null,
+     "is_merge": true
+    },
+    {
+     "id": "s5_1",
+     "name": "Track Birth/Death Lifecycle Management",
+     "description": "维护每条tracked source的出生与死亡。出生判据：连续N_prob=5帧观测累计概率超theta_prob=0.8则确认为active。死亡判据：连续N_inactive=(150,200,250,250)帧无观测且失活概率>=theta_inactive=0.9则释放slot。维护active/inactive状态高斯混合权重(active.mu=0.3, sigma2=0.0025; inactive.mu=0.15, sigma2=0.0025)。模块对应：ODAS src/tracking/track.c。输入：updated state+观测匹配历史；输出：active tracked source列表(source ID, az/el/x/y/z, energy, activity)。约束：N_inactive按source slot索引分别设定。适用场景：长时会话中追踪源在静默/复现时的ID持续性。",
+     "caps": [
+      "Sound Source Track Lifecycle Management"
+     ],
+     "next": [
+      "s5_2"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s5_2",
+     "name": "Tracked Source Output",
+     "description": "将active tracked source列表打包为标准格式输出到下游。三种sink：(a)JSON to terminal/file/TCP socket(ODAS内置)；(b)ROS2话题/odas/sst(odas_ros封装，消息含xyz单位球坐标+energy+source ID)；(c)单位球可视化(odas_web Electron GUI)。输入：active tracked source list；输出：JSON/socket/ROS topic/可视化。约束：输出格式与下游消费者契约对齐。impl_hint: 基于ROS2 rclpy Publisher发布自定义msg，话题命名/<robot>/sst，消息字段=[source_id, x, y, z, energy, activity]。",
+     "caps": [
+      "Tracked Source Trajectory Output"
+     ],
+     "next": [],
+     "condition": null,
+     "is_merge": false
+    }
+   ]
+  },
+  {
+   "name": "Audio-Visual Active Speaker Tracking",
+   "steps": [
+    {
+     "id": "s1",
+     "name": "音视频采集与预处理",
+     "description": "同步采集视频帧(25fps)与音频(16kHz)，提取MFCC+STFT复谱。输入：视频文件/摄像头+麦克风流；输出：视频帧序列+MFCC+复谱。约束：音频采样率16kHz，MFCC步长10ms。",
+     "caps": [
+      "AV Speaker Feature Fusion"
+     ],
+     "next": [
+      "s1_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s1_1",
+     "name": "Synchronized Video Frame + Audio Capture",
+     "description": "同步采集视频帧(25fps)与音频(16kHz wav)。模块对应：TalkNet demoTalkNet.py的video loading+ffmpeg audio extraction。输入：视频文件/摄像头+麦克风流；输出：视频帧序列+16kHz wav。",
+     "caps": [
+      "AV Speaker Feature Fusion"
+     ],
+     "next": [
+      "s1_2"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s1_2",
+     "name": "Audio MFCC + STFT Extraction",
+     "description": "对音频做STFT提取复数谱(含power-law归一化)，并提取80-dim MFCC作为audio frontend输入。模块对应：TalkNet talkNet.py audio frontend+dataLoader.py MFCC提取。输入：16kHz wav；输出：复数谱+80-dim MFCC序列(10ms step)。",
+     "caps": [
+      "Speaker Audio Spectrogram Extraction"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2",
+     "name": "人脸检测与轨迹嵌入",
+     "description": "MTCNN/SFD检测人脸bbox→跨帧跟踪→3D Conv+ResNet18提取视觉特征→V-TCN(5层残差dilated 1D Conv)做长时序视觉特征聚合。输入：视频帧序列；输出：每条人脸轨迹的视觉特征序列(N_faces×T×D_visual)。约束：感受野21 frames=840ms@25fps。",
+     "caps": [
+      "AV Speaker Feature Fusion"
+     ],
+     "next": [
+      "s2_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2_1",
+     "name": "Face Detection + Trajectory Tracking + Embedding",
+     "description": "MTCNN/SFD检测每帧人脸bbox→跨帧跟踪成轨迹(IoU/SORT)→每帧人脸crop经3D Conv+ResNet18提取视觉特征序列→V-TCN(5层残差dilated 1D Conv)做长时序视觉特征聚合(感受野21 frames=840ms)。模块对应：TalkNet talkNet.py visual_frontend(3D Conv+ResNet18)+visual_tc(V-TCN)。输入：视频帧序列；输出：每条人脸轨迹的视觉特征序列(N_faces×T×D_visual)。",
+     "caps": [
+      "Face Track Embedding"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s3",
+     "name": "视听跨模态编码融合",
+     "description": "2层cross-attention沿时间维做audio↔visual互查后接1层transformer(8 heads)self-attention做长时序全局聚合。输入：audio features(T_a×D_a)+visual features per face(T_v×D_v)；输出：长时序聚合的融合视听特征per face。约束：audio感受野1.89s+video 0.84s。",
+     "caps": [
+      "AV Speaker Feature Fusion"
+     ],
+     "next": [
+      "s3_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s3_1",
+     "name": "Cross-Attention Audio-Visual Fusion",
+     "description": "2层cross-attention沿时间维做audio→visual与visual→audio互查。audio embedding作为query查visual key/value，反之亦然。模块对应：TalkNet talkNet.py cross_attention模块。输入：audio features(T_a×D_a)+visual features per face(T_v×D_v)；输出：cross-attended audio+visual features。",
+     "caps": [
+      "Audio Visual Speaker Encoding"
+     ],
+     "next": [
+      "s3_2"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s3_2",
+     "name": "Self-Attention Long-Term Temporal Aggregation",
+     "description": "1层transformer(8 attention heads)对cross-attended特征做长时序全局聚合，捕捉远距离帧间依赖(audio感受野1.89s+video 0.84s)。模块对应：TalkNet talkNet.py self_attention模块。输入：cross-attended features；输出：长时序聚合的融合视听特征per face。此步是TalkNet关键创新——长时序temporal features是其在AVA上mAP 92.3的核心。",
+     "caps": [
+      "Audio Visual Speaker Encoding"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s4",
+     "name": "主动说话者评分",
+     "description": "FC+softmax分类头从融合特征输出每帧每脸的speaking概率(0-1)。训练用cross-entropy frame-level loss+负采样增强。输入：融合视听特征per face；输出：per-frame per-face speaking probability。性能指标：AVA val mAP 92.3/test 90.8。",
+     "caps": [
+      "AV Speaker Feature Fusion"
+     ],
+     "next": [
+      "s4_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s4_1",
+     "name": "Per-Frame Per-Face Speaking Probability Classification",
+     "description": "FC+softmax分类头从融合特征输出每帧每张脸的speaking概率(0-1)。训练用cross-entropy frame-level loss+负采样增强(batch内随机取另一视频音频作为负样本，强制模型学视听同步而非纯音频VAD)。模块对应：TalkNet talkNet.py classifier模块。输入：融合视听特征per face；输出：per-frame per-face speaking probability。性能指标：AVA val mAP 92.3/test 90.8；Columbia ASD avg F1 96.3。",
+     "caps": [
+      "Active Speaker Scoring"
+     ],
+     "next": [
+      "s5"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s5",
+     "name": "主动说话者选择与HRI输出",
+     "description": "对per-frame per-face speaking probabilities做时序平滑(median filter~1s窗口)+多脸argmax选择+hysteresis避免快速切换，输出active speaker face ID+confidence供HRI头部朝向。输入：per-frame per-face speaking probabilities；输出：active speaker face ID+confidence+bbox。约束：hysteresis margin典型0.1-0.2。",
+     "caps": [
+      "AV Speaker Feature Fusion"
+     ],
+     "next": [
+      "s5_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s5_1",
+     "name": "Active Speaker Selection with Temporal Smoothing",
+     "description": "对ASD分类头输出的per-frame per-face speaking probabilities做时序平滑(median filter~1s窗口)+多脸argmax选择+hysteresis(新脸概率需超当前active+margin才切换，避免快速抖动)，输出单一active speaker face ID+confidence+bbox供HRI头部朝向。输入：per-frame per-face speaking probabilities(来自CAP_46916b8f)。输出：active speaker face ID+confidence+bbox。约束：hysteresis margin典型0.1-0.2，平滑窗口~1s(25 frames@25fps)。适用场景：HRI持续面向说话者、多方会话说话人选择、凝视分配调度上游。",
+     "caps": [
+      "Active Speaker Selection with Temporal Smoothing"
+     ],
+     "next": [
+      "s5_2"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s5_2",
+     "name": "HRI Active Speaker Output",
+     "description": "将active speaker face ID+bbox+confidence发布为ROS2话题或JSON/socket供下游HRI控制器(头部朝向伺服、凝视分配等)消费。输入：s5_1 active speaker selection。输出：ROS2话题/JSON。impl_hint: 基于ROS2 rclpy Publisher发布自定义msg，话题命名/<robot>/active_speaker，消息字段=[uint32 face_id, float32[4] bbox, float32 confidence, builtin_interfaces/Time timestamp]。",
+     "caps": [
+      "Active Speaker Selection with Temporal Smoothing"
+     ],
+     "next": [],
+     "condition": null,
+     "is_merge": false
+    }
+   ]
+  },
+  {
+   "name": "Speaker Diarization Identity Tracking",
+   "steps": [
+    {
+     "id": "s1",
+     "name": "音频预处理与神经说话人分割",
+     "description": "音频加载、单声道化、16kHz重采样后，通过SincNet+序列模型做端到端神经说话人分割，输出per-frame per-speaker概率矩阵(Kmax=4)及VAD活动标注。",
+     "caps": [
+      "Speaker Diarization Identity Pipeline"
+     ],
+     "next": [
+      "s1_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s1_1",
+     "name": "Audio Loading + Mono Resampling",
+     "description": "torchcodec+torchaudio.load读取任意格式音频，若多声道沿通道维取均值降混为mono，若采样率非16kHz做重采样。输入：任意采样率/声道音频文件；输出：16kHz mono waveform tensor。约束：pyannote.audio内部由torchcodec+torchaudio自动完成。",
+     "caps": [
+      "Speaker Diarization Identity Pipeline"
+     ],
+     "next": [
+      "s1_2"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s1_2",
+     "name": "Neural Speaker Segmentation Inference",
+     "description": "SincNet卷积前端+序列模型对5s滑窗(步长500ms)做推理，输出per-frame per-speaker概率矩阵(T≈313帧×Kmax=4@16ms)。Powerset multi-class cross entropy损失训练。模块对应：pyannote/segmentation模型。输入：5s×16kHz waveform(80000 samples)；输出：(T, Kmax)概率矩阵。约束：Kmax=4，permutation-invariant training。",
+     "caps": [
+      "Neural Speaker Segmentation"
+     ],
+     "next": [
+      "s1_3"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s1_3",
+     "name": "Sliding Window Aggregation + VAD",
+     "description": "滑窗概率序列→全文件per-frame per-speaker活动标注。VAD=max over speakers(Bredin 2021 eq.2: y_t^VAD=max_k y_t^k)+hysteresis thresholding(onset/offset/min_duration_on/min_duration_off)。模块对应：pyannote.audio Inference(window=sliding)+内置hysteresis。输入：滑窗概率序列；输出：全文件per-frame per-speaker活动标注。",
+     "caps": [
+      "Neural Speaker Segmentation"
+     ],
+     "next": [
+      "s2"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2",
+     "name": "说话人声纹embedding提取",
+     "description": "对segmentation掩码指示的每说话人子段，用WeSpeaker ResNet34(256维)或ECAPA-TDNN(192维)提取声纹embedding。",
+     "caps": [
+      "Speaker Diarization Identity Pipeline"
+     ],
+     "next": [
+      "s2_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2_1",
+     "name": "Sliding Window Segmentation + Speaker Activity Masking",
+     "description": "pyannote.audio Inference(model=embedding, window=sliding, duration=3.0, step=1.0)对5s音频块+该块segmentation掩码切出每个活跃说话人的子段waveform。输入：5s音频块+segmentation掩码；输出：每说话人子段waveform。",
+     "caps": [
+      "Speaker Embedding Extraction"
+     ],
+     "next": [
+      "s2_2"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s2_2",
+     "name": "Speaker Embedding Model Inference",
+     "description": "WeSpeaker ResNet34+attentive statistics pooling→256维embedding；或ECAPA-TDNN(1D SE-Res2Blocks+MFA+通道与上下文相关统计池化)→192维embedding。VoxCeleb 1+2训练，Large Margin/Additive Margin Softmax损失。模块对应：pyannote/wespeaker-voxceleb-resnet34-LM或speechbrain/spkrec-ecapa-voxceleb。输入：每说话人子段waveform；输出：固定维度embedding向量。性能：ECAPA-TDNN VoxCeleb1-test Cleaned EER 0.80%。",
+     "caps": [
+      "Speaker Embedding Extraction"
+     ],
+     "next": [
+      "s3"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s3",
+     "name": "说话人聚类与身份分配",
+     "description": "基于embedding余弦距离矩阵做凝聚层次聚类(AHC)或VBx变分贝叶斯HMM精化，把N个embedding段聚合为K个说话人标签。",
+     "caps": [
+      "Speaker Diarization Identity Pipeline"
+     ],
+     "next": [
+      "s3_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s3_1",
+     "name": "Cosine Distance Matrix",
+     "description": "scipy.spatial.distance.cdist(embeddings, metric=cosine)计算(N,N)余弦距离矩阵。模块对应：scipy cdist。输入：N个embedding向量；输出：(N,N)余弦距离矩阵。",
+     "caps": [
+      "Speaker Agglomerative Clustering"
+     ],
+     "next": [
+      "s3_2",
+      "s3_3"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s3_2",
+     "name": "Agglomerative Hierarchical Clustering (Default)",
+     "description": "sklearn.cluster.AgglomerativeClustering对(N,N)距离矩阵按阈值做凝聚层次聚类(AHC)。pyannote.audio community-1默认clustering模块。模块对应：sklearn AgglomerativeClustering。输入：(N,N)距离矩阵+阈值；输出：N个聚类标签。约束：阈值需在dev set用Pipeline.optimization调参。",
+     "caps": [
+      "Speaker Agglomerative Clustering"
+     ],
+     "next": [
+      "s3_4"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s3_3",
+     "name": "VBx Bayesian HMM Clustering (Alternative)",
+     "description": "以AHC输出为初始化，在embedding序列上跑变分贝叶斯HMM(VBx)，输出每帧speaker标签的HMM状态序列。相比纯AHC，VBx显式建模时序转移与说话人数量不确定性。模块对应：BUTSpeechFIT/VBx。输入：embedding序列+AHC初始化标签；输出：HMM状态序列。约束：长音频(>30min)AHC初始化慢，可用random_N替代。",
+     "caps": [
+      "VBx Bayesian HMM Speaker Clustering"
+     ],
+     "next": [
+      "s3_4"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s3_4",
+     "name": "Speaker Count Estimation",
+     "description": "合并：汇聚AHC和VBx两条路径，按num_speakers/min_speakers/max_speakers参数或聚类阈值决定最终聚类数K。VBx路径通过HMM隐状态数自动估计。",
+     "caps": [
+      "Speaker Diarization Identity Pipeline"
+     ],
+     "next": [
+      "s4"
+     ],
+     "condition": null,
+     "is_merge": true
+    },
+    {
+     "id": "s4",
+     "name": "Turn边界检测与时间轴对齐",
+     "description": "对聚类标签做hysteresis thresholding精修turn边界，可选overlap-aware resegmentation，输出RTTM时间轴。",
+     "caps": [
+      "Speaker Diarization Identity Pipeline"
+     ],
+     "next": [
+      "s4_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s4_1",
+     "name": "Turn Boundary Hysteresis Refinement",
+     "description": "对聚类标签按时间排序聚合为Annotation，对每个speaker活动序列做onset/offset双阈值hysteresis thresholding(Bredin 2021图2)，填充<min_duration_off间隙(桥接短停顿)，删除<min_duration_on孤立段(去抖动)。模块对应：pyannote.audio内置后处理。输入：聚类标签+segmentation概率；输出：精修后的turn边界。",
+     "caps": [
+      "Speaker Diarization Identity Pipeline"
+     ],
+     "next": [
+      "s4_2"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s4_2",
+     "name": "Overlap-Aware Resegmentation",
+     "description": "以baseline diarization为参考，对5s滑窗找segmentation输出与baseline的最佳permutation，把重叠语音区域重新分配给多说话人标签。Bredin 2021 §2.4提出，相对VBx baseline在AMI/DIHARD3/VoxConverse上DER相对改进17%/13%/13%。模块对应：pyannote.audio.pipelines.Resegmentation。输入：baseline diarization+segmentation模型；输出：重叠区域多人标注的精修diarization。约束：5s滑窗，permutation-invariant。",
+     "caps": [
+      "Overlap-Aware Speaker Resegmentation"
+     ],
+     "next": [
+      "s4_3"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s4_3",
+     "name": "RTTM Timeline Output",
+     "description": "pyannote.core.Annotation.to_rttm()把Annotation输出为RTTM文件(speaker_id onset duration)。diart流式版用diart.sinks.RTTMWriter。输入：Annotation；输出：RTTM文件。",
+     "caps": [
+      "Speaker Diarization Identity Pipeline"
+     ],
+     "next": [
+      "s5"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s5",
+     "name": "评测与置信度评估",
+     "description": "以pyannote.metrics计算DER=(FA+Miss+Confusion)/Total speech，分解三量化分量。",
+     "caps": [
+      "Speaker Diarization Identity Pipeline"
+     ],
+     "next": [
+      "s5_1"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s5_1",
+     "name": "DER Calculation",
+     "description": "pyannote.metrics计算DER=(FA+Miss+Confusion)/Total speech，分解误报/漏检/说话人混淆三分量。完全自动处理，无forgiveness collar(DIHARD3/AMI Full协议)。模块对应：pyannote.metrics.DiarizationErrorRate。输入：预测RTTM+参考RTTM；输出：DER%+confusion矩阵分解。",
+     "caps": [
+      "Speaker Diarization DER Evaluation"
+     ],
+     "next": [
+      "s5_2"
+     ],
+     "condition": null,
+     "is_merge": false
+    },
+    {
+     "id": "s5_2",
+     "name": "Speaker Count Accuracy + Ablation",
+     "description": "pyannote.metrics DER的confusion矩阵分解，计算说话人数量准确率。输入：DER分解结果；输出：说话人数量准确率。",
+     "caps": [
+      "Speaker Diarization DER Evaluation"
+     ],
+     "next": [],
+     "condition": null,
+     "is_merge": false
+    }
+   ]
+  }
+ ],
+ "capabilities": [
+  {
+   "en": "Audio Sensing and Framing",
+   "zh": "音频采集与帧分",
+   "level": "l2",
+   "description": "多通道麦克风阵列同步采样与STFT帧分，输出复频谱供下游DOA估计。输入：声学传感器多通道音频。输出：每帧复频谱+噪声功率谱。约束：采样率16kHz/44.1kHz，hopSize=128/512。适用场景：声源追踪的前端音频预处理。",
+   "aliases": [
+    "Audio Frontend",
+    "Mic Array Capture"
+   ],
+   "parent": null,
+   "children": [
+    "Multi-channel Audio Capture",
+    "STFT Spectral Framing"
+   ],
+   "assets": []
+  },
+  {
+   "en": "Multi-channel Audio Capture",
+   "zh": "多通道音频采集",
+   "level": "l3",
+   "description": "N通道麦克风阵列同步采样。输入：声学传感器(8SoundsUSB/16SoundsUSB硬件)。输出：每帧8/16通道采样块。约束：需ALSA/PulseAudio声卡IO；采样率16kHz/44.1kHz。适用场景：麦克风阵列前端采集。",
+   "aliases": [
+    "Mic Array Signal Capture"
+   ],
+   "parent": "Audio Sensing and Framing",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "STFT Spectral Framing",
+   "zh": "STFT频谱帧分",
+   "level": "l3",
+   "description": "对每通道做STFT(frameSize=256, hopSize=128, sine window, 50% overlap)+MCRA静态噪声估计。输入：多通道时域采样块。输出：复频谱+噪声功率谱。约束：STFT结果被SSL与SSS共用降低计算量。适用场景：声源定位与追踪的频谱预处理。",
+   "aliases": [
+    "Short-Time Fourier Transform",
+    "MCRA Noise Estimation"
+   ],
+   "parent": "Audio Sensing and Framing",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "Bayesian Acoustic Source Tracking",
+   "zh": "贝叶斯声源追踪",
+   "level": "l2",
+   "description": "以贝叶斯滤波(卡尔曼/粒子/PHD)对每帧瞬时DOA做时序后验维护，输出连续source轨迹ID与方位/位置。处理瞬时DOA抖动、短静默段跨接、多源数据关联、轨迹生命周期(出生/死亡)。前置依赖：瞬时DOA估计(sub_topic_ref到acoustic_doa_localization)。输入：麦克风阵列复频谱+per-frame潜在DOA列表。输出：active tracked source列表(source ID, azimuth, elevation, x/y/z, energy, activity)。约束：嵌入式友好(单核<1% 1源/<7% 4源，树莓派3)。适用场景：HRI持续面向说话者、多方会话source标号维护、移动声源轨迹。",
+   "aliases": [
+    "Sound Source Tracking",
+    "SST",
+    "Acoustic Source Tracking"
+   ],
+   "parent": null,
+   "children": [
+    "Bayesian Filter State Prediction",
+    "Multi-Source Data Association",
+    "Bayesian Filter Measurement Update",
+    "Sound Source Track Lifecycle Management",
+    "Tracked Source Trajectory Output"
+   ],
+   "assets": [
+    "ODAS",
+    "HARK",
+    "LOCATA",
+    "NAOqi ALSoundLocalization",
+    "Spot Sound Source Tracking SAR System",
+    "Hexapod Auditory Navigation Robot",
+    "Silero VAD"
+   ]
+  },
+  {
+   "en": "Bayesian Filter State Prediction",
+   "zh": "贝叶斯滤波状态预测",
+   "level": "l3",
+   "description": "对每条tracked source按其运动模型(constant velocity/static/accelerate混合)做状态预测。M3K Kalman模式下状态为6维笛卡尔(位置+速度)，状态归一化到单位球防止笛卡尔漂移；过程噪声sigmaQ=0.001。Particle模式下1000粒子按st_ratio=0.5(static)/ve_ratio=0.3(velocity)/ac_ratio=0.2(accelerate)做状态采样。输入：上一帧state+covariance。输出：predicted state+累积协方差。约束：predict step必须在measurement update之前。适用场景：Bayesian多源追踪的预测阶段。",
+   "aliases": [
+    "Kalman Predict Step",
+    "Particle Filter Prediction"
+   ],
+   "parent": "Bayesian Acoustic Source Tracking",
+   "children": [],
+   "assets": [
+    "ODAS"
+   ]
+  },
+  {
+   "en": "Multi-Source Data Association",
+   "zh": "多源数据关联",
+   "level": "l3",
+   "description": "对每帧SSL输出的N个潜在DOA与M条tracked source做匹配，使用相干源闭式似然(M3K关键贡献)+GNN风格分配。三类关联概率分配：Pfalse=0.1(误检丢弃)、Pnew=0.1(候选新轨)、Ptrack=0.8(关联到已有轨)。新轨阈值theta_new=0.9，关联确认阈值theta_prob=0.8。输入：potential DOAs+predicted states。输出：obs→track匹配决策(matched/new/false三分类)。约束：JPDA替代方案需已知源数，本能力用GNN+概率阈值避免该假设。适用场景：多说话人场景下的瞬时观测归属。",
+   "aliases": [
+    "GNN Data Association",
+    "PDA Audio Tracking"
+   ],
+   "parent": "Bayesian Acoustic Source Tracking",
+   "children": [],
+   "assets": [
+    "ODAS"
+   ]
+  },
+  {
+   "en": "Bayesian Filter Measurement Update",
+   "zh": "贝叶斯滤波观测更新",
+   "level": "l3",
+   "description": "对已关联观测做加权Kalman增益更新(M3K核心：weighted update of mean vector and covariance matrix for simultaneous tracking)。观测噪声sigmaR2_active=0.0225、sigmaR2_target=0.0025、sigmaR2_prob=0.0025(用于不同activity状态下的观测不确定性)。输入：matched观测+predicted state。输出：updated state estimate+后验协方差。约束：必须严格在predict后做。适用场景：贝叶斯多源追踪的更新阶段。",
+   "aliases": [
+    "Kalman Update Step",
+    "Weighted M3K Update"
+   ],
+   "parent": "Bayesian Acoustic Source Tracking",
+   "children": [],
+   "assets": [
+    "ODAS"
+   ]
+  },
+  {
+   "en": "Sound Source Track Lifecycle Management",
+   "zh": "声源轨迹生命周期管理",
+   "level": "l3",
+   "description": "维护每条tracked source的出生与死亡。出生判据：连续N_prob=5帧观测累计概率超theta_prob=0.8则确认为active。死亡判据：连续N_inactive=(150,200,250,250)帧(4条source slot分别的遗忘计数器)无观测且失活概率>=theta_inactive=0.9则释放slot。同时维护active/inactive状态高斯混合权重(active.mu=0.3, sigma2=0.0025；inactive.mu=0.15, sigma2=0.0025)。输入：updated state+观测匹配历史。输出：active tracked source列表(source ID, az/el/x/y/z, energy, activity)。约束：N_inactive按source slot索引分别设定(slot 0=150, slot 1=200, slot 2=250, slot 3=250)。适用场景：长时会话中追踪源在静默/复现时的ID持续性。",
+   "aliases": [
+    "Track Birth-Death Management",
+    "Source ID Continuity"
+   ],
+   "parent": "Bayesian Acoustic Source Tracking",
+   "children": [],
+   "assets": [
+    "ODAS"
+   ]
+  },
+  {
+   "en": "Tracked Source Trajectory Output",
+   "zh": "追踪源轨迹输出",
+   "level": "l3",
+   "description": "将active tracked source列表打包为标准格式输出到下游。三种sink：(a)JSON to terminal/file/TCP socket(ODAS内置)；(b)ROS2话题/odas/sst(odas_ros封装，消息含xyz单位球坐标+energy+source ID)；(c)单位球可视化(odas_web Electron GUI)。输入：active tracked source list。输出：JSON/socket/ROS topic/可视化。约束：输出格式与下游消费者契约对齐(HRI控制器期望source ID+方位+能量)。适用场景：HRI声源追踪输出。",
+   "aliases": [
+    "SST Output Interface",
+    "/odas/sst Publisher"
+   ],
+   "parent": "Bayesian Acoustic Source Tracking",
+   "children": [],
+   "assets": [
+    "odas_ros",
+    "ODAS Studio"
+   ]
+  },
+  {
+   "en": "AV Speaker Feature Fusion",
+   "zh": "视听说话者特征融合",
+   "level": "l2",
+   "description": "把人脸轨迹嵌入与音频复谱做跨模态编码，产出每个说话者的融合视听特征，为下游ASD评分与语音分离共用。输入：人脸嵌入+音频复谱特征。输出：融合视听特征。约束：融合方式决定下游性能。适用场景：视听说话者检测与追踪。",
+   "aliases": [
+    "Audio-Visual Speaker Fusion",
+    "AV ASD Pipeline"
+   ],
+   "parent": null,
+   "children": [
+    "Speaker Audio Spectrogram Extraction",
+    "Face Track Embedding",
+    "Audio Visual Speaker Encoding",
+    "Active Speaker Scoring",
+    "Active Speaker Selection with Temporal Smoothing"
+   ],
+   "assets": [
+    "Silero VAD",
+    "TalkNet-ASD",
+    "AVSpeech Dataset",
+    "Looking to Listen",
+    "AVENet"
+   ]
+  },
+  {
+   "en": "Speaker Audio Spectrogram Extraction",
+   "zh": "说话者音频频谱提取",
+   "level": "l3",
+   "description": "对混合音频做STFT提取复数谱，含Power-law归一化与复谱掩蔽生成预处理。输入：混合音频波形。输出：复数谱。依赖：librosa/STFT。约束：采样率16kHz，归一化。适用场景：AV ASD的音频前端预处理。",
+   "aliases": [
+    "Audio Frontend",
+    "STFT Spectrogram Extraction"
+   ],
+   "parent": "AV Speaker Feature Fusion",
+   "children": [],
+   "assets": [
+    "TalkNet-ASD"
+   ]
+  },
+  {
+   "en": "Face Track Embedding",
+   "zh": "人脸轨迹嵌入",
+   "level": "l3",
+   "description": "检测视频中人脸并跟踪成轨迹，提取视觉特征序列。TalkNet用3D Conv+ResNet18+V-TCN(5层残差dilated 1D Conv)做长时序视觉特征聚合(感受野21 frames=840ms)。输入：视频帧。输出：每条人脸轨迹的视觉特征序列(N_faces×T_v×D_visual)。依赖：MTCNN/SFD检测+3D Conv+ResNet18。约束：人脸漏检直接导致ASD失败；非正面/遮挡人脸性能下降。适用场景：AV ASD的视觉前端。",
+   "aliases": [
+    "Face Detection and Tracking",
+    "Visual Face Embedding"
+   ],
+   "parent": "AV Speaker Feature Fusion",
+   "children": [],
+   "assets": [
+    "TalkNet-ASD"
+   ]
+  },
+  {
+   "en": "Audio Visual Speaker Encoding",
+   "zh": "视听说话者编码",
+   "level": "l3",
+   "description": "把人脸嵌入与音频复谱特征做跨模态融合编码，产出每个说话者的融合视听特征。TalkNet实现：2层cross-attention沿时间维做audio↔visual互查+1层transformer(8 heads)self-attention做长时序全局聚合。输入：人脸嵌入+音频复谱特征。输出：融合视听特征per face。约束：长时序感受野(audio 1.89s+video 0.84s)是性能关键。适用场景：AV ASD的跨模态融合与长时序聚合。",
+   "aliases": [
+    "Cross-Modal AV Fusion",
+    "AV Temporal Attention"
+   ],
+   "parent": "AV Speaker Feature Fusion",
+   "children": [],
+   "assets": [
+    "TalkNet-ASD"
+   ]
+  },
+  {
+   "en": "Active Speaker Scoring",
+   "zh": "主动说话者评分",
+   "level": "l3",
+   "description": "ASD分类头从融合视听特征输出每帧每脸的speaking概率(0-1)。训练用cross-entropy frame-level loss+负采样增强。输入：融合视听特征per face。输出：per-frame per-face speaking probability。约束：AVA-ActiveSpeaker协议；长时序特征是TalkNet关键。性能指标：AVA val mAP 92.3/test 90.8；Columbia ASD avg F1 96.3。适用场景：AV ASD的分类评分。",
+   "aliases": [
+    "ASD Classifier",
+    "Speaking Probability Estimation"
+   ],
+   "parent": "AV Speaker Feature Fusion",
+   "children": [],
+   "assets": [
+    "AVA-ActiveSpeaker"
+   ]
+  },
+  {
+   "en": "Active Speaker Selection with Temporal Smoothing",
+   "zh": "主动说话者选择与时序平滑",
+   "level": "l3",
+   "description": "对ASD分类头输出的per-frame per-face speaking probabilities做时序平滑(median filter~1s窗口)+多脸argmax选择+hysteresis(新脸概率需超当前active+margin才切换，避免快速抖动)，输出单一active speaker face ID+confidence+bbox供HRI头部朝向。输入：per-frame per-face speaking probabilities(来自CAP_46916b8f)。输出：active speaker face ID+confidence+bbox。约束：hysteresis margin典型0.1-0.2，平滑窗口~1s(25 frames@25fps)。适用场景：HRI持续面向说话者、多方会话说话人选择、凝视分配调度上游。",
+   "aliases": [
+    "Active Speaker Tracking Output",
+    "ASD Post-Processing for HRI"
+   ],
+   "parent": "AV Speaker Feature Fusion",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "Speaker Diarization Identity Pipeline",
+   "zh": "说话人日志化身份追踪流水线",
+   "level": "l2",
+   "description": "以神经分割+声纹embedding+聚类三阶段范式把任意采样率/声道的音频流转换为说话人身份时间线(RTTM)，输出谁在何时说话。输入：16kHz mono音频。输出：speaker turn timeline(speaker_id+onset+duration)。约束：5s滑窗步长500ms，Kmax=4。性能：VoxConverse v0.3 DER 11.2%(pyannote community-1)。适用场景：会议记录、客服对话、智能助手多方会话的身份追踪。",
+   "aliases": [
+    "speaker diarization",
+    "说话人分离",
+    "说话人日志化"
+   ],
+   "parent": null,
+   "children": [
+    "Neural Speaker Segmentation",
+    "Speaker Embedding Extraction",
+    "Speaker Agglomerative Clustering",
+    "VBx Bayesian HMM Speaker Clustering",
+    "Overlap-Aware Speaker Resegmentation",
+    "Speaker Diarization DER Evaluation"
+   ],
+   "assets": [
+    "pyannote.audio",
+    "diart"
+   ]
+  },
+  {
+   "en": "Neural Speaker Segmentation",
+   "zh": "神经说话人分割",
+   "level": "l3",
+   "description": "基于SincNet+序列模型的端到端网络把5s音频块映射为per-frame per-speaker概率矩阵(Kmax=4×T≈313帧@16ms)，用powerset multi-class cross entropy损失训练。输出可直接做VAD/OSD/Resegmentation。输入：5s×16kHz mono waveform。输出：(T, Kmax)概率矩阵。约束：Kmax=4，permutation-invariant training。性能：VoxConverse VAD FA+Miss 2.5%。适用场景：diarization流水线前置、独立VAD、重叠语音检测。",
+   "aliases": [
+    "speaker segmentation",
+    "pyannote segmentation",
+    "end-to-end speaker segmentation"
+   ],
+   "parent": "Speaker Diarization Identity Pipeline",
+   "children": [],
+   "assets": [
+    "pyannote.audio",
+    "pyannote/segmentation"
+   ]
+  },
+  {
+   "en": "Speaker Embedding Extraction",
+   "zh": "说话人声纹embedding提取",
+   "level": "l3",
+   "description": "把任意时长语音段映射为固定维度声纹embedding向量(WeSpeaker ResNet34 256维/ECAPA-TDNN 192维)，使同说话人余弦距离小、异说话人距离大。ECAPA-TDNN=1D SE-Res2Blocks+MFA+通道与上下文相关统计池化。WeSpeaker=ResNet34+attentive statistics pooling+Large Margin损失。输入：单说话人waveform段。输出：固定维度embedding向量。约束：VoxCeleb 1+2训练。性能：ECAPA-TDNN VoxCeleb1-test Cleaned EER 0.80%。适用场景：说话人验证、diarization embedding阶段、身份聚类。",
+   "aliases": [
+    "x-vector extraction",
+    "speaker embedding",
+    "ECAPA-TDNN embedding"
+   ],
+   "parent": "Speaker Diarization Identity Pipeline",
+   "children": [],
+   "assets": [
+    "SpeechBrain",
+    "pyannote/wespeaker-voxceleb-resnet34-LM",
+    "ECAPA-TDNN"
+   ]
+  },
+  {
+   "en": "Speaker Agglomerative Clustering",
+   "zh": "说话人凝聚层次聚类",
+   "level": "l3",
+   "description": "基于embedding余弦距离矩阵做凝聚层次聚类(AHC)，按距离阈值或目标聚类数把N个embedding段聚合为K个说话人标签。pyannote.audio community-1默认聚类模块。输入：(N,N)余弦距离矩阵+可选num_speakers约束。输出：N个聚类标签(SPEAKER_00/01/...)。约束：距离阈值需在dev set调参。适用场景：diarization身份分配阶段。",
+   "aliases": [
+    "AHC",
+    "agglomerative hierarchical clustering",
+    "凝聚聚类"
+   ],
+   "parent": "Speaker Diarization Identity Pipeline",
+   "children": [],
+   "assets": []
+  },
+  {
+   "en": "VBx Bayesian HMM Speaker Clustering",
+   "zh": "VBx变分贝叶斯HMM说话人聚类",
+   "level": "l3",
+   "description": "以AHC输出为初始化，在embedding序列上跑变分贝叶斯HMM(VBx)，输出每帧speaker标签的HMM状态序列。相比纯AHC，显式建模时序转移与说话人数量不确定性。输入：embedding序列+AHC初始化标签。输出：HMM状态序列(每帧speaker)。约束：长音频(>30min)AHC初始化慢。适用场景：高精度离线diarization、竞赛baseline。",
+   "aliases": [
+    "VBx",
+    "Bayesian HMM x-vector diarization",
+    "variational Bayes HMM"
+   ],
+   "parent": "Speaker Diarization Identity Pipeline",
+   "children": [],
+   "assets": [
+    "VBx"
+   ]
+  },
+  {
+   "en": "Overlap-Aware Speaker Resegmentation",
+   "zh": "重叠感知说话人再分割",
+   "level": "l3",
+   "description": "以baseline diarization为参考，对5s滑窗找segmentation输出与baseline的最佳permutation，把重叠语音区域重新分配给多说话人标签。Bredin 2021 §2.4提出。输入：baseline diarization+segmentation模型。输出：重叠区域多人标注的精修diarization。约束：5s滑窗，permutation-invariant。适用场景：重叠语音多的会议场景精修。",
+   "aliases": [
+    "overlap-aware resegmentation",
+    "重叠再分割"
+   ],
+   "parent": "Speaker Diarization Identity Pipeline",
+   "children": [],
+   "assets": [
+    "pyannote.audio"
+   ]
+  },
+  {
+   "en": "Speaker Diarization DER Evaluation",
+   "zh": "说话人日志化DER评测",
+   "level": "l3",
+   "description": "以pyannote.metrics计算DER=(FA+Miss+Confusion)/Total speech，分解误报/漏检/说话人混淆三分量。完全自动处理，无forgiveness collar(DIHARD3/AMI Full协议)。输入：预测RTTM+参考RTTM。输出：DER%+confusion矩阵分解。约束：协议差异(VoxConverse用250ms collar)。适用场景：diarization系统量化评测。",
+   "aliases": [
+    "DER evaluation",
+    "diarization error rate",
+    "说话人错误率"
+   ],
+   "parent": "Speaker Diarization Identity Pipeline",
+   "children": [],
+   "assets": [
+    "VoxConverse",
+    "pyannote.metrics"
+   ]
+  }
+ ],
+ "assets": [
+  {
+   "name": "ODAS",
+   "type": "tool",
+   "source": "https://github.com/introlab/odas",
+   "description": "IntRoLab维护的C99开源嵌入式机器人听觉库，提供SSL+SST+SSS+post-filter完整pipeline。SST模块支持Kalman/particle两种模式，针对低成本嵌入式硬件(Raspberry Pi/Jetson)优化。仅依赖FFTW3外部库。适用场景：嵌入式声源追踪HRI。约束：默认source slot=4，远场假设，树莓派上odas_web Electron GUI不流畅。",
+   "usage": "git clone https://github.com/introlab/odas.git && cd odas && mkdir build && cd build && cmake .. && make && ./bin/odaslive -c ../re6_sockets.cfg",
+   "implements": [
+    "Bayesian Filter State Prediction",
+    "Bayesian Acoustic Source Tracking",
+    "Multi-Source Data Association",
+    "Sound Source Track Lifecycle Management",
+    "Bayesian Filter Measurement Update"
+   ]
+  },
+  {
+   "name": "HARK",
+   "type": "framework",
+   "source": "https://www.hark.jp/",
+   "description": "京都大学/产综研/东工大主导的开源机器人听觉框架(2008)，提供LocalizeMUSIC(基于SEVD-MUSIC的多源同时DOA估计)+SourceTracker(源编号持续性维护)。模块丰富但MUSIC多次特征值分解计算重，无人机场景需三台笔记本地面处理。适用场景：同范式备选实现，与ODAS对比。约束：依赖FlowDesigner+多模块；笔记本级算力需求。",
+   "usage": "HARK SourceTracker模块：active/inactive阈值+遗忘时间窗管理源编号持续性。配置通过FlowDesigner GUI连接。",
+   "implements": [
+    "Bayesian Acoustic Source Tracking"
+   ]
+  },
+  {
+   "name": "LOCATA",
+   "type": "dataset",
+   "source": "https://locata.aalto.ch/",
+   "description": "IEEE SAM 2018 Workshop发布的声源定位与追踪评测基准。6个任务覆盖静态/移动声源x静态/移动阵列(含单个移动说话人+移动机器人阵列场景)。12通道球形/平面阵列真实录音+6-DoF位姿ground truth。适用场景：Bayesian SST算法(特别是多源+移动场景)的事实评测集。约束：主域名locata.aalto.ch，备用域名可能失效。",
+   "usage": "下载LOCATA数据集录音与标注，跑SST算法在Task 2/4/6(双源场景)上评估azimuth RMSE与track ID一致性。",
+   "implements": [
+    "Bayesian Acoustic Source Tracking"
+   ]
+  },
+  {
+   "name": "NAOqi ALSoundLocalization",
+   "type": "ros_package",
+   "source": "http://doc.aldebaran.com/2-5/naoqi/audio/alsoundlocalization.html",
+   "description": "SoftBank Robotics Pepper/NAO商用人形机器人内置声源定位模块。4麦TDOA(头部4麦阵列)+简单跟踪+头部位姿(FRAME_TORSO/FRAME_ROBOT/FRAME_WORLD)。输出：方位角/俯仰角/置信度/能量+头部位姿。适用场景：商用嵌入式TDOA+跟踪参考实现。约束：Pepper后方>120度不可靠需限定服务扇区；单次只定位1源取最响。",
+   "usage": "ALMemory事件：ALAudioSourceLocalization/SoundLocated()，含azimuth/elevation/confidence/energy。170ms聚合窗口，10度精度。",
+   "implements": [
+    "Bayesian Acoustic Source Tracking"
+   ]
+  },
+  {
+   "name": "odas_ros",
+   "type": "ros_package",
+   "source": "https://github.com/introlab/odas_ros",
+   "description": "ODAS的ROS2封装包(ros2主分支)，把ODAS核心pipeline暴露为ROS2节点，发布/odas/sst(声源追踪)、/odas/ssl(潜在声源)、/odas/sss(分离音频)话题。依赖audio_utils(introlab/audio_utils)做音频IO。适用场景：ODAS与ROS2/HRI栈的集成。约束：GPLv3(与ODAS MIT不一致)；需ROS2 Humble/Iron/Jazzy。",
+   "usage": "cd ~/colcon_ws/src && git clone https://github.com/introlab/odas_ros.git && cd odas_ros && git submodule update --init --recursive && colcon build && ros2 launch odas_ros odas_ros.launch.py",
+   "implements": [
+    "Tracked Source Trajectory Output"
+   ]
+  },
+  {
+   "name": "ODAS Studio",
+   "type": "tool",
+   "source": "https://github.com/introlab/odas_web",
+   "description": "ODAS的桌面可视化GUI(Electron+Node.js)，在单位球+azimuth/elevation时序散点图上实时绘制ODAS输出的potential DOAs与tracked source轨迹(每条source一种颜色)，用于调参与演示；同时录制分离后的wav。适用场景：ODAS调参与演示。约束：树莓派上不流畅，建议远程sink到PC/Mac；最后commit 2022-12。",
+   "usage": "git clone https://github.com/introlab/odas_web.git && cd odas_web && npm install && npm start",
+   "implements": [
+    "Tracked Source Trajectory Output"
+   ]
+  },
+  {
+   "name": "Spot Sound Source Tracking SAR System",
+   "type": "ros_package",
+   "source": "https://github.com/offroad-robotics/sst_as_a_heuristic_for_frontier_exploration",
+   "description": "Queen's University Ingenuity Labs的Spot四足+ODAS SST搜救系统。将SST作为frontier exploration启发式，主动朝向声源探索以最小化位置不确定度。64次试验成功率69%、SWPL 0.42。适用场景：搜救机器人主动定位被困者。约束：需Spot平台+ODAS+导航栈。",
+   "usage": "git clone https://github.com/offroad-robotics/sst_as_a_heuristic_for_frontier_exploration.git",
+   "implements": [
+    "Bayesian Acoustic Source Tracking"
+   ]
+  },
+  {
+   "name": "Hexapod Auditory Navigation Robot",
+   "type": "robot",
+   "source": "https://github.com/Gl0dny/hexapod",
+   "description": "Warsaw University of Technology的六足机器人+ODAS听觉导航系统。以DOA为方位基准沿/转向声源方向做平移运动并避障抵达声源附近。适用场景：六足机器人的听觉导航参考。约束：需ODAS+导航栈+六足底盘。",
+   "usage": "git clone https://github.com/Gl0dny/hexapod.git",
+   "implements": [
+    "Bayesian Acoustic Source Tracking"
+   ]
+  },
+  {
+   "name": "Silero VAD",
+   "type": "model",
+   "source": "https://github.com/snakers4/silero-vad",
+   "description": "Silero Team发布的语音活动检测(VAD)模型，MIT license。三链通用前置语音活动门控，避免噪声帧驱动追踪。适用场景：声源追踪前的语音活动预筛选。约束：单模型文件，无需GPU。",
+   "usage": "model, utils = torch.hub.load(repo_or_dir='snakers4/silero-vad', model='silero_vad'); get_speech_timestamps(audio, model)",
+   "implements": [
+    "AV Speaker Feature Fusion",
+    "Bayesian Acoustic Source Tracking"
+   ]
+  },
+  {
+   "name": "TalkNet-ASD",
+   "type": "framework",
+   "source": "https://github.com/TaoRuijie/TalkNet-ASD",
+   "description": "ACM MM 2021 oral论文的官方实现，提供AVA-ActiveSpeaker训练/评测+TalkSet生成/训练+Columbia ASD评测+端到端demo(输入视频→标记active speaker绿框/non-active红框输出视频)。核心架构：3D Conv+ResNet18 visual frontend+2D ResNet34+SE audio frontend+cross-attention+self-attention。适用场景：AV ASD旗舰实现。约束：需GPU推理(ResNet34+ResNet18+transformer)，嵌入式实时性受限。",
+   "usage": "conda create -n TalkNet python=3.7.9 anaconda && conda activate TalkNet && pip install -r requirement.txt && python demoTalkNet.py --videoName 001",
+   "implements": [
+    "Speaker Audio Spectrogram Extraction",
+    "AV Speaker Feature Fusion",
+    "Audio Visual Speaker Encoding",
+    "Face Track Embedding"
+   ]
+  },
+  {
+   "name": "AVA-ActiveSpeaker",
+   "type": "dataset",
+   "source": "https://github.com/TaoRuijie/TalkNet-ASD",
+   "description": "Roth et al.发布，3.65M人工标注帧/38.5h face tracks，逐帧speaking/non-speaking+audible标签，好莱坞电影来源。ASD事实主评测集，mAP指标。适用场景：AV ASD训练与评测。约束：需AVA license(研究用途)。",
+   "usage": "python trainTalkNet.py --dataPathAVA AVADataPath --download",
+   "implements": [
+    "Active Speaker Scoring"
+   ]
+  },
+  {
+   "name": "AVSpeech Dataset",
+   "type": "dataset",
+   "source": "https://looking-to-listen.github.io/avspeech/",
+   "description": "Looking to Listen项目发布，数千小时网络视频片段，每段含单人正面说话+干净音频。ASD训练备选+AV分离训练主集。适用场景：ASD野外训练备选。约束：需通过looking-to-listen.github.io/avspeech/申请，未公开下载。",
+   "usage": "需通过项目页申请访问",
+   "implements": [
+    "AV Speaker Feature Fusion"
+   ]
+  },
+  {
+   "name": "Looking to Listen",
+   "type": "model",
+   "source": "https://arxiv.org/abs/1804.03619",
+   "description": "Google Research的AV说话者分离奠基性工作(SIGGRAPH 2018/ACM TOG)。speaker-independent AV语音分离模型，视觉特征focus音频到目标说话者。引入AVSpeech数据集。适用场景：AV说话者处理方向的奠基性参考。约束：模型未开源。",
+   "usage": "论文参考：arXiv:1804.03619",
+   "implements": [
+    "AV Speaker Feature Fusion"
+   ]
+  },
+  {
+   "name": "AVENet",
+   "type": "model",
+   "source": "https://link.springer.com/chapter/10.1007/978-3-030-01225-0_15",
+   "description": "Tian et al. ECCV 2018的AV事件时序定位网络，引入audio-visual事件定位任务与AVE数据集。与ASD同AV融合范式但不同子任务。适用场景：AV事件定位奠基参考。约束：ownerSee paper。",
+   "usage": "论文参考：ECCV 2018",
+   "implements": [
+    "AV Speaker Feature Fusion"
+   ]
+  },
+  {
+   "name": "pyannote.audio",
+   "type": "framework",
+   "source": "https://github.com/pyannote/pyannote-audio",
+   "description": "开源说话人diarization工具箱(Python/PyTorch)，提供可训练的端到端神经构建块(segmentation、embedding、clustering)组合为diarization pipeline。预训练模型覆盖VAD、说话人变化检测、重叠语音检测、说话人嵌入。community-1在AMI/IHM DER 17.0、DIHARD 3 20.2、VoxConverse 11.2。",
+   "usage": "from pyannote.audio import Pipeline; pipeline = Pipeline.from_pretrained('pyannote/speaker-diarization-community-1', token=HF_TOKEN); output = pipeline('audio.wav')",
+   "implements": [
+    "Speaker Diarization Identity Pipeline",
+    "Neural Speaker Segmentation",
+    "Overlap-Aware Speaker Resegmentation"
+   ]
+  },
+  {
+   "name": "VoxConverse",
+   "type": "dataset",
+   "source": "https://github.com/joonson/voxconverse",
+   "description": "YouTube视频说话人diarization评测集(v0.3)，常作VAD间接评测。pyannote benchmark在VoxConverse v0.3上community-1 DER 11.2%。",
+   "usage": "pyannote与Silero VAD wiki共用的评测集",
+   "implements": [
+    "Speaker Diarization DER Evaluation"
+   ]
+  },
+  {
+   "name": "SpeechBrain",
+   "type": "framework",
+   "source": "https://github.com/speechbrain/speechbrain",
+   "description": "SpeechBrain通用语音工具包，含multi_mic模块(波束形成/多麦处理)+speaker embedding recipe(ECAPA-TDNN)。端到端微调。",
+   "usage": "from speechbrain.inference.speaker import EncoderClassifier; classifier = EncoderClassifier.from_hparams(source='speechbrain/spkrec-ecapa-voxceleb'); embeddings = classifier.encode_batch(signal)",
+   "implements": [
+    "Speaker Embedding Extraction"
+   ]
+  },
+  {
+   "name": "pyannote/segmentation",
+   "type": "model",
+   "source": "https://huggingface.co/pyannote/segmentation",
+   "description": "端到端神经说话人分割预训练模型。对5s滑窗音频推理输出per-frame per-speaker概率矩阵(T帧×S说话人)。多域语料训练(会议/电话/对话)。可用于VAD、OSD、Resegmentation。",
+   "usage": "from pyannote.audio import Model; model = Model.from_pretrained('pyannote/segmentation', use_auth_token='ACCESS_TOKEN'); from pyannote.audio import Inference; inference = Inference(model); segmentation = inference('audio.wav')",
+   "implements": [
+    "Neural Speaker Segmentation"
+   ]
+  },
+  {
+   "name": "pyannote/wespeaker-voxceleb-resnet34-LM",
+   "type": "model",
+   "source": "https://huggingface.co/pyannote/wespeaker-voxceleb-resnet34-LM",
+   "description": "WeSpeaker ResNet34+Large Margin预训练说话人embedding模型的pyannote.audio封装。ResNet34 backbone+attentive statistics pooling→256维embedding。VoxCeleb 1+2训练。",
+   "usage": "from pyannote.audio import Model; model = Model.from_pretrained('pyannote/wespeaker-voxceleb-resnet34-LM'); from pyannote.audio import Inference; inference = Inference(model, window='sliding', duration=3.0, step=1.0); embeddings = inference('audio.wav')",
+   "implements": [
+    "Speaker Embedding Extraction"
+   ]
+  },
+  {
+   "name": "ECAPA-TDNN",
+   "type": "model",
+   "source": "https://huggingface.co/speechbrain/spkrec-ecapa-voxceleb",
+   "description": "ECAPA-TDNN说话人embedding预训练模型。VoxCeleb 1+2训练，VoxCeleb1-test Cleaned EER 0.80%。卷积与残差块，attentive statistical pooling提取embeddings，Additive Margin Softmax损失训练。",
+   "usage": "import torchaudio; from speechbrain.inference.speaker import EncoderClassifier; classifier = EncoderClassifier.from_hparams(source='speechbrain/spkrec-ecapa-voxceleb'); signal, fs = torchaudio.load('audio.wav'); embeddings = classifier.encode_batch(signal)",
+   "implements": [
+    "Speaker Embedding Extraction"
+   ]
+  },
+  {
+   "name": "VBx",
+   "type": "framework",
+   "source": "https://github.com/BUTSpeechFIT/VBx",
+   "description": "布尔诺理工大学(BUT)开发的说话人diarization工具包。核心=AHC初始化+变分贝叶斯HMM精化(VB-HMM over x-vectors)。在CALLHOME/AMI/DIHARD II/III上是竞赛baseline。",
+   "usage": "git clone https://github.com/BUTSpeechFIT/VBx.git; cd VBx; # 1. 提取x-vector; # 2. AHC初始化; # 3. VB-HMM精化; 详见VBx/recipe/",
+   "implements": [
+    "VBx Bayesian HMM Speaker Clustering"
+   ]
+  },
+  {
+   "name": "diart",
+   "type": "package",
+   "source": "https://github.com/juanmc2005/diart",
+   "description": "基于pyannote.audio的实时流式说话人diarization Python框架。SpeakerDiarization pipeline=segmentation+embedding+incremental clustering，latency可配500ms-5s。支持CLI和Python API。",
+   "usage": "pip install diart; from diart import SpeakerDiarization; from diart.inference import StreamingInference; from diart.sources import MicrophoneAudioSource; pipeline = SpeakerDiarization(); mic = MicrophoneAudioSource(); inference = StreamingInference(pipeline, mic); prediction = inference()",
+   "implements": [
+    "Speaker Diarization Identity Pipeline"
+   ]
+  },
+  {
+   "name": "pyannote.metrics",
+   "type": "package",
+   "source": "https://github.com/pyannote/pyannote-metrics",
+   "description": "说话人diarization系统的可重复评估、诊断与错误分析工具包。提供DER及分解(FA/Miss/Confusion)、Jaccard error rate等指标。CLI界面支持批量评估。",
+   "usage": "pip install pyannote.metrics; from pyannote.metrics.diarization import DiarizationErrorRate; metric = DiarizationErrorRate(); der = metric(reference, hypothesis)",
+   "implements": [
+    "Speaker Diarization DER Evaluation"
+   ]
+  }
+ ],
+ "evidence": {
+  "chain_documents": 3,
+  "ledgers": 3,
+  "websearch_total": 41,
+  "webfetch_total": 30,
+  "with_negative_results": 3
+ }
+}

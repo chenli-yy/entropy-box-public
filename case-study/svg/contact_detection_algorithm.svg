@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="914" height="3588"
+ viewBox="0 0 914 3588"
+ shape-rendering="geometricPrecision" text-rendering="optimizeLegibility">
+<!--SV-THEME--><style>/* 一份 SVG 两种主题 */@media (prefers-color-scheme: light){[fill="#0B0D16"]{fill:#F6F3EC}[stroke="#0B0D16"]{stroke:#F6F3EC}[fill="#0D1D28"]{fill:#E4F1F8}[stroke="#0D1D28"]{stroke:#E4F1F8}[fill="#0D1F2C"]{fill:#E4F3F8}[stroke="#0D1F2C"]{stroke:#E4F3F8}[fill="#0E2019"]{fill:#E3F5EC}[stroke="#0E2019"]{stroke:#E3F5EC}[fill="#12162A"]{fill:#EFEBE2}[stroke="#12162A"]{stroke:#EFEBE2}[fill="#151A2B"]{fill:#FFFFFF}[stroke="#151A2B"]{stroke:#FFFFFF}[fill="#161A26"]{fill:#F0EEE8}[stroke="#161A26"]{stroke:#F0EEE8}[fill="#1A1430"]{fill:#EFEAFB}[stroke="#1A1430"]{stroke:#EFEAFB}[fill="#231A0C"]{fill:#FAF2DF}[stroke="#231A0C"]{stroke:#FAF2DF}[fill="#2A0F1E"]{fill:#FBE6EF}[stroke="#2A0F1E"]{stroke:#FBE6EF}[fill="#2A3050"]{fill:#DFD8CC}[stroke="#2A3050"]{stroke:#DFD8CC}[fill="#39406A"]{fill:#C7BDAD}[stroke="#39406A"]{stroke:#C7BDAD}[fill="#3FC5E8"]{fill:#0E6E8C}[stroke="#3FC5E8"]{stroke:#0E6E8C}[fill="#3FD6E8"]{fill:#0E6E8C}[stroke="#3FD6E8"]{stroke:#0E6E8C}[fill="#4FA8FF"]{fill:#1668A8}[stroke="#4FA8FF"]{stroke:#1668A8}[fill="#4FB3E8"]{fill:#1668A8}[stroke="#4FB3E8"]{stroke:#1668A8}[fill="#4FC08D"]{fill:#1F7A55}[stroke="#4FC08D"]{stroke:#1F7A55}[fill="#5C6480"]{fill:#8A8378}[stroke="#5C6480"]{stroke:#8A8378}[fill="#5FD08A"]{fill:#1F7A55}[stroke="#5FD08A"]{stroke:#1F7A55}[fill="#6E7796"]{fill:#A9A196}[stroke="#6E7796"]{stroke:#A9A196}[fill="#6FD3A6"]{fill:#166344}[stroke="#6FD3A6"]{stroke:#166344}[fill="#7A87A8"]{fill:#5A637C}[stroke="#7A87A8"]{stroke:#5A637C}[fill="#7B8BFF"]{fill:#3A46B0}[stroke="#7B8BFF"]{stroke:#3A46B0}[fill="#8A93B0"]{fill:#7B7368}[stroke="#8A93B0"]{stroke:#7B7368}[fill="#8FA3B8"]{fill:#4E5F70}[stroke="#8FA3B8"]{stroke:#4E5F70}[fill="#9B87FF"]{fill:#5B3FD4}[stroke="#9B87FF"]{stroke:#5B3FD4}[fill="#A9B0C8"]{fill:#5A5349}[stroke="#A9B0C8"]{stroke:#5A5349}[fill="#B08D7A"]{fill:#6D5546}[stroke="#B08D7A"]{stroke:#6D5546}[fill="#B98BFF"]{fill:#5B3FD4}[stroke="#B98BFF"]{stroke:#5B3FD4}[fill="#D6DAE8"]{fill:#2E2A25}[stroke="#D6DAE8"]{stroke:#2E2A25}[fill="#E8A33D"]{fill:#9A6C0B}[stroke="#E8A33D"]{stroke:#9A6C0B}[fill="#EDE7DD"]{fill:#191714}[stroke="#EDE7DD"]{stroke:#191714}[fill="#FF5FA8"]{fill:#B02063}[stroke="#FF5FA8"]{stroke:#B02063}[fill="#FF6B6B"]{fill:#C0392B}[stroke="#FF6B6B"]{stroke:#C0392B}[fill="#FF8FC2"]{fill:#8F1B4E}[stroke="#FF8FC2"]{stroke:#8F1B4E}[fill="#FFB03D"]{fill:#9A6C0B}[stroke="#FFB03D"]{stroke:#9A6C0B}}html[data-theme="light"] [fill="#0B0D16"]{fill:#F6F3EC}html[data-theme="light"] [stroke="#0B0D16"]{stroke:#F6F3EC}html[data-theme="light"] [fill="#0D1D28"]{fill:#E4F1F8}html[data-theme="light"] [stroke="#0D1D28"]{stroke:#E4F1F8}html[data-theme="light"] [fill="#0D1F2C"]{fill:#E4F3F8}html[data-theme="light"] [stroke="#0D1F2C"]{stroke:#E4F3F8}html[data-theme="light"] [fill="#0E2019"]{fill:#E3F5EC}html[data-theme="light"] [stroke="#0E2019"]{stroke:#E3F5EC}html[data-theme="light"] [fill="#12162A"]{fill:#EFEBE2}html[data-theme="light"] [stroke="#12162A"]{stroke:#EFEBE2}html[data-theme="light"] [fill="#151A2B"]{fill:#FFFFFF}html[data-theme="light"] [stroke="#151A2B"]{stroke:#FFFFFF}html[data-theme="light"] [fill="#161A26"]{fill:#F0EEE8}html[data-theme="light"] [stroke="#161A26"]{stroke:#F0EEE8}html[data-theme="light"] [fill="#1A1430"]{fill:#EFEAFB}html[data-theme="light"] [stroke="#1A1430"]{stroke:#EFEAFB}html[data-theme="light"] [fill="#231A0C"]{fill:#FAF2DF}html[data-theme="light"] [stroke="#231A0C"]{stroke:#FAF2DF}html[data-theme="light"] [fill="#2A0F1E"]{fill:#FBE6EF}html[data-theme="light"] [stroke="#2A0F1E"]{stroke:#FBE6EF}html[data-theme="light"] [fill="#2A3050"]{fill:#DFD8CC}html[data-theme="light"] [stroke="#2A3050"]{stroke:#DFD8CC}html[data-theme="light"] [fill="#39406A"]{fill:#C7BDAD}html[data-theme="light"] [stroke="#39406A"]{stroke:#C7BDAD}html[data-theme="light"] [fill="#3FC5E8"]{fill:#0E6E8C}html[data-theme="light"] [stroke="#3FC5E8"]{stroke:#0E6E8C}html[data-theme="light"] [fill="#3FD6E8"]{fill:#0E6E8C}html[data-theme="light"] [stroke="#3FD6E8"]{stroke:#0E6E8C}html[data-theme="light"] [fill="#4FA8FF"]{fill:#1668A8}html[data-theme="light"] [stroke="#4FA8FF"]{stroke:#1668A8}html[data-theme="light"] [fill="#4FB3E8"]{fill:#1668A8}html[data-theme="light"] [stroke="#4FB3E8"]{stroke:#1668A8}html[data-theme="light"] [fill="#4FC08D"]{fill:#1F7A55}html[data-theme="light"] [stroke="#4FC08D"]{stroke:#1F7A55}html[data-theme="light"] [fill="#5C6480"]{fill:#8A8378}html[data-theme="light"] [stroke="#5C6480"]{stroke:#8A8378}html[data-theme="light"] [fill="#5FD08A"]{fill:#1F7A55}html[data-theme="light"] [stroke="#5FD08A"]{stroke:#1F7A55}html[data-theme="light"] [fill="#6E7796"]{fill:#A9A196}html[data-theme="light"] [stroke="#6E7796"]{stroke:#A9A196}html[data-theme="light"] [fill="#6FD3A6"]{fill:#166344}html[data-theme="light"] [stroke="#6FD3A6"]{stroke:#166344}html[data-theme="light"] [fill="#7A87A8"]{fill:#5A637C}html[data-theme="light"] [stroke="#7A87A8"]{stroke:#5A637C}html[data-theme="light"] [fill="#7B8BFF"]{fill:#3A46B0}html[data-theme="light"] [stroke="#7B8BFF"]{stroke:#3A46B0}html[data-theme="light"] [fill="#8A93B0"]{fill:#7B7368}html[data-theme="light"] [stroke="#8A93B0"]{stroke:#7B7368}html[data-theme="light"] [fill="#8FA3B8"]{fill:#4E5F70}html[data-theme="light"] [stroke="#8FA3B8"]{stroke:#4E5F70}html[data-theme="light"] [fill="#9B87FF"]{fill:#5B3FD4}html[data-theme="light"] [stroke="#9B87FF"]{stroke:#5B3FD4}html[data-theme="light"] [fill="#A9B0C8"]{fill:#5A5349}html[data-theme="light"] [stroke="#A9B0C8"]{stroke:#5A5349}html[data-theme="light"] [fill="#B08D7A"]{fill:#6D5546}html[data-theme="light"] [stroke="#B08D7A"]{stroke:#6D5546}html[data-theme="light"] [fill="#B98BFF"]{fill:#5B3FD4}html[data-theme="light"] [stroke="#B98BFF"]{stroke:#5B3FD4}html[data-theme="light"] [fill="#D6DAE8"]{fill:#2E2A25}html[data-theme="light"] [stroke="#D6DAE8"]{stroke:#2E2A25}html[data-theme="light"] [fill="#E8A33D"]{fill:#9A6C0B}html[data-theme="light"] [stroke="#E8A33D"]{stroke:#9A6C0B}html[data-theme="light"] [fill="#EDE7DD"]{fill:#191714}html[data-theme="light"] [stroke="#EDE7DD"]{stroke:#191714}html[data-theme="light"] [fill="#FF5FA8"]{fill:#B02063}html[data-theme="light"] [stroke="#FF5FA8"]{stroke:#B02063}html[data-theme="light"] [fill="#FF6B6B"]{fill:#C0392B}html[data-theme="light"] [stroke="#FF6B6B"]{stroke:#C0392B}html[data-theme="light"] [fill="#FF8FC2"]{fill:#8F1B4E}html[data-theme="light"] [stroke="#FF8FC2"]{stroke:#8F1B4E}html[data-theme="light"] [fill="#FFB03D"]{fill:#9A6C0B}html[data-theme="light"] [stroke="#FFB03D"]{stroke:#9A6C0B}</style>
+<defs>
+  <marker id="arr" markerWidth="12" markerHeight="9" refX="10" refY="4.5" orient="auto">
+    <polygon points="0 0,12 4.5,0 9" fill="#5C6480"/>
+  </marker>
+  <marker id="arr-gray" markerWidth="12" markerHeight="9" refX="10" refY="4.5" orient="auto">
+    <polygon points="0 0,12 4.5,0 9" fill="#39406A"/>
+  </marker>
+</defs>
+<rect width="100%" height="100%" fill="#0B0D16" rx="0"/>
+<rect x="0.0" y="0.0" width="914.0" height="100.0" rx="0" fill="#101528" stroke="none" stroke-width="0"/>
+  <text x="457.0" y="52.0" font-size="20" fill="#EDE7DD" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="457.0" dy="0">接触检测算法  (Contact Detection Algorithm)</tspan></text>
+  <rect x="163.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.5"/>
+  <text x="185.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="185.0" dy="0">阶段</tspan></text>
+  <rect x="247.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#231A0C" stroke="#E8A33D" stroke-width="1.5"/>
+  <text x="269.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="269.0" dy="0">步骤</tspan></text>
+  <rect x="331.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#0D1D28" stroke="#4FB3E8" stroke-width="1.5"/>
+  <text x="353.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="353.0" dy="0">子链</tspan></text>
+  <rect x="415.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="1.5"/>
+  <text x="437.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="437.0" dy="0">判断</tspan></text>
+  <rect x="499.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#1A1430" stroke="#9B87FF" stroke-width="1.5"/>
+  <text x="521.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="521.0" dy="0">分支</tspan></text>
+  <rect x="583.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#0E2019" stroke="#4FC08D" stroke-width="1.5"/>
+  <text x="605.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="605.0" dy="0">合并</tspan></text>
+  <rect x="667.0" y="122.0" width="16.0" height="16.0" rx="3" fill="#161A26" stroke="#7A87A8" stroke-width="1.5"/>
+  <text x="689.0" y="131.0" font-size="13" fill="#A9B0C8" text-anchor="start" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="689.0" dy="0">编码</tspan></text>
+  <rect x="36.0" y="164.0" width="842.0" height="784.0" rx="8" fill="#151A2B" stroke="#2A3050" stroke-width="2.0"/>
+  <rect x="36.0" y="164.0" width="842.0" height="48.0" rx="8" fill="#16223A" stroke="none" stroke-width="0"/>
+  <rect x="36.0" y="188.0" width="842.0" height="24.0" rx="0" fill="#16223A" stroke="none" stroke-width="0"/>
+  <text x="457.0" y="189.0" font-size="15" fill="#7FD9F0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="457.0" dy="0">任务链 1: GJK-EPA Convex Narrowphase Pipeline</tspan></text>
+  <rect x="56.0" y="232.0" width="802.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="232.0" width="802.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="252.0" width="802.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="457.0" y="253.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="457.0" dy="0">s1 — 凸形状与 support 函数建模</tspan></text>
+  <rect x="56.0" y="404.0" width="802.0" height="180.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="404.0" width="802.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="424.0" width="802.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="457.0" y="425.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="457.0" dy="0">s2 — GJK 单纯形演化与相交判定</tspan></text>
+  <rect x="56.0" y="600.0" width="802.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="600.0" width="802.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="620.0" width="802.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="457.0" y="621.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="457.0" dy="0">s3 — EPA 多面体扩展求穿透深度</tspan></text>
+  <rect x="56.0" y="772.0" width="802.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="772.0" width="802.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="792.0" width="802.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="457.0" y="793.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="457.0" dy="0">s4 — 接触流形生成与输出</tspan></text>
+  <rect x="36.0" y="980.0" width="752.0" height="772.0" rx="8" fill="#151A2B" stroke="#2A3050" stroke-width="2.0"/>
+  <rect x="36.0" y="980.0" width="752.0" height="48.0" rx="8" fill="#16223A" stroke="none" stroke-width="0"/>
+  <rect x="36.0" y="1004.0" width="752.0" height="24.0" rx="0" fill="#16223A" stroke="none" stroke-width="0"/>
+  <text x="412.0" y="1005.0" font-size="15" fill="#7FD9F0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="412.0" dy="0">任务链 2: BVH Broadphase + Mesh Narrowphase Collision Pipeline</tspan></text>
+  <rect x="56.0" y="1048.0" width="712.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="1048.0" width="712.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="1068.0" width="712.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="412.0" y="1069.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="412.0" dy="0">s1 — BVH 构建与 mesh 注册</tspan></text>
+  <rect x="56.0" y="1220.0" width="712.0" height="180.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="1220.0" width="712.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="1240.0" width="712.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="412.0" y="1241.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="412.0" dy="0">s2 — BVH 双树遍历与 leaf pair 提取</tspan></text>
+  <rect x="56.0" y="1416.0" width="712.0" height="144.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="1416.0" width="712.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="1436.0" width="712.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="412.0" y="1437.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="412.0" dy="0">s3 — leaf pair 几何精确测试</tspan></text>
+  <rect x="56.0" y="1576.0" width="712.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="1576.0" width="712.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="1596.0" width="712.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="412.0" y="1597.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="412.0" dy="0">s4 — contact 结果聚合与输出</tspan></text>
+  <rect x="36.0" y="1784.0" width="742.0" height="912.0" rx="8" fill="#151A2B" stroke="#2A3050" stroke-width="2.0"/>
+  <rect x="36.0" y="1784.0" width="742.0" height="48.0" rx="8" fill="#16223A" stroke="none" stroke-width="0"/>
+  <rect x="36.0" y="1808.0" width="742.0" height="24.0" rx="0" fill="#16223A" stroke="none" stroke-width="0"/>
+  <text x="407.0" y="1809.0" font-size="15" fill="#7FD9F0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="407.0" dy="0">任务链 3: SAP Broadphase + Convex Primitive Narrowphase Pipeline</tspan></text>
+  <rect x="56.0" y="1852.0" width="702.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="1852.0" width="702.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="1872.0" width="702.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="407.0" y="1873.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="407.0" dy="0">s1 — SAP 量化与端点维护</tspan></text>
+  <rect x="56.0" y="2024.0" width="702.0" height="180.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="2024.0" width="702.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="2044.0" width="702.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="407.0" y="2045.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="407.0" dy="0">s2 — SAP 扫掠与活动集重叠测试</tspan></text>
+  <rect x="56.0" y="2220.0" width="702.0" height="180.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="2220.0" width="702.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="2240.0" width="702.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="407.0" y="2241.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="407.0" dy="0">s3 — primitive-pair 类型派发</tspan></text>
+  <rect x="56.0" y="2416.0" width="702.0" height="260.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="2416.0" width="702.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="2436.0" width="702.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="407.0" y="2437.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="407.0" dy="0">s4 — GJK / SAT 窄相求解穿透深度</tspan></text>
+  <rect x="36.0" y="2728.0" width="576.0" height="784.0" rx="8" fill="#151A2B" stroke="#2A3050" stroke-width="2.0"/>
+  <rect x="36.0" y="2728.0" width="576.0" height="48.0" rx="8" fill="#16223A" stroke="none" stroke-width="0"/>
+  <rect x="36.0" y="2752.0" width="576.0" height="24.0" rx="0" fill="#16223A" stroke="none" stroke-width="0"/>
+  <text x="324.0" y="2753.0" font-size="15" fill="#7FD9F0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="324.0" dy="0">任务链 4: GPU Parallel Voxel Collision Pipeline</tspan></text>
+  <rect x="56.0" y="2796.0" width="536.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="2796.0" width="536.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="2816.0" width="536.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="324.0" y="2817.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="324.0" dy="0">s1 — mesh 离散化与 BitVector 构建</tspan></text>
+  <rect x="56.0" y="2968.0" width="536.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="2968.0" width="536.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="2988.0" width="536.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="324.0" y="2989.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="324.0" dy="0">s2 — voxel hash 与 BitVector GPU 维护</tspan></text>
+  <rect x="56.0" y="3140.0" width="536.0" height="180.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="3140.0" width="536.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="3160.0" width="536.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="324.0" y="3161.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="324.0" dy="0">s3 — GPU 并行 bit-AND 碰撞查询</tspan></text>
+  <rect x="56.0" y="3336.0" width="536.0" height="156.0" rx="7" fill="#12162A" stroke="#2A3050" stroke-width="1.5"/>
+  <rect x="56.0" y="3336.0" width="536.0" height="40.0" rx="6" fill="#0D1F2C" stroke="#3FC5E8" stroke-width="1.8"/>
+  <rect x="56.0" y="3356.0" width="536.0" height="20.0" rx="0" fill="#0D1F2C" stroke="none" stroke-width="0"/>
+  <text x="324.0" y="3357.0" font-size="14" fill="#3FC5E8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="324.0" dy="0">s4 — 碰撞结果提取与上报</tspan></text>
+  <line x1="287.0" y1="330.0" x2="321.0" y2="330.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 437.0 368.0 L 437.0 422.0 L 171.0 422.0 L 171.0 476.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="514.0" x2="321.0" y2="514.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 402.0 564.0 L 402.0 612.0 L 171.0 612.0 L 171.0 660.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="402.0" y1="564.0" x2="422.0" y2="838.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="698.0" x2="321.0" y2="698.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="553.0" y1="698.0" x2="587.0" y2="698.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 703.0 736.0 L 703.0 784.0 L 171.0 784.0 L 171.0 832.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="870.0" x2="321.0" y2="870.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="1146.0" x2="321.0" y2="1146.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 437.0 1184.0 L 437.0 1238.0 L 171.0 1238.0 L 171.0 1292.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="1330.0" x2="321.0" y2="1330.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="483.0" y1="1330.0" x2="517.0" y2="1330.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 402.0 1380.0 L 402.0 1511.0 L 156.0 1511.0 L 156.0 1642.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 598.0 1380.0 L 598.0 1428.0 L 156.0 1428.0 L 156.0 1476.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 598.0 1380.0 L 598.0 1428.0 L 392.0 1428.0 L 392.0 1476.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 598.0 1380.0 L 598.0 1428.0 L 628.0 1428.0 L 628.0 1476.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="156.0" y1="1540.0" x2="156.0" y2="1642.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 392.0 1540.0 L 392.0 1591.0 L 156.0 1591.0 L 156.0 1642.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 628.0 1540.0 L 628.0 1591.0 L 156.0 1591.0 L 156.0 1642.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="257.0" y1="1674.0" x2="291.0" y2="1674.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="1950.0" x2="321.0" y2="1950.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 437.0 1988.0 L 437.0 2042.0 L 171.0 2042.0 L 171.0 2096.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="2134.0" x2="321.0" y2="2134.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="483.0" y1="2134.0" x2="517.0" y2="2134.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 402.0 2184.0 L 402.0 2238.0 L 171.0 2238.0 L 171.0 2292.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 618.0 2166.0 L 618.0 2229.0 L 171.0 2229.0 L 171.0 2292.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="2330.0" x2="321.0" y2="2330.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 402.0 2380.0 L 402.0 2428.0 L 171.0 2428.0 L 171.0 2476.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="402.0" y1="2380.0" x2="422.0" y2="2482.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="171.0" y1="2552.0" x2="171.0" y2="2580.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="422.0" y1="2546.0" x2="422.0" y2="2586.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="2618.0" x2="321.0" y2="2618.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="2894.0" x2="321.0" y2="2894.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 437.0 2932.0 L 437.0 2980.0 L 171.0 2980.0 L 171.0 3028.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="3066.0" x2="321.0" y2="3066.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 437.0 3104.0 L 437.0 3158.0 L 171.0 3158.0 L 171.0 3212.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="3250.0" x2="321.0" y2="3250.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <path d="M 402.0 3300.0 L 402.0 3348.0 L 171.0 3348.0 L 171.0 3396.0" fill="none" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="402.0" y1="3300.0" x2="422.0" y2="3402.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <line x1="287.0" y1="3434.0" x2="321.0" y2="3434.0" stroke="#5C6480" stroke-width="2.0" marker-end="url(#arr)"/>
+  <g class="step-node" data-sid="s1_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Convex Pair Reception And Support Function Dispatch
+接收上层 broadphase 送入的凸体对 (A, B) 与几何状态，按凸形状类型（box/sphere/ellipsoid/capsule/cone/cylinder/convex hull/half-space/plane）派发对应 support function。libccd 用 ccd_t 结构的 ccd.support1/support2 函数指针封装；Bullet3 用 btConvexShape::localGetSupportingVertex 多态派发。输入：凸体对 + 几何状态 + 凸形状类型。输出：support1/support2 函数指针 + 初始 search direction。依赖：凸形状几何 + shape 类型枚举。约束：仅处理凸-凸对；凹 mesh 需先用 V-HACD 凸分解后挂为 convex hull；旋转矩阵传递需正交化；libccd 提供 USE_DOUBLE 编译开关用于高精度。性能指标：dispatch &lt;0.01ms。适用场景：GJK-EPA 链入口、链 3 primitive-pair dispatch 的子步骤。
+CAP_b9bd399c</title>
+  <rect x="56.0" y="292.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="329.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">凸形状 support 函数派发</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Minkowski Difference Simplex Initialization
+从初始 search direction 开始，用 support 函数在 Minkowski 差空间 A⊖B = {a-b : a∈A, b∈B} 采第一个 support 点作为 simplex 起点。libccd 用 ccd_simplex 结构；Bullet3 用 btVoronoiSimplexSolver::initialize。输入：support 函数 + 初始 direction。输出：simplex 包含 1 个初始点。依赖：support function 已配置。约束：初始 direction 通常取 A.center - B.center 方向；空 simplex 不可启动迭代。
+CAP_312ea7d4</title>
+  <rect x="322.0" y="292.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="329.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">GJK 单纯形演化与相交判定</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>GJK Simplex Iteration Toward Origin
+GJK 主循环：求 simplex 中离原点最近点 p → 设 d = -p → 采 support(d) 新点 → 若新点未超越 p 则收敛（不相交）→ 否则加入 simplex 并 reduceSimplexContainingClosest。libccd ccd_gjk_simplex 主循环；Bullet3 btGjkPairDetector::closestPtPointTetra。输入：simplex + support 函数。输出：simplex（最多 4 点 tetrahedron）+ 收敛标志 + closest point。依赖：simplex 已初始化。约束：max_iterations 默认 100（libccd）；数值退化（共面/共线 simplex）需 epsilon 容差。性能指标：单次查询 &lt;1ms（万级顶点凸包，i7-12700）。适用场景：GJK-EPA 链核心步骤、链 3 SAP+primitive 窄相步骤复用。
+CAP_312ea7d4</title>
+  <rect x="56.0" y="476.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="513.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">GJK 单纯形演化与相交判定</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>判断：Intersected
+判断：GJK simplex 是否包围原点。libccd ccdGJKIntersect() 返回 0/1；Bullet3 btGjkPairDetector 检查 simplex 收敛时 closestPoint 距离。是 → 转入 s3 阶段启动 EPA 求穿透深度；否 → 物体未接触，直接转 s4_2 输出 no-contact。输入：收敛 simplex + 距离。输出：分支标志 intersected (depth&gt;0) OR separated (返回最近距离)。
+CAP_312ea7d4</title>
+  <polygon points="402.0,464.0 482.0,514.0 402.0,564.0 322.0,514.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="402.0" y="497.9" font-size="12" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="402.0" dy="0">判断：</tspan><tspan x="402.0" dy="16.2">Intersected</tspan></text>
+  <text x="402.0" y="526.0" font-size="9.5" fill="#FF8FC2" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="402.0" dy="0">simplex 是否包围…</tspan></text>
+  <rect x="380.0" y="454.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="402.0" y="462.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="402.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>EPA Polytope Seed From GJK Final Simplex
+从 GJK 收敛时的最终 simplex（3D 下 tetrahedron 包围原点）出发构造初始 EPA polytope。libccd ccdGJKPenetration 内 ccdEPA 初始化；Bullet3 btGjkEpa2::EvaluateEPA 初始 polytope。输入：GJK 最终 simplex。输出：初始 EPA polytope（四面体）。依赖：GJK 已判定相交（s2_2 的 intersected 分支）。约束：初始 simplex 必须包含原点（由 GJK 保证）；退化情况（共面 simplex）需 fallback 到 MPR 或采样多方向重启。
+CAP_8833d73d</title>
+  <rect x="56.0" y="660.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="697.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">EPA 多面体扩展求穿透深度</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>EPA Polytope Expansion Loop
+EPA 核心循环：找距离原点最近的面 → 沿该面法向采 support 点 → 若新点超出当前面，删除该面并添加三个新面（多面体增长）→ 收敛后原点到最近面的距离即穿透深度、该面法向即接触 normal。libccd ccdEPA::expand；Bullet3 btGjkEpa2::sExpand 扩展循环。输入：初始 polytope + support 函数。输出：扩展后的 polytope + 最近面信息。依赖：EPA seed 已构造。约束：epa_tolerance 默认 1e-4（libccd）。性能指标：单次扩展 &lt;0.5ms（典型 5-15 次扩展收敛）。
+CAP_8833d73d</title>
+  <rect x="322.0" y="660.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="697.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">EPA 多面体扩展求穿透深度</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_3" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Minimum Penetration Depth And Normal Extraction
+EPA 收敛后，从最近面提取 (depth, normal, contact_point) 元组：原点到最近面的距离 = depth，该面法向 = contact normal，原点在该面上的投影 = contact point。libccd 用 epa.last-&gt;dist/last-&gt;normal；Bullet3 用 btGjkEpa2::sResults 输出 depth/normal/contactPoint。输入：收敛 polytope + 最近面。输出：(depth, normal, contact_point) 元组。依赖：EPA 已收敛。约束：normal 与 depth 方向遵循 libccd 约定（depth 沿 normal 方向指向 B）。
+CAP_8833d73d</title>
+  <rect x="588.0" y="660.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="703.0" y="697.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="703.0" dy="0">EPA 多面体扩展求穿透深度</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Contact Manifold Construction And Persistence
+把单次 GJK-EPA 求得的 (normal, depth, contact_point) 整理为接触流形（最多 4 个 contact point），跨帧持久化以维持稳定接触。Bullet3 用 btPersistentManifold（4-point buffer + sort by distance）；PhysX 用 Gu::ContactBuffer；FCL 用 CollisionResult::contacts。manifold 管理包括：旧点剔除（depth &lt; 阈值移除）、新点添加（保持 ≤4 点）、跨帧 sort。输入：(normal, depth, contact_point) + 历史 manifold ID。输出：persistent manifold（≤4 contact points）。依赖：GJK-EPA 单次查询结果。约束：4 点上限是 Bullet/PhysX 工程约束；持久化需 body pair ID 索引；首次接触时 manifold 为空。性能指标：manifold 更新 &lt;0.1ms。适用场景：物理引擎跨帧接触稳定、链 3 窄相后处理。
+CAP_0a938307</title>
+  <rect x="56.0" y="832.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="869.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">接触流形生成与持久化</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Contact Pair Output To Upstream Solver
+把完整 manifold 输出给上层接触求解器（兄弟主题 sequential_impulse / multi_body_contact / compliance_contact_model）。Bullet3 用 btManifoldResult::addContactPoint；FCL 用 CollisionResult。不相交分支（s2_2 separated）也经此步输出 no-contact 标志。输入：manifold with contact points（或 no-contact 标志）。输出：contact pair + normal + depth 给上层 solver。约束：本主题止于检测到接触，不做力计算与求解（归兄弟主题）。
+CAP_0a938307</title>
+  <rect x="322.0" y="838.0" width="200.0" height="64.0" rx="6" fill="#0E2019" stroke="#4FC08D" stroke-width="2.2"/>
+  <text x="422.0" y="869.0" font-size="13" fill="#4FC08D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="422.0" dy="0">接触流形生成与持久化</tspan></text>
+  <rect x="328.0" y="842.0" width="34.0" height="20.0" rx="10" fill="#4FC08D44" stroke="#4FC08D" stroke-width="1"/>
+  <text x="345.0" y="853.0" font-size="10" fill="#4FC08D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="345.0" dy="0">合并</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Triangle Mesh Loading And BVH Construction
+用 FCL BVHModel&lt;OBBRSSf&gt;::beginModel() + addSubModel() + endModel() 构建 BVH。Bullet3 用 btBvhTriangleMeshShape；HPP-FCL 用 BVHModel&lt;OBBRSS&gt;。输入：triangle mesh (顶点 + 三角形索引)。输出：BVHModel&lt;OBBRSS&gt; 加速结构。依赖：用户提供 mesh。约束：mesh 三角形数典型 100-10000；BVH 构建需 100ms 量级（mesh 大时）；构建可缓存跨帧。性能指标：BVH 构建 O(n log n)。适用场景：机器人 motion planning 的 link mesh 与障碍 mesh 预处理。
+CAP_0fcc3ac3 / CAP_4556626f</title>
+  <rect x="56.0" y="1108.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="1140.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">动态 AABB 树构建与增量更新</tspan></text>
+  <text x="171.0" y="1174.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="171.0" dy="0">动态 AABB 树构建与增量更新 +1</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Dynamic BVH Update On Object Pose Change
+机器人每个 link 每帧位姿变化，BVH 必须随 link pose 增量更新。FCL DynamicAABBTreeCollisionManager::update(obj) 增量更新；Bullet3 btDbvt::update 增量 refit。输入：BVH + 新位姿。输出：更新后的 BVH 节点 bbox。依赖：BVH 已构建。约束：增量更新比重建便宜（O(log n)）；动态场景需每帧调用。性能指标：单 link BVH 增量更新 &lt;1ms。
+CAP_0fcc3ac3</title>
+  <rect x="322.0" y="1108.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="1145.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">动态 AABB 树构建与增量更新</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Broadphase CollisionManager Double-Tree Traversal
+两物体 BVH 同时遍历，每对 internal node 测 AABB 重叠，重叠则下钻到子节点；不重叠剪枝。FCL DynamicAABBTreeCollisionManager::collide(other_manager, callback) 双树递归遍历；HPP-FCL 同名接口。输入：两物体的 BVH + CollisionManager。输出：candidate AABB 重叠 leaf pair 列表。依赖：BVH 已构建并按当前位姿更新。约束：BVH 双树遍历复杂度 O(log n × log m × k) k=重叠对数。性能指标：单次遍历 1-10ms（典型 1000 三角形 mesh 对）。适用场景：FCL/HPP-FCL/MoveIt2 默认 broadphase。
+CAP_622de075</title>
+  <rect x="56.0" y="1292.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="1319.5" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">OBBRSS BVH 双树遍历与 OBB 体</tspan><tspan x="171.0" dy="18.9">积测试</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>判断：OBB Overlap
+判断：当前 BVH 节点对的 OBB 是否重叠？FCL OBB::overlap() 用 Gottschalk 15 轴 SAT 测试（A 的 3 axis + B 的 3 axis + 9 个边叉积）。是 → 下钻到 leaf 触发 s2_3 leaf pair 提取；否 → 剪枝，直接转 s4_1 聚合（此 branch 无 contact）。输入：BVH 内部节点 OBB pair。输出：overlap yes/no + leaf pair（若 overlap 到 leaf）。
+CAP_622de075</title>
+  <polygon points="402.0,1280.0 482.0,1330.0 402.0,1380.0 322.0,1330.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="402.0" y="1313.9" font-size="12" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="402.0" dy="0">判断：OBB</tspan><tspan x="402.0" dy="16.2">Overlap</tspan></text>
+  <text x="402.0" y="1342.0" font-size="9.5" fill="#FF8FC2" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="402.0" dy="0">OBB 重叠</tspan></text>
+  <rect x="380.0" y="1270.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="402.0" y="1278.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="402.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_3" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Leaf Pair Candidate Extraction
+BVH 双树遍历到 leaf pair（各含一个 triangle 或一小簇），触发精确 triangle-triangle 或 mesh-primitive 测试。FCL MeshCollisionTraversalNode::leafTesting() 把 leaf pair 送入 s3 阶段。输入：BVH leaf pair（各含一个 triangle）。输出：(triangle_A, triangle_B, BVH path) 或 (mesh, primitive) leaf。依赖：s2_2 判定 OBB 重叠。约束：每个 leaf 含一个 triangle（典型）或一小簇；leaf pair 数量受 BVH 重叠率影响。
+CAP_682b5c7d</title>
+  <polygon points="598.0,1280.0 678.0,1330.0 598.0,1380.0 518.0,1330.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="598.0" y="1319.9" font-size="12" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="598.0" dy="0">BVH 候选对送窄</tspan><tspan x="598.0" dy="16.2">相接口</tspan></text>
+  <text x="598.0" y="1342.0" font-size="9.5" fill="#FF8FC2" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="598.0" dy="0">leaf pair 几何…</tspan></text>
+  <rect x="576.0" y="1270.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="598.0" y="1278.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="598.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Triangle-Triangle Intersection Test
+条件：leaf pair 是 mesh-mesh triangle 对。O(1) 复杂度的两 triangle 相交判定：计算两三角形所在平面的交线，将两三角形投影到交线上得两个区间，区间重叠则相交。Möller 1997 JGT 算法。FCL Intersect::intersect_TriangleTriangle() 默认实现。输入：两个 triangle（顶点 3×3）。输出：相交 yes/no + 交线段（若相交）。依赖：BVH leaf pair（s2_3）。约束：共面三角形需特殊处理（退化为 2D triangle-triangle 测试）；浮点精度需 epsilon 容差。性能指标：单次测试 O(1)，典型 &lt;1μs。适用场景：mesh-mesh 窄相 leaf 测试。
+CAP_db8b96a0</title>
+  <rect x="56.0" y="1476.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="156.0" y="1498.2" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">三角形对相交测试（</tspan><tspan x="156.0" dy="17.6">Möller 1997）</tspan></text>
+  <rect x="62.0" y="1480.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="79.0" y="1491.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Mesh-Primitive Narrowphase Dispatch
+条件：leaf pair 是 mesh-primitive 对（mesh-box / mesh-sphere / mesh-capsule / mesh-convex / mesh-halfspace / mesh-plane / mesh-octree）。派发到专用 narrowphase 实现，避免通过 triangle-triangle 间接测试（性能与数值稳定性更优）。FCL ShapeMeshCollisionTraversalNode 模板族。输入：mesh + primitive + 位姿对。输出：contact info。依赖：BVH leaf pair（s2_3）。约束：每对类型需单独实现；octree 需 octomap 集成；mesh-capsule 在薄接触下数值不稳定。适用场景：机械臂 link mesh vs 环境 box obstacle 等场景。
+CAP_d2d8e362</title>
+  <rect x="292.0" y="1476.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="392.0" y="1498.2" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="392.0" dy="0">Mesh-Primitive 窄相</tspan><tspan x="392.0" dy="17.6">派发</tspan></text>
+  <rect x="298.0" y="1480.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="315.0" y="1491.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="315.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_3" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Distance Query Alternative For Tolerance Mode
+条件：collision query 不相交且用户请求 tolerance verification（如距离小于 5cm 时报警）。转 distance query 模式，BVH 节点的 RSS（Rectangle Swept Sphere）体积给保守距离下界。FCL MeshCollisionTraversalNode + RSS::distance() 求最近距离。输入：(mesh, mesh) leaf + RSS BV。输出：conservative lower bound distance。依赖：s2_3 leaf pair + CollisionRequest flag。约束：仅当 request.enable_nearest_distance=true 时启用；RSS 距离是下界，精确距离需 leaf triangle 距离计算。适用场景：tolerance verification 与 proximity query。
+CAP_622de075</title>
+  <rect x="528.0" y="1476.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="628.0" y="1498.2" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="628.0" dy="0">OBBRSS BVH 双树遍历</tspan><tspan x="628.0" dy="17.6">与 OBB 体积测试</tspan></text>
+  <rect x="534.0" y="1480.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="551.0" y="1491.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="551.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>CollisionResult Aggregation
+把 BVH 遍历所有 leaf pair 产生的 contact info 聚合到 CollisionResult 容器，包括 contact point 列表、最远 penetration depth、碰撞对统计。FCL CollisionResult::addContact() 累加；MoveIt2 collision_result::ContactMap 按对象对分组。输入：所有 leaf pair 的 contact info。输出：聚合 CollisionResult + 最远 contact pair。依赖：s3 步骤产出。约束：contact 数量上限受 CollisionRequest::max_contacts 限制（默认 1，motion planning 通常调高）；聚合后需按距离排序保留最深接触。性能指标：聚合 &lt;1ms（典型）。适用场景：本链 s4_1 步骤、链 3/4 输出阶段。
+CAP_8a4674b4</title>
+  <rect x="56.0" y="1642.0" width="200.0" height="64.0" rx="6" fill="#0E2019" stroke="#4FC08D" stroke-width="2.2"/>
+  <text x="156.0" y="1673.0" font-size="13" fill="#4FC08D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="156.0" dy="0">接触结果聚合与输出</tspan></text>
+  <rect x="62.0" y="1646.0" width="34.0" height="20.0" rx="10" fill="#4FC08D44" stroke="#4FC08D" stroke-width="1"/>
+  <text x="79.0" y="1657.0" font-size="10" fill="#4FC08D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="79.0" dy="0">合并</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Contact Pair Output To MoveIt2 Planning Scene
+把聚合 CollisionResult 输出给上层 MoveIt2 planning_scene，按 ACM (Allowed Collision Matrix) 过滤免检对，剩余传给 motion planner 作为约束违反标志。MoveIt2 planning_scene::checkCollision() 接收 CollisionResult；collision_detection::CollisionEnvFCL 默认实现。输入：CollisionResult + ACM。输出：filtered contact pairs to MoveIt2 planning_scene。依赖：FCL CollisionResult + ACM 配置。约束：MoveIt2 collision check 是 motion planning 计算瓶颈（可达 90% 资源）；ACM 是工程优化。适用场景：MoveIt2 / EXOTica / Tesseract motion planning。
+CAP_8a4674b4</title>
+  <rect x="292.0" y="1636.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="407.0" y="1673.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="407.0" dy="0">接触结果聚合与输出</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>AABB Endpoint Quantization
+把每个刚体 AABB 在 x/y/z 三轴的 min/max 世界坐标量化到 16/32 位整数坐标。Bullet3 btAxisSweep3 用 quantizeWithClamp 把 float AABB 量化为 unsigned short；PhysX PxBroadPhase 用 32-bit uint；Box2D b2BroadPhase 用 uint16。输入：刚体 AABB 集合。输出：每轴两个端点 (min_handle, max_handle) 的量化坐标。依赖：刚体集合。约束：量化精度受限于整数位宽（uint16 量化精度 = world_extent / 65536）；坐标超出 AABB 量程会被 clamp。性能指标：单刚体量化 O(1)。适用场景：SAP broadphase 入口。
+CAP_52a93b9f</title>
+  <rect x="56.0" y="1912.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="1949.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">轴端点排序与扫掠</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Sorted Endpoint Array Maintenance
+对每轴端点数组初始化为有序（增量插入 + bubble sort），并在每帧刚体运动后做增量重排（仅移动少量端点）。Bullet3 btAxisSweep3::updateHandle() 用 insertion sort；PhysX PxBroadPhase 用 incremental radix sort；Box2D b2BroadPhase::UpdatePairs() 用 insertion sort。输入：每轴两个端点 + 上一帧排序。输出：每帧更新后的有序端点数组。依赖：s1_1 量化坐标。约束：增量更新复杂度 O(k) k=移动的端点数；静态物体端点不变。性能指标：增量更新 &lt;1ms。适用场景：每帧 broadphase 更新。
+CAP_52a93b9f</title>
+  <rect x="322.0" y="1912.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="1949.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">轴端点排序与扫掠</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Longest Axis Sweep With Active Set
+扫掠最长轴（通常 x 轴）端点流：遇到 min 端点把对应 handle 加入活动集；遇到 max 端点从活动集移除。活动集内任意两个 handle 在该轴上 AABB 重叠。Bullet3 btAxisSweep3::calculateOverlappingPairs 主循环；PhysX PxBroadPhase 同。输入：有序端点数组。输出：x 轴候选对集合（活动集内笛卡尔积）。依赖：s1_2 排序端点。约束：活动集大小与场景密度相关；极端密集场景需 SAP-BVH hybrid。性能指标：单帧扫掠 O(n + k) k=候选对数。适用场景：Bullet3 btAxisSweep3、PhysX eSAP、Box2D b2BroadPhase 默认 broadphase。
+CAP_63251742</title>
+  <rect x="56.0" y="2096.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="2133.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">活动集扫描与多轴重叠测试</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>判断：3-Axis AABB Overlap
+判断：x 轴候选对是否在 y/z 两轴也 AABB 重叠？是 → 候选对送窄相（s2_3）；否 → 此对剪枝，直接进入下一阶段 s3（无候选对处理）。Bullet3 btAxisSweep3::addPair 用 quantize3 兼容性测试；Box2D b2BroadPhase::UpdatePairs 用 b2AABB::Overlap 三轴测试。输入：x 轴候选对 + y/z 轴端点。输出：3 轴重叠 yes/no。
+CAP_63251742</title>
+  <polygon points="402.0,2084.0 482.0,2134.0 402.0,2184.0 322.0,2134.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="402.0" y="2117.9" font-size="12" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="402.0" dy="0">判断：3-Axis</tspan><tspan x="402.0" dy="16.2">AABB Overlap</tspan></text>
+  <text x="402.0" y="2146.0" font-size="9.5" fill="#FF8FC2" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="402.0" dy="0">3 轴 AABB 重叠</tspan></text>
+  <rect x="380.0" y="2074.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="402.0" y="2082.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="402.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_3" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Candidate Pair To Narrowphase Cache
+把通过 3 轴测试的候选对写入 btOverlappingPairCache / PxBroadPhase pair cache，去重后送窄相。Bullet3 btHashedOverlappingPairCache::addOverlappingPair 用 hash 表去重；PhysX PxBroadPhase::getCreatedPairs 返回 pair 数组。输入：3 轴重叠候选对。输出：去重候选对集合送窄相。依赖：s2_2 通过测试。约束：hash 去重避免重复 narrowphase 调用；capacity 自适应扩展。适用场景：SAP → narrowphase 接口。
+CAP_3fafbc78</title>
+  <rect x="518.0" y="2102.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="618.0" y="2133.0" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="618.0" dy="0">SAP 候选对送窄相接口</tspan></text>
+  <rect x="524.0" y="2106.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="541.0" y="2117.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="541.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Primitive Pair Type Lookup
+查派发表 m_doubleDispatch[type1][type2] 找到对应 algorithm 类。Bullet3 btDefaultCollisionConfiguration::initializeConvexConvex 派发 btConvexConvexAlgorithm（GJK+EPA）；initializeBoxBox 派发 btBoxBoxDetector（SAT）；initializeSphereSphere 派发 btSphereSphereCollisionAlgorithm；等等。PhysX GuParticleSystem::dispatcher 同；Box2D b2ContactRegister 同。输入：候选 primitive pair + 类型枚举。输出：algorithm 类指针 + 算法上下文。依赖：s2_3 候选对。约束：未注册类型对需 fallback 到 GJK（凸-凸通用）；每对类型在初始化时注册。性能指标：派发表查询 O(1)。适用场景：本链 s3_1 步骤、链 1 GJK-EPA 链入口（同样有 primitive type lookup）。
+CAP_9883138f</title>
+  <rect x="56.0" y="2292.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="2329.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">primitive 对算法派发表</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>判断：Algorithm Selection
+判断：根据 primitive pair 类型选择算法路径。convex-convex 通用对 → s4 阶段用 GJK+EPA；特定 primitive 对（box-box / sphere-sphere / sphere-plane / capsule-capsule / box-sphere 等）→ s4_3 直接用 SAT 公式或几何关系（无需迭代）。Bullet3 btDefaultCollisionConfiguration 派发表区分两类；Box2D b2Collide* 函数族直接派发；PhysX GuPCMContact 模板族同。输入：algorithm 类指针。输出：算法路径标志 (gjk_epa / sat / direct_formula)。
+CAP_9883138f</title>
+  <polygon points="402.0,2280.0 482.0,2330.0 402.0,2380.0 322.0,2330.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="402.0" y="2313.9" font-size="12" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="402.0" dy="0">判断：Algorithm</tspan><tspan x="402.0" dy="16.2">Selection</tspan></text>
+  <text x="402.0" y="2342.0" font-size="9.5" fill="#FF8FC2" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="402.0" dy="0">primitive pair …</tspan></text>
+  <rect x="380.0" y="2270.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="402.0" y="2278.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="402.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>GJK Simplex Iteration For Convex Pair
+对 convex-convex 候选对执行 GJK 单纯形迭代判定相交。本步骤复用链 1 的 GJK Simplex Evolution 能力（caps 直接引用），具体算法见 chain_01 文档。libccd ccdGJKIntersect 是核心实现；Bullet3 btGjkPairDetector::getClosestPoints 调用 libccd 风格算法。输入：凸体对 + support function。输出：相交标志 + 最终 simplex（若相交，供 EPA 启动）。依赖：s3_2 选 GJK 分支。约束：max_iterations 默认 100；仅处理凸-凸对。适用场景：本链 convex-convex 窄相步骤、链 1 GJK-EPA 链核心步骤复用。
+CAP_312ea7d4</title>
+  <rect x="56.0" y="2476.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="2513.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">GJK 单纯形演化与相交判定</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_3" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>SAT For Specific Primitive Pairs
+对特定 primitive 对执行 SAT（Separating Axis Theorem）算法，避免 GJK 迭代，直接求穿透深度。box-box：测试 15 轴（6 面法向 + 9 边叉积）；sphere-sphere：测试 1 轴（中心连线）；sphere-plane：测试 1 轴（平面法向）；capsule-capsule：测试 4 轴（两 capsule 轴 + 两 capsule 端点连线）。Box2D b2CollidePolygon 实现 2D SAT；Bullet3 btPolyhedralContactClipping 实现 3D SAT for polyhedron-polyhedron；PhysX GuPCMContact 模板族实现各 primitive 对的 SAT。输入：primitive pair + 位姿。输出：(normal, depth, contact_point)。依赖：s3_2 选 SAT 分支。约束：仅特定 primitive 对有专用 SAT；通用 convex-convex 需 fallback 到 GJK。性能指标：单次 SAT O(15) = 常数时间。适用场景：本链特定 primitive 对窄相、Box2D 2D 物理引擎默认窄相。
+CAP_7d475384</title>
+  <rect x="322.0" y="2482.0" width="200.0" height="64.0" rx="6" fill="#1A1430" stroke="#9B87FF" stroke-width="2.2"/>
+  <text x="422.0" y="2504.2" font-size="13" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="422.0" dy="0">SAT 窄相（特定</tspan><tspan x="422.0" dy="17.6">primitive 对）</tspan></text>
+  <rect x="328.0" y="2486.0" width="34.0" height="20.0" rx="10" fill="#9B87FF44" stroke="#9B87FF" stroke-width="1"/>
+  <text x="345.0" y="2497.0" font-size="10" fill="#9B87FF" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="345.0" dy="0">分支</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>EPA Penetration Depth Solver
+对 GJK 判定相交的对执行 EPA 扩展求穿透深度。本步骤复用链 1 的 EPA Polytope Expansion 能力，具体算法见 chain_01 文档。libccd ccdGJKPenetration 调用 ccdEPA::expand；Bullet3 btGjkEpa2::EvaluateEPA。输入：GJK 最终 simplex + support function。输出：(depth, normal, contact_point)。依赖：s4_1 GJK 判定相交。约束：epa_tolerance 默认 1e-4。适用场景：本链 convex-convex 窄相穿透深度求解、链 1 GJK-EPA 链核心步骤复用。
+CAP_8833d73d</title>
+  <rect x="56.0" y="2580.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="2617.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">EPA 多面体扩展求穿透深度</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_4" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Contact Manifold Output To Solver
+合并：聚合 GJK+EPA 路径（s4_2）与 SAT 路径（s4_3）的穿透信息，整理为 contact manifold 并送上层求解器。本步骤复用链 1 的 Contact Manifold Generation 能力。Bullet3 btPersistentManifold 跨帧持久化；PhysX Gu::ContactBuffer；Box2D b2ContactManifold。输入：(normal, depth, contact_point) + 历史 manifold。输出：persistent manifold 给上层 sequential_impulse / multi_body_contact 求解器。依赖：s4_2 或 s4_3 输出。约束：4 点上限（Bullet/PhysX 工程约束）。适用场景：本链 s4_4 步骤、链 1 GJK-EPA 链输出步骤复用。
+CAP_0a938307</title>
+  <rect x="322.0" y="2586.0" width="200.0" height="64.0" rx="6" fill="#0E2019" stroke="#4FC08D" stroke-width="2.2"/>
+  <text x="422.0" y="2617.0" font-size="13" fill="#4FC08D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="422.0" dy="0">接触流形生成与持久化</tspan></text>
+  <rect x="328.0" y="2590.0" width="34.0" height="20.0" rx="10" fill="#4FC08D44" stroke="#4FC08D" stroke-width="1"/>
+  <text x="345.0" y="2601.0" font-size="10" fill="#4FC08D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="345.0" dy="0">合并</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Robot Link Mesh Loading And Voxelization
+从 URDF 加载机器人 link mesh（collision mesh），用 GPU-Voxels voxelizeMesh() 把每个 link mesh 离散为 voxel BitVector 上传到 GPU 显存。voxelization 用 CUDA 三角面栅格化（每 triangle 由一个 warp 处理），凹 mesh 自然离散（不需 V-HACD 预处理，与 GJK 的 convex 假设不同）。GPU-Voxels GpuVoxels::addRobot() + voxelizeMesh()。输入：URDF/mesh + voxel size。输出：per-link BitVector (GPU 显存)。依赖：CUDA GPU + URDF 解析。约束：voxel size 决定精度，1cm 精度下 100m³ 场景需 ~100MB 显存；mesh 凹形不需预处理但精度受 triangle density 影响。性能指标：单 robot link mesh voxelization &lt;50ms。适用场景：本链 s1_1 步骤、机器人 self-collision 与 map collision 的预处理。
+CAP_9e3711dc</title>
+  <rect x="56.0" y="2856.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="2893.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">mesh 与点云体素化预处理</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s1_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Environment Point Cloud Voxelization
+把传感器点云（LiDAR / RGB-D）离散为 voxel BitVector 上传到 GPU。GPU-Voxels GpuVoxels::insertPointcloud() 直接把点坐标 round 到 cell index，用 atomicOr 写入 BitVector。release 1.3.0 强化点云集成，支持 ROS DistanceROSDemo。输入：点云（ROS sensor_msgs::PointCloud2） + voxel size。输出：environment BitVector (GPU 显存)。依赖：CUDA GPU + ROS（可选）。约束：点云密度不均需密度归一化；1M points voxelization &lt;20ms。性能指标：1M points voxelization &lt;20ms。适用场景：本链 s1_2 步骤、机器人 map collision 的环境感知。
+CAP_9e3711dc</title>
+  <rect x="322.0" y="2856.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="2893.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">mesh 与点云体素化预处理</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Voxel Hash Map Construction On GPU
+用 spatial hash 函数把 (cell_x, cell_y, cell_z) 三元整数坐标映射到桶数组索引，GPU-Voxels VoxelMap / BitVector CUDA 数据结构在 GPU 显存中维护大世界稀疏 voxel。空间哈希函数 hash(cell_x, cell_y, cell_z) 把 cell 坐标映射到桶数组索引；查询时根据 hash 桶反查 cell 占用。GPU-Voxels VoxelMap 模板类。输入：voxel size + world bounds。输出：GPU 上的 VoxelMap / BitVector 数据结构。依赖：s1_1/s1_2 的 BitVector。约束：均匀 voxel 网格直接用 (x,y,z) → index 三元映射即可，但 GPU-Voxels 用 spatial hash 把大世界稀疏 voxel 压缩到紧凑 BitVector，节省显存。适用场景：本链 s2_1 步骤、GPU 并行 voxel 数据结构。
+CAP_cd9c7274 / CAP_56beed31</title>
+  <rect x="56.0" y="3028.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="3060.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">空间哈希桶查询</tspan></text>
+  <text x="171.0" y="3094.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="171.0" dy="0">空间哈希桶查询 +1</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s2_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>BitVector Maintenance On Object Pose Update
+机器人运动时每帧更新 link BitVector 位姿；增量更新避免每帧重建。GPU-Voxels GpuVoxels::updateRobot() 把机器人当前 joint state 转换为各 link 世界位姿，对应 link BitVector 平移/旋转到新位置；insertPointcloud() 增量插入新点云。release 1.2.0 的 self-collision 检查依赖此增量更新。输入：机器人位姿 / 点云增量 + 当前 BitVector。输出：更新后的 BitVector (GPU 显存)。依赖：s2_1 已构建 VoxelMap。约束：增量更新比重建便宜；机器人 link BitVector 平移需用 voxel grid discretization 重采（位姿非整数 voxel 边界对齐时）。性能指标：单 robot 30 link 增量更新 &lt;5ms。适用场景：本链 s2_2 步骤、机器人 self-collision 与 map collision 每帧更新。
+CAP_56beed31</title>
+  <rect x="322.0" y="3028.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="437.0" y="3055.6" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="437.0" dy="0">GPU 体素 BitVector 与碰撞查</tspan><tspan x="437.0" dy="18.9">询</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>GPU Parallel Bit-AND Collision Kernel
+对两个对象的 BitVector 启动 CUDA kernel 并行 bit-AND：每 thread 处理 32 bit（一个 warp），用 popc() 内建函数数 bit 数，set bit 即冲突 voxel。GPU-Voxels GpuVoxels::collide() 直接调用；metaPointCloud_-&gt;getAssociatedBitvectors() 获取 BitVector 句柄。SIMT 并行让 100 万 voxel 对的检测 &lt;10ms。输入：两个对象的 BitVector (GPU)。输出：overlap BitVector (GPU 显存)。依赖：s2_2 已更新 BitVector。约束：bit-AND kernel 复杂度 O(N/32) N=voxel 数；线程数受 GPU SM 数限制；GPU-Voxels 默认 collide() 返回 bool 仅做 boolean check，不返回 voxel list（如需 voxel list 需调 getCollidingVoxels）。性能指标：100³ cell × 2 对象 bit-AND 在 NVIDIA GTX 1080 上约 3ms；100 万 voxel 对 &lt;10ms。适用场景：本链 s3_1 步骤、GPU 并行 voxel-AND 核心。
+CAP_56beed31 / CAP_a7ba4eee</title>
+  <rect x="56.0" y="3212.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="3234.6" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">GPU 体素 BitVector 与碰撞查</tspan><tspan x="171.0" dy="18.9">询</tspan></text>
+  <text x="171.0" y="3278.0" font-size="10" fill="#8A93B0" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="171.0" dy="0">GPU 体素 BitVector 与碰撞查询 +1</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s3_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>判断：Collision Found
+判断：bit-AND 结果 overlap BitVector 是否有 set bit（popc &gt; 0）？是 → 转 s4 提取冲突 voxel list；否 → 直接转 s4_2 上报 no-collision（跳过 voxel 提取节省开销）。GPU-Voxels collide() 直接返回 bool；getCollidingVoxels() 用于需要 voxel list 的场景。输入：overlap BitVector (GPU)。输出：collision bool + (若 yes) 冲突 voxel list 候选。
+CAP_73c34f8e</title>
+  <polygon points="402.0,3200.0 482.0,3250.0 402.0,3300.0 322.0,3250.0" fill="#2A0F1E" stroke="#FF5FA8" stroke-width="2.5"/>
+  <text x="402.0" y="3233.9" font-size="12" fill="#FF5FA8" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="402.0" dy="0">判断：Collision</tspan><tspan x="402.0" dy="16.2">Found</tspan></text>
+  <text x="402.0" y="3262.0" font-size="9.5" fill="#FF8FC2" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif"><tspan x="402.0" dy="0">overla…</tspan></text>
+  <rect x="380.0" y="3190.0" width="44.0" height="20.0" rx="10" fill="#FF5FA8" stroke="none" stroke-width="0"/>
+  <text x="402.0" y="3198.0" font-size="10" fill="#151A2B" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="402.0" dy="0">判断</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_1" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Collision Bool And Conflict Voxel Set Output
+把 GPU overlap BitVector 上的 set bit 提取为 (collision_bool, conflict_voxels_world_coord) 元组。GPU-Voxels getCollidingVoxels() / getCollidingBoxes() 把 set bit 的 cell 坐标转回 (x, y, z) 整数坐标，再乘 voxel size 得世界坐标；CUDA kernel 用 popc() 数 bit 数，用 atomicAdd 收集 set bit 的 cell 坐标到输出数组。两种输出形态：(1) bool collision（path validation 用）；(2) voxel list（self-collision 定位 link / map collision 定位障碍用）。输入：overlap BitVector (GPU)。输出：(collision_bool, conflict_voxels_world_coord)。依赖：s3_2 判定 collision found。约束：返回 voxel 中心点而非精确 contact point（精度限制为 voxel size）；冲突 voxel 数过多（&gt;1000）时上报可能成为瓶颈。性能指标：1000 冲突 voxel 提取 &lt;5ms。适用场景：本链 s4_1 步骤。
+CAP_73c34f8e</title>
+  <rect x="56.0" y="3396.0" width="230.0" height="76.0" rx="5" fill="#231A0C" stroke="#E8A33D" stroke-width="2.0"/>
+  <text x="171.0" y="3433.0" font-size="14" fill="#E8A33D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="171.0" dy="0">voxel 重叠接触提取</tspan></text>
+  </g>
+  <g class="step-node" data-sid="s4_2" data-sub-topic="" data-sub-chain="" style="cursor:pointer;">
+  <title>Path Validation And Self Collision Report
+合并：聚合 collision found 分支（s4_1 提取的 voxel list）与 no-collision 分支（s3_2 直接转来）的结果，送上层 motion planning / path validation / self-collision check。GPU-Voxels ROS gpu_voxels_ros 包提供上报接口。path validation 把 trajectory 离散为多个 sample pose，每个 pose 跑 BitVector bit-AND；self-collision check 把 robot 自身 links 互相 bit-AND。输入：collision bool + conflict_voxels + trajectory samples。输出：path validation report / self-collision report 给上层 motion planner。依赖：s4_1 或 s3_2 输出。约束：本链止于检测，不做轨迹优化；本链产出的 (collision_bool, conflict_voxels) 不直接喂给 compliance_contact_model / sequential_impulse 等力学求解兄弟主题（精度不够），而是喂给上层 motion planning / path validation（不属于本 L2 主题）。适用场景：机器人 self-collision 检查、map collision 检查、motion planning path validation。
+CAP_73c34f8e</title>
+  <rect x="322.0" y="3402.0" width="200.0" height="64.0" rx="6" fill="#0E2019" stroke="#4FC08D" stroke-width="2.2"/>
+  <text x="422.0" y="3433.0" font-size="13" fill="#4FC08D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="422.0" dy="0">voxel 重叠接触提取</tspan></text>
+  <rect x="328.0" y="3406.0" width="34.0" height="20.0" rx="10" fill="#4FC08D44" stroke="#4FC08D" stroke-width="1"/>
+  <text x="345.0" y="3417.0" font-size="10" fill="#4FC08D" text-anchor="middle" font-family="PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,SimHei,system-ui,sans-serif" style="font-weight:bold"><tspan x="345.0" dy="0">合并</tspan></text>
+  </g>
+</svg>

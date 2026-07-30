@@ -1,0 +1,420 @@
+{
+  "repo": "/sessions/intelligent-eloquent-hamilton/mnt/ontology",
+  "dedup_gate": {
+    "ledger_size": 1206,
+    "status_distribution": {
+      "resolved": 1116,
+      "merged": 39,
+      "merge_failed": 6,
+      "merge_pending": 2,
+      "open": 43
+    },
+    "labelled_pairs": 1155,
+    "by_metric": {
+      "emb": {
+        "n_pairs": 508,
+        "n_duplicate": 35,
+        "n_not_duplicate": 473,
+        "precision_at_operating_point": 0.0689,
+        "auc": 0.6294,
+        "auc_ci95": [
+          0.5307,
+          0.7221
+        ],
+        "sim_duplicate_mean": 0.9349,
+        "sim_not_duplicate_mean": 0.9209,
+        "threshold_sweep": [
+          {
+            "threshold": 0.863,
+            "kept": 508,
+            "duplicates_kept": 35,
+            "precision": 0.0689,
+            "recall_of_duplicates": 1.0
+          },
+          {
+            "threshold": 0.874,
+            "kept": 485,
+            "duplicates_kept": 33,
+            "precision": 0.068,
+            "recall_of_duplicates": 0.9429
+          },
+          {
+            "threshold": 0.886,
+            "kept": 438,
+            "duplicates_kept": 32,
+            "precision": 0.0731,
+            "recall_of_duplicates": 0.9143
+          },
+          {
+            "threshold": 0.897,
+            "kept": 385,
+            "duplicates_kept": 31,
+            "precision": 0.0805,
+            "recall_of_duplicates": 0.8857
+          },
+          {
+            "threshold": 0.909,
+            "kept": 310,
+            "duplicates_kept": 26,
+            "precision": 0.0839,
+            "recall_of_duplicates": 0.7429
+          },
+          {
+            "threshold": 0.92,
+            "kept": 259,
+            "duplicates_kept": 23,
+            "precision": 0.0888,
+            "recall_of_duplicates": 0.6571
+          },
+          {
+            "threshold": 0.931,
+            "kept": 191,
+            "duplicates_kept": 20,
+            "precision": 0.1047,
+            "recall_of_duplicates": 0.5714
+          },
+          {
+            "threshold": 0.943,
+            "kept": 143,
+            "duplicates_kept": 18,
+            "precision": 0.1259,
+            "recall_of_duplicates": 0.5143
+          },
+          {
+            "threshold": 0.954,
+            "kept": 109,
+            "duplicates_kept": 15,
+            "precision": 0.1376,
+            "recall_of_duplicates": 0.4286
+          },
+          {
+            "threshold": 0.966,
+            "kept": 48,
+            "duplicates_kept": 4,
+            "precision": 0.0833,
+            "recall_of_duplicates": 0.1143
+          },
+          {
+            "threshold": 0.977,
+            "kept": 22,
+            "duplicates_kept": 2,
+            "precision": 0.0909,
+            "recall_of_duplicates": 0.0571
+          },
+          {
+            "threshold": 0.989,
+            "kept": 5,
+            "duplicates_kept": 1,
+            "precision": 0.2,
+            "recall_of_duplicates": 0.0286
+          },
+          {
+            "threshold": 1.0,
+            "kept": 1,
+            "duplicates_kept": 1,
+            "precision": 1.0,
+            "recall_of_duplicates": 0.0286
+          }
+        ]
+      },
+      "lex": {
+        "n_pairs": 647,
+        "n_duplicate": 4,
+        "n_not_duplicate": 643,
+        "precision_at_operating_point": 0.0062,
+        "auc": 0.4539,
+        "auc_ci95": [
+          0.2714,
+          0.7644
+        ],
+        "sim_duplicate_mean": 0.3588,
+        "sim_not_duplicate_mean": 0.3732,
+        "threshold_sweep": [
+          {
+            "threshold": 0.3,
+            "kept": 647,
+            "duplicates_kept": 4,
+            "precision": 0.0062,
+            "recall_of_duplicates": 1.0
+          },
+          {
+            "threshold": 0.358,
+            "kept": 330,
+            "duplicates_kept": 1,
+            "precision": 0.003,
+            "recall_of_duplicates": 0.25
+          },
+          {
+            "threshold": 0.417,
+            "kept": 89,
+            "duplicates_kept": 1,
+            "precision": 0.0112,
+            "recall_of_duplicates": 0.25
+          },
+          {
+            "threshold": 0.475,
+            "kept": 30,
+            "duplicates_kept": 0,
+            "precision": 0.0,
+            "recall_of_duplicates": 0.0
+          },
+          {
+            "threshold": 0.533,
+            "kept": 18,
+            "duplicates_kept": 0,
+            "precision": 0.0,
+            "recall_of_duplicates": 0.0
+          },
+          {
+            "threshold": 0.592,
+            "kept": 11,
+            "duplicates_kept": 0,
+            "precision": 0.0,
+            "recall_of_duplicates": 0.0
+          },
+          {
+            "threshold": 0.65,
+            "kept": 11,
+            "duplicates_kept": 0,
+            "precision": 0.0,
+            "recall_of_duplicates": 0.0
+          },
+          {
+            "threshold": 0.708,
+            "kept": 11,
+            "duplicates_kept": 0,
+            "precision": 0.0,
+            "recall_of_duplicates": 0.0
+          },
+          {
+            "threshold": 0.767,
+            "kept": 9,
+            "duplicates_kept": 0,
+            "precision": 0.0,
+            "recall_of_duplicates": 0.0
+          },
+          {
+            "threshold": 0.825,
+            "kept": 8,
+            "duplicates_kept": 0,
+            "precision": 0.0,
+            "recall_of_duplicates": 0.0
+          },
+          {
+            "threshold": 0.883,
+            "kept": 8,
+            "duplicates_kept": 0,
+            "precision": 0.0,
+            "recall_of_duplicates": 0.0
+          },
+          {
+            "threshold": 0.942,
+            "kept": 4,
+            "duplicates_kept": 0,
+            "precision": 0.0,
+            "recall_of_duplicates": 0.0
+          },
+          {
+            "threshold": 1.0,
+            "kept": 4,
+            "duplicates_kept": 0,
+            "precision": 0.0,
+            "recall_of_duplicates": 0.0
+          }
+        ]
+      }
+    }
+  },
+  "records": {
+    "topic_records": 1740,
+    "capability_entries": 40834,
+    "asset_entries": 18110,
+    "chains": {
+      "total": 5756,
+      "per_topic_mean": 3.31,
+      "steps_total": 63691,
+      "steps_per_chain_mean": 11.07,
+      "steps_per_chain_median": 10,
+      "steps_per_chain_p90": 16,
+      "branching": 1314,
+      "branching_pct": 22.83,
+      "with_merge_node": 1277,
+      "with_merge_node_pct": 22.19,
+      "purely_linear": 4267,
+      "purely_linear_pct": 74.13
+    },
+    "provenance_integrity": {
+      "chain_doc_references": 5545,
+      "chain_doc_missing": 95,
+      "chain_doc_resolvable_pct": 98.29,
+      "topics_without_chain_docs": 58,
+      "topics_without_chain_docs_pct": 3.33,
+      "retrieval_doc_references": 1722,
+      "retrieval_doc_missing": 5,
+      "retrieval_doc_resolvable_pct": 99.71
+    },
+    "refusal_to_fabricate": {
+      "unverified_markers_total": 1105,
+      "topics_with_unverified": 282,
+      "topics_with_unverified_pct": 16.21,
+      "markers_per_topic_mean": 0.64
+    }
+  },
+  "amortization": {
+    "distinct_capabilities": 22777,
+    "capability_topic_usages": 36713,
+    "amortization_factor": 1.6118,
+    "rederivations_avoided": 13936,
+    "reused_across_topics": 6533,
+    "reused_pct": 28.68,
+    "max_reuse": 32,
+    "usage_distribution_head": {
+      "1": 16244,
+      "2": 3608,
+      "3": 1382,
+      "4": 665,
+      "5": 315,
+      "6": 178,
+      "7": 107,
+      "8": 79,
+      "9": 63,
+      "10": 38,
+      "11": 19,
+      "12": 18
+    },
+    "amortization_curve": [
+      [
+        50,
+        1.034
+      ],
+      [
+        100,
+        1.0638
+      ],
+      [
+        150,
+        1.0894
+      ],
+      [
+        200,
+        1.1157
+      ],
+      [
+        250,
+        1.139
+      ],
+      [
+        300,
+        1.1615
+      ],
+      [
+        350,
+        1.1877
+      ],
+      [
+        400,
+        1.2071
+      ],
+      [
+        450,
+        1.2273
+      ],
+      [
+        500,
+        1.2484
+      ],
+      [
+        550,
+        1.2708
+      ],
+      [
+        600,
+        1.2881
+      ],
+      [
+        650,
+        1.3062
+      ],
+      [
+        700,
+        1.3239
+      ],
+      [
+        750,
+        1.3433
+      ],
+      [
+        800,
+        1.3605
+      ],
+      [
+        850,
+        1.3784
+      ],
+      [
+        900,
+        1.396
+      ],
+      [
+        950,
+        1.4135
+      ],
+      [
+        1000,
+        1.4307
+      ],
+      [
+        1050,
+        1.4452
+      ],
+      [
+        1100,
+        1.4624
+      ],
+      [
+        1150,
+        1.4784
+      ],
+      [
+        1200,
+        1.4939
+      ],
+      [
+        1250,
+        1.5086
+      ],
+      [
+        1300,
+        1.5237
+      ],
+      [
+        1350,
+        1.5373
+      ],
+      [
+        1400,
+        1.552
+      ],
+      [
+        1450,
+        1.5675
+      ],
+      [
+        1500,
+        1.5822
+      ],
+      [
+        1550,
+        1.5963
+      ],
+      [
+        1600,
+        1.6102
+      ],
+      [
+        1605,
+        1.6118
+      ]
+    ]
+  }
+}
