@@ -1,535 +1,500 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>箱熵 · 图谱是怎么建出来的</title>
+<title>How the graph is built — Entropy Box</title>
+<meta name="description" content="The agent-orchestrated pipeline behind the Entropy Box capability graph: five stages, three mechanical gates, a mandatory retrieval ledger per document, and the frozen source documents published so you can read what the compiler read.">
+<link rel="canonical" href="https://chenli-yy.github.io/entropy-box-public/how-it-works/">
+<meta property="og:title" content="How the graph is built — Entropy Box">
+<meta property="og:description" content="Five stages, three gates, and the provenance discipline that forces evidence — with the original research documents.">
+<meta name="author" content="Yuqi Wang">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230B0D11'/%3E%3Cpath d='M8 11h16M8 16h11M8 21h16' stroke='%232DD4BF' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E">
 <style>
-:root {
-  --bg:#000; --surface:#0e0e10; --card:#141416; --card-2:#1c1c1e;
-  --border:#2a2a2d; --border-soft:#202023; --border-strong:#3a3a3e;
-  --text:#ebebf0; --bright:#fff; --muted:#98989f; --dim:#6c6c70; --faint:#48484a;
-  --accent:#0a84ff; --accent-2:#5e5ce6; --accent-light:#409cff;
-  --amber:#fbbf24; --green:#30d158; --red:#ff453a; --cyan:#64d2ff;
+:root{
+  --bg:#07080B; --bg2:#0B0D12; --panel:#10131A; --panel2:#0D1015;
+  --line:#1E232D; --line2:#2A3240;
+  --text:#EDF1F6; --dim:#98A2B3; --faint:#6B7688;
+  --teal:#2DD4BF; --blue:#5B9DFF; --amber:#F0B429; --green:#3FCF6E; --red:#FF6B60;
 }
-* { box-sizing:border-box; }
-html { scroll-behavior:smooth; }
-body {
-  margin:0; background:var(--bg); color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
-  font-size:15px; line-height:1.7; -webkit-font-smoothing:antialiased;
-}
-a { color:var(--accent); }
-.wrap { max-width:1120px; margin:0 auto; padding:0 32px; }
-.sec { padding:64px 0; border-top:.5px solid var(--border-soft); }
-.sec:first-of-type { border-top:none; }
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--text);
+  font:15.5px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,
+  "PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--teal);text-decoration:none}
+a:hover{text-decoration:underline}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.88em}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
 
-/* ---------- 滚动淡入 ---------- */
-.rv { opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease; }
-.rv.in { opacity:1; transform:none; }
+/* ---------- nav ---------- */
+nav{position:sticky;top:0;z-index:50;background:rgba(7,8,11,.78);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:26px;height:56px}
+.brand{font-weight:700;font-size:15px;color:var(--text);display:flex;align-items:center;
+  gap:8px;flex-shrink:0}
+.brand:hover{text-decoration:none}
+.brand .bd{width:9px;height:9px;border-radius:50%;background:var(--teal);
+  box-shadow:0 0 12px var(--teal);flex-shrink:0}
+.navlinks{display:flex;gap:22px;font-size:13.5px;margin-left:auto}
+.navlinks a{color:var(--dim)}
+.navlinks a:hover{color:var(--text);text-decoration:none}
+@media(max-width:820px){.navlinks{display:none}}
 
-/* ---------- 章节标题 ---------- */
-.eyebrow {
-  font-size:11px; font-weight:700; letter-spacing:2.4px; text-transform:uppercase;
-  color:var(--accent-light); margin-bottom:10px;
-}
-.sec h2 { font-size:26px; font-weight:700; color:var(--bright); margin:0 0 10px; letter-spacing:-.3px; }
-.sec .lede { font-size:14.5px; color:var(--muted); margin:0 0 30px; max-width:760px; line-height:1.8; }
-.sec .lede strong { color:var(--text); font-weight:600; }
+/* ---------- reveal ---------- */
+.rv{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
 
-/* ---------- HERO ---------- */
-.hero { position:relative; overflow:hidden; padding:76px 0 54px; }
-.hero::before {
-  content:''; position:absolute; inset:-40% -20% auto -20%; height:640px;
-  background:
-    radial-gradient(46% 52% at 22% 8%, rgba(10,132,255,.22) 0%, transparent 62%),
-    radial-gradient(38% 46% at 78% 4%, rgba(94,92,230,.18) 0%, transparent 60%);
-  pointer-events:none;
-}
-.hero::after {
-  content:''; position:absolute; inset:0;
-  background:repeating-linear-gradient(0deg, rgba(255,255,255,.014) 0 1px, transparent 1px 34px);
-  pointer-events:none;
-}
-.hero-in { position:relative; z-index:1; }
-.hero h1 {
-  font-size:42px; line-height:1.22; font-weight:740; color:var(--bright);
-  margin:0 0 16px; letter-spacing:-1px; max-width:820px;
-}
-.hero h1 em { font-style:normal; color:var(--accent-light); }
-.hero-sub { font-size:16px; color:var(--muted); max-width:730px; margin:0 0 34px; line-height:1.85; }
-.hero-sub strong { color:var(--text); font-weight:600; }
+/* ---------- sections ---------- */
+.sec{padding:72px 0;border-top:1px solid var(--line)}
+.eyebrow{font-size:11.5px;font-weight:680;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--teal);margin-bottom:14px;display:flex;align-items:center;gap:9px}
+.eyebrow::before{content:'';width:16px;height:1px;background:var(--teal);opacity:.6}
+.sec h2{font-size:clamp(23px,3.2vw,31px);font-weight:680;color:var(--text);
+  margin:0 0 14px;letter-spacing:-.026em;max-width:24ch;line-height:1.18}
+.sec .lede{font-size:16px;color:var(--dim);margin:0 0 32px;max-width:68ch;line-height:1.65}
+.sec .lede strong{color:var(--text);font-weight:600}
 
-/* 数据墙 */
-/* auto-fit：4 张 / 5 张（--deep 模式多一张检索次数卡）都能自动排匀 */
-.stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:10px; }
-.stat {
-  background:linear-gradient(180deg, var(--card) 0%, rgba(20,20,22,.5) 100%);
-  border:.5px solid var(--border); border-radius:14px; padding:18px 16px 15px;
-  position:relative; overflow:hidden;
-}
-.stat::after {
-  content:''; position:absolute; left:16px; right:16px; top:0; height:1px;
-  background:linear-gradient(90deg, transparent, rgba(10,132,255,.55), transparent);
-}
-.stat-n {
-  font-size:29px; font-weight:730; color:var(--bright); line-height:1.12;
-  letter-spacing:-.8px; font-variant-numeric:tabular-nums;
-}
-.stat-n span { font-size:15px; font-weight:600; color:var(--muted); margin-left:3px; letter-spacing:0; }
-.stat-l { font-size:11.5px; color:var(--muted); margin-top:7px; line-height:1.5; }
+/* ---------- hero ---------- */
+.hero{position:relative;overflow:hidden;padding:84px 0 62px}
+.hero::before{content:'';position:absolute;top:-320px;left:50%;transform:translateX(-50%);
+  width:1100px;height:600px;pointer-events:none;
+  background:radial-gradient(ellipse at center,rgba(45,212,191,.15),transparent 62%)}
+.hero::after{content:'';position:absolute;inset:0;pointer-events:none;opacity:.35;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),
+    linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:56px 56px;
+  mask-image:radial-gradient(ellipse 70% 60% at 50% 20%,#000,transparent 75%);
+  -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 20%,#000,transparent 75%)}
+.hero-in{position:relative;z-index:1}
+.hero h1{font-size:clamp(30px,5.2vw,50px);line-height:1.1;font-weight:700;
+  color:var(--text);margin:16px 0 0;letter-spacing:-.032em;max-width:19ch}
+.hero h1 em{font-style:normal;
+  background:linear-gradient(100deg,var(--teal),var(--blue));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-sub{font-size:17px;color:var(--dim);max-width:64ch;margin:22px 0 0;line-height:1.6}
+.hero-sub strong{color:var(--text);font-weight:600}
 
-/* ---------- 流水线 ---------- */
-.flow { display:grid; grid-template-columns:repeat(5,1fr); gap:0; align-items:stretch; }
-.node { position:relative; padding:0 7px; }
-.node-in {
-  height:100%; background:var(--card); border:.5px solid var(--border);
-  border-radius:14px; padding:16px 15px 15px; transition:all .22s ease;
-}
-.node:hover .node-in { border-color:var(--accent); transform:translateY(-3px); background:var(--card-2); }
-.node:not(:last-child)::after {
-  content:''; position:absolute; right:-6px; top:38px; width:12px; height:12px;
-  border-top:1.5px solid var(--border-strong); border-right:1.5px solid var(--border-strong);
-  transform:rotate(45deg); z-index:2;
-}
-.node-top { display:flex; align-items:center; gap:8px; margin-bottom:9px; }
-.node-num {
-  font-family:ui-monospace,Menlo,Consolas,monospace; font-size:11px; font-weight:700;
-  color:var(--accent); background:rgba(10,132,255,.13);
-  border:1px solid rgba(10,132,255,.3); border-radius:6px; padding:2px 7px;
-}
-.node-name { font-size:14px; font-weight:660; color:var(--bright); }
-.node-desc { font-size:12.5px; color:var(--muted); line-height:1.65; }
-.node-gate {
-  margin-top:11px; padding-top:9px; border-top:.5px solid var(--border-soft);
-  font-size:11px; color:var(--amber); display:flex; align-items:center; gap:5px;
-}
-.node-gate.g-none { color:var(--dim); }
-.node-gate b { font-family:ui-monospace,Menlo,Consolas,monospace; font-weight:600; }
+/* ---------- pipeline ---------- */
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;align-items:stretch}
+.node{position:relative;padding:0 6px}
+.node-in{height:100%;background:var(--panel);border:1px solid var(--line);
+  border-radius:12px;padding:17px 16px 16px;transition:.2s}
+.node:hover .node-in{border-color:var(--line2);transform:translateY(-3px);
+  background:var(--panel2)}
+.node:not(:last-child)::after{content:'';position:absolute;right:-5px;top:40px;
+  width:10px;height:10px;border-top:1.5px solid var(--line2);
+  border-right:1.5px solid var(--line2);transform:rotate(45deg);z-index:2}
+.node-top{display:flex;align-items:center;gap:9px;margin-bottom:10px}
+.node-num{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;font-weight:700;
+  color:var(--teal);background:rgba(45,212,191,.11);border:1px solid rgba(45,212,191,.3);
+  border-radius:6px;padding:2px 7px}
+.node-name{font-size:14.5px;font-weight:660;color:var(--text);letter-spacing:-.012em}
+.node-desc{font-size:12.5px;color:var(--dim);line-height:1.6}
+.node-gate{margin-top:12px;padding-top:10px;border-top:1px solid var(--line);
+  font-size:11px;color:var(--amber);display:flex;align-items:center;gap:5px}
+.node-gate.g-none{color:var(--faint)}
+.node-gate b{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:600}
 
-/* ---------- 取证 ---------- */
-.eg { display:grid; grid-template-columns:290px 1fr; gap:22px; align-items:start; }
-.eg-rules {
-  background:linear-gradient(180deg, rgba(251,191,36,.07), rgba(251,191,36,.02));
-  border:1px solid rgba(251,191,36,.26); border-radius:16px; padding:20px;
-}
-.eg-rules h3 { margin:0 0 6px; font-size:15px; font-weight:680; color:var(--amber); }
-.eg-rules p { font-size:12.5px; color:var(--muted); margin:0 0 15px; line-height:1.7; }
-.quota { display:flex; flex-direction:column; gap:8px; }
-.quota-row {
-  display:flex; align-items:center; justify-content:space-between; gap:10px;
-  background:rgba(0,0,0,.32); border:.5px solid var(--border); border-radius:10px;
-  padding:9px 12px;
-}
-.quota-k { font-size:12.5px; color:var(--text); font-family:ui-monospace,Menlo,Consolas,monospace; }
-.quota-v { font-size:12.5px; font-weight:700; color:var(--amber); white-space:nowrap; }
-.eg-hard {
-  margin-top:15px; font-size:12px; line-height:1.7; color:var(--muted);
-  border-top:.5px solid rgba(251,191,36,.2); padding-top:12px;
-}
-.eg-hard b { color:var(--amber); }
+/* ---------- evidence ---------- */
+.eg{display:grid;grid-template-columns:296px 1fr;gap:22px;align-items:start}
+.eg-rules{background:linear-gradient(170deg,rgba(240,180,41,.075),rgba(240,180,41,.015));
+  border:1px solid rgba(240,180,41,.26);border-radius:14px;padding:21px}
+.eg-rules h3{margin:0 0 6px;font-size:15.5px;font-weight:670;color:var(--amber);
+  letter-spacing:-.012em}
+.eg-rules p{font-size:12.5px;color:var(--dim);margin:0 0 16px;line-height:1.65}
+.quota{display:flex;flex-direction:column;gap:8px}
+.quota-row{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  background:rgba(0,0,0,.32);border:1px solid var(--line);border-radius:9px;padding:9px 12px}
+.quota-k{font-size:12.5px;color:var(--text);
+  font-family:ui-monospace,Menlo,Consolas,monospace}
+.quota-v{font-size:12px;font-weight:700;color:var(--amber);white-space:nowrap}
+.eg-hard{margin-top:16px;font-size:12.5px;line-height:1.7;color:var(--dim);
+  border-top:1px solid rgba(240,180,41,.2);padding-top:13px}
+.eg-hard b{color:var(--amber)}
 
-.eg-log { min-width:0; }
-.log-head { display:flex; align-items:baseline; gap:10px; margin-bottom:10px; flex-wrap:wrap; }
-.log-head h3 { margin:0; font-size:15px; font-weight:660; color:var(--bright); }
-.log-head span { font-size:12px; color:var(--dim); }
-.log-box {
-  background:var(--surface); border:.5px solid var(--border); border-radius:14px;
-  overflow:hidden;
-}
-.log-bar {
-  display:flex; align-items:center; gap:7px; padding:9px 14px;
-  border-bottom:.5px solid var(--border); background:var(--card);
-  font-family:ui-monospace,Menlo,Consolas,monospace; font-size:11.5px; color:var(--dim);
-}
-.dot { width:9px; height:9px; border-radius:50%; }
-.log-scroll { overflow-x:auto; }
-table.log { border-collapse:collapse; width:100%; font-size:12px; min-width:660px; }
-table.log th {
-  text-align:left; padding:8px 12px; color:var(--muted); font-weight:600;
-  background:rgba(255,255,255,.025); border-bottom:.5px solid var(--border); white-space:nowrap;
-}
-table.log td { padding:8px 12px; border-bottom:.5px solid var(--border-soft); vertical-align:top; color:var(--text); }
-table.log tr:last-child td { border-bottom:none; }
-table.log td.q { color:var(--cyan); font-family:ui-monospace,Menlo,Consolas,monospace; font-size:11.5px; line-height:1.6; }
-table.log td.n, table.log td.s { white-space:nowrap; color:var(--muted); }
-table.log tr.fail td { background:rgba(255,69,58,.07); }
-table.log tr.fail td.n, table.log tr.fail td.q { color:#ff8a80; }
-.log-foot {
-  padding:10px 14px; border-top:.5px solid var(--border); background:var(--card);
-  font-size:11.5px; color:var(--muted); line-height:1.65;
-}
-.log-foot b { color:var(--text); }
+.eg-log{min-width:0}
+.log-head{display:flex;align-items:baseline;gap:10px;margin-bottom:11px;flex-wrap:wrap}
+.log-head h3{margin:0;font-size:15.5px;font-weight:660;color:var(--text);
+  letter-spacing:-.012em}
+.log-head span{font-size:12px;color:var(--faint)}
+.log-box{background:var(--panel2);border:1px solid var(--line);border-radius:13px;
+  overflow:hidden}
+.log-bar{display:flex;align-items:center;gap:7px;padding:9px 14px;
+  border-bottom:1px solid var(--line);background:var(--panel);
+  font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11.5px;color:var(--faint)}
+.tld{width:9px;height:9px;border-radius:50%}
+.log-scroll{overflow-x:auto}
+table.log{border-collapse:collapse;width:100%;font-size:12px;min-width:680px}
+table.log th{text-align:left;padding:9px 12px;color:var(--faint);font-weight:650;
+  font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  background:rgba(255,255,255,.022);border-bottom:1px solid var(--line);white-space:nowrap}
+table.log td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top;
+  color:var(--text)}
+table.log tr:last-child td{border-bottom:none}
+table.log td.q{color:var(--blue);font-family:ui-monospace,Menlo,Consolas,monospace;
+  font-size:11.5px;line-height:1.6}
+table.log td.n,table.log td.s{white-space:nowrap;color:var(--dim)}
+table.log tr.fail td{background:rgba(255,107,96,.07)}
+table.log tr.fail td.n,table.log tr.fail td.q{color:#FF9A92}
+.log-foot{padding:12px 14px;border-top:1px solid var(--line);background:var(--panel);
+  font-size:12px;color:var(--dim);line-height:1.65}
+.log-foot b{color:var(--text)}
 
-/* ---------- 录屏 ---------- */
-.scope {
-  display:flex; gap:12px; align-items:flex-start;
-  background:rgba(251,191,36,.06); border:1px solid rgba(251,191,36,.26);
-  border-radius:14px; padding:14px 16px; margin-bottom:16px;
-  font-size:13px; line-height:1.8; color:var(--muted);
-}
-.scope-ic { color:var(--amber); font-size:15px; line-height:1.5; }
-.scope b { color:var(--amber); }
-.scope strong { color:var(--text); }
-.scope ol { margin:4px 0 0; padding-left:18px; }
-.scope li { margin:2px 0; }
-#video-slot {
-  position:relative; width:100%; aspect-ratio:1920/1040;
-  border-radius:16px; overflow:hidden; border:.5px solid var(--border); background:#08090b;
-}
-.ph {
-  position:absolute; inset:0; cursor:pointer;
-  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;
-  background:
-    radial-gradient(120% 80% at 50% 0%, rgba(10,132,255,.15) 0%, transparent 64%),
-    repeating-linear-gradient(0deg, rgba(255,255,255,.02) 0 1px, transparent 1px 30px), #08090b;
-}
-.ph:hover .play { transform:scale(1.08); box-shadow:0 10px 34px rgba(10,132,255,.45); }
-.play {
-  width:70px; height:70px; border-radius:50%; background:var(--accent); color:#fff;
-  display:flex; align-items:center; justify-content:center; font-size:26px; padding-left:6px;
-  box-shadow:0 8px 26px rgba(10,132,255,.3); transition:all .22s ease;
-}
-.ph-t { font-size:15px; font-weight:600; color:var(--bright); }
-.ph-b {
-  font-size:11.5px; color:var(--muted); border:.5px solid var(--border);
-  border-radius:999px; padding:4px 13px; background:rgba(255,255,255,.03);
-}
-.loading {
-  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-  font-size:13px; color:var(--muted); background:rgba(8,9,11,.8); z-index:2;
-}
+/* ---------- recording ---------- */
+.scope{display:flex;gap:13px;align-items:flex-start;
+  background:rgba(240,180,41,.055);border:1px solid rgba(240,180,41,.26);
+  border-radius:13px;padding:15px 17px;margin-bottom:16px;
+  font-size:13.5px;line-height:1.72;color:var(--dim)}
+.scope-ic{color:var(--amber);font-size:15px;line-height:1.5}
+.scope b{color:var(--amber)}
+.scope strong{color:var(--text)}
+.scope ol{margin:6px 0 0;padding-left:18px}
+.scope li{margin:3px 0}
+#video-slot{position:relative;width:100%;aspect-ratio:1920/1040;border-radius:14px;
+  overflow:hidden;border:1px solid var(--line);background:#08090b}
+.ph{position:absolute;inset:0;cursor:pointer;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:14px;
+  background:radial-gradient(120% 80% at 50% 0%,rgba(45,212,191,.14) 0%,transparent 64%),
+    repeating-linear-gradient(0deg,rgba(255,255,255,.02) 0 1px,transparent 1px 30px),#08090b}
+.ph:hover .play{transform:scale(1.08);box-shadow:0 10px 34px rgba(45,212,191,.45)}
+.play{width:70px;height:70px;border-radius:50%;background:var(--teal);color:#04211E;
+  display:flex;align-items:center;justify-content:center;font-size:26px;padding-left:6px;
+  box-shadow:0 8px 26px rgba(45,212,191,.3);transition:.22s}
+.ph-t{font-size:15px;font-weight:620;color:var(--text)}
+.ph-b{font-size:11.5px;color:var(--dim);border:1px solid var(--line);border-radius:999px;
+  padding:4px 13px;background:rgba(255,255,255,.03)}
+.loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:13px;color:var(--dim);background:rgba(8,9,11,.8);z-index:2}
 
-/* ---------- 材料 ---------- */
-.mats { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
-.mat {
-  display:flex; gap:14px; padding:16px 18px; text-decoration:none;
-  background:var(--card); border:.5px solid var(--border); border-radius:14px;
-  transition:all .2s ease;
-}
-.mat:hover { border-color:var(--accent); background:var(--card-2); transform:translateY(-2px); }
-.mat-ic {
-  width:40px; height:40px; flex-shrink:0; border-radius:11px;
-  background:rgba(10,132,255,.11); border:.5px solid rgba(10,132,255,.26);
-  display:flex; align-items:center; justify-content:center; font-size:17px;
-}
-.mat-b { min-width:0; flex:1; }
-.mat-t { font-size:14px; font-weight:640; color:var(--bright); margin-bottom:3px; }
-.mat-d { font-size:12.5px; color:var(--muted); line-height:1.6; }
-.mat-m {
-  margin-top:8px; font-family:ui-monospace,Menlo,Consolas,monospace;
-  font-size:10.5px; color:var(--faint); letter-spacing:.2px;
-}
-.mats-sub { grid-column:1/-1; font-size:13px; color:var(--muted); margin:16px 0 2px; }
-.chips { grid-column:1/-1; display:flex; flex-wrap:wrap; gap:8px; }
-.chips a {
-  font-size:12.5px; text-decoration:none; color:var(--muted);
-  background:var(--card); border:.5px solid var(--border); border-radius:999px;
-  padding:7px 15px; transition:all .18s ease;
-}
-.chips a:hover { color:var(--accent); border-color:var(--accent); background:var(--card-2); }
+/* ---------- materials ---------- */
+.mats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.mat{display:flex;gap:14px;padding:17px 19px;text-decoration:none;background:var(--panel);
+  border:1px solid var(--line);border-radius:13px;transition:.2s}
+.mat:hover{border-color:var(--line2);background:var(--panel2);transform:translateY(-2px);
+  text-decoration:none}
+.mat-ic{width:40px;height:40px;flex-shrink:0;border-radius:11px;
+  background:rgba(45,212,191,.1);border:1px solid rgba(45,212,191,.26);
+  display:flex;align-items:center;justify-content:center;font-size:17px}
+.mat-b{min-width:0;flex:1}
+.mat-t{font-size:14.5px;font-weight:650;color:var(--text);margin-bottom:4px;
+  letter-spacing:-.012em}
+.mat-d{font-size:12.5px;color:var(--dim);line-height:1.6}
+.mat-m{margin-top:9px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10.5px;
+  color:var(--faint);letter-spacing:.02em}
+.mats-sub{grid-column:1/-1;font-size:13.5px;color:var(--dim);margin:18px 0 2px}
+.chips{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px}
+.chips a{font-size:12.5px;text-decoration:none;color:var(--dim);background:var(--panel);
+  border:1px solid var(--line);border-radius:999px;padding:7px 15px;transition:.18s}
+.chips a:hover{color:var(--teal);border-color:var(--teal);background:var(--panel2)}
+.zh{font-size:10.5px;color:var(--faint);border:1px solid var(--line);border-radius:4px;
+  padding:1px 5px;margin-left:6px;letter-spacing:.03em}
 
-/* ---------- 页脚 ---------- */
-.foot { padding:34px 0 70px; border-top:.5px solid var(--border-soft); }
-.foot p { font-size:12.5px; color:var(--dim); line-height:1.85; margin:0; max-width:820px; }
-.foot code {
-  font-family:ui-monospace,Menlo,Consolas,monospace; font-size:11.5px;
-  background:var(--card); border:.5px solid var(--border); border-radius:5px;
-  padding:1px 6px; color:var(--muted);
-}
+.foot{padding:40px 0 84px;border-top:1px solid var(--line);background:var(--bg2)}
+.foot p{font-size:12.5px;color:var(--faint);line-height:1.8;margin:0 0 12px;max-width:84ch}
+.foot code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11.5px;
+  background:var(--panel);border:1px solid var(--line);border-radius:5px;padding:1px 6px;
+  color:var(--dim)}
+.foot a{color:var(--dim)}
+.foot a:hover{color:var(--teal)}
 
-@media (max-width:1000px) {
-  .flow { grid-template-columns:repeat(2,1fr); gap:10px; }
-  .node { padding:0; }
-  .node:not(:last-child)::after { display:none; }
-  .eg { grid-template-columns:1fr; }
-  .mats { grid-template-columns:1fr; }
+@media(max-width:1000px){
+  .flow{grid-template-columns:repeat(2,1fr);gap:10px}
+  .node{padding:0}
+  .node:not(:last-child)::after{display:none}
+  .eg{grid-template-columns:1fr}
+  .mats{grid-template-columns:1fr}
 }
-@media (max-width:640px) {
-  .wrap { padding:0 18px; }
-  .hero h1 { font-size:29px; letter-spacing:-.5px; }
-  .hero { padding:44px 0 34px; }
-  .sec { padding:44px 0; }
-  .flow { grid-template-columns:1fr; }
+@media(max-width:640px){
+  .wrap{padding:0 18px}
+  .hero{padding:52px 0 40px}
+  .sec{padding:52px 0}
+  .flow{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
 
+<nav>
+  <div class="wrap">
+    <a class="brand" href="../"><span class="bd"></span>Entropy Box</a>
+    <div class="navlinks">
+      <a href="../#why">Why compile</a>
+      <a href="../#how">Architecture</a>
+      <a href="../#findings">Findings</a>
+      <a href="../#data">Data</a>
+      <a href="../blog/">Notes</a>
+      <a href="../about/">Scope &amp; status</a>
+    </div>
+  </div>
+</nav>
+
 <!-- ============ HERO ============ -->
 <section class="hero">
   <div class="wrap hero-in">
     <div class="eyebrow">Behind the graph</div>
-    <h1>图谱里的每一条，<br>都能查到<em>是谁、在哪、搜了几次</em>查出来的。</h1>
-    <p class="hero-sub">这不是让大模型写一段介绍。每个主题都由一条 <strong>Agent 编排流水线</strong>产出：先规划检索、再逐条技术链取证、每篇调研文档<strong>强制附检索日志</strong>、机械校验不过直接打回、入库还要过全局查重闸门。下面是这条流水线的样子，以及它留下的证据。</p>
-
-    <!-- STATS:BEGIN 由 pipeline/render/build_showcase_stats.py 生成，勿手改 -->
-    <div class="stats rv">
-      <div class="stat"><div class="stat-n" data-to="1497">0</div><div class="stat-l">L2 主题结构化产物<br>JSON + MD 双份</div></div>
-      <div class="stat"><div class="stat-n" data-to="4853">0</div><div class="stat-l">分链深度调研文档<br>每篇附完整检索台账</div></div>
-      <div class="stat"><div class="stat-n" data-to="21929">0</div><div class="stat-l">能力层级关系节点<br>全局去重后入库</div></div>
-      <div class="stat"><div class="stat-n" data-to="787">0</div><div class="stat-l">组查重嫌疑逐条裁决<br>725 判独立 &middot; 32 判合并</div></div>
-    </div>
-    <!-- STATS:END -->
+    <h1>Every entry can be traced to <em>who searched, where, and how many times</em>.</h1>
+    <p class="hero-sub">This is not a model writing a summary. Every topic is produced by
+    an <strong>agent-orchestrated pipeline</strong>: plan the retrieval first, gather
+    evidence chain by chain, attach a <strong>mandatory retrieval log</strong> to every
+    research document, fail the mechanical validator and it goes straight back, and clear
+    a global deduplication gate before anything is admitted. Below is the shape of that
+    pipeline — and the evidence it leaves behind.</p>
   </div>
 </section>
 
-<!-- ============ 流水线 ============ -->
+<!-- ============ PIPELINE ============ -->
 <section class="sec">
   <div class="wrap">
     <div class="eyebrow">Pipeline</div>
-    <h2>五个环节，三道闸门</h2>
-    <p class="lede">闸门是<strong>机械的</strong>——脚本判定，不通过就 <code style="font-family:ui-monospace,monospace">exit 1</code>，产物不进库，不存在"差不多就先放过"。</p>
+    <h2>Five stages, three gates</h2>
+    <p class="lede">The gates are <strong>mechanical</strong> — a script decides, a
+    failure means <code>exit 1</code>, and the output does not enter the registry. There
+    is no “close enough, let it through”.</p>
 
     <div class="flow rv">
       <div class="node"><div class="node-in">
-        <div class="node-top"><span class="node-num">01</span><span class="node-name">编排</span></div>
-        <div class="node-desc">主题分批派发，断点可续跑。失败的落账等人工复核，不静默跳过。</div>
-        <div class="node-gate g-none">&#9675; 无闸门</div>
+        <div class="node-top"><span class="node-num">01</span><span class="node-name">Orchestrate</span></div>
+        <div class="node-desc">Topics dispatched in batches, resumable from any
+        breakpoint. Failures are logged for human review, never silently skipped.</div>
+        <div class="node-gate g-none">&#9675; no gate</div>
       </div></div>
       <div class="node"><div class="node-in">
-        <div class="node-top"><span class="node-num">02</span><span class="node-name">规划</span></div>
-        <div class="node-desc">种子词 + 领域语义扩展 + Stop Rule，先规划再检索，不搜一次就下结论。</div>
-        <div class="node-gate g-none">&#9675; 无闸门</div>
+        <div class="node-top"><span class="node-num">02</span><span class="node-name">Plan</span></div>
+        <div class="node-desc">Seed terms, domain semantic expansion and an explicit stop
+        rule. Plan the search before running it — no conclusions off a single query.</div>
+        <div class="node-gate g-none">&#9675; no gate</div>
       </div></div>
       <div class="node"><div class="node-in">
-        <div class="node-top"><span class="node-num">03</span><span class="node-name">取证</span></div>
-        <div class="node-desc">一条技术链一篇文档，文末强制附检索日志：每条 query 登记命中数与用途。</div>
-        <div class="node-gate">&#9679; 闸门 <b>检索量下限</b></div>
+        <div class="node-top"><span class="node-num">03</span><span class="node-name">Gather</span></div>
+        <div class="node-desc">One document per technical chain, each ending in a
+        mandatory retrieval log: every query recorded with its hit count and its use.</div>
+        <div class="node-gate">&#9679; gate <b>retrieval floor</b></div>
       </div></div>
       <div class="node"><div class="node-in">
-        <div class="node-top"><span class="node-num">04</span><span class="node-name">校验</span></div>
-        <div class="node-desc">分链验收 + 结构校验：九节齐全、图环检测、双向一致性、引用闭包。</div>
-        <div class="node-gate">&#9679; 闸门 <b>exit 1</b></div>
+        <div class="node-top"><span class="node-num">04</span><span class="node-name">Validate</span></div>
+        <div class="node-desc">Per-chain acceptance plus structural validation: all nine
+        sections present, cycle detection, bidirectional consistency, citation
+        closure.</div>
+        <div class="node-gate">&#9679; gate <b>exit 1</b></div>
       </div></div>
       <div class="node"><div class="node-in">
-        <div class="node-top"><span class="node-num">05</span><span class="node-name">入库</span></div>
-        <div class="node-desc">全局注册表代理键 + 嵌入双视图余弦查重，同一件事全库只有一个条目。</div>
-        <div class="node-gate">&#9679; 闸门 <b>查重裁决</b></div>
+        <div class="node-top"><span class="node-num">05</span><span class="node-name">Admit</span></div>
+        <div class="node-desc">Global registry surrogate keys plus dual-view embedding
+        cosine deduplication — one thing, one entry, registry-wide.</div>
+        <div class="node-gate">&#9679; gate <b>dedup adjudication</b></div>
       </div></div>
     </div>
   </div>
 </section>
 
-<!-- ============ 取证 ============ -->
+<!-- ============ EVIDENCE ============ -->
 <section class="sec">
   <div class="wrap">
     <div class="eyebrow">Evidence</div>
-    <h2>"不是编的"，是这么被强制的</h2>
-    <p class="lede">Agent 天然会把话说圆。所以我们不靠自觉，靠<strong>可数的硬指标</strong>：写完文档必须交出检索台账，条数不够就打回重跑。</p>
+    <h2>How “we didn't make it up” is enforced</h2>
+    <p class="lede">An agent will naturally smooth things over. So we do not rely on good
+    intentions — we rely on <strong>countable floors</strong>: a finished document must
+    hand over its retrieval ledger, and one that falls short is sent back to be
+    rerun.</p>
 
     <div class="eg rv">
       <div class="eg-rules">
-        <h3>单篇文档的硬下限</h3>
-        <p>写在 Agent Prompt 里，由脚本机械验收。</p>
+        <h3>Hard floors, per document</h3>
+        <p>Written into the agent prompt, mechanically enforced by script.</p>
         <div class="quota">
-          <div class="quota-row"><span class="quota-k">WebSearch</span><span class="quota-v">&ge; 10 次</span></div>
-          <div class="quota-row"><span class="quota-k">WebFetch</span><span class="quota-v">&ge; 8 次</span></div>
-          <div class="quota-row"><span class="quota-k">check_github.py</span><span class="quota-v">核验仓库存活</span></div>
-          <div class="quota-row"><span class="quota-k">fetch_paper.py</span><span class="quota-v">取论文原文</span></div>
+          <div class="quota-row"><span class="quota-k">WebSearch</span><span class="quota-v">&ge; 10 calls</span></div>
+          <div class="quota-row"><span class="quota-k">WebFetch</span><span class="quota-v">&ge; 8 calls</span></div>
+          <div class="quota-row"><span class="quota-k">check_github.py</span><span class="quota-v">repo is alive</span></div>
+          <div class="quota-row"><span class="quota-k">fetch_paper.py</span><span class="quota-v">paper full text</span></div>
         </div>
-        <div class="eg-hard"><b>严禁凭空，未达标不许事后补日志</b>——直接打回重跑。每条检索还要写清用在正文第几节，让结论和来源一一对得上。</div>
+        <div class="eg-hard"><b>Nothing invented, and no back-filling the log after the
+        fact</b> — a document that misses the floor is rerun, not patched. Every query
+        must also name the section it fed, so each conclusion maps to its source.</div>
       </div>
 
       <div class="eg-log">
         <div class="log-head">
-          <h3>真实台账实样</h3>
-          <span>摘自 chain_02 导航效率加权度量 · 该篇共 12 次 WebSearch / 8 次 WebFetch</span>
+          <h3>A real ledger, verbatim</h3>
+          <span>from chain_02, navigation efficiency weighted metrics · 12 WebSearch / 8 WebFetch in that document</span>
         </div>
         <div class="log-box">
           <div class="log-bar">
-            <span class="dot" style="background:#ff5f57"></span>
-            <span class="dot" style="background:#febc2e"></span>
-            <span class="dot" style="background:#28c840"></span>
-            <span style="margin-left:6px">chain_02_navigation_efficiency_weighted.md &mdash; § 12.1 WebSearch 日志</span>
+            <span class="tld" style="background:#ff5f57"></span>
+            <span class="tld" style="background:#febc2e"></span>
+            <span class="tld" style="background:#28c840"></span>
+            <span style="margin-left:6px">chain_02_navigation_efficiency_weighted.md &mdash; § 12.1 WebSearch log</span>
           </div>
           <div class="log-scroll">
             <table class="log">
-              <thead><tr><th>#</th><th>Query</th><th>命中</th><th>关键命中</th><th>用于</th><th>备注</th></tr></thead>
+              <thead><tr><th>#</th><th>Query</th><th>Hits</th><th>Key hit</th><th>Used in</th><th>Note</th></tr></thead>
               <tbody>
-                <tr><td class="n">1</td><td class="q">Anderson 2018 "On Evaluation of Embodied Navigation Agents" SPL formula definition</td><td class="n">5</td><td>论文要点笔记</td><td class="s">§1, §10</td><td class="s">中文结果为主</td></tr>
-                <tr><td class="n">3</td><td class="q">arxiv 1807.06757 SPL formula geodesic distance</td><td class="n">5</td><td>论文笔记</td><td class="s">§1, §10</td><td class="s">确认论文身份</td></tr>
-                <tr class="fail"><td class="n">7</td><td class="q">aihabitat.org challenge PointNav ObjectNav evaluation rules success SPL threshold</td><td class="n">1</td><td>无直接命中</td><td class="s">&mdash;</td><td class="s">搜索失败</td></tr>
-                <tr><td class="n">8</td><td class="q">"SPL" "Success weighted by Path Length" formula "S * l" geodesic shortest path</td><td class="n">5</td><td>含 SPL 公式</td><td class="s">§1, §8</td><td class="s">确认公式</td></tr>
-                <tr><td class="n">11</td><td class="q">"soft-SPL" habitat definition formula "distance_to_goal" "start_distance"</td><td class="n">5</td><td>确认 soft_spl 在 nav.py</td><td class="s">§5, §8</td><td class="s">确认 SoftSPL</td></tr>
+                <tr><td class="n">1</td><td class="q">Anderson 2018 "On Evaluation of Embodied Navigation Agents" SPL formula definition</td><td class="n">5</td><td>paper notes</td><td class="s">§1, §10</td><td class="s">mostly Chinese results</td></tr>
+                <tr><td class="n">3</td><td class="q">arxiv 1807.06757 SPL formula geodesic distance</td><td class="n">5</td><td>paper notes</td><td class="s">§1, §10</td><td class="s">paper identity confirmed</td></tr>
+                <tr class="fail"><td class="n">7</td><td class="q">aihabitat.org challenge PointNav ObjectNav evaluation rules success SPL threshold</td><td class="n">1</td><td>no direct hit</td><td class="s">&mdash;</td><td class="s">search failed</td></tr>
+                <tr><td class="n">8</td><td class="q">"SPL" "Success weighted by Path Length" formula "S * l" geodesic shortest path</td><td class="n">5</td><td>contains SPL formula</td><td class="s">§1, §8</td><td class="s">formula confirmed</td></tr>
+                <tr><td class="n">11</td><td class="q">"soft-SPL" habitat definition formula "distance_to_goal" "start_distance"</td><td class="n">5</td><td>soft_spl found in nav.py</td><td class="s">§5, §8</td><td class="s">SoftSPL confirmed</td></tr>
               </tbody>
             </table>
           </div>
-          <div class="log-foot">注意第 7 行：<b>那次搜索什么也没搜到，照样登记在册</b>。台账记的是过程，不是战果——能看见失败，才说明没有事后美化。</div>
+          <div class="log-foot">Look at row 7: <b>that search returned nothing, and it is
+          logged anyway</b>. The ledger records the process, not the trophies — you can
+          only trust it if you can see the failures in it.</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ 录屏 ============ -->
+<!-- ============ RECORDING ============ -->
 <section class="sec">
   <div class="wrap">
     <div class="eyebrow">Recording</div>
-    <h2>跑起来是什么样</h2>
-    <p class="lede">85 秒，无剪辑无加速。</p>
+    <h2>What it looks like running</h2>
+    <p class="lede">85 seconds, unedited and not sped up.</p>
 
     <div class="scope rv">
       <span class="scope-ic">&#9888;</span>
       <div>
-        <b>先说清楚这段录屏只是三个片面：</b>
+        <b>Three narrow slices, stated up front:</b>
         <ol>
-          <li>工作流的入口文档（batch 启动 prompt）</li>
-          <li>一次断点续跑的前端效果</li>
-          <li>单个话题里<strong>其中一条</strong>工作链的调研汇总文件</li>
+          <li>The workflow entry document (the batch launch prompt)</li>
+          <li>A resumed run, as it appears in the front end</li>
+          <li>The research summary for <strong>one</strong> chain inside a single topic</li>
         </ol>
-        完整流水线比这复杂得多，调研过程的 raw data 与大量中间文档都<strong>没有</strong>出现在画面里。
+        The full pipeline is considerably more involved. The raw research data and a large
+        volume of intermediate documents <strong>do not</strong> appear on screen.
       </div>
     </div>
 
     <div id="video-slot" class="rv">
       <div class="ph" onclick="loadVideo()">
         <div class="play">&#9654;</div>
-        <div class="ph-t">点击播放</div>
-        <div class="ph-b">&#128274; 点击后才开始传输，不点不占流量 &middot; 8.4 MB</div>
+        <div class="ph-t">Click to play</div>
+        <div class="ph-b">&#128274; Nothing is transferred until you click &middot; 8.4 MB</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ 材料 ============ -->
+<!-- ============ MATERIALS ============ -->
 <section class="sec">
   <div class="wrap">
     <div class="eyebrow">Raw materials</div>
-    <h2>原件在这，自己翻</h2>
-    <p class="lede">录屏里出现的那几份文件，原文直出、未做删改。已<strong>冻结快照</strong>，后续流水线怎么改都不会动这里的版本。</p>
+    <h2>The originals, to read yourself</h2>
+    <p class="lede">The files that appear in the recording, published as they are and
+    unedited. These are <strong>frozen snapshots</strong> — however the pipeline changes
+    later, the versions here do not move. The research documents are in Chinese, the
+    source language of the compiled corpus.</p>
 
     <div class="mats rv">
       <a class="mat" href="docs/batch_orchestrator_prompt.html" target="_blank" rel="noopener">
         <div class="mat-ic">&#9881;&#65039;</div>
         <div class="mat-b">
-          <div class="mat-t">Batch Orchestrator 启动 Prompt</div>
-          <div class="mat-d">录屏左侧那份 · 批量生成的编排入口，规定了无人值守铁律与 Phase 0–4 执行流程</div>
+          <div class="mat-t">Batch orchestrator launch prompt <span class="zh">ZH</span></div>
+          <div class="mat-d">The document on the left of the recording — the entry point
+          for batch compilation, laying down the unattended-operation rules and the
+          Phase 0–4 execution flow.</div>
           <div class="mat-m">agent_prompt_batch_orchestrator.md &middot; 17.4 KB &middot; sha256 3539e103</div>
         </div>
       </a>
       <a class="mat" href="docs/evaluation_metric_definition.html" target="_blank" rel="noopener">
         <div class="mat-ic">&#128203;</div>
         <div class="mat-b">
-          <div class="mat-t">主检索文档 · evaluation_metric_definition</div>
-          <div class="mat-d">单个主题的全链调研汇总：广度扫描 → 候选链识别 → 红队评审 → 单链质量门控</div>
+          <div class="mat-t">Primary research document · evaluation_metric_definition <span class="zh">ZH</span></div>
+          <div class="mat-d">The all-chain research summary for one topic: breadth scan →
+          candidate chain identification → red-team review → per-chain quality
+          gating.</div>
           <div class="mat-m">evaluation_metric_definition.md &middot; 26.8 KB &middot; sha256 fe7ef6e2</div>
         </div>
       </a>
 
-      <div class="mats-sub">该主题下的 5 篇分链深度调研 —— 文末「12. 检索日志」即上文那份台账的完整版：</div>
+      <div class="mats-sub">Five per-chain deep-research documents under that topic —
+      section 12, “Retrieval log”, is the full version of the ledger above:</div>
       <div class="chips">
-        <a href="docs/chain_01_programmatic_binary_success.html" target="_blank" rel="noopener">链 01 · 程序化二值成功判定</a>
-        <a href="docs/chain_02_navigation_efficiency_weighted.html" target="_blank" rel="noopener">链 02 · 导航效率加权度量</a>
-        <a href="docs/chain_03_few_shot_rl_statistical_rigor.html" target="_blank" rel="noopener">链 03 · 少样本 RL 统计严谨性</a>
-        <a href="docs/chain_04_geometric_precision_metric.html" target="_blank" rel="noopener">链 04 · 几何精度度量</a>
-        <a href="docs/chain_05_human_rated_rubric_metric.html" target="_blank" rel="noopener">链 05 · 人为评分量表体系</a>
+        <a href="docs/chain_01_programmatic_binary_success.html" target="_blank" rel="noopener">Chain 01 · Programmatic binary success</a>
+        <a href="docs/chain_02_navigation_efficiency_weighted.html" target="_blank" rel="noopener">Chain 02 · Navigation efficiency weighted</a>
+        <a href="docs/chain_03_few_shot_rl_statistical_rigor.html" target="_blank" rel="noopener">Chain 03 · Few-shot RL statistical rigor</a>
+        <a href="docs/chain_04_geometric_precision_metric.html" target="_blank" rel="noopener">Chain 04 · Geometric precision metric</a>
+        <a href="docs/chain_05_human_rated_rubric_metric.html" target="_blank" rel="noopener">Chain 05 · Human-rated rubric metric</a>
       </div>
     </div>
   </div>
 </section>
 
-<div class="wrap foot">
-  <p>展示页用的原始 markdown 已冻结在 <code>docs/_src/</code>，附 <code>manifest.json</code> 记录源路径、快照时间与 sha256；渲染只读快照，源文件后续改动不影响本页。检索日志实样取自 chain_02 第 12.1 节，为版面做了截断，完整表格见原件。</p>
+<div class="foot">
+  <div class="wrap">
+    <p>The source markdown behind this page is frozen under <code>docs/_src/</code>, with
+    a <code>manifest.json</code> recording each source path, snapshot time and sha256.
+    The page renders read-only snapshots, so later edits to the source files do not affect
+    it. The ledger sample is taken from chain_02 §12.1 and truncated for layout — the full
+    table is in the original.</p>
+    <p>Artifact counts and reproducible measurements live on the
+    <a href="../">front page</a> · <a href="../about/">Scope &amp; status</a> ·
+    <a href="../data/measurements.json">measurements.json</a></p>
+  </div>
 </div>
 
 <script>
-// 数字滚动
-function countUp(el) {
-  var to = parseInt(el.getAttribute('data-to'), 10);
-  if (isNaN(to)) { return; }
-  var suffix = el.querySelector('span');
-  var sfx = suffix ? suffix.outerHTML : '';
-  var dur = 1100, t0 = null;
-  function step(ts) {
-    if (!t0) t0 = ts;
-    var p = Math.min(1, (ts - t0) / dur);
-    var eased = 1 - Math.pow(1 - p, 3);
-    el.innerHTML = Math.round(to * eased).toLocaleString('en-US') + sfx;
-    if (p < 1) requestAnimationFrame(step);
-  }
-  requestAnimationFrame(step);
-}
-
-// 滚动淡入 + 首次进入时触发数字动画
-(function () {
-  var items = document.querySelectorAll('.rv');
-  function reveal(el) {
-    if (el.classList.contains('in')) return;
-    el.classList.add('in');
-    var nums = el.querySelectorAll('.stat-n');
-    for (var k = 0; k < nums.length; k++) countUp(nums[k]);
-  }
-  function revealAll() {
-    for (var i = 0; i < items.length; i++) reveal(items[i]);
-  }
-  if (!('IntersectionObserver' in window)) {
-    revealAll();
-    return;
-  }
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (!e.isIntersecting) return;
-      reveal(e.target);
-      io.unobserve(e.target);
-    });
-  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-  for (var n = 0; n < items.length; n++) io.observe(items[n]);
-  // iframe 内嵌时 IntersectionObserver 可能不触发（父容器 display 切换时机问题），
-  // 1.5 秒后兜底强制显示所有未激活的 .rv 元素
-  setTimeout(function() {
-    var remaining = document.querySelectorAll('.rv:not(.in)');
-    if (remaining.length) revealAll();
-  }, 1500);
+(function(){
+  var items=document.querySelectorAll('.rv');
+  function reveal(el){ if(el.classList.contains('in'))return; el.classList.add('in'); }
+  function revealAll(){ for(var i=0;i<items.length;i++) reveal(items[i]); }
+  if(!('IntersectionObserver' in window)){ revealAll(); return; }
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(!e.isIntersecting)return; reveal(e.target); io.unobserve(e.target); });
+  },{threshold:.15,rootMargin:'0px 0px -40px 0px'});
+  for(var n=0;n<items.length;n++) io.observe(items[n]);
+  // Fallback: when embedded in an iframe the observer may not fire on display toggles.
+  setTimeout(function(){ if(document.querySelectorAll('.rv:not(.in)').length) revealAll(); },1500);
 })();
 
-// 录屏懒加载：点击前页面不请求任何视频字节
-var videoLoaded = false;
-function loadVideo() {
-  if (videoLoaded) return;
-  var slot = document.getElementById('video-slot');
-  if (!slot) return;
-  videoLoaded = true;
+// Lazy recording: no video bytes are requested before the click.
+var videoLoaded=false;
+function loadVideo(){
+  if(videoLoaded)return;
+  var slot=document.getElementById('video-slot');
+  if(!slot)return;
+  videoLoaded=true;
 
-  var tip = document.createElement('div');
-  tip.className = 'loading';
-  tip.id = 'v-loading';
-  tip.textContent = '正在加载录屏…（8.4 MB，首帧就绪即可播放）';
+  var tip=document.createElement('div');
+  tip.className='loading'; tip.id='v-loading';
+  tip.textContent='Loading recording… (8.4 MB, plays as soon as the first frame is ready)';
 
-  var v = document.createElement('video');
-  v.id = 'demo-video';
-  v.controls = true; v.autoplay = true; v.playsInline = true;
-  v.setAttribute('playsinline', '');
-  v.setAttribute('preload', 'auto');
-  v.setAttribute('controlsList', 'nodownload');
-  v.style.cssText = 'width:100%;height:100%;display:block;background:#000';
-  v.poster = '../media/pipeline_demo_poster.jpg';
-  v.src = '../media/pipeline_demo.mp4';
+  var v=document.createElement('video');
+  v.id='demo-video';
+  v.controls=true; v.autoplay=true; v.playsInline=true;
+  v.setAttribute('playsinline','');
+  v.setAttribute('preload','auto');
+  v.setAttribute('controlsList','nodownload');
+  v.style.cssText='width:100%;height:100%;display:block;background:#000';
+  v.poster='../media/pipeline_demo_poster.jpg';
+  v.src='../media/pipeline_demo.mp4';
 
-  function done() {
-    var el = document.getElementById('v-loading');
-    if (el && el.parentNode) el.parentNode.removeChild(el);
-  }
-  v.addEventListener('loadeddata', done);
-  v.addEventListener('canplay', done);
-  v.addEventListener('error', function () {
+  function done(){ var el=document.getElementById('v-loading');
+    if(el&&el.parentNode) el.parentNode.removeChild(el); }
+  v.addEventListener('loadeddata',done);
+  v.addEventListener('canplay',done);
+  v.addEventListener('error',function(){
     done();
-    slot.innerHTML = '<div class="loading" style="flex-direction:column;gap:8px;text-align:center;padding:24px">'
-      + '<div>录屏加载失败</div><div style="font-size:12px">可能是网络中断，或该部署未挂载 assets/ 静态资源</div></div>';
-    videoLoaded = false;
+    slot.innerHTML='<div class="loading" style="flex-direction:column;gap:8px;text-align:center;padding:24px">'
+      +'<div>The recording failed to load</div>'
+      +'<div style="font-size:12px">Possibly a network interruption, or this deployment does not have the media assets mounted.</div></div>';
+    videoLoaded=false;
   });
 
-  slot.innerHTML = '';
+  slot.innerHTML='';
   slot.appendChild(v);
   slot.appendChild(tip);
-  try { v.play(); } catch (e) {}
+  try{ v.play(); }catch(e){}
 }
 
-// 父页面关闭子页面时暂停播放
-window.addEventListener('message', function (e) {
-  if (e && e.data === 'pause-demo') {
-    var v = document.getElementById('demo-video');
-    if (v) { try { v.pause(); } catch (err) {} }
+// Pause playback when a parent page closes this view.
+window.addEventListener('message',function(e){
+  if(e&&e.data==='pause-demo'){
+    var v=document.getElementById('demo-video');
+    if(v){ try{ v.pause(); }catch(err){} }
   }
 });
 </script>

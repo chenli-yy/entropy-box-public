@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Entropy Box — A Knowledge Compiler for Embodied AI</title>
+<meta name="description" content="Entropy Box compiles fragmented robotics knowledge — papers, repositories, documentation, datasets — into a persistent, typed, deduplicated capability graph. Open artifact, open data, reproducible measurements.">
+<meta property="og:title" content="Entropy Box — A Knowledge Compiler for Embodied AI">
+<meta property="og:description" content="Compile once, execute everywhere. Open capability graph, retrieval golden set, adjudication ledger and reproducible measurements for robotics engineering knowledge.">
+<meta property="og:type" content="website">
+<meta name="author" content="Yuqi Wang">
+<meta name="keywords" content="knowledge compiler, robotics knowledge graph, embodied AI, capability graph, task chain, robot foundation models, ROS, retrieval augmented generation, provenance, multi-agent, open dataset">
+<link rel="canonical" href="https://chenli-yy.github.io/entropy-box-public/">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{
+  --bg:#0D1117; --panel:#161B22; --panel2:#11161D; --line:#30363D;
+  --text:#E6EDF3; --dim:#8B949E; --faint:#6E7681;
+  --accent:#58A6FF; --teal:#39C5BB; --amber:#D29922; --green:#3FB950; --red:#F85149;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);
+  font:15.5px/1.68 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,
+  "PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9em}
+.wrap{max-width:1000px;margin:0 auto;padding:0 24px}
+
+/* ---------- hero ---------- */
+.hero{padding:72px 0 46px;border-bottom:1px solid var(--line)}
+.kicker{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal)}
+h1{font-size:40px;line-height:1.14;margin:14px 0 0;font-weight:660;letter-spacing:-.022em}
+h1 small{display:block;font-size:19px;font-weight:400;color:var(--dim);
+  margin-top:12px;letter-spacing:0}
+.tag{font-size:15px;color:var(--dim);max-width:70ch;margin:22px 0 0}
+.slogan{margin:26px 0 0;font-size:14px;letter-spacing:.1em;color:var(--teal);
+  text-transform:uppercase;font-weight:600}
+.cta{display:flex;gap:10px;flex-wrap:wrap;margin:30px 0 0}
+.btn{display:inline-block;padding:9px 17px;border-radius:7px;font-size:14px;
+  border:1px solid var(--line);background:var(--panel);color:var(--text);font-weight:500}
+.btn:hover{border-color:var(--accent);text-decoration:none}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#06121F;font-weight:600}
+.btn.primary:hover{filter:brightness(1.08)}
+
+/* ---------- sections ---------- */
+section{padding:52px 0;border-bottom:1px solid var(--line)}
+h2{font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:var(--faint);
+  margin:0 0 22px;font-weight:600}
+h3{font-size:19px;margin:0 0 7px;font-weight:620;letter-spacing:-.01em}
+p{margin:0 0 14px}
+.lead{font-size:17px;color:var(--text)}
+.dim{color:var(--dim)}
+
+/* ---------- numbers ---------- */
+.nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:18px}
+.nums .cell{background:var(--panel2);border:1px solid var(--line);border-radius:9px;padding:15px 16px}
+.nums .v{font-size:26px;font-weight:660;color:var(--teal);letter-spacing:-.02em;line-height:1.1}
+.nums .k{font-size:12px;color:var(--faint);margin-top:5px}
+.asof{font-size:12px;color:var(--faint);margin-top:16px}
+
+/* ---------- cards ---------- */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;
+  padding:19px 20px;display:block;color:inherit}
+a.card:hover{border-color:var(--accent);text-decoration:none}
+.card .t{font-weight:620;font-size:16px;margin-bottom:5px}
+.card .d{font-size:13.5px;color:var(--dim)}
+.card .m{font-size:11.5px;color:var(--faint);margin-top:10px;font-family:ui-monospace,Menlo,monospace}
+.badge{display:inline-block;font-size:10.5px;padding:2px 7px;border-radius:4px;
+  background:rgba(57,197,187,.13);color:var(--teal);margin-left:7px;letter-spacing:.04em;
+  vertical-align:middle}
+.badge.neg{background:rgba(248,81,73,.12);color:var(--red)}
+.badge.warn{background:rgba(210,153,34,.13);color:var(--amber)}
+
+/* ---------- compare ---------- */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:720px){.cmp{grid-template-columns:1fr}}
+.cmp .col{border:1px solid var(--line);border-radius:10px;padding:18px 19px;background:var(--panel2)}
+.cmp .col.b{border-color:rgba(57,197,187,.35)}
+.cmp h4{margin:0 0 12px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.cmp .col.b h4{color:var(--teal)}
+.flow{list-style:none;margin:0;padding:0;font-size:13.5px}
+.flow li{padding:5px 0 5px 20px;position:relative;color:var(--dim)}
+.flow li::before{content:'↓';position:absolute;left:2px;color:var(--faint);font-size:11px}
+.flow li:first-child::before{content:'•'}
+.flow li.hi{color:var(--text);font-weight:560}
+.flow li.bad{color:var(--red)}
+.flow li.good{color:var(--teal)}
+
+/* ---------- finding ---------- */
+.finding{border-left:3px solid var(--amber);background:rgba(210,153,34,.05);
+  border-radius:0 9px 9px 0;padding:17px 20px;margin:0 0 16px}
+.finding .t{font-weight:620;margin-bottom:6px}
+.finding .d{font-size:14px;color:var(--dim)}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:10px 0 0}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line)}
+th{color:var(--faint);font-weight:600;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+td.num{text-align:right;font-family:ui-monospace,Menlo,monospace}
+
+pre{background:var(--panel2);border:1px solid var(--line);border-radius:8px;
+  padding:14px 16px;overflow-x:auto;font-size:13px;margin:12px 0}
+ul.plain{padding-left:20px;color:var(--dim);font-size:14px}
+ul.plain li{margin:5px 0}
+footer{padding:34px 0 70px;font-size:13px;color:var(--faint)}
+footer a{color:var(--dim)}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareSourceCode",
+      "name": "Entropy Box — A Knowledge Compiler for Embodied AI",
+      "alternateName": "箱熵",
+      "description": "Entropy Box compiles fragmented robotics and embodied-AI knowledge from papers, repositories, documentation and datasets into a persistent, typed, deduplicated capability graph, through a three-phase multi-agent compilation architecture with admission gates and an auditable retrieval ledger.",
+      "programmingLanguage": "Python",
+      "license": "https://opensource.org/licenses/MIT",
+      "author": { "@type": "Person", "name": "Yuqi Wang", "email": "wangyuqi11and11@163.com" },
+      "keywords": "knowledge compilation, robotics knowledge graph, embodied AI, capability graph, task chain, retrieval-augmented generation, provenance, multi-agent systems, robot foundation models"
+    },
+    {
+      "@type": "Dataset",
+      "name": "Entropy Box robotics capability and asset index",
+      "description": "Bilingual (English/Chinese) index of 24,929 robotics engineering capabilities and 6,078 implementation assets — repositories, frameworks, packages, pretrained models, datasets, simulators, benchmarks and robot platforms — organised under a three-level, 2,942-node taxonomy of embodied AI, together with a capability dependency network of 50,407 typed edges derived from 5,756 compiled task chains.",
+      "keywords": ["robotics", "embodied AI", "knowledge graph", "capability graph", "ROS", "task planning", "open-source assets"],
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "creator": { "@type": "Person", "name": "Yuqi Wang" },
+      "isAccessibleForFree": true,
+      "distribution": [
+        { "@type": "DataDownload", "encodingFormat": "application/json", "name": "capability index", "contentUrl": "data/capability_names.json" },
+        { "@type": "DataDownload", "encodingFormat": "application/json", "name": "asset index", "contentUrl": "data/asset_index.json" },
+        { "@type": "DataDownload", "encodingFormat": "application/json", "name": "taxonomy", "contentUrl": "data/taxonomy.json" }
+      ]
+    },
+    {
+      "@type": "Dataset",
+      "name": "Robotics engineering knowledge retrieval golden set",
+      "description": "A 126-query evaluation suite for retrieval over robotics engineering knowledge, in the mixed Chinese/English register practitioners actually type. Eight intent classes (identity, concept, function, io, selection, multihop, negative, evidence) and three assertion strengths — exact identifiers, any-of sets, and structural predicates — plus explicit negative assertions declaring what must NOT be retrieved. Entity references carry both surrogate identifier and resolved bilingual name so the set survives registry rebuilds.",
+      "keywords": ["information retrieval", "evaluation", "benchmark", "robotics", "nDCG", "negative assertions"],
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "isAccessibleForFree": true,
+      "distribution": [{ "@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "data/retrieval_golden.json" }]
+    },
+    {
+      "@type": "Dataset",
+      "name": "Adjudicated near-duplicate capability pairs",
+      "description": "1,226 near-duplicate candidate pairs from a robotics knowledge registry's deduplication gate, each recording the embedding or lexical similarity score that flagged it, the metric, the adjudicating agent and the written rationale for the decision. Usable as labelled data for duplicate detection in technical knowledge graphs. Includes an explicit selection-bias warning: only pairs above the flagging threshold appear, so recall cannot be estimated from this file.",
+      "keywords": ["duplicate detection", "entity resolution", "knowledge graph quality", "labelled dataset"],
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "isAccessibleForFree": true,
+      "distribution": [{ "@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "data/dedup_adjudication_ledger.json" }]
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "name": "Entropy Box: A Knowledge Compiler for Embodied AI",
+      "alternativeHeadline": "Towards Structured Knowledge Compilation for Robotics Foundation Models",
+      "author": { "@type": "Person", "name": "Yuqi Wang" },
+      "abstract": "The bottleneck in embodied AI is not model capacity but knowledge. We argue robotics needs a knowledge compiler rather than another chatbot: a system that ingests unstructured sources once and emits a persistent, typed, deduplicated artifact. We describe the three-phase multi-agent compilation architecture, distil it into a design rule for multi-agent systems — merge stages when what passes between them is reasoning, split them when what passes between them is an artifact — and report two empirical results, including that embedding similarity conditional on flagging is too weak to decide duplication.",
+      "keywords": "knowledge compilation, robotics knowledge graph, embodied AI, capability graph, provenance",
+      "url": "paper/entropy-box-knowledge-compiler-v8.pdf",
+      "encodingFormat": "application/pdf"
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="hero">
+  <div class="kicker">Entropy Box · 箱熵</div>
+  <h1>A Knowledge Compiler for Embodied AI
+    <small>Towards structured knowledge compilation for robotics foundation models</small></h1>
+  <p class="tag">The bottleneck in embodied AI is not model capacity — it is knowledge.
+  What a robot needs to know already exists, in papers, repositories, ROS packages,
+  model hubs and benchmark suites. It exists as <em>prose</em>, not as structure.
+  Entropy Box compiles it, once, into a persistent typed graph that programs can
+  consume.</p>
+  <div class="slogan">Compile once, execute everywhere.</div>
+  <div class="cta">
+    <a class="btn primary" href="paper/entropy-box-knowledge-compiler-v8.pdf">Read the paper (PDF)</a>
+    <a class="btn" href="case-study/">Nine topics in full</a>
+    <a class="btn" href="how-it-works/">How it is built</a>
+    <a class="btn" href="graph/capability-network.html">Explore the graph</a>
+    <a class="btn" href="blog/">Technical notes</a>
+    <a class="btn" href="#data">Download the data</a>
+  </div>
+</div>
+
+<section>
+  <h2>The compiled artifact</h2>
+  <div class="nums">
+    <div class="cell"><div class="v">24,929</div><div class="k">capabilities</div></div>
+    <div class="cell"><div class="v">6,078</div><div class="k">assets</div></div>
+    <div class="cell"><div class="v">1,740</div><div class="k">topics compiled</div></div>
+    <div class="cell"><div class="v">5,756</div><div class="k">task chains</div></div>
+    <div class="cell"><div class="v">63,691</div><div class="k">chain steps</div></div>
+    <div class="cell"><div class="v">50,407</div><div class="k">dependency edges</div></div>
+    <div class="cell"><div class="v">7,089</div><div class="k">cross-topic hubs</div></div>
+    <div class="cell"><div class="v">98.3%</div><div class="k">provenance resolvable</div></div>
+  </div>
+  <p class="asof">Snapshot of 2026-07-30, produced by
+  <a href="analysis/measure.py">analysis/measure.py</a> &mdash; the script reads only the
+  artifact on disk, so anyone with a copy can regenerate every number here. Structured
+  output: <a href="data/measurements.json">measurements.json</a>. Compilation runs
+  unattended and these rise over time; roughly a third of the taxonomy is still
+  uncompiled.</p>
+</section>
+
+<section>
+  <h2>The problem is not missing knowledge</h2>
+  <p class="lead">It is that a language model has no chief engineer's view.</p>
+  <p class="dim">Most people assume the bottleneck in robotics development is finding
+  material. It is not &mdash; papers, repositories and open models are abundant. The
+  real problem is that <strong>a single task hides a dozen technical steps and a
+  tangle of dependencies between them</strong>. A model can write an object-detection
+  function or implement a control law when an engineer tells it which one is needed.
+  It cannot orchestrate the whole workflow on its own.</p>
+  <div class="grid" style="margin:22px 0 0">
+    <div class="card"><div class="t">Atomic competence, no composition</div>
+      <div class="d">A model will happily write a detector or a controller, but cannot
+      independently deliver an end-to-end task like <em>&ldquo;pick up the red
+      cup&rdquo;</em>.</div></div>
+    <div class="card"><div class="t">Blind to dependencies</div>
+      <div class="d">One simple task spans perception &rarr; localization &rarr;
+      planning &rarr; control &rarr; execution. Which module feeds which, and on what
+      data interface, is exactly what gets lost.</div></div>
+    <div class="card"><div class="t">The route is a black box</div>
+      <div class="d">Facing a new task, an engineer reads dozens of papers and
+      compares several technical routes by trial and error. A model cannot hand you a
+      viable route plan.</div></div>
+    <div class="card"><div class="t">Orchestration eats the time</div>
+      <div class="d">Most engineering hours go into surveying routes and hand-wiring
+      modules together &mdash; not into the algorithm work that actually matters.</div></div>
+  </div>
+  <p class="dim" style="margin-top:22px;font-size:16px">A language model is a
+  craftsman who has mastered every individual part but has never held the chief
+  engineer's drawing. <strong>What we build is that drawing.</strong></p>
+</section>
+
+<section>
+  <h2>Why compile</h2>
+  <p class="lead">Traditional retrieval compiles on every query. A knowledge
+  compiler compiles once.</p>
+  <div class="cmp">
+    <div class="col">
+      <h4>Query-time derivation</h4>
+      <ul class="flow">
+        <li class="hi">Question</li>
+        <li>Retrieve passages</li>
+        <li>Model derives the structure</li>
+        <li>Answer, in prose</li>
+        <li class="bad">Structure discarded — next query redoes it</li>
+      </ul>
+    </div>
+    <div class="col b">
+      <h4>Knowledge compilation</h4>
+      <ul class="flow">
+        <li class="hi">Corpus</li>
+        <li>Compile — gated, offline, auditable</li>
+        <li>Typed persistent graph</li>
+        <li>Retrieve over structure</li>
+        <li class="good">Reasoning &amp; assembly — gaps named explicitly</li>
+      </ul>
+    </div>
+  </div>
+  <p class="dim" style="margin-top:18px">The measurable consequence is
+  <strong>amortization</strong>: the average number of times each compiled unit is
+  consumed. It currently stands at <strong id="alpha">—</strong>, corresponding to
+  <strong id="avoided">—</strong> avoided re-derivations, and — more informatively
+  — it is still rising with coverage rather than saturating. Compilation becomes a
+  better deal the more of the domain it covers.</p>
+</section>
+
+<section>
+  <h2>What we found</h2>
+  <p class="dim" style="margin-bottom:20px">Two results measured from the system's
+  own records. One of them is negative, and it is the more useful of the two.</p>
+
+  <div class="finding">
+    <div class="t">Embedding similarity cannot decide duplication
+      <span class="badge neg">negative result</span></div>
+    <div class="d">Using 1,155 human- and agent-adjudicated near-duplicate pairs as
+    labelled data: once the gate has flagged a pair, the similarity score carries
+    far too little signal to decide the merge. And raising the threshold does not
+    fix it — precision barely moves while half the true duplicates are discarded.
+    A conservative adjudication stage is therefore a <em>requirement</em>, not a
+    safety margin. Any system that merges automatically above a similarity
+    threshold would, at our operating point, be wrong more than nine times in ten.
+    <table>
+      <tr><th>Path</th><th class="num">pairs</th><th class="num">true dup.</th>
+          <th class="num">precision</th><th class="num">AUC</th><th>95% CI</th></tr>
+      <tr><td>Embedding (primary)</td><td class="num">508</td><td class="num">35</td>
+          <td class="num">0.069</td><td class="num">0.629</td><td class="mono">[0.531, 0.722]</td></tr>
+      <tr><td>Lexical (fallback)</td><td class="num">647</td><td class="num">4</td>
+          <td class="num">0.006</td><td class="num">0.454</td><td class="mono">[0.271, 0.764]</td></tr>
+    </table>
+    <p style="margin:12px 0 0;font-size:13px">Two limits we state rather than
+    bury: the pairs are conditioned on having been flagged, so this does not
+    estimate the gate's overall discriminative power; and gate <em>recall</em> is
+    unmeasurable from this data, because nothing labelled the duplicates the gate
+    never flagged. The lexical row rests on four positives and is not a finding.</p>
+    </div>
+  </div>
+
+  <div class="finding" style="border-left-color:var(--green)">
+    <div class="t">Provenance resolvability, proposed as a metric
+      <span class="badge">98.3%</span></div>
+    <div class="d">Every compiled topic cites the research documents it was
+    assembled from, and because those are files, the citation can be checked
+    mechanically. 98.3% of the artifact's own evidence citations resolve to a
+    retrievable document. Structural validity is routinely checked for generated
+    knowledge graphs; provenance resolvability is not — and it is cheap to compute,
+    hard to game, and directly diagnostic of whether an evidence layer is real or
+    decorative. A system that cannot report it does not have one.</div>
+  </div>
+
+  <div class="finding" style="border-left-color:var(--accent)">
+    <div class="t">Unverified fields are left unverified
+      <span class="badge warn">by design</span></div>
+    <div class="d">1,105 fields are explicitly marked unverified rather than
+    filled in, across 16.2% of topic records. We report this as a <em>positive</em>
+    indicator. Given what is actually verifiable about fast-moving open-source
+    projects, zero unverified markers would not indicate a better artifact — it
+    would indicate a pipeline that fills gaps instead of declaring them.</div>
+  </div>
+</section>
+
+<section>
+  <h2>How it works</h2>
+  <p class="dim" style="margin-bottom:20px">Four layers. The one that does the
+  unexpected work is the third.</p>
+  <div class="cmp" style="grid-template-columns:1fr">
+    <div class="col b"><h4>Layer 4 &middot; Application</h4>
+      <div class="d" style="color:var(--dim);font-size:13.5px">Workflow orchestration.
+      With the graph in view, the model selects capability modules, orders their
+      execution, handles interface adaptation, and emits a complete plan &mdash; with
+      the gaps named.</div></div>
+    <div class="col b"><h4>Layer 3 &middot; Reasoning</h4>
+      <div class="d" style="color:var(--dim);font-size:13.5px">Dependency derivation.
+      <strong>50,407 capability dependency edges are derived mechanically</strong> from
+      5,756 task chains, by walking each chain's <code>next</code> pointers and the
+      capabilities each step declares, punching through pure routing steps that carry
+      no capability. 7,089 cross-topic hubs fall out of this &mdash; the capabilities
+      that bridge domains, and the ones an orchestrator most needs to get right.</div></div>
+    <div class="col"><h4>Layer 2 &middot; Knowledge</h4>
+      <div class="d" style="color:var(--dim);font-size:13.5px">Typed modelling.
+      Topics &rarr; capabilities &rarr; assets, each node carrying declared inputs and
+      outputs, prerequisites, performance envelope and applicability. A computable
+      network rather than a document collection.</div></div>
+    <div class="col"><h4>Layer 1 &middot; Data</h4>
+      <div class="d" style="color:var(--dim);font-size:13.5px">Acquisition and
+      structuring. Knowledge extracted from papers, open-source projects, technical
+      documentation and engineering practice, cleaned, aligned and admitted through
+      gates into a domain ontology.</div></div>
+  </div>
+  <p class="dim" style="margin-top:20px">The derivation in Layer 3 is worth pausing
+  on. The dependency network was not authored and was not inferred by a model: the
+  ordering information was already latent in the task chains, and a graph traversal
+  makes it explicit. It is the clearest instance of the general claim &mdash; compile
+  the structure once, and downstream questions become traversals.</p>
+</section>
+
+<section>
+  <h2>What changes</h2>
+  <table>
+    <tr><th></th><th>Conventional workflow</th><th>With a compiled graph</th></tr>
+    <tr><td><b>Route survey</b></td><td>read dozens of papers, several days</td>
+        <td>candidate routes with alternatives, minutes</td></tr>
+    <tr><td><b>Module selection</b></td><td>search GitHub and find out the hard way</td>
+        <td>every known implementation, with its attribution</td></tr>
+    <tr><td><b>Orchestration</b></td><td>hand-wire modules, debug the interfaces</td>
+        <td>ordered from the dependency graph, adaptation flagged</td></tr>
+    <tr><td><b>Reuse</b></td><td>each project reinvents</td>
+        <td>the artifact accumulates; every task strengthens it</td></tr>
+    <tr><td><b>Onboarding</b></td><td>oral tradition, long ramp</td>
+        <td>the graph is the map</td></tr>
+  </table>
+  <p class="dim" style="margin-top:16px;font-size:13px">Stated as the design intent,
+  not as a measured outcome &mdash; see <a href="#status">honest status</a> for what we
+  have and have not established.</p>
+</section>
+
+<section id="demo">
+  <h2>What it does that retrieval cannot</h2>
+  <p class="dim" style="margin-bottom:18px">Unedited screen recording, 51 seconds.
+  A natural-language goal &mdash; <em>&ldquo;how do you keep a legged robot safe going
+  down stairs?&rdquo;</em> &mdash; is decomposed, matched across topics, and assembled
+  into a technical plan whose nodes carry attributed open-source assets. Every asset
+  card opens onto its repository, licence and import path. This is the thing a
+  passage-retrieval system structurally cannot produce: not a paragraph about stair
+  descent, but a plan with named implementations and explicit gaps.</p>
+  <video controls preload="metadata" poster="media/assembly_demo_poster.jpg"
+         style="width:100%;border:1px solid var(--line);border-radius:10px;background:#000">
+    <source src="media/assembly_demo.mp4" type="video/mp4">
+  </video>
+  <p class="dim" style="font-size:12.5px;margin-top:10px">1920&times;844, native
+  resolution. Both recordings are cropped only &mdash; to remove operating-system
+  chrome and screen-capture overlays &mdash; and are otherwise unedited and not
+  sped up. No content has been altered.</p>
+</section>
+
+<section id="disclosure">
+  <h2>What we are withholding, and why</h2>
+  <p class="dim">The project has had almost no publicity so far, and we would rather
+  not put the most load-bearing material into the open while that is still true. So
+  this release is deliberately partial, and we would rather say so plainly than let
+  you discover the gaps.</p>
+  <div class="grid" style="margin-top:20px">
+    <div class="card"><div class="t">Published in full</div>
+      <div class="d">The three-level taxonomy. Bilingual names and levels for every
+      capability. The asset index with upstream sources. The dependency network's
+      structure &mdash; nodes, domains, degrees, topic tags, 50,407 edges. The
+      126-query retrieval golden set. The adjudicated duplicate ledger. Every number
+      we report, plus the script that regenerates them. Nine topics reproduced
+      completely, with their diagrams and research ledgers.</div></div>
+    <div class="card"><div class="t">Withheld for now</div>
+      <div class="d">Full capability <em>descriptions</em> in bulk &mdash; the fields
+      carrying inputs, outputs, constraints and performance envelopes. These are the
+      substance of the artifact, and they are what would be worth copying wholesale.
+      You can read them in full for the nine case-study topics, which is enough to
+      judge whether the structure is real.</div></div>
+    <div class="card"><div class="t">The intention</div>
+      <div class="d">Open it completely. The value we are building is the compilation
+      pipeline and the standard, not a moat around a name list &mdash; and a knowledge
+      layer nobody can inspect is not infrastructure. We would rather stage the
+      opening than stage a retreat.</div></div>
+  </div>
+  <p class="dim" style="margin-top:18px;font-size:13.5px">If you want access to
+  something specific that is not here &mdash; for research, for a benchmark, for an
+  integration &mdash; write to us. We are far more likely to say yes than to say no.</p>
+</section>
+
+<section id="explore">
+  <h2>Explore</h2>
+  <div class="grid">
+    <a class="card" href="case-study/">
+      <div class="t">Nine topics, in full <span class="badge">inspectable</span></div>
+      <div class="d">Nine compiled topics across nine domains reproduced completely:
+      every chain and step, every capability description, every implementing
+      repository, the task-chain diagram, and the retrieval ledgers behind each.
+      All 143 assets in the set carry a real repository URL.</div>
+      <div class="m">9 topics · 37 chains · 283 capabilities · 143 assets</div>
+    </a>
+    <a class="card" href="how-it-works/">
+      <div class="t">How the graph is built <span class="badge">with originals</span></div>
+      <div class="d">Five stages, three gates, and the provenance discipline that
+      forces evidence &mdash; plus the actual research documents for one topic, with
+      their retrieval ledgers and negative-results tables, published so you can read
+      what the compiler read. Includes the 85-second unedited pipeline recording.</div>
+      <div class="m">7 source documents · 1 recording</div>
+    </a>
+    <a class="card" href="graph/capability-network.html">
+      <div class="t">Capability dependency network</div>
+      <div class="d">The full ordering graph derived from compiled task chains, with
+      English capability names. Search, filter by hub or bridge role, follow
+      dependency edges.</div>
+      <div class="m">24,915 nodes · 50,407 edges · 7,089 hubs</div>
+    </a>
+    <a class="card" href="graph/topic-graph.html">
+      <div class="t">Topic graph</div>
+      <div class="d">The 2,942-node curated taxonomy that drives compilation:
+      15 top-level domains, 416 sub-domains, 2,511 leaf topics.</div>
+      <div class="m">15 domains · 2,511 compilation units</div>
+    </a>
+    <a class="card" href="blog/">
+      <div class="t">Technical notes <span class="badge">2 posts</span></div>
+      <div class="d">Things we measured and things we got wrong, written to be useful
+      independently of this system. The first is a negative result about embedding-based
+      duplicate detection; the second is a design rule for multi-agent systems, learned
+      from two architectures that failed.</div>
+      <div class="m">CC BY 4.0 · republish with attribution</div>
+    </a>
+    <a class="card" href="integrate/">
+      <div class="t">Query it from your agent</div>
+      <div class="d">Open read-only retrieval endpoint &mdash; plain HTTP, an Agent
+      Skill declaration, or an MCP stdio server. No key, nothing to install. The page
+      states plainly which capabilities are exposed and which are web-only.</div>
+      <div class="m">HTTP · Agent Skill · MCP</div>
+    </a>
+    <a class="card" href="media/pipeline_demo.mp4">
+      <div class="t">Pipeline recording</div>
+      <div class="d">85 seconds, unedited and not sped up: the batch orchestration
+      entry document, a resumed run, and one chain's research summary. Three narrow
+      slices &mdash; the full pipeline is considerably more involved.</div>
+      <div class="m">MP4 · 1600&times;916 · 13.6 MB</div>
+    </a>
+  </div>
+</section>
+
+<section id="data">
+  <h2>Open data</h2>
+  <p class="dim" style="margin-bottom:20px">Published so that the measurements can
+  be reproduced and the resources reused. Data files are CC BY 4.0; code is MIT.</p>
+  <div class="grid">
+    <a class="card" href="data/retrieval_golden.json">
+      <div class="t">Retrieval golden set <span class="badge">126 queries</span></div>
+      <div class="d">Domain-specific evaluation suite for robotics engineering
+      knowledge, in the mixed Chinese/English register users actually type. Three
+      assertion strengths (exact / any-of / structural predicate) plus
+      <em>negative</em> assertions declaring what must not be retrieved. Entity
+      references carry both the surrogate id and the resolved bilingual name, so
+      the set survives registry rebuilds.</div>
+      <div class="m">8 intent classes · 120 positive · 13 negative assertions</div>
+    </a>
+    <a class="card" href="data/dedup_adjudication_ledger.json">
+      <div class="t">Adjudication ledger <span class="badge">labelled</span></div>
+      <div class="d">Adjudicated near-duplicate candidate pairs with the similarity
+      score that flagged them, the metric, the adjudicating agent and the written
+      rationale. This is the dataset behind the negative result above, and a
+      labelled duplicate-detection benchmark for this domain in its own right.</div>
+      <div class="m">1,226 pairs · 1,155 labelled</div>
+    </a>
+    <a class="card" href="data/capability_names.json">
+      <div class="t">Capability index <span class="badge">bilingual</span></div>
+      <div class="d">Every capability in the registry with its English and Chinese
+      canonical names and its abstraction level. Full descriptions are not
+      distributed in bulk; see the case study for a complete example.</div>
+      <div class="m">24,929 capabilities · en + zh</div>
+    </a>
+    <a class="card" href="data/asset_index.json">
+      <div class="t">Asset index</div>
+      <div class="d">Repositories, frameworks, packages, pretrained models,
+      datasets, simulators, benchmarks and robot platforms, with upstream sources
+      and aliases. One repository is exactly one asset.</div>
+      <div class="m">6,078 assets · 15 types</div>
+    </a>
+    <a class="card" href="data/taxonomy.json">
+      <div class="t">Taxonomy</div>
+      <div class="d">The three-level compilation backbone, bilingual. The leaf
+      level is the unit of compilation; sibling leaves are passed to the compiler
+      as explicit negative scope, which is what keeps adjacent topics from
+      absorbing each other.</div>
+      <div class="m">2,942 nodes · 15 / 416 / 2,511</div>
+    </a>
+    <a class="card" href="data/measurements.json">
+      <div class="t">Measurements <span class="badge">reproducible</span></div>
+      <div class="d">Every number on this page and in the paper, as structured
+      output from <code>analysis/measure.py</code>. The script reads only the
+      artifact on disk — no GPU, no network, no service — so the numbers can be
+      regenerated as compilation proceeds.</div>
+      <div class="m">measure.py → measurements.json</div>
+    </a>
+  </div>
+</section>
+
+<section>
+  <h2>Query it</h2>
+  <p class="dim">A read-only retrieval endpoint over the evidence corpus is open.
+  No registration, no client software.</p>
+  <pre>curl -X POST "$ENTROPY_BOX_API/api/evidence/search" \
+  -H "Content-Type: application/json" \
+  -d '{"query": "obstacle inflation collision check", "top_k": 5,
+       "mode": "hybrid", "rerank": true}'</pre>
+  <p class="dim" style="font-size:13.5px">The same endpoint is packaged as an Agent
+  Skill declaration and as an MCP stdio server, so external agents can query the
+  artifact directly. The open endpoint exposes concept-level evidence retrieval;
+  complex task retrieval, chain assembly and node-level graph queries are
+  implemented but not yet exposed as an API. See the project site for the current
+  base URL.</p>
+</section>
+
+<section>
+  <h2>What this is not</h2>
+  <ul class="plain">
+    <li><strong>Not a search engine.</strong> The output is typed entities with
+    declared inputs, outputs, prerequisites and implementations, plus the edges
+    between them — intended for a program, not a reader.</li>
+    <li><strong>Not a RAG system.</strong> RAG derives structure at query time and
+    discards it. A compiler derives it once and keeps it.</li>
+    <li><strong>Not a vector database.</strong> That is a component of the runtime.
+    The content is the typed edge families — hierarchy, ordering, implementation.
+    Vectors give you neighbours; they do not give you <em>precedes</em>.</li>
+    <li><strong>Not an execution ontology.</strong> We model engineering decisions,
+    not action semantics. Complementary to KnowRob and IEEE 1872, not a
+    replacement.</li>
+    <li><strong>Not classical knowledge compilation.</strong> We use the term in a
+    source-level, engineering sense and claim none of the tractability results of
+    the OBDD/d-DNNF line of work. The paper says so explicitly.</li>
+  </ul>
+</section>
+
+<section id="status">
+  <h2>Honest status</h2>
+  <ul class="plain">
+    <li>Compilation is <strong>in progress</strong> and unattended. Roughly a third
+    of the taxonomy is not yet compiled; counts on this page rise over time.</li>
+    <li><strong>The central comparison has not been run.</strong> We argue for
+    compilation and quantify its amortization, but we have not demonstrated better
+    answers than a strong RAG or GraphRAG baseline. That experiment needs baselines
+    beside the golden set, and we have not run it.</li>
+    <li><strong>Retrieval numbers are not published yet.</strong> The evaluation
+    harness and golden set exist; a valid run does not. We publish the suite rather
+    than a claim.</li>
+    <li><strong>Build cost is unmeasured.</strong> The pipeline records no
+    per-topic time or token cost, so the economics of front-loading work — the
+    quantity that actually decides whether compilation is worth it — cannot yet be
+    reported.</li>
+    <li>74.1% of task chains are purely linear even though the schema supports
+    branching. The compiler emits the simplest structure that passes, and nothing
+    rewards capturing genuine route divergence.</li>
+  </ul>
+</section>
+
+<footer>
+  <p style="font-size:14.5px;color:var(--text)"><strong>Entropy Box &middot; 箱熵</strong>
+     &mdash; a knowledge compiler for embodied AI.</p>
+  <p>
+    Website: <a href="https://xiangshang.ngrok.app/">xiangshang.ngrok.app</a>
+    &nbsp;·&nbsp;
+    Interactive dashboard, complex-query retrieval and one-click plan assembly run
+    live there. <span style="color:var(--dim)">This GitHub page is the durable entry
+    point for citation and archival.</span>
+  </p>
+  <p>
+    Contact: <a href="mailto:wangyuqi11and11@163.com">wangyuqi11and11@163.com</a>
+    &nbsp;·&nbsp; Yuqi Wang
+    &nbsp;·&nbsp; Research collaboration, dataset access, integrations and corrections
+    all welcome &mdash; including access to material not published here.
+  </p>
+  <p>
+    Paper: <a href="paper/entropy-box-knowledge-compiler-v8.pdf">PDF</a> &middot;
+    <a href="paper/entropy-box-knowledge-compiler.tex">LaTeX source</a>
+    &nbsp;·&nbsp; Data: <a href="#data">CC BY 4.0</a>
+    &nbsp;·&nbsp; Code: <a href="LICENSE">MIT</a>
+    &nbsp;·&nbsp; Citation: <a href="CITATION.cff">CITATION.cff</a>
+  </p>
+  <p><strong>On language.</strong> Site text and all capability / asset <em>names</em>
+     are English. Capability <em>descriptions</em> and the research documents are in
+     Chinese, the source language of the compiled corpus. We publish them as they are
+     rather than machine-translating, because the descriptions carry the engineering
+     detail &mdash; inputs, outputs, constraints, performance envelopes &mdash; that a
+     translation pass would blur.</p>
+  <p style="margin-top:18px;color:var(--faint)">If this is useful to you, or if you
+     find something in it that is wrong, we would like to hear about it. Corrections to
+     an artifact like this are worth more than compliments.</p>
+</footer>
+
+</div>
+
+
+</body>
+</html>
