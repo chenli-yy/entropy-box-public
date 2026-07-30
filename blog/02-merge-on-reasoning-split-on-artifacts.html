@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Merge on reasoning, split on artifacts — Entropy Box</title>
+<meta name="description" content="Two multi-agent architectures failed before the third worked. The rule that explains both failures: merge two stages into one context when what passes between them is reasoning; split them when what passes between them is an artifact.">
+<meta name="author" content="Yuqi Wang">
+<meta name="keywords" content="multi-agent systems, agent orchestration, context engineering, LLM pipeline design, agent handoff, design intent">
+<link rel="canonical" href="https://chenli-yy.github.io/entropy-box-public/blog/02-merge-on-reasoning-split-on-artifacts.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Merge on reasoning, split on artifacts">
+<meta property="og:description" content="A design rule for multi-agent systems, learned from two architectures that failed.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Merge on reasoning, split on artifacts",
+  "description": "A design rule for decomposing multi-agent LLM systems, derived from two failed architectures: merge two stages into one context when what passes between them is reasoning; split them when what passes between them is an artifact.",
+  "author": { "@type": "Person", "name": "Yuqi Wang" },
+  "datePublished": "2026-07-30",
+  "keywords": "multi-agent systems, agent orchestration, context engineering, LLM pipeline design",
+  "isPartOf": { "@type": "Blog", "name": "Entropy Box technical notes" },
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+<link rel="stylesheet" href="blog.css">
+</head>
+<body>
+<article class="wrap">
+
+<div class="crumb"><a href="../">Entropy Box</a> / <a href="./">Notes</a> / 02</div>
+
+<h1>Merge on reasoning, split on artifacts</h1>
+<p class="meta">Yuqi Wang · 30 July 2026 · ~9 min ·
+   <a href="../paper/entropy-box-knowledge-compiler-v8.pdf">paper §5</a></p>
+
+<p class="lede">We are on our third multi-agent architecture for the same job. The
+first two failed, and they failed for reasons that turned out to be the same reason
+seen from opposite sides. The rule we extracted from them is the most portable thing
+we have learned building this system, and it contradicts how multi-agent
+decomposition is usually justified.</p>
+
+<h2>The job</h2>
+
+<p>Compile one topic of robotics engineering knowledge — say <em>A* path
+planning</em> — into a structured record: the distinct engineering paradigms that
+solve it, the ordered steps each one takes, the capabilities each step needs, and
+the open-source assets that implement them. Research it from the literature, verify
+the assets exist, emit conformant JSON. Then do that 2,511 times, unattended.</p>
+
+<h2>v1: one agent, one topic, one context</h2>
+
+<p>The obvious first attempt. Give one agent the whole topic and let it work.</p>
+
+<p>It failed three ways that were really one way. <strong>Research depth was squeezed
+by context length</strong> — as the conversation filled with retrieved material,
+later paradigms got visibly shallower treatment than earlier ones.
+<strong>Paradigms contaminated each other</strong>, converging on a shared
+vocabulary that belonged to none of them. And by the time the agent wrote the
+record, a large share of fields were <strong>drafted from memory</strong> rather
+than grounded in anything retrieved; the research documents degenerated into
+conclusions with no recoverable evidence behind them.</p>
+
+<p>Diagnosis: one context cannot hold five deep investigations. Obvious fix: give
+each paradigm its own context.</p>
+
+<h2>v2: one agent per chain, split into a relay</h2>
+
+<p>So we did that, and went further. Each paradigm got its own context, and we split
+the work inside it across three specialist agents in sequence — research, then asset
+verification, then JSON emission — with all paradigms completing research before any
+entered generation. Clean separation of concerns. Each agent has one job. This is
+how you are supposed to build these things.</p>
+
+<p>It failed for a reason we did not anticipate:</p>
+
+<blockquote>
+<strong>Design intent evaporates at the handoff.</strong> Why this chain has
+<em>this</em> step sequence; why step 4 must follow step 3; why two capabilities were
+deliberately not split apart — these are judgements formed <em>during</em> research.
+Only their conclusions can be written into a document. The reasoning that produced
+them cannot.
+</blockquote>
+
+<p>The downstream agent had no choice but to transcribe the document literally, and
+two consequences followed immediately.</p>
+
+<p><strong>The cost of one more search became a whole session.</strong> When the
+document did not cover a field, the JSON agent had no recourse. It was forbidden from
+searching — because an agent with no research context that is allowed to search will
+fill gaps from parametric memory, which is worse than leaving them empty. So a gap
+that one query would have closed had to wait for human intervention or an entire
+additional round.</p>
+
+<p><strong>Verification could not feed back.</strong> When the asset-verification
+agent discovered that a capability had no real implementation anywhere, it had
+neither the authority nor the context to revise the capability list the research
+agent had designed. It could only execute the plan it had been handed, knowing the
+plan was wrong.</p>
+
+<p>We had decomposed along role boundaries. Roles were the wrong seam.</p>
+
+<h2>The rule</h2>
+
+<blockquote class="rule">
+<strong>Merge two stages into one context when what passes between them is
+reasoning. Split them into separate contexts when what passes between them is an
+artifact.</strong>
+</blockquote>
+
+<p>Reasoning does not survive serialization. Artifacts do.</p>
+
+<p>A handoff that requires the receiver to reconstruct <em>why</em> is a handoff that
+should not exist. A handoff that requires the receiver only to consume <em>what</em>
+is a handoff that should be made explicit, durable and resumable.</p>
+
+<p>The usual justification for multi-agent decomposition is capability
+specialisation: give each agent the role it is best at, keep its prompt focused, let
+it be excellent at one thing. That is not wrong, but our experience says it is not
+the binding constraint. <strong>The decisive question is not what each agent is good
+at. It is what can survive the gap between them.</strong></p>
+
+<h2>What the rule produces</h2>
+
+<p>Applied honestly, it cuts in two directions at once, which is why the resulting
+architecture looks inconsistent until you know the rule.</p>
+
+<p><strong>Within a chain, merge.</strong> Research, asset verification and record
+emission happen in <em>one</em> agent session, because what passes between them is
+design intent. The agent that writes the record is the agent that did the research.
+Gaps found during emission get closed by a few extra queries on the spot.
+Verification can revise the research plan, because it is the same conversation.</p>
+
+<p><strong>Across the orchestration, split.</strong> Panoramic survey, cross-chain
+merge adjudication, and final validation happen in <em>three separate</em> agent
+sessions handing off through the file system, sharing no conversation context —
+because what passes between them is finished artifacts: documents, fragments, a
+record.</p>
+
+<p>Two levels, opposite decisions, one rule. The test is always the same: is the
+payload a reasoning chain or a file?</p>
+
+<h2>What it costs</h2>
+
+<p>Closing the loop within a chain is not free, and the bill arrives in a specific
+place. Chains now run in parallel and mint identifiers independently, so the same
+real capability reliably acquires two identifiers under two names. Something has to
+reconcile that.</p>
+
+<p>We pay it deliberately, in one place: a merge stage that is the only point in the
+whole pipeline with simultaneous visibility of every finished chain. The trade is
+favourable for a specific reason — <strong>merging is mechanically decidable</strong>.
+It has criteria, thresholds, and a written adjudication standard. Design intent, once
+lost, cannot be reconstructed at any price.</p>
+
+<p>That asymmetry is the whole argument. Pay in the currency you can actually
+earn back.</p>
+
+<p>There is also a smaller cost we did not foresee. Because the chain agent now
+researches <em>and</em> emits schema, we can no longer put a cheap model on the
+mechanical segment. Closing the loop removed an optimisation.</p>
+
+<h2>Two corollaries worth stealing</h2>
+
+<p><strong>Context is a budget, not a log.</strong> When a chain agent returns, our
+controller records <em>one line</em> — chain number, verdict, entity counts, whether
+gaps were flagged — and does not read the returned artifacts into its own context.
+This is written into the specification as a rule, not left to judgement. The
+controller's context is reserved for dispatch and gating decisions. Treating context
+as something to be allocated, rather than a place where information accumulates, is
+what makes a 30-topic batch tractable.</p>
+
+<p><strong>A validation stage needs an explicit instruction not to re-derive.</strong>
+Our final-check phase is forbidden from re-reading the research documents in full,
+re-verifying asset URLs, or redoing the adversarial reading already performed
+upstream. The stated reason is that the acceptance records of those earlier steps
+<em>are</em> the evidence. Without that instruction, a capable agent handed a
+validation role will re-derive everything it can — and a pipeline that re-validates
+at every stage does not converge. We learned this by watching it not converge.</p>
+
+<h2>Where the rule might not hold</h2>
+
+<p>We have applied it to one problem, in one domain, at one scale. Some honest
+caveats.</p>
+
+<p>It assumes reasoning is genuinely lossy to serialize. If your intermediate
+reasoning is short and formalisable — a plan in a DSL, a proof term — then it
+serializes fine and the rule collapses to "split everywhere". Our reasoning is
+long-form judgement about engineering trade-offs, which is exactly the lossy case.</p>
+
+<p>It also assumes the merged stage still <em>fits</em>. The rule says merge when
+reasoning passes between stages; it does not repeal context limits. v1 failed because
+too much was merged. The rule tells you where the seams should be, not how many
+there should be.</p>
+
+<h2>Where this comes from</h2>
+
+<p>This is §5 of a system paper on
+<a href="../">Entropy Box</a>, a knowledge compiler for robotics and embodied AI.
+The paper describes the full architecture — the admission gates, the provenance
+ledger, and two sequencing constraints that bit us in similar ways (normalize entity
+identifiers <em>before</em> measuring chain overlap; rekey to opaque surrogate keys
+only <em>after</em> every stage that needs to read names).</p>
+
+<ul>
+<li><a href="../paper/entropy-box-knowledge-compiler-v8.pdf">Paper (PDF)</a> — §5.1
+    for the two failures in full, §5.2 for the rule, §5.6 for the ordering constraints</li>
+<li><a href="../how-it-works/">How the graph is built</a> — including the actual
+    research documents for one topic, with their retrieval ledgers</li>
+</ul>
+
+<p>If you have decomposed an agent system along role boundaries and watched intent
+leak out at the seams, we would like to compare notes.</p>
+
+<hr>
+<p class="foot">Part of <a href="../">Entropy Box</a>, a knowledge compiler for
+embodied AI. Corrections welcome:
+<a href="mailto:wangyuqi11and11@163.com">wangyuqi11and11@163.com</a>.
+This post is CC BY 4.0.</p>
+
+</article>
+</body>
+</html>

@@ -31,6 +31,7 @@ reproducible measurement script, and interactive views of the compiled artifact.
 🛠 **[How the graph is built](how-it-works/)** &nbsp;·&nbsp;
 🕸 **[Capability network](graph/capability-network.html)** &nbsp;·&nbsp;
 🔌 **[Query it from your agent](integrate/)** &nbsp;·&nbsp;
+📝 **[Technical notes](blog/)** &nbsp;·&nbsp;
 📊 **[Open data](#open-data)**
 
 > **On language.** Site text and all capability / asset *names* are English.
@@ -229,6 +230,17 @@ exposed as an API. See the project site for the current base URL.
 
 See [`CITATION.cff`](CITATION.cff). If you use the golden set or the adjudication
 ledger, please cite the paper.
+
+## Technical notes
+
+Written to be useful independently of this system — if a note is only interesting to
+someone who already cares about Entropy Box, it does not belong there.
+
+- [**Embedding similarity cannot decide duplication**](blog/01-similarity-cannot-decide-duplication.html)
+  — 1,155 adjudicated pairs, precision 0.069, AUC 0.629, and no threshold repairs it.
+  Includes the dataset and the script.
+- [**Merge on reasoning, split on artifacts**](blog/02-merge-on-reasoning-split-on-artifacts.html)
+  — a design rule for multi-agent systems, derived from two architectures that failed.
 
 ## Links and contact
 

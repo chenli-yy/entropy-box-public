@@ -1,0 +1,55 @@
+:root{--bg:#0D1117;--panel:#161B22;--panel2:#11161D;--line:#30363D;--text:#E6EDF3;
+  --dim:#9AA5B1;--faint:#6E7681;--accent:#58A6FF;--teal:#39C5BB;--amber:#D29922;--red:#F85149}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+  font:17px/1.72 -apple-system,BlinkMacSystemFont,"Segoe UI",Georgia,Helvetica,Arial,
+  "PingFang SC","Microsoft YaHei",serif;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:720px;margin:0 auto;padding:34px 24px 110px}
+.crumb{font-size:12px;color:var(--faint);letter-spacing:.08em;text-transform:uppercase;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif}
+h1{font-size:34px;line-height:1.2;margin:20px 0 10px;font-weight:660;letter-spacing:-.02em;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif}
+.meta{color:var(--faint);font-size:13.5px;margin:0 0 30px;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif}
+.lede{font-size:19px;line-height:1.62;color:var(--text);border-left:3px solid var(--teal);
+  padding-left:18px;margin:0 0 34px}
+h2{font-size:23px;margin:42px 0 12px;font-weight:640;letter-spacing:-.015em;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif}
+p{margin:0 0 18px}
+blockquote{margin:26px 0;padding:16px 20px;background:var(--panel);
+  border-left:3px solid var(--amber);border-radius:0 8px 8px 0;font-size:16.5px}
+blockquote.rule{border-left-color:var(--teal);background:rgba(57,197,187,.07);
+  font-size:18px;text-align:left}
+blockquote p:last-child{margin-bottom:0}
+pre{background:var(--panel2);border:1px solid var(--line);border-radius:8px;
+  padding:14px 17px;overflow-x:auto;font-size:14px;line-height:1.5;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9em;
+  background:rgba(255,255,255,.06);padding:1px 5px;border-radius:4px}
+pre code{background:none;padding:0}
+table{width:100%;border-collapse:collapse;font-size:14.5px;margin:22px 0 6px;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif}
+th,td{text-align:left;padding:8px 11px;border-bottom:1px solid var(--line)}
+th{color:var(--faint);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;
+  font-weight:640}
+td.n,th.n{text-align:right;font-family:ui-monospace,Menlo,monospace}
+td.m,.m{font-family:ui-monospace,Menlo,monospace;font-size:13.5px}
+.cap{font-size:13px;color:var(--faint);margin:0 0 22px}
+.tag{font-size:10px;color:var(--teal);border:1px solid rgba(57,197,187,.4);
+  border-radius:3px;padding:0 4px;letter-spacing:.04em;vertical-align:middle}
+ul{padding-left:22px;margin:0 0 18px}
+li{margin:7px 0}
+strong{color:#fff;font-weight:640}
+hr{border:none;border-top:1px solid var(--line);margin:44px 0 20px}
+.foot{font-size:13.5px;color:var(--faint);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif}
+.post{display:block;background:var(--panel);border:1px solid var(--line);
+  border-radius:10px;padding:20px 22px;margin:0 0 14px;color:inherit}
+.post:hover{border-color:var(--accent);text-decoration:none}
+.post .t{font-size:19px;font-weight:640;margin-bottom:6px;letter-spacing:-.01em;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif}
+.post .d{font-size:14.5px;color:var(--dim)}
+.post .mt{font-size:12px;color:var(--faint);margin-top:11px;
+  font-family:ui-monospace,Menlo,monospace}

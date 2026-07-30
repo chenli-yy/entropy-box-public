@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Embedding similarity cannot decide duplication — Entropy Box</title>
+<meta name="description" content="We used 1,155 adjudicated near-duplicate pairs from our own knowledge graph as labelled data. Once the gate has flagged a pair, embedding similarity has precision 0.069 and AUC 0.629 — and raising the threshold does not fix it. Why a conservative adjudication stage is a requirement, not a safety margin.">
+<meta name="author" content="Yuqi Wang">
+<meta name="keywords" content="entity resolution, duplicate detection, embedding similarity, knowledge graph quality, AUC, negative result, deduplication threshold">
+<link rel="canonical" href="https://chenli-yy.github.io/entropy-box-public/blog/01-similarity-cannot-decide-duplication.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Embedding similarity cannot decide duplication">
+<meta property="og:description" content="1,155 adjudicated pairs, precision 0.069, AUC 0.629 — and no threshold fixes it.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Embedding similarity cannot decide duplication",
+  "description": "Using 1,155 adjudicated near-duplicate pairs as labelled data, we show that once a deduplication gate has flagged a pair, embedding similarity carries too little signal to decide the merge, and that no threshold repairs this.",
+  "author": { "@type": "Person", "name": "Yuqi Wang" },
+  "datePublished": "2026-07-30",
+  "keywords": "entity resolution, duplicate detection, embedding similarity, knowledge graph quality, negative result",
+  "isPartOf": { "@type": "Blog", "name": "Entropy Box technical notes" },
+  "license": "https://creativecommons.org/licenses/by/4.0/"
+}
+</script>
+<link rel="stylesheet" href="blog.css">
+</head>
+<body>
+<article class="wrap">
+
+<div class="crumb"><a href="../">Entropy Box</a> / <a href="./">Notes</a> / 01</div>
+
+<h1>Embedding similarity cannot decide duplication</h1>
+<p class="meta">Yuqi Wang · 30 July 2026 · ~8 min ·
+   <a href="../data/dedup_adjudication_ledger.json">the dataset</a> ·
+   <a href="../analysis/measure.py">the script</a></p>
+
+<p class="lede">We built a deduplication gate the way most people build one: embed
+the entities, compare cosine similarity, flag pairs above a threshold. Then we
+looked at 1,155 pairs our own adjudicators had ruled on, and discovered the score
+was doing almost none of the work.</p>
+
+<h2>The setup</h2>
+
+<p>We maintain a registry of robotics engineering capabilities — currently about
+25,000 of them. Capabilities are compiled from literature independently, one topic
+at a time, so the same underlying competence gets rediscovered under different
+names constantly. Something has to decide whether <em>Contact Point Sampling</em>
+and <em>Contact Point Candidate Generation</em> are the same thing.</p>
+
+<p>Our gate encodes each entity into two views — an <em>identity</em> view over
+names and aliases, and a <em>concept</em> view over the description — and flags a
+pair when</p>
+
+<pre>s = 0.5·s_identity + 0.5·s_concept  ≥ 0.86
+      or  max(s_identity, s_concept) ≥ 0.95</pre>
+
+<p>The 0.86 was not guessed. We measured the distribution of nearest-neighbour
+similarity among entities known to be <em>legitimately distinct</em> and put the
+threshold at its 95th percentile, ≈0.863. That is a defensible way to set a
+threshold, and we were reasonably pleased with it.</p>
+
+<p>Flagged pairs then go to a two-stage adjudication chain: a non-LLM triage pass
+that only ever clears obvious non-duplicates, then an LLM adjudicator instructed to
+answer "different" under uncertainty. Every decision is written to a ledger with
+the score, the metric, the adjudicator and a written rationale.</p>
+
+<p>That ledger is the point of this post. It is a labelled dataset, and we had
+never used it as one.</p>
+
+<h2>The measurement</h2>
+
+<p>Take <code>merged</code> as "true duplicate" and <code>resolved</code> as
+"distinct". 1,155 pairs carry a final label. Now ask the question the design
+implicitly answers but never tested: <strong>once a pair has been flagged, does the
+similarity score tell you anything about whether it is actually a
+duplicate?</strong></p>
+
+<table>
+<tr><th>Path</th><th class="n">pairs</th><th class="n">true dup.</th>
+    <th class="n">precision</th><th class="n">AUC</th><th>95% CI</th></tr>
+<tr><td>Embedding (primary)</td><td class="n">508</td><td class="n">35</td>
+    <td class="n">0.069</td><td class="n">0.629</td><td class="m">[0.531, 0.722]</td></tr>
+<tr><td>Lexical (fallback)</td><td class="n">647</td><td class="n">4</td>
+    <td class="n">0.006</td><td class="n">0.454</td><td class="m">[0.271, 0.764]</td></tr>
+</table>
+<p class="cap">AUC uses similarity as a duplicate detector <em>within the flagged
+set</em>; 0.5 is chance. Confidence intervals from 2,000 bootstrap resamples.</p>
+
+<p>Read the first row slowly. <strong>93% of what the gate flags is not a
+duplicate.</strong> And the AUC of 0.629 — while its confidence interval does
+exclude chance, so there <em>is</em> signal — is nowhere near strong enough to
+decide anything. The true duplicates have mean similarity 0.935; the non-duplicates
+have mean similarity 0.921. Those distributions sit almost on top of each other.</p>
+
+<p>The second row is worse but means less: with four positive examples the interval
+spans almost the entire range. We report it for completeness and draw no conclusion
+from it, beyond the obvious one — a fallback path exercised this rarely cannot be
+validated from production data at all.</p>
+
+<h2>"Just raise the threshold"</h2>
+
+<p>This is the first thing everyone says, including us. Here is what it buys.</p>
+
+<table>
+<tr><th class="n">threshold</th><th class="n">pairs kept</th>
+    <th class="n">true dup. kept</th><th class="n">precision</th>
+    <th class="n">recall of true dup.</th></tr>
+<tr><td class="n">0.86 <span class="tag">current</span></td><td class="n">508</td><td class="n">35</td><td class="n">0.069</td><td class="n">1.000</td></tr>
+<tr><td class="n">0.90</td><td class="n">365</td><td class="n">31</td><td class="n">0.085</td><td class="n">0.886</td></tr>
+<tr><td class="n">0.92</td><td class="n">259</td><td class="n">23</td><td class="n">0.089</td><td class="n">0.657</td></tr>
+<tr><td class="n">0.94</td><td class="n">143</td><td class="n">18</td><td class="n">0.126</td><td class="n">0.514</td></tr>
+<tr><td class="n">0.96</td><td class="n">48</td><td class="n">4</td><td class="n">0.083</td><td class="n">0.114</td></tr>
+<tr><td class="n">0.98</td><td class="n">5</td><td class="n">1</td><td class="n">0.200</td><td class="n">0.029</td></tr>
+</table>
+
+<p>Going from 0.86 to 0.94 takes precision from 0.069 to 0.126 — still one true
+duplicate in eight — and throws away <em>half the real duplicates</em> to get
+there. Past 0.95 the counts collapse to single digits and the estimates stop
+meaning anything.</p>
+
+<p>There is no operating point at which the score alone is a usable decision
+procedure. This is not a tuning problem.</p>
+
+<h2>What actually follows from this</h2>
+
+<p>Our system already had a conservative adjudication stage after the threshold. We
+had adopted it on an argument about asymmetric costs: a false merge welds two
+legitimately distinct entities together and destroys a distinction that then has to
+be re-derived from scratch, whereas a false retention leaves one redundant row that
+a later pass can still clean up. Irreversible versus reversible. So bias toward
+retention.</p>
+
+<p>That was a design preference. This measurement makes it a <strong>requirement</strong>.</p>
+
+<p>The adjudication stage is not a safety margin bolted onto a working classifier.
+It is doing essentially all of the discrimination. The threshold is a
+<em>recall filter</em> — its job is to make sure real duplicates reach a judge, and
+it should be tuned for exactly that and nothing else.</p>
+
+<p>Which gives the uncomfortable corollary. Any system that flags near-duplicate
+entities by embedding similarity and then <strong>merges automatically above a
+threshold</strong> would, at our operating point, be wrong more than nine times in
+ten. That pattern is common. If you have one in production and have never labelled
+a sample of its decisions, you do not know what it is doing.</p>
+
+<h2>Two limits we are not going to bury</h2>
+
+<p><strong>Selection bias.</strong> Every pair in the ledger is a pair that already
+passed the threshold. So the AUC above answers a conditional question — "among
+pairs we flagged, does the score rank duplicates higher?" — and not "how well does
+the score separate duplicates from non-duplicates in general". The conditional
+question happens to be the operationally decisive one, because it asks whether the
+score should influence the decision <em>after</em> flagging. But it does not
+generalise, and we are not claiming it does.</p>
+
+<p><strong>We cannot measure recall.</strong> Nothing labelled the duplicates the
+gate never flagged, because nothing ever looked at them. A real recall estimate
+requires adjudicating a random sample of <em>unflagged</em> pairs, which we have not
+done. It is the obvious next experiment and it is not hard, just tedious.</p>
+
+<h2>Why we are publishing this</h2>
+
+<p>Partly because it is a genuinely useful result to anyone building entity
+resolution over technical text, and it cost us nothing to obtain — the data was
+sitting in a log we had been writing for months and never read as a dataset.</p>
+
+<p>But mostly because of the second-order lesson, which is about instrumentation
+rather than embeddings. <strong>We were only able to run this experiment because the
+adjudication decisions had been recorded with their scores and their rationales
+instead of being applied and forgotten.</strong> If the merge step had simply mutated
+the registry and moved on — which is the obvious way to implement it — there would
+be no dataset, no measurement, and no way to discover that the component was
+behaving nothing like we assumed.</p>
+
+<p>Log the decision, the input that drove it, and the reason. It is a few extra
+fields, and it is the difference between having a system and knowing how your
+system behaves.</p>
+
+<h2>Get the data</h2>
+
+<p>The ledger is published under CC BY 4.0 with the selection-bias warning attached
+to the file itself:</p>
+
+<ul>
+<li><a href="../data/dedup_adjudication_ledger.json"><code>dedup_adjudication_ledger.json</code></a>
+    — 1,226 pairs, 1,155 labelled, with scores, metrics, adjudicators and rationales</li>
+<li><a href="../analysis/measure.py"><code>analysis/measure.py</code></a> — computes
+    every number above, including the bootstrap intervals and the threshold sweep.
+    Reads only files on disk: no GPU, no network, no service</li>
+<li><a href="../paper/entropy-box-knowledge-compiler-v8.pdf">The paper</a>, §9.1, for
+    the same result with the surrounding system described</li>
+</ul>
+
+<p>If you run this on your own adjudication logs, we would like to know what you
+find — particularly if your AUC is better than ours, because then the interesting
+question becomes what you did differently.</p>
+
+<hr>
+<p class="foot">Part of <a href="../">Entropy Box</a>, a knowledge compiler for
+embodied AI. Corrections welcome:
+<a href="mailto:wangyuqi11and11@163.com">wangyuqi11and11@163.com</a>.
+This post is CC BY 4.0.</p>
+
+</article>
+</body>
+</html>

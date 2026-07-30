@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Technical notes — Entropy Box</title>
+<meta name="description" content="Technical notes from building a knowledge compiler for robotics: measured results, design rules, and things that failed.">
+<link rel="canonical" href="https://chenli-yy.github.io/entropy-box-public/blog/">
+<link rel="stylesheet" href="blog.css">
+</head>
+<body>
+<div class="wrap">
+<div class="crumb"><a href="../">Entropy Box</a> / Notes</div>
+<h1>Technical notes</h1>
+<p class="lede">Things we measured, things we got wrong, and rules that turned out to
+generalise. Written to be useful independently of our system &mdash; if a note is
+only interesting to someone who already cares about Entropy Box, it does not belong
+here.</p>
+
+<a class="post" href="01-similarity-cannot-decide-duplication.html">
+  <div class="t">01 &nbsp;Embedding similarity cannot decide duplication</div>
+  <div class="d">We used 1,155 adjudicated near-duplicate pairs from our own registry
+  as labelled data. Once the gate has flagged a pair, precision is 0.069 and AUC is
+  0.629 &mdash; and raising the threshold does not repair it. Why a conservative
+  adjudication stage is a requirement rather than a safety margin, and why we could
+  only run the experiment because the decisions had been logged with their
+  reasons.</div>
+  <div class="mt">negative result · entity resolution · dataset published</div>
+</a>
+
+<a class="post" href="02-merge-on-reasoning-split-on-artifacts.html">
+  <div class="t">02 &nbsp;Merge on reasoning, split on artifacts</div>
+  <div class="d">Two multi-agent architectures failed before the third worked. The
+  rule that explains both failures: merge two stages into one context when what
+  passes between them is reasoning; split them when what passes between them is an
+  artifact. Multi-agent decomposition is usually justified by capability
+  specialisation &mdash; we think the binding constraint is what survives the
+  handoff.</div>
+  <div class="mt">multi-agent design · context engineering · two failures</div>
+</a>
+
+<hr>
+<p class="foot">Part of <a href="../">Entropy Box</a>, a knowledge compiler for
+embodied AI. Posts are CC BY 4.0 &mdash; republish them, with attribution and a link
+back. Corrections: <a href="mailto:wangyuqi11and11@163.com">wangyuqi11and11@163.com</a>.</p>
+</div>
+</body>
+</html>
