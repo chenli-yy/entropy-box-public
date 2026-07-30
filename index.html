@@ -3,262 +3,107 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Entropy Box — A Knowledge Compiler for Embodied AI</title>
+<title>Entropy Box — A Knowledge Compiler for Embodied Intelligence</title>
 <meta name="description" content="Entropy Box compiles fragmented robotics knowledge — papers, repositories, documentation, datasets — into a persistent, typed, deduplicated capability graph. Open artifact, open data, reproducible measurements.">
-<meta property="og:title" content="Entropy Box — A Knowledge Compiler for Embodied AI">
-<meta property="og:description" content="Compile once, execute everywhere. Open capability graph, retrieval golden set, adjudication ledger and reproducible measurements for robotics engineering knowledge.">
+<meta property="og:title" content="Entropy Box — A Knowledge Compiler for Embodied Intelligence">
+<meta property="og:description" content="Compile knowledge, structure capabilities, enable robot intelligence. Open capability graph, retrieval golden set, adjudication ledger and reproducible measurements.">
 <meta property="og:type" content="website">
 <meta name="author" content="Yuqi Wang">
 <meta name="keywords" content="knowledge compiler, robotics knowledge graph, embodied AI, embodied intelligence, capability graph, task chain, robot foundation models, ROS, retrieval augmented generation, provenance, multi-agent, open dataset">
 <link rel="canonical" href="https://chenli-yy.github.io/entropy-box-public/">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230B0D11'/%3E%3Cpath d='M8 11h16M8 16h11M8 21h16' stroke='%232DD4BF' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#05070D">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%2305070D'/%3E%3Cg stroke='%2300D4FF' stroke-width='1.3' fill='none'%3E%3Cpath d='M6 5.5v13M6 5.5h11M6 12h7M6 18.5h11'/%3E%3C/g%3E%3Cg fill='%2300D4FF'%3E%3Ccircle cx='6' cy='5.5' r='1.9'/%3E%3Ccircle cx='6' cy='18.5' r='1.9'/%3E%3C/g%3E%3Cg fill='%2305070D' stroke='%2300D4FF' stroke-width='1.2'%3E%3Ccircle cx='6' cy='12' r='1.7'/%3E%3Ccircle cx='17' cy='5.5' r='1.7'/%3E%3Ccircle cx='13' cy='12' r='1.7'/%3E%3Ccircle cx='17' cy='18.5' r='1.7'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/eb.css">
 <style>
-:root{
-  --bg:#07080B; --bg2:#0B0D12; --panel:#10131A; --panel2:#0D1015;
-  --line:#1E232D; --line2:#2A3240;
-  --text:#EDF1F6; --dim:#98A2B3; --faint:#6B7688;
-  --teal:#2DD4BF; --blue:#5B9DFF;
-  --amber:#F0B429; --green:#3FCF6E; --red:#FF6B60;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:70px}
-body{margin:0;background:var(--bg);color:var(--text);
-  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,
-  "PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased;
-  overflow-x:hidden}
-a{color:var(--teal);text-decoration:none}
-a:hover{text-decoration:underline}
-code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.88em}
-.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
-.num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
-
-/* ---------- nav ---------- */
-nav{position:sticky;top:0;z-index:50;background:rgba(7,8,11,.78);
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  border-bottom:1px solid var(--line)}
-nav .wrap{display:flex;align-items:center;gap:26px;height:56px}
-.brand{font-weight:700;font-size:15px;color:var(--text);letter-spacing:-.01em;
-  display:flex;align-items:center;gap:8px;flex-shrink:0}
-.brand:hover{text-decoration:none}
-.brand .dot{width:9px;height:9px;border-radius:50%;background:var(--teal);
-  box-shadow:0 0 12px var(--teal);flex-shrink:0}
-.navlinks{display:flex;gap:22px;font-size:13.5px;margin-left:auto}
-.navlinks a{color:var(--dim)}
-.navlinks a:hover{color:var(--text);text-decoration:none}
-.navcta{font-size:13px;padding:6px 13px;border-radius:6px;background:var(--teal);
-  color:#04211E;font-weight:650;flex-shrink:0}
-.navcta:hover{text-decoration:none;filter:brightness(1.1)}
-@media(max-width:900px){.navlinks{display:none}.navcta{margin-left:auto}}
-
 /* ---------- hero ---------- */
-.hero{position:relative;padding:96px 0 0;overflow:hidden}
-.hero::before{content:'';position:absolute;top:-320px;left:50%;transform:translateX(-50%);
-  width:1100px;height:620px;pointer-events:none;
-  background:radial-gradient(ellipse at center,rgba(45,212,191,.16),transparent 62%)}
-.hero::after{content:'';position:absolute;inset:0;pointer-events:none;opacity:.35;
-  background-image:linear-gradient(var(--line) 1px,transparent 1px),
-    linear-gradient(90deg,var(--line) 1px,transparent 1px);
-  background-size:56px 56px;
-  mask-image:radial-gradient(ellipse 70% 55% at 50% 25%,#000,transparent 75%);
-  -webkit-mask-image:radial-gradient(ellipse 70% 55% at 50% 25%,#000,transparent 75%)}
-.hero .wrap{position:relative;z-index:1}
-.kicker{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;
-  letter-spacing:.16em;text-transform:uppercase;color:var(--teal);font-weight:600;
-  border:1px solid rgba(45,212,191,.3);background:rgba(45,212,191,.07);
-  padding:5px 12px;border-radius:100px}
-h1{font-size:clamp(38px,6.4vw,68px);line-height:1.04;margin:24px 0 0;
-  font-weight:700;letter-spacing:-.035em;max-width:16ch}
-h1 .g{background:linear-gradient(100deg,var(--teal),var(--blue));
-  -webkit-background-clip:text;background-clip:text;color:transparent}
-.slogan{display:flex;flex-wrap:wrap;align-items:center;margin:22px 0 0;
-  font-size:clamp(15px,2vw,18.5px);font-weight:640;letter-spacing:-.008em;color:var(--teal)}
-.slogan i{font-style:normal;color:var(--line2);margin:0 13px;font-weight:400}
-.sub{font-size:clamp(16px,2vw,19px);color:var(--dim);margin:20px 0 0;
-  max-width:58ch;line-height:1.55}
-.sub strong{color:var(--text);font-weight:600}
-.cta{display:flex;gap:11px;flex-wrap:wrap;margin:34px 0 0;align-items:center}
-.btn{display:inline-flex;align-items:center;gap:7px;padding:11px 20px;border-radius:8px;
-  font-size:14.5px;border:1px solid var(--line2);background:var(--panel);
-  color:var(--text);font-weight:550;transition:.16s}
-.btn:hover{border-color:var(--teal);background:var(--panel2);text-decoration:none;
-  transform:translateY(-1px)}
-.btn.primary{background:var(--teal);border-color:var(--teal);color:#04211E;font-weight:680;
-  box-shadow:0 10px 30px -12px rgba(45,212,191,.7)}
-.btn.primary:hover{filter:brightness(1.08);border-color:var(--teal)}
-.btn.ghost{background:transparent;border-color:transparent;color:var(--dim);padding-left:6px}
-.btn.ghost:hover{color:var(--text);transform:none}
+.hero{padding:104px 0 0}
+.hero .split{gap:56px;align-items:center}
+.hero .display{max-width:13ch;margin:22px 0 0}
+.hero .display .a{color:var(--cyan)}
+.pathline{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin:28px 0 0;
+  font-family:var(--mono);font-size:clamp(10.5px,1.35vw,12.5px);font-weight:500;
+  letter-spacing:.19em;text-transform:uppercase;color:#CBD5E1}
+.pathline s{text-decoration:none;color:var(--cyan);opacity:.8}
+.hero .lede{margin:24px 0 0;font-size:18px;color:#CBD5E1;max-width:600px}
+.hero .lede strong{color:#F8FAFC;font-weight:500}
 
-/* ---------- number wall ---------- */
-.wall{margin:72px 0 0;border-top:1px solid var(--line);
-  display:grid;grid-template-columns:repeat(4,1fr)}
-.wall .cell{padding:26px 22px 24px;border-right:1px solid var(--line);
-  border-bottom:1px solid var(--line);transition:.2s}
-.wall .cell:nth-child(4n){border-right:none}
-.wall .cell:hover{background:rgba(45,212,191,.035)}
-.wall .v{font-size:clamp(26px,3.4vw,36px);font-weight:700;letter-spacing:-.035em;
-  line-height:1;color:var(--text)}
-.wall .cell:nth-child(-n+4) .v{color:var(--teal)}
-.wall .k{font-size:12px;color:var(--faint);margin-top:9px;letter-spacing:.02em}
-@media(max-width:860px){.wall{grid-template-columns:repeat(2,1fr)}
-  .wall .cell:nth-child(4n){border-right:1px solid var(--line)}
-  .wall .cell:nth-child(2n){border-right:none}}
-.asof{font-size:12.5px;color:var(--faint);margin:16px 0 0;max-width:76ch}
+/* hero diagram */
+.hgraph{width:100%;max-width:460px;margin-left:auto}
+.hgraph .fr{fill:none;stroke:rgba(148,163,184,.26);stroke-width:1}
+.hgraph .fr-d{fill:none;stroke:rgba(148,163,184,.24);stroke-width:1;stroke-dasharray:4 4}
+.hgraph .fr-a{fill:rgba(0,212,255,.05);stroke:rgba(0,212,255,.42);stroke-width:1}
+.hgraph .ln{stroke:rgba(148,163,184,.34);stroke-width:1;fill:none}
+.hgraph .ln-a{stroke:rgba(0,212,255,.5);stroke-width:1;fill:none}
+.hgraph .eg{stroke:rgba(0,212,255,.30);stroke-width:1;fill:none}
+.hgraph .nd{fill:#05070D;stroke:var(--cyan);stroke-width:1.2}
+.hgraph .nd-f{fill:var(--cyan)}
+.hgraph .lb{fill:#94A3B8;font-family:var(--mono);font-size:9.5px;letter-spacing:.11em}
+.hgraph .lb-w{fill:#F8FAFC;font-family:var(--mono);font-size:10.5px;font-weight:500;
+  letter-spacing:.15em}
+.hgraph .lb-a{fill:var(--cyan);font-family:var(--mono);font-size:9px;letter-spacing:.16em}
+@media(max-width:940px){.hgraph{margin:8px auto 0;max-width:400px}}
 
-/* ---------- sections ---------- */
-section{padding:84px 0;position:relative}
-section+section{border-top:1px solid var(--line)}
-.sec-alt{background:linear-gradient(180deg,var(--bg2),var(--bg))}
-h2{font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);
-  margin:0 0 14px;font-weight:680;display:flex;align-items:center;gap:9px}
-h2::before{content:'';width:16px;height:1px;background:var(--teal);opacity:.6}
-.h3big{font-size:clamp(26px,3.6vw,38px);line-height:1.16;margin:0 0 16px;
-  font-weight:680;letter-spacing:-.028em;max-width:22ch}
-.lead{font-size:17.5px;color:var(--dim);max-width:64ch;margin:0 0 8px;line-height:1.6}
-.lead strong{color:var(--text);font-weight:600}
-.dim{color:var(--dim)}
-p{margin:0 0 14px}
+/* ---------- architecture flow ---------- */
+.flowsteps{display:grid;gap:0;max-width:760px;margin:0 auto}
+.fstep{border:1px solid var(--rule);border-radius:10px;background:var(--card);
+  padding:20px 24px;display:grid;grid-template-columns:1fr auto;gap:20px;
+  align-items:center}
+.fstep.on{border-color:var(--accent-line);background:var(--accent-soft)}
+.fstep .fk{font-family:var(--mono);font-size:10px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--ink-3);margin-bottom:7px}
+.fstep.on .fk{color:var(--accent)}
+.fstep .fn{font-size:17px;font-weight:500;letter-spacing:-.018em;color:var(--ink);
+  margin-bottom:5px}
+.fstep .fd{font-size:13.5px;line-height:1.55;color:var(--ink-2)}
+.fstep .fm{text-align:right;font-family:var(--mono);white-space:nowrap}
+.fstep .fm b{display:block;font-size:17px;font-weight:500;color:var(--ink);
+  font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.fstep.on .fm b{color:var(--accent)}
+.fstep .fm span{font-size:10px;color:var(--ink-3);letter-spacing:.05em}
+.farrow{height:26px;display:flex;align-items:center;justify-content:center;
+  color:var(--ink-3);font-size:13px}
+@media(max-width:620px){.fstep{grid-template-columns:1fr;gap:12px}
+  .fstep .fm{text-align:left}}
 
-/* ---------- split ---------- */
-.split{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);
-  gap:56px;align-items:center}
-@media(max-width:900px){.split{grid-template-columns:1fr;gap:34px}}
-
-/* ---------- cards ---------- */
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(268px,1fr));gap:14px}
-.grid.g2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;
-  padding:20px 21px;display:block;color:inherit;transition:.18s;position:relative;
-  overflow:hidden}
-a.card:hover{border-color:var(--line2);text-decoration:none;transform:translateY(-2px);
-  background:var(--panel2)}
-a.card::after{content:'→';position:absolute;top:18px;right:19px;color:var(--faint);
-  font-size:15px;transition:.18s;opacity:0}
-a.card:hover::after{opacity:1;transform:translateX(3px);color:var(--teal)}
-.card .t{font-weight:650;font-size:16px;margin-bottom:6px;padding-right:22px;
-  letter-spacing:-.012em}
-.card .d{font-size:13.5px;color:var(--dim);line-height:1.55}
-.card .m{font-size:11.5px;color:var(--faint);margin-top:12px;
-  font-family:ui-monospace,Menlo,monospace;padding-top:11px;border-top:1px solid var(--line)}
-.card .ico{font-size:19px;margin-bottom:11px;display:block;line-height:1}
-.badge{display:inline-block;font-size:10px;padding:3px 8px;border-radius:100px;
-  background:rgba(45,212,191,.12);color:var(--teal);margin-left:7px;letter-spacing:.05em;
-  vertical-align:middle;font-weight:650;text-transform:uppercase}
-.badge.neg{background:rgba(255,107,96,.13);color:var(--red)}
-.badge.warn{background:rgba(240,180,41,.13);color:var(--amber)}
-.badge.ok{background:rgba(63,207,110,.13);color:var(--green)}
-
-/* ---------- compare diagram ---------- */
-.cmp{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px}
+/* ---------- compare ---------- */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media(max-width:760px){.cmp{grid-template-columns:1fr}}
-.col{border:1px solid var(--line);border-radius:12px;padding:22px 22px 24px;
-  background:var(--panel2)}
-.col.b{border-color:rgba(45,212,191,.34);background:
-  linear-gradient(180deg,rgba(45,212,191,.055),var(--panel2) 55%)}
-.col h4{margin:0 0 4px;font-size:14.5px;font-weight:670;letter-spacing:-.012em}
-.col .cap{font-size:12px;color:var(--faint);margin:0 0 18px}
-.col.b h4{color:var(--teal)}
-.flow{list-style:none;margin:0;padding:0;font-size:13.5px}
-.flow li{padding:8px 0 8px 26px;position:relative;color:var(--dim);line-height:1.4}
-.flow li::before{content:'';position:absolute;left:5px;top:15px;width:7px;height:7px;
-  border-radius:50%;background:var(--line2)}
-.flow li::after{content:'';position:absolute;left:8px;top:22px;width:1px;
-  height:calc(100% - 8px);background:var(--line)}
-.flow li:last-child::after{display:none}
-.flow li.hi{color:var(--text);font-weight:600}
-.flow li.hi::before{background:var(--dim)}
-.flow li.bad{color:var(--red)}
-.flow li.bad::before{background:var(--red);box-shadow:0 0 9px rgba(255,107,96,.6)}
-.flow li.good{color:var(--teal);font-weight:600}
-.flow li.good::before{background:var(--teal);box-shadow:0 0 9px var(--teal)}
+.cmpcol{border:1px solid var(--rule);border-radius:10px;padding:24px;
+  background:var(--card)}
+.cmpcol.on{border-color:var(--accent-line);background:var(--accent-soft)}
+.cmpcol h4{font-size:15.5px;font-weight:500;margin:0 0 3px;letter-spacing:-.014em}
+.cmpcol.on h4{color:var(--accent)}
+.cmpcol .cc{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-3);margin:0 0 20px}
+.steps{list-style:none;margin:0;padding:0;font-size:13.5px}
+.steps li{position:relative;padding:8px 0 8px 24px;color:var(--ink-2);line-height:1.45}
+.steps li::before{content:'';position:absolute;left:4px;top:15px;width:6px;height:6px;
+  border-radius:50%;background:var(--rule-2)}
+.steps li::after{content:'';position:absolute;left:6.5px;top:21px;width:1px;
+  height:calc(100% - 6px);background:var(--rule)}
+.steps li:last-child::after{display:none}
+.steps li.hi{color:var(--ink);font-weight:500}
+.steps li.out{color:#B91C1C}
+.dark .steps li.out,.deep .steps li.out{color:#F87171}
+.steps li.out::before{background:currentColor}
+.steps li.win{color:var(--accent);font-weight:500}
+.steps li.win::before{background:currentColor}
 
-/* ---------- architecture pipeline ---------- */
-.pipe{margin-top:12px}
-.stage{display:grid;grid-template-columns:34px minmax(0,1fr);gap:18px;position:relative}
-.stage .node{position:relative;display:flex;justify-content:center;padding-top:26px}
-.stage .node .d{width:13px;height:13px;border-radius:50%;background:var(--bg);
-  border:2px solid var(--line2);z-index:2;transition:.2s;flex-shrink:0}
-.stage .node::before{content:'';position:absolute;top:0;bottom:0;left:50%;width:2px;
-  transform:translateX(-50%);background:var(--line)}
-.stage:first-child .node::before{top:32px}
-.stage:last-child .node::before{height:32px;bottom:auto;top:0}
-.stage .body{border:1px solid var(--line);border-radius:12px;background:var(--panel2);
-  padding:17px 20px;margin-bottom:10px;transition:.18s;
-  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:22px;align-items:center}
-.stage:hover .body{border-color:var(--line2)}
-.stage:hover .node .d{border-color:var(--dim)}
-.stage.key .body{border-color:rgba(45,212,191,.4);
-  background:linear-gradient(100deg,rgba(45,212,191,.075),var(--panel2) 62%)}
-.stage.key .node .d{background:var(--teal);border-color:var(--teal);
-  box-shadow:0 0 16px var(--teal)}
-.stage.soft .body{background:transparent;border-style:dashed}
-.stage.soft .st{color:var(--dim)}
-.stage .sn{font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;
-  color:var(--faint);font-weight:680;margin-bottom:6px}
-.stage.key .sn{color:var(--teal);opacity:.85}
-.stage .st{font-weight:660;font-size:16.5px;letter-spacing:-.016em;margin-bottom:5px}
-.stage.key .st{color:var(--teal)}
-.stage .sd{font-size:13.5px;color:var(--dim);line-height:1.55}
-.stage .metric{text-align:right;white-space:nowrap}
-.stage .metric .mv{font-size:20px;font-weight:700;letter-spacing:-.025em;color:var(--text);
-  font-variant-numeric:tabular-nums;line-height:1.1}
-.stage.key .metric .mv{color:var(--teal)}
-.stage .metric .mk{font-size:10.5px;color:var(--faint);margin-top:4px;letter-spacing:.02em}
-@media(max-width:640px){.stage .body{grid-template-columns:1fr;gap:14px}
-  .stage .metric{text-align:left}}
-
-/* ---------- chart ---------- */
-.chartbox{border:1px solid var(--line);border-radius:12px;background:var(--panel2);
-  padding:20px 18px 14px}
-.chartbox svg{width:100%;height:auto;display:block}
-.chart-cap{font-size:12px;color:var(--faint);margin-top:10px;padding:0 4px;line-height:1.5}
-
-/* ---------- finding ---------- */
-.finding{border:1px solid var(--line);border-radius:12px;background:var(--panel);
-  padding:22px 24px;position:relative;overflow:hidden}
-.finding::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
-  background:var(--amber)}
-.finding.g::before{background:var(--green)}
-.finding.b::before{background:var(--blue)}
-.finding .ft{font-weight:660;margin-bottom:8px;font-size:16px;letter-spacing:-.012em}
-.finding .fd{font-size:14px;color:var(--dim);line-height:1.6}
-.finding .fd strong{color:var(--text)}
-
-table{width:100%;border-collapse:collapse;font-size:13px;margin:14px 0 0}
-th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line)}
-th{color:var(--faint);font-weight:650;font-size:10.5px;letter-spacing:.09em;
-  text-transform:uppercase}
-td.n{text-align:right;font-family:ui-monospace,Menlo,monospace;
-  font-variant-numeric:tabular-nums}
-tbody tr:hover{background:rgba(255,255,255,.018)}
-
-pre{background:var(--panel2);border:1px solid var(--line);border-radius:10px;
-  padding:16px 18px;overflow-x:auto;font-size:12.5px;margin:14px 0;line-height:1.6}
-pre .c{color:var(--teal)}
-ul.plain{padding-left:18px;color:var(--dim);font-size:14px;margin:0}
-ul.plain li{margin:9px 0;line-height:1.6}
-ul.plain strong{color:var(--text)}
-
-video{width:100%;border:1px solid var(--line);border-radius:12px;background:#000;display:block}
-
-/* ---------- status strip ---------- */
-.strip{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
-.chip{font-size:12.5px;padding:7px 13px;border-radius:100px;border:1px solid var(--line);
-  background:var(--panel2);color:var(--dim)}
-.chip b{color:var(--text);font-weight:600}
-
-footer{padding:56px 0 90px;font-size:13.5px;color:var(--faint);
-  border-top:1px solid var(--line);background:var(--bg2)}
-footer a{color:var(--dim)}
-footer a:hover{color:var(--teal)}
-.fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:36px;margin-bottom:34px}
-@media(max-width:760px){.fgrid{grid-template-columns:1fr;gap:26px}}
-.fgrid h5{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);
-  margin:0 0 12px;font-weight:650}
-.fgrid ul{list-style:none;margin:0;padding:0}
-.fgrid li{margin:7px 0}
-.fnote{font-size:12.5px;color:var(--faint);line-height:1.65;max-width:80ch;
-  border-top:1px solid var(--line);padding-top:22px}
+/* ---------- findings ---------- */
+.finding{border:1px solid var(--rule);border-radius:10px;background:var(--card);
+  padding:24px;border-left:2px solid var(--rule-2)}
+.finding.neg{border-left-color:#DC2626}
+.dark .finding.neg,.deep .finding.neg{border-left-color:#F87171}
+.finding.ok{border-left-color:var(--accent)}
+.finding.warn{border-left-color:#D97706}
+.finding .ft{font-size:16px;font-weight:500;letter-spacing:-.014em;margin:0 0 9px;
+  color:var(--ink)}
+.finding .fb{font-size:14px;line-height:1.62;color:var(--ink-2);margin:0}
+.finding .fb strong{color:var(--ink);font-weight:500}
 </style>
 <script type="application/ld+json">
 {
@@ -266,7 +111,7 @@ footer a:hover{color:var(--teal)}
   "@graph": [
     {
       "@type": "SoftwareSourceCode",
-      "name": "Entropy Box — A Knowledge Compiler for Embodied AI",
+      "name": "Entropy Box — A Knowledge Compiler for Embodied Intelligence",
       "alternateName": "箱熵",
       "description": "Entropy Box compiles fragmented robotics and embodied-AI knowledge from papers, repositories, documentation and datasets into a persistent, typed, deduplicated capability graph, through a three-phase multi-agent compilation architecture with admission gates and an auditable retrieval ledger.",
       "programmingLanguage": "Python",
@@ -291,7 +136,7 @@ footer a:hover{color:var(--teal)}
     {
       "@type": "Dataset",
       "name": "Robotics engineering knowledge retrieval golden set",
-      "description": "A 126-query evaluation suite for retrieval over robotics engineering knowledge, in the mixed Chinese/English register practitioners actually type. Eight intent classes (identity, concept, function, io, selection, multihop, negative, evidence) and three assertion strengths — exact identifiers, any-of sets, and structural predicates — plus explicit negative assertions declaring what must NOT be retrieved. Entity references carry both surrogate identifier and resolved bilingual name so the set survives registry rebuilds.",
+      "description": "A 126-query evaluation suite for retrieval over robotics engineering knowledge, in the mixed Chinese/English register practitioners actually type. Eight intent classes and three assertion strengths — exact identifiers, any-of sets, and structural predicates — plus explicit negative assertions declaring what must NOT be retrieved.",
       "keywords": ["information retrieval", "evaluation", "benchmark", "robotics", "nDCG", "negative assertions"],
       "license": "https://creativecommons.org/licenses/by/4.0/",
       "isAccessibleForFree": true,
@@ -300,7 +145,7 @@ footer a:hover{color:var(--teal)}
     {
       "@type": "Dataset",
       "name": "Adjudicated near-duplicate capability pairs",
-      "description": "1,226 near-duplicate candidate pairs from a robotics knowledge registry's deduplication gate, each recording the embedding or lexical similarity score that flagged it, the metric, the adjudicating agent and the written rationale for the decision. Usable as labelled data for duplicate detection in technical knowledge graphs. Includes an explicit selection-bias warning: only pairs above the flagging threshold appear, so recall cannot be estimated from this file.",
+      "description": "1,226 near-duplicate candidate pairs from a robotics knowledge registry's deduplication gate, each recording the embedding or lexical similarity score that flagged it, the metric, the adjudicating agent and the written rationale for the decision. Includes an explicit selection-bias warning: only pairs above the flagging threshold appear, so recall cannot be estimated from this file.",
       "keywords": ["duplicate detection", "entity resolution", "knowledge graph quality", "labelled dataset"],
       "license": "https://creativecommons.org/licenses/by/4.0/",
       "isAccessibleForFree": true,
@@ -311,7 +156,7 @@ footer a:hover{color:var(--teal)}
       "name": "Entropy Box: A Knowledge Compiler for Embodied AI",
       "alternativeHeadline": "Towards Structured Knowledge Compilation for Robotics Foundation Models",
       "author": { "@type": "Person", "name": "Yuqi Wang" },
-      "abstract": "The bottleneck in embodied AI is not model capacity but knowledge. We argue robotics needs a knowledge compiler rather than another chatbot: a system that ingests unstructured sources once and emits a persistent, typed, deduplicated artifact. We describe the three-phase multi-agent compilation architecture, distil it into a design rule for multi-agent systems — merge stages when what passes between them is reasoning, split them when what passes between them is an artifact — and report two empirical results, including that embedding similarity conditional on flagging is too weak to decide duplication.",
+      "abstract": "The bottleneck in embodied AI is not model capacity but knowledge. We argue robotics needs a knowledge compiler rather than another chatbot: a system that ingests unstructured sources once and emits a persistent, typed, deduplicated artifact.",
       "keywords": "knowledge compilation, robotics knowledge graph, embodied AI, capability graph, provenance",
       "url": "paper/entropy-box-knowledge-compiler-v8.pdf",
       "encodingFormat": "application/pdf"
@@ -322,160 +167,259 @@ footer a:hover{color:var(--teal)}
 </head>
 <body>
 
-<nav>
+<nav class="nav">
   <div class="wrap">
-    <a class="brand" href="#top"><span class="dot"></span>Entropy Box</a>
+    <a class="mark" href="#top">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <g stroke="#00D4FF" stroke-width="1.3" fill="none">
+          <path d="M6 5.5v13M6 5.5h11M6 12h7M6 18.5h11"/>
+        </g>
+        <g fill="#00D4FF"><circle cx="6" cy="5.5" r="1.9"/><circle cx="6" cy="18.5" r="1.9"/></g>
+        <g fill="#05070D" stroke="#00D4FF" stroke-width="1.2">
+          <circle cx="6" cy="12" r="1.7"/><circle cx="17" cy="5.5" r="1.7"/>
+          <circle cx="13" cy="12" r="1.7"/><circle cx="17" cy="18.5" r="1.7"/>
+        </g>
+      </svg>
+      Entropy Box <span class="zh">箱熵</span>
+    </a>
     <div class="navlinks">
-      <a href="#why">Why compile</a>
-      <a href="#how">Architecture</a>
-      <a href="#findings">Findings</a>
+      <a href="#overview">Overview</a>
+      <a href="#architecture">Architecture</a>
+      <a href="graph/capability-network.html">Knowledge graph</a>
+      <a href="#research">Research</a>
       <a href="#demo">Demo</a>
       <a href="#data">Data</a>
-      <a href="about/">Scope &amp; status</a>
     </div>
-    <a class="navcta" href="paper/entropy-box-knowledge-compiler-v8.pdf">Paper (PDF)</a>
+    <a class="navpaper" href="paper/entropy-box-knowledge-compiler-v8.pdf">Paper</a>
   </div>
 </nav>
 
-<div id="top" class="hero">
+<!-- ===================== HERO ===================== -->
+<section class="band dark hero" id="top">
   <div class="wrap">
-    <div class="kicker">Entropy Box · 箱熵</div>
-    <h1>Knowledge Compiler for <span class="g">Embodied Intelligence</span></h1>
-    <div class="slogan">Compile knowledge<i>/</i>Compose capabilities<i>/</i>Accelerate robots</div>
-    <p class="sub">Robotics knowledge already exists — in papers, repos, ROS packages,
-    model hubs. It exists as <strong>prose</strong>, not as structure.
-    Entropy Box compiles it once into a typed graph that programs can consume.</p>
-    <div class="cta">
-      <a class="btn primary" href="paper/entropy-box-knowledge-compiler-v8.pdf">Read the paper</a>
-      <a class="btn" href="graph/capability-network.html">Explore the graph</a>
-      <a class="btn ghost" href="#demo">Watch the 51s demo →</a>
-    </div>
-
-    <div class="wall">
-      <div class="cell"><div class="v num">24,929</div><div class="k">capabilities</div></div>
-      <div class="cell"><div class="v num">50,407</div><div class="k">dependency edges</div></div>
-      <div class="cell"><div class="v num">5,756</div><div class="k">task chains</div></div>
-      <div class="cell"><div class="v num">98.3%</div><div class="k">provenance resolvable</div></div>
-      <div class="cell"><div class="v num">6,078</div><div class="k">assets</div></div>
-      <div class="cell"><div class="v num">1,740</div><div class="k">topics compiled</div></div>
-      <div class="cell"><div class="v num">63,691</div><div class="k">chain steps</div></div>
-      <div class="cell"><div class="v num">7,089</div><div class="k">cross-topic hubs</div></div>
-    </div>
-    <p class="asof">Snapshot of 2026-07-30, regenerated by
-    <a href="analysis/measure.py">analysis/measure.py</a> from the artifact on disk —
-    no network, no service. Structured output: <a href="data/measurements.json">measurements.json</a>.
-    Compilation runs unattended; roughly a third of the taxonomy is still uncompiled.</p>
-  </div>
-</div>
-
-<section id="problem" class="sec-alt">
-  <div class="wrap">
-    <h2>The problem</h2>
-    <div class="split">
+    <div class="split lead-left">
       <div>
-        <p class="h3big">A language model has no chief engineer's view.</p>
-        <p class="lead">It can write a detector or a control law when you tell it which
-        one you need. It cannot orchestrate the whole workflow on its own — because
-        <strong>one task hides a dozen steps and a tangle of dependencies between
-        them</strong>.</p>
-        <p class="lead" style="margin-top:16px">A craftsman who has mastered every
-        individual part, but has never held the drawing. <strong>What we build is that
-        drawing.</strong></p>
+        <div class="eyebrow">Scientific knowledge infrastructure</div>
+        <h1 class="display">Knowledge Compiler for <span class="a">Embodied Intelligence</span></h1>
+        <div class="pathline">
+          Compile knowledge <s>→</s> Structure capabilities <s>→</s> Enable robot intelligence
+        </div>
+        <p class="lede">Robotics knowledge already exists — in papers, repositories, ROS
+        packages and model hubs. It exists as <strong>prose</strong>, not as structure.
+        Entropy Box compiles it once into a typed, persistent graph that programs can
+        consume.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="paper/entropy-box-knowledge-compiler-v8.pdf">Read the paper <span class="ar">→</span></a>
+          <a class="btn btn-ghost" href="graph/capability-network.html">Explore the knowledge graph</a>
+        </div>
       </div>
-      <div class="grid">
-        <div class="card">
-          <div class="t">Atomic competence, no composition</div>
-          <div class="d">Writes a detector happily. Cannot deliver <em>“pick up the red
-          cup”</em> end to end.</div></div>
-        <div class="card">
-          <div class="t">Blind to dependencies</div>
-          <div class="d">Perception → localization → planning → control. Which module
-          feeds which, on what interface, is exactly what gets lost.</div></div>
-        <div class="card">
-          <div class="t">The route is a black box</div>
-          <div class="d">Facing a new task, an engineer reads dozens of papers to
-          compare technical routes by trial and error.</div></div>
-        <div class="card">
-          <div class="t">Orchestration eats the time</div>
-          <div class="d">Most hours go into surveying routes and hand-wiring modules —
-          not the algorithm work that matters.</div></div>
+
+      <div>
+        <svg class="hgraph" viewBox="0 0 440 566" role="img"
+             aria-label="Compilation path: papers, repositories and datasets enter the knowledge compiler, which emits a typed graph, a capability chain, and finally a robot task plan.">
+          <title>The compilation path</title>
+          <desc>Unstructured sources are compiled once into a typed graph, from which
+          capability chains and executable robot task plans are derived.</desc>
+
+          <!-- sources -->
+          <g>
+            <rect class="fr" x="4"   y="16" width="134" height="34" rx="6"/>
+            <rect class="fr" x="152" y="16" width="134" height="34" rx="6"/>
+            <rect class="fr" x="300" y="16" width="136" height="34" rx="6"/>
+            <text class="lb" x="71"  y="37" text-anchor="middle">PAPERS</text>
+            <text class="lb" x="219" y="37" text-anchor="middle">REPOSITORIES</text>
+            <text class="lb" x="368" y="37" text-anchor="middle">DATASETS</text>
+          </g>
+          <g class="ln">
+            <path d="M71,50 C71,74 220,68 220,96"/>
+            <path d="M219,50 L219,96"/>
+            <path d="M368,50 C368,74 220,68 220,96"/>
+          </g>
+
+          <!-- compiler -->
+          <rect class="fr-a" x="46" y="96" width="348" height="58" rx="8"/>
+          <text class="lb-w" x="220" y="121" text-anchor="middle">KNOWLEDGE COMPILER</text>
+          <text class="lb-a" x="220" y="138" text-anchor="middle">GATED · OFFLINE · AUDITABLE</text>
+          <path class="ln-a" d="M220,154 L220,190"/>
+          <path class="ln-a" d="M215,183 L220,190 L225,183"/>
+
+          <!-- typed graph -->
+          <rect class="fr-d" x="46" y="190" width="348" height="176" rx="8"/>
+          <text class="lb" x="60" y="210">TYPED GRAPH</text>
+          <g class="eg">
+            <path d="M106,258 L174,236"/><path d="M174,236 L244,260"/>
+            <path d="M244,260 L312,240"/><path d="M106,258 L136,308"/>
+            <path d="M174,236 L210,298"/><path d="M244,260 L210,298"/>
+            <path d="M312,240 L282,314"/><path d="M136,308 L210,298"/>
+            <path d="M210,298 L282,314"/><path d="M136,308 L174,346"/>
+            <path d="M210,298 L174,346"/><path d="M282,314 L256,346"/>
+            <path d="M174,346 L256,346"/>
+          </g>
+          <g>
+            <circle class="nd-f" cx="174" cy="236" r="4.5"/>
+            <circle class="nd-f" cx="210" cy="298" r="5"/>
+            <circle class="nd" cx="106" cy="258" r="4"/>
+            <circle class="nd" cx="244" cy="260" r="4"/>
+            <circle class="nd" cx="312" cy="240" r="4"/>
+            <circle class="nd" cx="136" cy="308" r="4"/>
+            <circle class="nd" cx="282" cy="314" r="4"/>
+            <circle class="nd" cx="174" cy="346" r="4"/>
+            <circle class="nd" cx="256" cy="346" r="4"/>
+          </g>
+          <path class="ln-a" d="M220,366 L220,402"/>
+          <path class="ln-a" d="M215,395 L220,402 L225,395"/>
+
+          <!-- capability chain -->
+          <text class="lb" x="60" y="422">CAPABILITY CHAIN</text>
+          <g class="ln-a">
+            <path d="M102,448 L152,448"/><path d="M184,448 L234,448"/>
+            <path d="M266,448 L316,448"/>
+          </g>
+          <g>
+            <circle class="nd" cx="86" cy="448" r="14"/>
+            <circle class="nd" cx="168" cy="448" r="14"/>
+            <circle class="nd" cx="250" cy="448" r="14"/>
+            <circle class="nd" cx="332" cy="448" r="14"/>
+            <circle class="nd-f" cx="86" cy="448" r="3.5"/>
+            <circle class="nd-f" cx="168" cy="448" r="3.5"/>
+            <circle class="nd-f" cx="250" cy="448" r="3.5"/>
+            <circle class="nd-f" cx="332" cy="448" r="3.5"/>
+          </g>
+          <path class="ln-a" d="M220,470 L220,504"/>
+          <path class="ln-a" d="M215,497 L220,504 L225,497"/>
+
+          <!-- robot plan -->
+          <rect class="fr-a" x="128" y="504" width="184" height="42" rx="8"/>
+          <text class="lb-w" x="220" y="530" text-anchor="middle">ROBOT TASK PLAN</text>
+        </svg>
       </div>
     </div>
   </div>
 </section>
 
-<section id="why">
+<!-- ===================== RESEARCH DATASET ===================== -->
+<section class="band deep" id="dataset">
   <div class="wrap">
-    <h2>Why compile</h2>
-    <p class="h3big">Retrieval compiles on every query. A compiler compiles once.</p>
-    <div class="cmp">
-      <div class="col">
+    <div class="rule-label">Research dataset · snapshot 2026-07-30</div>
+    <div class="metrics" data-rv="0">
+      <div class="metric"><div class="mv tnum" data-count>24,929</div>
+        <div class="mk">Robot capabilities</div><div class="mn">bilingual, typed</div></div>
+      <div class="metric"><div class="mv tnum" data-count>50,407</div>
+        <div class="mk">Knowledge relations</div><div class="mn">mechanically derived</div></div>
+      <div class="metric"><div class="mv tnum" data-count>5,756</div>
+        <div class="mk">Executable task chains</div><div class="mn">63,691 steps</div></div>
+      <div class="metric"><div class="mv tnum" data-count>98.3%</div>
+        <div class="mk">Traceable evidence</div><div class="mn">provenance resolvable</div></div>
+      <div class="metric"><div class="mv tnum" data-count>6,078</div>
+        <div class="mk">Implementation assets</div><div class="mn">15 asset types</div></div>
+      <div class="metric"><div class="mv tnum" data-count>1,740</div>
+        <div class="mk">Compiled topics</div><div class="mn">of a 2,511-leaf taxonomy</div></div>
+      <div class="metric"><div class="mv tnum" data-count>7,089</div>
+        <div class="mk">Cross-domain hubs</div><div class="mn">bridging capabilities</div></div>
+      <div class="metric"><div class="mv tnum" data-count>1,226</div>
+        <div class="mk">Adjudicated duplicate pairs</div><div class="mn">1,155 labelled</div></div>
+    </div>
+    <p class="note" style="margin-top:20px">Regenerated by
+    <a href="analysis/measure.py">analysis/measure.py</a> from the artifact on disk — no
+    GPU, no network, no service — so anyone with a copy reproduces every figure.
+    Structured output: <a href="data/measurements.json">measurements.json</a>. Compilation
+    runs unattended; roughly a third of the taxonomy is still uncompiled.</p>
+  </div>
+</section>
+
+<!-- ===================== OVERVIEW ===================== -->
+<section class="band light" id="overview">
+  <div class="wrap">
+    <div class="eyebrow">Overview</div>
+    <div class="split top">
+      <div>
+        <h2 class="title">A language model has no chief engineer's view.</h2>
+        <p class="lede">It writes a detector or a control law when you tell it which one
+        you need. It cannot orchestrate the workflow on its own — because
+        <strong>one task hides a dozen steps and a tangle of dependencies between
+        them</strong>.</p>
+        <p class="lede" style="margin-top:18px">A craftsman who has mastered every part,
+        but has never held the drawing. <strong>What we build is that drawing.</strong></p>
+      </div>
+      <div class="cards" data-rv="0">
+        <div class="card"><div class="ct">Atomic competence, no composition</div>
+          <p class="cd">Writes a detector happily. Cannot deliver
+          <em>“pick up the red cup”</em> end to end.</p></div>
+        <div class="card"><div class="ct">Blind to dependencies</div>
+          <p class="cd">Perception → localization → planning → control. Which module feeds
+          which, on what interface, is exactly what gets lost.</p></div>
+        <div class="card"><div class="ct">The route is a black box</div>
+          <p class="cd">Facing a new task, an engineer reads dozens of papers to compare
+          technical routes by trial and error.</p></div>
+        <div class="card"><div class="ct">Orchestration eats the time</div>
+          <p class="cd">Most hours go into surveying routes and hand-wiring modules — not
+          the algorithm work that matters.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== WHY COMPILE ===================== -->
+<section class="band tint" id="why">
+  <div class="wrap">
+    <div class="eyebrow">Why compile</div>
+    <h2 class="title">Retrieval compiles on every query. A compiler compiles once.</h2>
+
+    <div class="cmp" data-rv="0" style="margin-top:32px">
+      <div class="cmpcol">
         <h4>Query-time derivation</h4>
-        <p class="cap">RAG, GraphRAG, agentic search</p>
-        <ul class="flow">
+        <p class="cc">RAG · GraphRAG · agentic search</p>
+        <ul class="steps">
           <li class="hi">Question</li>
           <li>Retrieve passages</li>
           <li>Model derives the structure</li>
           <li>Answer, in prose</li>
-          <li class="bad">Structure discarded — next query redoes it</li>
+          <li class="out">Structure discarded — the next query redoes it</li>
         </ul>
       </div>
-      <div class="col b">
+      <div class="cmpcol on">
         <h4>Knowledge compilation</h4>
-        <p class="cap">Entropy Box</p>
-        <ul class="flow">
+        <p class="cc">Entropy Box</p>
+        <ul class="steps">
           <li class="hi">Corpus</li>
           <li>Compile — gated, offline, auditable</li>
           <li>Typed persistent graph</li>
           <li>Retrieve over structure</li>
-          <li class="good">Reasoning &amp; assembly — gaps named explicitly</li>
+          <li class="win">Reasoning and assembly — gaps named explicitly</li>
         </ul>
       </div>
     </div>
 
-    <div class="split" style="margin-top:48px;align-items:start">
+    <div class="split top" style="margin-top:56px">
       <div>
-        <p class="h3big" style="font-size:clamp(21px,2.7vw,27px);max-width:24ch">
-          Amortization is still rising, not saturating.</p>
-        <p class="lead" style="font-size:16px">The average number of times each compiled
-        unit gets consumed currently stands at <strong>1.61</strong>, worth
-        <strong>13,936</strong> avoided re-derivations. The curve has not flattened —
-        <strong>compilation becomes a better deal the more of the domain it
-        covers</strong>.</p>
-        <div class="strip">
-          <span class="chip"><b>28.7%</b> of capabilities reused across topics</span>
-          <span class="chip">max reuse <b>32×</b></span>
+        <h3 class="subtitle">Amortization is still rising, not saturating.</h3>
+        <p class="lede" style="font-size:16px">Each compiled unit is currently consumed
+        <strong>1.61</strong> times on average — <strong>13,936</strong> avoided
+        re-derivations. The curve has not flattened, which is the informative part:
+        <strong>compilation becomes a better deal the more of the domain it covers.</strong></p>
+        <div class="chiprow">
+          <span class="chip"><b>28.7%</b>&nbsp;of capabilities reused across topics</span>
+          <span class="chip">max reuse&nbsp;<b>32×</b></span>
         </div>
       </div>
       <div class="chartbox">
-        <svg viewBox="0 0 560 180" role="img" aria-label="Amortization factor rising with topics compiled">
-          <defs>
-            <linearGradient id="ga" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#2DD4BF" stop-opacity=".30"/>
-              <stop offset="100%" stop-color="#2DD4BF" stop-opacity="0"/>
-            </linearGradient>
-          </defs>
-          <g stroke="#1E232D" stroke-width="1">
-            <line x1="40" y1="152" x2="544" y2="152"/>
-            <line x1="40" y1="113" x2="544" y2="113" stroke-dasharray="3 4"/>
-            <line x1="40" y1="74" x2="544" y2="74" stroke-dasharray="3 4"/>
-            <line x1="40" y1="35" x2="544" y2="35" stroke-dasharray="3 4"/>
-          </g>
-          <g fill="#6B7688" font-size="10" font-family="ui-monospace,Menlo,monospace">
-            <text x="34" y="156" text-anchor="end">1.0</text>
-            <text x="34" y="117" text-anchor="end">1.2</text>
-            <text x="34" y="78" text-anchor="end">1.4</text>
-            <text x="34" y="39" text-anchor="end">1.6</text>
-            <text x="40" y="171">50</text>
-            <text x="292" y="171" text-anchor="middle">topics compiled →</text>
-            <text x="544" y="171" text-anchor="end">1,605</text>
-          </g>
-          <path fill="url(#ga)" d="M40,152 L40.0,145.5 L56.2,139.8 L72.4,134.9 L88.6,129.9 L104.8,125.4 L121.0,121.1 L137.2,116.1 L153.4,112.4 L169.6,108.5 L185.9,104.4 L202.1,100.2 L218.3,96.8 L234.5,93.4 L250.7,90.0 L266.9,86.3 L283.1,83.0 L299.3,79.6 L315.5,76.2 L331.7,72.8 L347.9,69.6 L364.1,66.8 L380.3,63.5 L396.5,60.4 L412.7,57.5 L428.9,54.6 L445.1,51.7 L461.4,49.1 L477.6,46.3 L493.8,43.4 L510.0,40.6 L526.2,37.9 L542.4,35.2 L544.0,34.9 L544.0,152 Z"/>
-          <polyline fill="none" stroke="#2DD4BF" stroke-width="2.2"
-            stroke-linejoin="round" stroke-linecap="round"
-            points="40.0,145.5 56.2,139.8 72.4,134.9 88.6,129.9 104.8,125.4 121.0,121.1 137.2,116.1 153.4,112.4 169.6,108.5 185.9,104.4 202.1,100.2 218.3,96.8 234.5,93.4 250.7,90.0 266.9,86.3 283.1,83.0 299.3,79.6 315.5,76.2 331.7,72.8 347.9,69.6 364.1,66.8 380.3,63.5 396.5,60.4 412.7,57.5 428.9,54.6 445.1,51.7 461.4,49.1 477.6,46.3 493.8,43.4 510.0,40.6 526.2,37.9 542.4,35.2 544.0,34.9"/>
-          <circle cx="544" cy="34.9" r="8" fill="#2DD4BF" opacity=".2"/>
-          <circle cx="544" cy="34.9" r="4" fill="#2DD4BF"/>
+        <svg viewBox="0 0 560 180" role="img"
+             aria-label="Amortization factor rising steadily with the number of topics compiled, from 1.03 at 50 topics to 1.61 at 1,605.">
+          <line class="g-axis" x1="40" y1="152" x2="544" y2="152"/>
+          <line class="g-grid" x1="40" y1="113" x2="544" y2="113"/>
+          <line class="g-grid" x1="40" y1="74" x2="544" y2="74"/>
+          <line class="g-grid" x1="40" y1="35" x2="544" y2="35"/>
+          <text class="g-lbl" x="34" y="156" text-anchor="end">1.0</text>
+          <text class="g-lbl" x="34" y="117" text-anchor="end">1.2</text>
+          <text class="g-lbl" x="34" y="78" text-anchor="end">1.4</text>
+          <text class="g-lbl" x="34" y="39" text-anchor="end">1.6</text>
+          <text class="g-lbl" x="40" y="171">50</text>
+          <text class="g-lbl" x="292" y="171" text-anchor="middle">topics compiled →</text>
+          <text class="g-lbl" x="544" y="171" text-anchor="end">1,605</text>
+          <path class="f-accent" d="M40,152 L40,145.5 L56.2,139.8 L72.4,134.9 L88.6,129.9 L104.8,125.4 L121,121.1 L137.2,116.1 L153.4,112.4 L169.6,108.5 L185.9,104.4 L202.1,100.2 L218.3,96.8 L234.5,93.4 L250.7,90 L266.9,86.3 L283.1,83 L299.3,79.6 L315.5,76.2 L331.7,72.8 L347.9,69.6 L364.1,66.8 L380.3,63.5 L396.5,60.4 L412.7,57.5 L428.9,54.6 L445.1,51.7 L461.4,49.1 L477.6,46.3 L493.8,43.4 L510,40.6 L526.2,37.9 L542.4,35.2 L544,34.9 L544,152 Z"/>
+          <polyline class="l-accent" data-draw="0"
+            points="40,145.5 56.2,139.8 72.4,134.9 88.6,129.9 104.8,125.4 121,121.1 137.2,116.1 153.4,112.4 169.6,108.5 185.9,104.4 202.1,100.2 218.3,96.8 234.5,93.4 250.7,90 266.9,86.3 283.1,83 299.3,79.6 315.5,76.2 331.7,72.8 347.9,69.6 364.1,66.8 380.3,63.5 396.5,60.4 412.7,57.5 428.9,54.6 445.1,51.7 461.4,49.1 477.6,46.3 493.8,43.4 510,40.6 526.2,37.9 542.4,35.2 544,34.9"/>
+          <circle class="dot-accent" cx="544" cy="34.9" r="3.5"/>
         </svg>
         <p class="chart-cap">Amortization factor α — capability-topic usages ÷ distinct
         capabilities — against topics compiled. Source:
@@ -485,106 +429,103 @@ footer a:hover{color:var(--teal)}
   </div>
 </section>
 
-<section id="how" class="sec-alt">
+<!-- ===================== ARCHITECTURE ===================== -->
+<section class="band light" id="architecture">
   <div class="wrap">
-    <h2>Architecture</h2>
-    <p class="h3big">Five stages. The second does the unexpected work.</p>
-    <div class="pipe">
-      <div class="stage">
-        <div class="node"><span class="d"></span></div>
-        <div class="body">
-          <div>
-            <div class="sn">Stage 01</div>
-            <div class="st">Data Layer</div>
-            <div class="sd">Papers, open-source projects, technical documentation and
-            engineering practice — extracted, cleaned, aligned, and admitted through
-            gates into a domain ontology.</div>
-          </div>
-          <div class="metric"><div class="mv">1,740</div><div class="mk">topics compiled</div></div>
+    <div class="eyebrow">Architecture</div>
+    <h2 class="title">Raw knowledge in, robot intelligence out.</h2>
+    <p class="lede" style="margin-bottom:44px">Five stages. The second does the unexpected
+    work — the dependency edges are not authored and not model-inferred.</p>
+
+    <div class="flowsteps" data-rv="0">
+      <div class="fstep">
+        <div>
+          <div class="fk">Stage 01 · Raw knowledge</div>
+          <div class="fn">Data layer</div>
+          <div class="fd">Papers, open-source projects, technical documentation and
+          engineering practice — extracted, cleaned, aligned, and admitted through gates
+          into a domain ontology.</div>
         </div>
+        <div class="fm"><b class="tnum">1,740</b><span>TOPICS</span></div>
       </div>
-      <div class="stage key">
-        <div class="node"><span class="d"></span></div>
-        <div class="body">
-          <div>
-            <div class="sn">Stage 02</div>
-            <div class="st">Knowledge Graph</div>
-            <div class="sd">Topics → capabilities → assets, each node carrying declared
-            inputs, outputs, prerequisites and performance envelope. The ordering edges
-            are <strong>derived mechanically</strong> from 5,756 task chains — by walking
-            each chain's <code>next</code> pointers and the capabilities each step
-            declares, punching through pure routing steps. Not authored, not
-            model-inferred: the ordering was already latent, and a traversal makes it
-            explicit.</div>
-          </div>
-          <div class="metric"><div class="mv">50,407</div><div class="mk">derived edges</div></div>
+      <div class="farrow">↓</div>
+
+      <div class="fstep on">
+        <div>
+          <div class="fk">Stage 02 · Knowledge compiler</div>
+          <div class="fn">Typed knowledge graph</div>
+          <div class="fd">Topics → capabilities → assets, each node carrying declared
+          inputs, outputs, prerequisites and performance envelope. Ordering edges are
+          derived mechanically from 5,756 task chains by walking each chain's
+          <code>next</code> pointers — the ordering was already latent, and a traversal
+          makes it explicit.</div>
         </div>
+        <div class="fm"><b class="tnum">50,407</b><span>EDGES</span></div>
       </div>
-      <div class="stage">
-        <div class="node"><span class="d"></span></div>
-        <div class="body">
-          <div>
-            <div class="sn">Stage 03</div>
-            <div class="st">Retrieval Engine</div>
-            <div class="sd">Hybrid retrieval that runs <em>over the structure</em> rather
-            than over passages, with every hit traceable to the evidence document it came
-            from. Open read-only endpoint, plus Agent Skill and MCP packaging.</div>
-          </div>
-          <div class="metric"><div class="mv">98.3%</div><div class="mk">provenance resolvable</div></div>
+      <div class="farrow">↓</div>
+
+      <div class="fstep">
+        <div>
+          <div class="fk">Stage 03 · Retrieval</div>
+          <div class="fn">Structure-aware retrieval</div>
+          <div class="fd">Hybrid retrieval that runs over the structure rather than over
+          passages, with every hit traceable to the evidence document it came from. Open
+          read-only endpoint, plus Agent Skill and MCP packaging.</div>
         </div>
+        <div class="fm"><b class="tnum">98.3%</b><span>TRACEABLE</span></div>
       </div>
-      <div class="stage">
-        <div class="node"><span class="d"></span></div>
-        <div class="body">
-          <div>
-            <div class="sn">Stage 04</div>
-            <div class="st">Agent System</div>
-            <div class="sd">With the graph in view, the model selects capability modules,
-            orders execution from the dependency edges, handles interface adaptation, and
-            emits a complete plan — with the gaps named rather than papered over.</div>
-          </div>
-          <div class="metric"><div class="mv">7,089</div><div class="mk">cross-topic hubs</div></div>
+      <div class="farrow">↓</div>
+
+      <div class="fstep">
+        <div>
+          <div class="fk">Stage 04 · Composition</div>
+          <div class="fn">Robot capability layer</div>
+          <div class="fd">With the graph in view, an agent selects capability modules,
+          orders execution from the dependency edges, handles interface adaptation, and
+          emits a complete plan — with the gaps named rather than papered over.</div>
         </div>
+        <div class="fm"><b class="tnum">7,089</b><span>HUBS</span></div>
       </div>
-      <div class="stage soft">
-        <div class="node"><span class="d"></span></div>
-        <div class="body">
-          <div>
-            <div class="sn">Stage 05 · where this is going</div>
-            <div class="st">Robot Deployment</div>
-            <div class="sd">The plan lands on real hardware: attributed implementations,
-            declared interfaces, named gaps. <strong>Not yet demonstrated end to
-            end</strong> — the assembly step is shown in the demo below; execution on a
-            platform is the next thing to earn, not a claim we are making.</div>
-          </div>
-          <div class="metric"><div class="mv">—</div><div class="mk">not established</div></div>
+      <div class="farrow">↓</div>
+
+      <div class="fstep" style="border-style:dashed">
+        <div>
+          <div class="fk">Stage 05 · Where this is going</div>
+          <div class="fn">Robot intelligence</div>
+          <div class="fd">The plan lands on real hardware: attributed implementations,
+          declared interfaces, named gaps. <strong>Not yet demonstrated end to end</strong>
+          — the assembly step is shown in the demo below; execution on a platform is the
+          next thing to earn, not a claim we are making.</div>
         </div>
+        <div class="fm"><b>—</b><span>NOT ESTABLISHED</span></div>
       </div>
     </div>
-    <div class="cta" style="margin-top:26px">
-      <a class="btn" href="how-it-works/">Five stages, three gates, with source documents</a>
-      <a class="btn ghost" href="media/pipeline_demo.mp4">85s pipeline recording →</a>
+
+    <div class="actions" style="justify-content:center">
+      <a class="btn btn-ghost" href="how-it-works/">Five stages, three gates, with source documents</a>
+      <a class="btn btn-text" href="media/pipeline_demo.mp4">85s pipeline recording <span class="ar">→</span></a>
     </div>
   </div>
 </section>
 
-<section id="findings">
+<!-- ===================== RESEARCH ===================== -->
+<section class="band tint" id="research">
   <div class="wrap">
-    <h2>What we found</h2>
-    <p class="h3big">Two results from the system's own records. One is negative — and
-    more useful.</p>
+    <div class="eyebrow">Research</div>
+    <h2 class="title">Two results from the system's own records. One is negative — and
+    more useful.</h2>
 
-    <div class="split" style="align-items:start;margin-top:8px">
-      <div class="finding">
+    <div class="split top" data-rv="0" style="margin-top:34px">
+      <div class="finding neg">
         <div class="ft">Embedding similarity cannot decide duplication
-          <span class="badge neg">negative</span></div>
-        <div class="fd">On 1,155 adjudicated near-duplicate pairs: once the gate has
-        flagged a pair, the similarity score carries <strong>far too little signal to
-        decide the merge</strong>. Raising the threshold does not fix it — precision
-        barely moves while half the true duplicates are discarded. Any system that
-        merges automatically above a threshold would, at our operating point, be
-        <strong>wrong more than nine times in ten</strong>.
-        <table>
+          <span class="tag neg">negative</span></div>
+        <p class="fb">On 1,155 adjudicated near-duplicate pairs: once the gate has flagged
+        a pair, the similarity score carries <strong>far too little signal to decide the
+        merge</strong>. Raising the threshold does not fix it — precision barely moves
+        while half the true duplicates are discarded. Any system that merges automatically
+        above a threshold would, at our operating point, be <strong>wrong more than nine
+        times in ten</strong>.</p>
+        <table style="margin-top:16px">
           <tr><th>Path</th><th class="n">pairs</th><th class="n">dup.</th>
               <th class="n">prec.</th><th class="n">AUC</th></tr>
           <tr><td>Embedding</td><td class="n">508</td><td class="n">35</td>
@@ -592,78 +533,69 @@ footer a:hover{color:var(--teal)}
           <tr><td>Lexical</td><td class="n">647</td><td class="n">4</td>
               <td class="n">0.006</td><td class="n">0.454</td></tr>
         </table>
-        <p style="margin:14px 0 0;font-size:12.5px;color:var(--faint)">Pairs are
-        conditioned on having been flagged, so this does not estimate the gate's overall
-        discriminative power; recall is unmeasurable from this data. The lexical row
-        rests on four positives and is not a finding.
-        <a href="blog/01-similarity-cannot-decide-duplication.html">Full note →</a></p>
-        </div>
+        <p class="note" style="margin-top:14px">Pairs are conditioned on having been
+        flagged, so this does not estimate the gate's overall discriminative power; recall
+        is unmeasurable from this data. The lexical row rests on four positives and is not
+        a finding. <a href="blog/01-similarity-cannot-decide-duplication.html">Full note →</a></p>
       </div>
       <div class="chartbox">
-        <svg viewBox="0 0 560 200" role="img" aria-label="Precision stays flat while recall collapses across the threshold sweep">
-          <g stroke="#1E232D" stroke-width="1">
-            <line x1="44" y1="164" x2="544" y2="164"/>
-            <line x1="44" y1="122" x2="544" y2="122" stroke-dasharray="3 4"/>
-            <line x1="44" y1="80" x2="544" y2="80" stroke-dasharray="3 4"/>
-            <line x1="44" y1="38" x2="544" y2="38" stroke-dasharray="3 4"/>
-          </g>
-          <g fill="#6B7688" font-size="10" font-family="ui-monospace,Menlo,monospace">
-            <text x="38" y="168" text-anchor="end">0%</text>
-            <text x="38" y="126" text-anchor="end">33%</text>
-            <text x="38" y="84" text-anchor="end">66%</text>
-            <text x="38" y="42" text-anchor="end">100%</text>
-            <text x="44" y="187">0.863</text>
-            <text x="294" y="187" text-anchor="middle">similarity threshold →</text>
-            <text x="544" y="187" text-anchor="end">0.954</text>
-          </g>
-          <polyline fill="none" stroke="#FF6B60" stroke-width="2.2" stroke-linejoin="round"
-            stroke-linecap="round"
-            points="44,38 106.5,45.2 169,48.8 231.5,52.4 294,70.4 356.5,81.2 419,90.0 481.5,97.2 544,110.0"/>
-          <polyline fill="none" stroke="#2DD4BF" stroke-width="2.2" stroke-linejoin="round"
-            stroke-linecap="round"
+        <svg viewBox="0 0 560 200" role="img"
+             aria-label="Across the threshold sweep, recall of true duplicates falls from 100 percent to 43 percent while precision stays near 7 to 14 percent.">
+          <line class="g-axis" x1="44" y1="164" x2="544" y2="164"/>
+          <line class="g-grid" x1="44" y1="122" x2="544" y2="122"/>
+          <line class="g-grid" x1="44" y1="80" x2="544" y2="80"/>
+          <line class="g-grid" x1="44" y1="38" x2="544" y2="38"/>
+          <text class="g-lbl" x="38" y="168" text-anchor="end">0%</text>
+          <text class="g-lbl" x="38" y="126" text-anchor="end">33%</text>
+          <text class="g-lbl" x="38" y="84" text-anchor="end">66%</text>
+          <text class="g-lbl" x="38" y="42" text-anchor="end">100%</text>
+          <text class="g-lbl" x="44" y="187">0.863</text>
+          <text class="g-lbl" x="294" y="187" text-anchor="middle">similarity threshold →</text>
+          <text class="g-lbl" x="544" y="187" text-anchor="end">0.954</text>
+          <polyline class="l-neg" data-draw="0"
+            points="44,38 106.5,45.2 169,48.8 231.5,52.4 294,70.4 356.5,81.2 419,90 481.5,97.2 544,110"/>
+          <polyline class="l-accent" data-draw="260"
             points="44,155.3 106.5,155.4 169,154.8 231.5,153.9 294,153.4 356.5,152.8 419,150.8 481.5,148.1 544,146.7"/>
-          <g font-size="11.5" font-family="-apple-system,Segoe UI,sans-serif" font-weight="600">
-            <text x="180" y="28" fill="#FF6B60">recall of true duplicates — collapses</text>
-            <text x="180" y="140" fill="#2DD4BF">precision — flat</text>
-          </g>
+          <text class="g-key k-neg" x="182" y="28">recall of true duplicates — collapses</text>
+          <text class="g-key k-accent" x="182" y="140">precision — flat</text>
         </svg>
-        <p class="chart-cap">The whole negative result in one picture: tightening the
-        gate throws duplicates away without buying precision. Nine sweep points from the
+        <p class="chart-cap">The whole negative result in one picture: tightening the gate
+        throws duplicates away without buying precision. Nine sweep points from the
         embedding path.</p>
       </div>
     </div>
 
-    <div class="grid g2" style="margin-top:16px">
-      <div class="finding g">
+    <div class="cards two" data-rv="0" style="margin-top:18px">
+      <div class="finding ok">
         <div class="ft">Provenance resolvability, proposed as a metric
-          <span class="badge ok">98.3%</span></div>
-        <div class="fd">Every compiled topic cites the documents it was assembled from,
-        and because those are files, the citation is <strong>mechanically
-        checkable</strong>. Structural validity is routinely checked for generated
-        knowledge graphs; provenance resolvability is not — and it is cheap to compute,
-        hard to game, and directly diagnostic of whether an evidence layer is real or
-        decorative. A system that cannot report it does not have one.</div>
+          <span class="tag">98.3%</span></div>
+        <p class="fb">Every compiled topic cites the documents it was assembled from, and
+        because those are files, the citation is <strong>mechanically checkable</strong>.
+        Structural validity is routinely checked for generated knowledge graphs;
+        provenance resolvability is not — and it is cheap to compute, hard to game, and
+        directly diagnostic of whether an evidence layer is real or decorative. A system
+        that cannot report it does not have one.</p>
       </div>
-      <div class="finding b">
+      <div class="finding warn">
         <div class="ft">Unverified fields are left unverified
-          <span class="badge warn">by design</span></div>
-        <div class="fd"><strong>1,105 fields</strong> are explicitly marked unverified
-        rather than filled in, across 16.2% of topic records. We report this as a
+          <span class="tag warn">by design</span></div>
+        <p class="fb"><strong>1,105 fields</strong> are explicitly marked unverified rather
+        than filled in, across 16.2% of topic records. We report this as a
         <em>positive</em> indicator. Given what is actually verifiable about fast-moving
-        open-source projects, zero unverified markers would not indicate a better
-        artifact — it would indicate a pipeline that fills gaps instead of declaring
-        them.</div>
+        open-source projects, zero unverified markers would not indicate a better artifact
+        — it would indicate a pipeline that fills gaps instead of declaring them.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section id="demo" class="sec-alt">
+<!-- ===================== DEMO ===================== -->
+<section class="band dark" id="demo">
   <div class="wrap">
-    <h2>See it</h2>
-    <p class="h3big">Not a paragraph about stair descent — a plan with named
-    implementations.</p>
-    <p class="lead" style="margin-bottom:26px">51 seconds, unedited. The goal
+    <div class="eyebrow">Demo</div>
+    <h2 class="title">Not a paragraph about stair descent — a plan with named
+    implementations.</h2>
+    <p class="lede" style="margin-bottom:34px">51 seconds, unedited. The goal
     <em>“how do you keep a legged robot safe going down stairs?”</em> is decomposed,
     matched across topics, and assembled into a technical plan whose nodes carry
     attributed open-source assets. Every card opens onto its repository, licence and
@@ -672,124 +604,123 @@ footer a:hover{color:var(--teal)}
     <video controls preload="metadata" poster="media/assembly_demo_poster.jpg">
       <source src="media/assembly_demo.mp4" type="video/mp4">
     </video>
-    <p class="chart-cap">1920×844 native. Both recordings are cropped only — to remove
-    OS chrome and capture overlays — otherwise unedited and not sped up.</p>
+    <p class="chart-cap">1920×844 native. Both recordings are cropped only — to remove OS
+    chrome and capture overlays — otherwise unedited and not sped up.</p>
   </div>
 </section>
 
-<section id="explore">
+<!-- ===================== EXPLORE ===================== -->
+<section class="band deep" id="explore">
   <div class="wrap">
-    <h2>Explore</h2>
-    <p class="h3big">Everything below is inspectable right now.</p>
-    <div class="grid">
-      <a class="card" href="case-study/">
-        <div class="t">Nine topics, in full <span class="badge">inspectable</span></div>
-        <div class="d">Nine compiled topics across nine domains, reproduced completely:
-        every chain and step, every capability description, every implementing
-        repository, the diagrams and the retrieval ledgers behind each.</div>
-        <div class="m">9 topics · 37 chains · 283 capabilities · 143 assets</div>
+    <div class="eyebrow">Knowledge graph</div>
+    <h2 class="title">Everything below is inspectable right now.</h2>
+    <div class="cards" data-rv="0" style="margin-top:34px">
+      <a class="card" href="graph/capability-network.html"><span class="arrow">→</span>
+        <div class="ct">Capability dependency network</div>
+        <p class="cd">The full ordering graph derived from compiled task chains, with
+        English capability names. Search, filter by hub or bridge role, follow dependency
+        edges.</p>
+        <div class="cm">24,915 nodes · 50,407 edges · 7,089 hubs</div>
       </a>
-      <a class="card" href="graph/capability-network.html">
-        <div class="t">Capability dependency network</div>
-        <div class="d">The full ordering graph derived from compiled task chains, with
-        English capability names. Search, filter by hub or bridge role, follow
-        dependency edges.</div>
-        <div class="m">24,915 nodes · 50,407 edges · 7,089 hubs</div>
+      <a class="card" href="graph/topic-graph.html"><span class="arrow">→</span>
+        <div class="ct">Topic graph</div>
+        <p class="cd">The curated taxonomy that drives compilation: 15 top-level domains,
+        416 sub-domains, 2,511 leaf topics.</p>
+        <div class="cm">2,942 nodes · 2,511 compilation units</div>
       </a>
-      <a class="card" href="graph/topic-graph.html">
-        <div class="t">Topic graph</div>
-        <div class="d">The curated taxonomy that drives compilation: 15 top-level
-        domains, 416 sub-domains, 2,511 leaf topics.</div>
-        <div class="m">2,942 nodes · 2,511 compilation units</div>
+      <a class="card" href="case-study/"><span class="arrow">→</span>
+        <div class="ct">Nine topics, in full <span class="tag">inspectable</span></div>
+        <p class="cd">Nine compiled topics across nine domains, reproduced completely:
+        every chain and step, every capability description, every implementing repository,
+        the diagrams and the retrieval ledgers behind each.</p>
+        <div class="cm">9 topics · 37 chains · 283 capabilities · 143 assets</div>
       </a>
-      <a class="card" href="how-it-works/">
-        <div class="t">How the graph is built <span class="badge">with originals</span></div>
-        <div class="d">Five stages, three gates, and the provenance discipline that
-        forces evidence — plus the actual research documents for one topic, published so
-        you can read what the compiler read.</div>
-        <div class="m">7 source documents · 1 recording</div>
+      <a class="card" href="how-it-works/"><span class="arrow">→</span>
+        <div class="ct">How the graph is built <span class="tag mute">with originals</span></div>
+        <p class="cd">Five stages, three gates, and the provenance discipline that forces
+        evidence — plus the actual research documents for one topic, published so you can
+        read what the compiler read.</p>
+        <div class="cm">7 source documents · 1 recording</div>
       </a>
-      <a class="card" href="blog/">
-        <div class="t">Technical notes <span class="badge">2 posts</span></div>
-        <div class="d">Things we measured and things we got wrong, written to be useful
+      <a class="card" href="blog/"><span class="arrow">→</span>
+        <div class="ct">Technical notes <span class="tag mute">2 posts</span></div>
+        <p class="cd">Things we measured and things we got wrong, written to be useful
         independently of this system. A negative result on embedding-based duplicate
-        detection, and a design rule for multi-agent systems.</div>
-        <div class="m">CC BY 4.0 · republish with attribution</div>
+        detection, and a design rule for multi-agent systems.</p>
+        <div class="cm">CC BY 4.0 · republish with attribution</div>
       </a>
-      <a class="card" href="integrate/">
-        <div class="t">Query it from your agent</div>
-        <div class="d">Open read-only retrieval endpoint — plain HTTP, an Agent Skill
-        declaration, or an MCP stdio server. No key, nothing to install.</div>
-        <div class="m">HTTP · Agent Skill · MCP</div>
+      <a class="card" href="integrate/"><span class="arrow">→</span>
+        <div class="ct">Query it from your agent</div>
+        <p class="cd">Open read-only retrieval endpoint — plain HTTP, an Agent Skill
+        declaration, or an MCP stdio server. No key, nothing to install.</p>
+        <div class="cm">HTTP · Agent Skill · MCP</div>
       </a>
     </div>
   </div>
 </section>
 
-<section id="data" class="sec-alt">
+<!-- ===================== DATA ===================== -->
+<section class="band light" id="data">
   <div class="wrap">
-    <h2>Open data</h2>
-    <p class="h3big">Published so the measurements can be reproduced and the resources
-    reused.</p>
-    <p class="lead" style="margin-bottom:26px">Data files CC BY 4.0 · code MIT.</p>
-    <div class="grid">
-      <a class="card" href="data/retrieval_golden.json">
-        <div class="t">Retrieval golden set <span class="badge">126 queries</span></div>
-        <div class="d">Domain-specific evaluation suite in the mixed Chinese/English
+    <div class="eyebrow">Open data</div>
+    <h2 class="title">Published so the measurements can be reproduced and the resources
+    reused.</h2>
+    <p class="lede" style="margin-bottom:34px">Data files CC BY 4.0 · code MIT.</p>
+    <div class="cards" data-rv="0">
+      <a class="card" href="data/retrieval_golden.json"><span class="arrow">→</span>
+        <div class="ct">Retrieval golden set <span class="tag">126 queries</span></div>
+        <p class="cd">Domain-specific evaluation suite in the mixed Chinese/English
         register users actually type. Three assertion strengths plus <em>negative</em>
-        assertions declaring what must not be retrieved.</div>
-        <div class="m">8 intent classes · 120 positive · 13 negative</div>
+        assertions declaring what must not be retrieved.</p>
+        <div class="cm">8 intent classes · 120 positive · 13 negative</div>
       </a>
-      <a class="card" href="data/dedup_adjudication_ledger.json">
-        <div class="t">Adjudication ledger <span class="badge">labelled</span></div>
-        <div class="d">Near-duplicate pairs with the similarity score that flagged them,
-        the metric, the adjudicating agent and the written rationale. The dataset behind
-        the negative result above.</div>
-        <div class="m">1,226 pairs · 1,155 labelled</div>
+      <a class="card" href="data/dedup_adjudication_ledger.json"><span class="arrow">→</span>
+        <div class="ct">Adjudication ledger <span class="tag">labelled</span></div>
+        <p class="cd">Near-duplicate pairs with the similarity score that flagged them, the
+        metric, the adjudicating agent and the written rationale. The dataset behind the
+        negative result above.</p>
+        <div class="cm">1,226 pairs · 1,155 labelled</div>
       </a>
-      <a class="card" href="data/capability_names.json">
-        <div class="t">Capability index <span class="badge">bilingual</span></div>
-        <div class="d">Every capability with its English and Chinese canonical names and
+      <a class="card" href="data/capability_names.json"><span class="arrow">→</span>
+        <div class="ct">Capability index <span class="tag">bilingual</span></div>
+        <p class="cd">Every capability with its English and Chinese canonical names and
         abstraction level. Full descriptions are not distributed in bulk — see the case
-        study for complete examples.</div>
-        <div class="m">24,929 capabilities · en + zh</div>
+        study for complete examples.</p>
+        <div class="cm">24,929 capabilities · en + zh</div>
       </a>
-      <a class="card" href="data/asset_index.json">
-        <div class="t">Asset index</div>
-        <div class="d">Repositories, frameworks, packages, pretrained models, datasets,
-        simulators, benchmarks and robot platforms, with upstream sources and aliases.
-        One repository is exactly one asset.</div>
-        <div class="m">6,078 assets · 15 types</div>
+      <a class="card" href="data/asset_index.json"><span class="arrow">→</span>
+        <div class="ct">Asset index</div>
+        <p class="cd">Repositories, frameworks, packages, pretrained models, datasets,
+        simulators, benchmarks and robot platforms, with upstream sources and aliases. One
+        repository is exactly one asset.</p>
+        <div class="cm">6,078 assets · 15 types</div>
       </a>
-      <a class="card" href="data/taxonomy.json">
-        <div class="t">Taxonomy</div>
-        <div class="d">The three-level compilation backbone, bilingual. Sibling leaves
-        are passed to the compiler as explicit negative scope — which is what keeps
-        adjacent topics from absorbing each other.</div>
-        <div class="m">2,942 nodes · 15 / 416 / 2,511</div>
+      <a class="card" href="data/taxonomy.json"><span class="arrow">→</span>
+        <div class="ct">Taxonomy</div>
+        <p class="cd">The three-level compilation backbone, bilingual. Sibling leaves are
+        passed to the compiler as explicit negative scope — which is what keeps adjacent
+        topics from absorbing each other.</p>
+        <div class="cm">2,942 nodes · 15 / 416 / 2,511</div>
       </a>
-      <a class="card" href="data/measurements.json">
-        <div class="t">Measurements <span class="badge">reproducible</span></div>
-        <div class="d">Every number on this page and in the paper, as structured output
-        from <code>analysis/measure.py</code>. No GPU, no network, no service.</div>
-        <div class="m">measure.py → measurements.json</div>
+      <a class="card" href="data/measurements.json"><span class="arrow">→</span>
+        <div class="ct">Measurements <span class="tag">reproducible</span></div>
+        <p class="cd">Every number on this page and in the paper, as structured output from
+        <code>analysis/measure.py</code>. No GPU, no network, no service.</p>
+        <div class="cm">measure.py → measurements.json</div>
       </a>
     </div>
 
-    <div class="split" style="margin-top:48px;align-items:start">
+    <div class="split top" style="margin-top:56px">
       <div>
-        <p class="h3big" style="font-size:clamp(21px,2.7vw,27px)">Query it — no key,
-        nothing to install.</p>
-        <p class="lead" style="font-size:15.5px">A read-only retrieval endpoint over the
+        <h3 class="subtitle">Query it — no key, nothing to install.</h3>
+        <p class="lede" style="font-size:16px">A read-only retrieval endpoint over the
         evidence corpus is open, and packaged as an Agent Skill declaration and an MCP
         stdio server. Concept-level evidence retrieval is exposed; chain assembly and
         node-level graph queries are implemented but not yet public.</p>
-        <div class="cta" style="margin-top:20px">
-          <a class="btn" href="integrate/">Integration guide</a>
-        </div>
+        <div class="actions"><a class="btn btn-ghost" href="integrate/">Integration guide</a></div>
       </div>
       <div>
-<pre><span class="c">curl</span> -X POST "$ENTROPY_BOX_API/api/evidence/search" \
+<pre><span class="k">curl</span> -X POST "$ENTROPY_BOX_API/api/evidence/search" \
   -H "Content-Type: application/json" \
   -d '{"query": "obstacle inflation collision check",
        "top_k": 5, "mode": "hybrid", "rerank": true}'</pre>
@@ -798,48 +729,56 @@ footer a:hover{color:var(--teal)}
   </div>
 </section>
 
-<section id="status">
+<!-- ===================== STATUS ===================== -->
+<section class="band dark" id="status">
   <div class="wrap">
-    <h2>Honest status</h2>
-    <div class="split" style="align-items:start">
+    <div class="eyebrow">Honest status</div>
+    <div class="split top">
       <div>
-        <p class="h3big" style="font-size:clamp(22px,3vw,30px)">What we have <em>not</em>
-        established.</p>
-        <p class="lead" style="font-size:15.5px">This release is deliberately partial and
-        the central experiment has not been run. We would rather say so plainly than let
-        you discover the gaps.</p>
-        <div class="cta" style="margin-top:20px">
-          <a class="btn" href="about/">Full scope, limits &amp; disclosure</a>
+        <h2 class="title">What we have <em>not</em> established.</h2>
+        <p class="lede" style="font-size:16px">This release is deliberately partial and the
+        central experiment has not been run. We would rather say so plainly than let you
+        discover the gaps.</p>
+        <div class="actions">
+          <a class="btn btn-ghost" href="about/">Full scope, limits &amp; disclosure</a>
         </div>
       </div>
-      <div>
-        <ul class="plain">
-          <li><strong>The central comparison has not been run.</strong> We argue for
-          compilation and quantify its amortization, but have not demonstrated better
-          answers than a strong RAG or GraphRAG baseline.</li>
-          <li><strong>Retrieval numbers are not published.</strong> The harness and the
-          golden set exist; a valid run does not. We publish the suite rather than a
-          claim.</li>
-          <li><strong>Build cost is unmeasured.</strong> No per-topic time or token cost
-          is recorded — so the economics of front-loading work cannot yet be
-          reported.</li>
-          <li><strong>Compilation is in progress.</strong> Roughly a third of the
-          taxonomy is uncompiled; counts on this page rise over time.</li>
-          <li><strong>74.1% of chains are purely linear</strong> even though the schema
-          supports branching. Nothing yet rewards capturing genuine route divergence.</li>
-        </ul>
-      </div>
+      <ul class="list">
+        <li><b>The central comparison has not been run.</b> We argue for compilation and
+        quantify its amortization, but have not demonstrated better answers than a strong
+        RAG or GraphRAG baseline.</li>
+        <li><b>Retrieval numbers are not published.</b> The harness and the golden set
+        exist; a valid run does not. We publish the suite rather than a claim.</li>
+        <li><b>Build cost is unmeasured.</b> No per-topic time or token cost is recorded —
+        so the economics of front-loading work cannot yet be reported.</li>
+        <li><b>Compilation is in progress.</b> Roughly a third of the taxonomy is
+        uncompiled; the counts above rise over time.</li>
+        <li><b>74.1% of chains are purely linear</b> even though the schema supports
+        branching. Nothing yet rewards capturing genuine route divergence.</li>
+      </ul>
     </div>
   </div>
 </section>
 
-<footer>
+<footer class="foot">
   <div class="wrap">
-    <div class="fgrid">
+    <div class="footgrid">
       <div>
-        <div class="brand" style="margin-bottom:12px"><span class="dot"></span>Entropy Box · 箱熵</div>
-        <p style="color:var(--dim);margin:0 0 14px;max-width:38ch">A knowledge compiler
-        for embodied AI. This GitHub page is the durable entry point for citation and
+        <a class="mark" href="#top" style="margin-bottom:16px">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <g stroke="#00D4FF" stroke-width="1.3" fill="none">
+              <path d="M6 5.5v13M6 5.5h11M6 12h7M6 18.5h11"/>
+            </g>
+            <g fill="#00D4FF"><circle cx="6" cy="5.5" r="1.9"/><circle cx="6" cy="18.5" r="1.9"/></g>
+            <g fill="#05070D" stroke="#00D4FF" stroke-width="1.2">
+              <circle cx="6" cy="12" r="1.7"/><circle cx="17" cy="5.5" r="1.7"/>
+              <circle cx="13" cy="12" r="1.7"/><circle cx="17" cy="18.5" r="1.7"/>
+            </g>
+          </svg>
+          Entropy Box <span class="zh">箱熵</span>
+        </a>
+        <p style="max-width:38ch;margin:0 0 14px">A knowledge compiler for embodied
+        intelligence. This GitHub page is the durable entry point for citation and
         archival.</p>
         <p style="margin:0">Live dashboard, complex-query retrieval and one-click plan
         assembly: <a href="https://xiangshang.ngrok.app/">xiangshang.ngrok.app</a></p>
@@ -858,50 +797,25 @@ footer a:hover{color:var(--teal)}
         <h5>Contact</h5>
         <ul>
           <li><a href="mailto:wangyuqi11and11@163.com">wangyuqi11and11@163.com</a></li>
-          <li style="color:var(--dim)">Yuqi Wang</li>
+          <li>Yuqi Wang</li>
           <li><a href="about/">Scope &amp; status</a></li>
-          <li style="color:var(--dim)">Research collaboration, dataset access,
-          integrations and corrections all welcome — including access to material not
-          published here.</li>
+          <li>Research collaboration, dataset access, integrations and corrections all
+          welcome — including access to material not published here.</li>
         </ul>
       </div>
     </div>
-    <p class="fnote"><strong style="color:var(--dim)">On language.</strong> Site text and
-    all capability / asset <em>names</em> are English. Capability <em>descriptions</em>
-    and the research documents are in Chinese, the source language of the compiled
-    corpus. We publish them as they are rather than machine-translating, because the
-    descriptions carry the engineering detail — inputs, outputs, constraints, performance
-    envelopes — that a translation pass would blur.
+    <p class="footnote"><strong>On language.</strong> Site text and all capability / asset
+    <em>names</em> are English. Capability <em>descriptions</em> and the research documents
+    are in Chinese, the source language of the compiled corpus. We publish them as they are
+    rather than machine-translating, because the descriptions carry the engineering detail
+    — inputs, outputs, constraints, performance envelopes — that a translation pass would
+    blur.
     <br><br>If this is useful to you, or if you find something in it that is wrong, we
     would like to hear about it. Corrections to an artifact like this are worth more than
     compliments.</p>
   </div>
 </footer>
 
-<script>
-(function(){
-  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-  var seen=new WeakSet();
-  var io=new IntersectionObserver(function(es){
-    es.forEach(function(e){
-      if(!e.isIntersecting||seen.has(e.target))return;
-      seen.add(e.target);
-      var el=e.target, raw=el.textContent.trim();
-      var m=raw.match(/^([\d,]+)(\.\d+)?(%)?$/); if(!m)return;
-      var suffix=m[3]||'', target=parseFloat(raw.replace(/[,%]/g,''));
-      if(!isFinite(target))return;
-      var dec=(raw.split('.')[1]||'').replace(/%/g,'').length, t0=null, dur=900;
-      function fmt(v){var s=v.toFixed(dec),p=s.split('.');
-        return p[0].replace(/\B(?=(\d{3})+(?!\d))/g,',')+(p[1]?'.'+p[1]:'')+suffix}
-      function step(ts){ if(!t0)t0=ts; var p=Math.min((ts-t0)/dur,1);
-        el.textContent=fmt(target*(1-Math.pow(1-p,3)));
-        if(p<1)requestAnimationFrame(step); else el.textContent=raw; }
-      requestAnimationFrame(step);
-    });
-  },{threshold:.5});
-  document.querySelectorAll('.wall .v').forEach(function(el){io.observe(el)});
-})();
-</script>
-
+<script src="assets/eb.js" defer></script>
 </body>
 </html>

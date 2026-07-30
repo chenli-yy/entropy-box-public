@@ -9,336 +9,252 @@
 <meta property="og:title" content="How the graph is built — Entropy Box">
 <meta property="og:description" content="Five stages, three gates, and the provenance discipline that forces evidence — with the original research documents.">
 <meta name="author" content="Yuqi Wang">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230B0D11'/%3E%3Cpath d='M8 11h16M8 16h11M8 21h16' stroke='%232DD4BF' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#05070D">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%2305070D'/%3E%3Cg stroke='%2300D4FF' stroke-width='1.3' fill='none'%3E%3Cpath d='M6 5.5v13M6 5.5h11M6 12h7M6 18.5h11'/%3E%3C/g%3E%3Cg fill='%2300D4FF'%3E%3Ccircle cx='6' cy='5.5' r='1.9'/%3E%3Ccircle cx='6' cy='18.5' r='1.9'/%3E%3C/g%3E%3Cg fill='%2305070D' stroke='%2300D4FF' stroke-width='1.2'%3E%3Ccircle cx='6' cy='12' r='1.7'/%3E%3Ccircle cx='17' cy='5.5' r='1.7'/%3E%3Ccircle cx='13' cy='12' r='1.7'/%3E%3Ccircle cx='17' cy='18.5' r='1.7'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/eb.css">
 <style>
-:root{
-  --bg:#07080B; --bg2:#0B0D12; --panel:#10131A; --panel2:#0D1015;
-  --line:#1E232D; --line2:#2A3240;
-  --text:#EDF1F6; --dim:#98A2B3; --faint:#6B7688;
-  --teal:#2DD4BF; --blue:#5B9DFF; --amber:#F0B429; --green:#3FCF6E; --red:#FF6B60;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:70px}
-body{margin:0;background:var(--bg);color:var(--text);
-  font:15.5px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,
-  "PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
-a{color:var(--teal);text-decoration:none}
-a:hover{text-decoration:underline}
-code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.88em}
-.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+.hdr{padding:88px 0 56px}
+.hdr .display{max-width:20ch;font-size:clamp(29px,4.6vw,46px)}
+.hdr .display em{font-style:normal;color:var(--cyan)}
 
-/* ---------- nav ---------- */
-nav{position:sticky;top:0;z-index:50;background:rgba(7,8,11,.78);
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  border-bottom:1px solid var(--line)}
-nav .wrap{display:flex;align-items:center;gap:26px;height:56px}
-.brand{font-weight:700;font-size:15px;color:var(--text);display:flex;align-items:center;
-  gap:8px;flex-shrink:0}
-.brand:hover{text-decoration:none}
-.brand .bd{width:9px;height:9px;border-radius:50%;background:var(--teal);
-  box-shadow:0 0 12px var(--teal);flex-shrink:0}
-.navlinks{display:flex;gap:22px;font-size:13.5px;margin-left:auto}
-.navlinks a{color:var(--dim)}
-.navlinks a:hover{color:var(--text);text-decoration:none}
-@media(max-width:820px){.navlinks{display:none}}
+/* pipeline */
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.pnode{border:1px solid var(--rule);border-radius:10px;background:var(--card);
+  padding:18px 17px;position:relative;transition:.18s ease}
+.pnode:hover{border-color:var(--rule-2)}
+.pnum{font-family:var(--mono);font-size:10.5px;font-weight:500;color:var(--accent);
+  letter-spacing:.12em;margin-bottom:9px}
+.pname{font-size:15px;font-weight:500;letter-spacing:-.014em;color:var(--ink);
+  margin-bottom:8px}
+.pdesc{font-size:12.5px;line-height:1.6;color:var(--ink-2)}
+.pgate{margin-top:14px;padding-top:11px;border-top:1px solid var(--rule);
+  font-family:var(--mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;
+  color:#B45309}
+.dark .pgate,.deep .pgate{color:#FBBF24}
+.pgate.none{color:var(--ink-3)}
+@media(max-width:1000px){.flow{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.flow{grid-template-columns:1fr}}
 
-/* ---------- reveal ---------- */
-.rv{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
-.rv.in{opacity:1;transform:none}
-@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+/* evidence */
+.eg{display:grid;grid-template-columns:300px 1fr;gap:24px;align-items:start}
+@media(max-width:940px){.eg{grid-template-columns:1fr}}
+.floors{border:1px solid var(--rule);border-radius:10px;background:var(--card);padding:22px}
+.floors h3{font-size:15.5px;font-weight:500;color:var(--ink);margin:0 0 5px;
+  letter-spacing:-.014em}
+.floors .fp{font-size:12.5px;color:var(--ink-3);margin:0 0 18px}
+.qrow{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:10px 13px;border:1px solid var(--rule);border-radius:7px;
+  background:var(--card-2);margin-bottom:8px}
+.qrow span:first-child{font-family:var(--mono);font-size:12.5px;color:var(--ink)}
+.qrow span:last-child{font-family:var(--mono);font-size:11.5px;font-weight:500;
+  color:var(--accent);white-space:nowrap}
+.hard{margin-top:16px;padding-top:14px;border-top:1px solid var(--rule);
+  font-size:12.5px;line-height:1.68;color:var(--ink-2)}
+.hard b{color:var(--ink);font-weight:500}
 
-/* ---------- sections ---------- */
-.sec{padding:72px 0;border-top:1px solid var(--line)}
-.eyebrow{font-size:11.5px;font-weight:680;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--teal);margin-bottom:14px;display:flex;align-items:center;gap:9px}
-.eyebrow::before{content:'';width:16px;height:1px;background:var(--teal);opacity:.6}
-.sec h2{font-size:clamp(23px,3.2vw,31px);font-weight:680;color:var(--text);
-  margin:0 0 14px;letter-spacing:-.026em;max-width:24ch;line-height:1.18}
-.sec .lede{font-size:16px;color:var(--dim);margin:0 0 32px;max-width:68ch;line-height:1.65}
-.sec .lede strong{color:var(--text);font-weight:600}
+.loghead{display:flex;align-items:baseline;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.loghead h3{font-size:15.5px;font-weight:500;color:var(--ink);margin:0;
+  letter-spacing:-.014em}
+.loghead span{font-size:12px;color:var(--ink-3)}
+.logbox{border:1px solid var(--rule);border-radius:10px;overflow:hidden;
+  background:var(--card)}
+.logbar{display:flex;align-items:center;gap:7px;padding:10px 14px;
+  border-bottom:1px solid var(--rule);background:var(--card-2);
+  font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.tl{width:9px;height:9px;border-radius:50%}
+.logscroll{overflow-x:auto}
+table.log{min-width:690px;font-size:12px}
+table.log td.q{font-family:var(--mono);font-size:11.5px;line-height:1.55;
+  color:var(--accent)}
+table.log td.s{white-space:nowrap;color:var(--ink-3)}
+table.log td.i{text-align:right;font-family:var(--mono);color:var(--ink)}
+table.log tr.fail td{background:rgba(220,38,38,.055)}
+.dark table.log tr.fail td,.deep table.log tr.fail td{background:rgba(248,113,113,.07)}
+table.log tr.fail td.q,table.log tr.fail td.i{color:#B91C1C}
+.dark table.log tr.fail td.q,.dark table.log tr.fail td.i,
+.deep table.log tr.fail td.q,.deep table.log tr.fail td.i{color:#F87171}
+.logfoot{padding:13px 15px;border-top:1px solid var(--rule);background:var(--card-2);
+  font-size:12.5px;line-height:1.62;color:var(--ink-2)}
+.logfoot b{color:var(--ink);font-weight:500}
 
-/* ---------- hero ---------- */
-.hero{position:relative;overflow:hidden;padding:84px 0 62px}
-.hero::before{content:'';position:absolute;top:-320px;left:50%;transform:translateX(-50%);
-  width:1100px;height:600px;pointer-events:none;
-  background:radial-gradient(ellipse at center,rgba(45,212,191,.15),transparent 62%)}
-.hero::after{content:'';position:absolute;inset:0;pointer-events:none;opacity:.35;
-  background-image:linear-gradient(var(--line) 1px,transparent 1px),
-    linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:56px 56px;
-  mask-image:radial-gradient(ellipse 70% 60% at 50% 20%,#000,transparent 75%);
-  -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 20%,#000,transparent 75%)}
-.hero-in{position:relative;z-index:1}
-.hero h1{font-size:clamp(30px,5.2vw,50px);line-height:1.1;font-weight:700;
-  color:var(--text);margin:16px 0 0;letter-spacing:-.032em;max-width:19ch}
-.hero h1 em{font-style:normal;
-  background:linear-gradient(100deg,var(--teal),var(--blue));
-  -webkit-background-clip:text;background-clip:text;color:transparent}
-.hero-sub{font-size:17px;color:var(--dim);max-width:64ch;margin:22px 0 0;line-height:1.6}
-.hero-sub strong{color:var(--text);font-weight:600}
-
-/* ---------- pipeline ---------- */
-.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;align-items:stretch}
-.node{position:relative;padding:0 6px}
-.node-in{height:100%;background:var(--panel);border:1px solid var(--line);
-  border-radius:12px;padding:17px 16px 16px;transition:.2s}
-.node:hover .node-in{border-color:var(--line2);transform:translateY(-3px);
-  background:var(--panel2)}
-.node:not(:last-child)::after{content:'';position:absolute;right:-5px;top:40px;
-  width:10px;height:10px;border-top:1.5px solid var(--line2);
-  border-right:1.5px solid var(--line2);transform:rotate(45deg);z-index:2}
-.node-top{display:flex;align-items:center;gap:9px;margin-bottom:10px}
-.node-num{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;font-weight:700;
-  color:var(--teal);background:rgba(45,212,191,.11);border:1px solid rgba(45,212,191,.3);
-  border-radius:6px;padding:2px 7px}
-.node-name{font-size:14.5px;font-weight:660;color:var(--text);letter-spacing:-.012em}
-.node-desc{font-size:12.5px;color:var(--dim);line-height:1.6}
-.node-gate{margin-top:12px;padding-top:10px;border-top:1px solid var(--line);
-  font-size:11px;color:var(--amber);display:flex;align-items:center;gap:5px}
-.node-gate.g-none{color:var(--faint)}
-.node-gate b{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:600}
-
-/* ---------- evidence ---------- */
-.eg{display:grid;grid-template-columns:296px 1fr;gap:22px;align-items:start}
-.eg-rules{background:linear-gradient(170deg,rgba(240,180,41,.075),rgba(240,180,41,.015));
-  border:1px solid rgba(240,180,41,.26);border-radius:14px;padding:21px}
-.eg-rules h3{margin:0 0 6px;font-size:15.5px;font-weight:670;color:var(--amber);
-  letter-spacing:-.012em}
-.eg-rules p{font-size:12.5px;color:var(--dim);margin:0 0 16px;line-height:1.65}
-.quota{display:flex;flex-direction:column;gap:8px}
-.quota-row{display:flex;align-items:center;justify-content:space-between;gap:10px;
-  background:rgba(0,0,0,.32);border:1px solid var(--line);border-radius:9px;padding:9px 12px}
-.quota-k{font-size:12.5px;color:var(--text);
-  font-family:ui-monospace,Menlo,Consolas,monospace}
-.quota-v{font-size:12px;font-weight:700;color:var(--amber);white-space:nowrap}
-.eg-hard{margin-top:16px;font-size:12.5px;line-height:1.7;color:var(--dim);
-  border-top:1px solid rgba(240,180,41,.2);padding-top:13px}
-.eg-hard b{color:var(--amber)}
-
-.eg-log{min-width:0}
-.log-head{display:flex;align-items:baseline;gap:10px;margin-bottom:11px;flex-wrap:wrap}
-.log-head h3{margin:0;font-size:15.5px;font-weight:660;color:var(--text);
-  letter-spacing:-.012em}
-.log-head span{font-size:12px;color:var(--faint)}
-.log-box{background:var(--panel2);border:1px solid var(--line);border-radius:13px;
-  overflow:hidden}
-.log-bar{display:flex;align-items:center;gap:7px;padding:9px 14px;
-  border-bottom:1px solid var(--line);background:var(--panel);
-  font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11.5px;color:var(--faint)}
-.tld{width:9px;height:9px;border-radius:50%}
-.log-scroll{overflow-x:auto}
-table.log{border-collapse:collapse;width:100%;font-size:12px;min-width:680px}
-table.log th{text-align:left;padding:9px 12px;color:var(--faint);font-weight:650;
-  font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
-  background:rgba(255,255,255,.022);border-bottom:1px solid var(--line);white-space:nowrap}
-table.log td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top;
-  color:var(--text)}
-table.log tr:last-child td{border-bottom:none}
-table.log td.q{color:var(--blue);font-family:ui-monospace,Menlo,Consolas,monospace;
-  font-size:11.5px;line-height:1.6}
-table.log td.n,table.log td.s{white-space:nowrap;color:var(--dim)}
-table.log tr.fail td{background:rgba(255,107,96,.07)}
-table.log tr.fail td.n,table.log tr.fail td.q{color:#FF9A92}
-.log-foot{padding:12px 14px;border-top:1px solid var(--line);background:var(--panel);
-  font-size:12px;color:var(--dim);line-height:1.65}
-.log-foot b{color:var(--text)}
-
-/* ---------- recording ---------- */
-.scope{display:flex;gap:13px;align-items:flex-start;
-  background:rgba(240,180,41,.055);border:1px solid rgba(240,180,41,.26);
-  border-radius:13px;padding:15px 17px;margin-bottom:16px;
-  font-size:13.5px;line-height:1.72;color:var(--dim)}
-.scope-ic{color:var(--amber);font-size:15px;line-height:1.5}
-.scope b{color:var(--amber)}
-.scope strong{color:var(--text)}
-.scope ol{margin:6px 0 0;padding-left:18px}
+/* recording */
+.scope{display:flex;gap:14px;align-items:flex-start;border:1px solid var(--rule);
+  border-left:2px solid #D97706;border-radius:0 10px 10px 0;background:var(--card);
+  padding:17px 20px;margin-bottom:18px;font-size:13.5px;line-height:1.7;
+  color:var(--ink-2)}
+.scope b{color:var(--ink);font-weight:500}
+.scope ol{margin:7px 0 0;padding-left:19px}
 .scope li{margin:3px 0}
-#video-slot{position:relative;width:100%;aspect-ratio:1920/1040;border-radius:14px;
-  overflow:hidden;border:1px solid var(--line);background:#08090b}
+#video-slot{position:relative;width:100%;aspect-ratio:1920/1040;border-radius:10px;
+  overflow:hidden;border:1px solid var(--rule);background:#05070D}
 .ph{position:absolute;inset:0;cursor:pointer;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;gap:14px;
-  background:radial-gradient(120% 80% at 50% 0%,rgba(45,212,191,.14) 0%,transparent 64%),
-    repeating-linear-gradient(0deg,rgba(255,255,255,.02) 0 1px,transparent 1px 30px),#08090b}
-.ph:hover .play{transform:scale(1.08);box-shadow:0 10px 34px rgba(45,212,191,.45)}
-.play{width:70px;height:70px;border-radius:50%;background:var(--teal);color:#04211E;
-  display:flex;align-items:center;justify-content:center;font-size:26px;padding-left:6px;
-  box-shadow:0 8px 26px rgba(45,212,191,.3);transition:.22s}
-.ph-t{font-size:15px;font-weight:620;color:var(--text)}
-.ph-b{font-size:11.5px;color:var(--dim);border:1px solid var(--line);border-radius:999px;
-  padding:4px 13px;background:rgba(255,255,255,.03)}
+  align-items:center;justify-content:center;gap:15px;background:#05070D;border:none;
+  width:100%;font-family:inherit}
+.play{width:64px;height:64px;border-radius:50%;background:#FFFFFF;color:#05070D;
+  display:flex;align-items:center;justify-content:center;font-size:22px;padding-left:5px;
+  transition:transform .2s ease}
+.ph:hover .play{transform:scale(1.06)}
+.pht{font-size:14.5px;font-weight:500;color:#F8FAFC}
+.phb{font-family:var(--mono);font-size:11px;color:#94A3B8;
+  border:1px solid rgba(148,163,184,.24);border-radius:100px;padding:5px 14px;
+  letter-spacing:.05em}
 .loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  font-size:13px;color:var(--dim);background:rgba(8,9,11,.8);z-index:2}
+  font-size:13px;color:#94A3B8;background:rgba(5,7,13,.85);z-index:2;text-align:center;
+  padding:24px}
 
-/* ---------- materials ---------- */
-.mats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.mat{display:flex;gap:14px;padding:17px 19px;text-decoration:none;background:var(--panel);
-  border:1px solid var(--line);border-radius:13px;transition:.2s}
-.mat:hover{border-color:var(--line2);background:var(--panel2);transform:translateY(-2px);
-  text-decoration:none}
-.mat-ic{width:40px;height:40px;flex-shrink:0;border-radius:11px;
-  background:rgba(45,212,191,.1);border:1px solid rgba(45,212,191,.26);
-  display:flex;align-items:center;justify-content:center;font-size:17px}
-.mat-b{min-width:0;flex:1}
-.mat-t{font-size:14.5px;font-weight:650;color:var(--text);margin-bottom:4px;
-  letter-spacing:-.012em}
-.mat-d{font-size:12.5px;color:var(--dim);line-height:1.6}
-.mat-m{margin-top:9px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10.5px;
-  color:var(--faint);letter-spacing:.02em}
-.mats-sub{grid-column:1/-1;font-size:13.5px;color:var(--dim);margin:18px 0 2px}
-.chips{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px}
-.chips a{font-size:12.5px;text-decoration:none;color:var(--dim);background:var(--panel);
-  border:1px solid var(--line);border-radius:999px;padding:7px 15px;transition:.18s}
-.chips a:hover{color:var(--teal);border-color:var(--teal);background:var(--panel2)}
-.zh{font-size:10.5px;color:var(--faint);border:1px solid var(--line);border-radius:4px;
-  padding:1px 5px;margin-left:6px;letter-spacing:.03em}
-
-.foot{padding:40px 0 84px;border-top:1px solid var(--line);background:var(--bg2)}
-.foot p{font-size:12.5px;color:var(--faint);line-height:1.8;margin:0 0 12px;max-width:84ch}
-.foot code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11.5px;
-  background:var(--panel);border:1px solid var(--line);border-radius:5px;padding:1px 6px;
-  color:var(--dim)}
-.foot a{color:var(--dim)}
-.foot a:hover{color:var(--teal)}
-
-@media(max-width:1000px){
-  .flow{grid-template-columns:repeat(2,1fr);gap:10px}
-  .node{padding:0}
-  .node:not(:last-child)::after{display:none}
-  .eg{grid-template-columns:1fr}
-  .mats{grid-template-columns:1fr}
-}
-@media(max-width:640px){
-  .wrap{padding:0 18px}
-  .hero{padding:52px 0 40px}
-  .sec{padding:52px 0}
-  .flow{grid-template-columns:1fr}
-}
+/* materials */
+.mats{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media(max-width:820px){.mats{grid-template-columns:1fr}}
+.matsub{font-size:13.5px;color:var(--ink-2);margin:26px 0 12px}
+.chips{display:flex;flex-wrap:wrap;gap:9px}
+.chips a{font-size:12.5px;color:var(--ink-2);background:var(--card);
+  border:1px solid var(--rule);border-radius:100px;padding:8px 16px;transition:.18s ease}
+.chips a:hover{color:var(--accent);border-color:var(--accent-line);text-decoration:none}
+.zh{font-family:var(--mono);font-size:10px;color:var(--ink-3);border:1px solid var(--rule);
+  border-radius:3px;padding:1px 5px;margin-left:7px;letter-spacing:.06em}
 </style>
 </head>
 <body>
 
-<nav>
+<nav class="nav">
   <div class="wrap">
-    <a class="brand" href="../"><span class="bd"></span>Entropy Box</a>
+    <a class="mark" href="../">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <g stroke="#00D4FF" stroke-width="1.3" fill="none">
+          <path d="M6 5.5v13M6 5.5h11M6 12h7M6 18.5h11"/>
+        </g>
+        <g fill="#00D4FF"><circle cx="6" cy="5.5" r="1.9"/><circle cx="6" cy="18.5" r="1.9"/></g>
+        <g fill="#05070D" stroke="#00D4FF" stroke-width="1.2">
+          <circle cx="6" cy="12" r="1.7"/><circle cx="17" cy="5.5" r="1.7"/>
+          <circle cx="13" cy="12" r="1.7"/><circle cx="17" cy="18.5" r="1.7"/>
+        </g>
+      </svg>
+      Entropy Box <span class="zh" style="color:#64748B;border:none;padding:0;margin-left:0;font-size:13px">箱熵</span>
+    </a>
     <div class="navlinks">
-      <a href="../#why">Why compile</a>
-      <a href="../#how">Architecture</a>
-      <a href="../#findings">Findings</a>
+      <a href="../#overview">Overview</a>
+      <a href="../#architecture">Architecture</a>
+      <a href="../graph/capability-network.html">Knowledge graph</a>
+      <a href="../#research">Research</a>
       <a href="../#data">Data</a>
-      <a href="../blog/">Notes</a>
       <a href="../about/">Scope &amp; status</a>
     </div>
+    <a class="navpaper" href="../paper/entropy-box-knowledge-compiler-v8.pdf">Paper</a>
   </div>
 </nav>
 
-<!-- ============ HERO ============ -->
-<section class="hero">
-  <div class="wrap hero-in">
+<section class="band dark hdr">
+  <div class="wrap">
     <div class="eyebrow">Behind the graph</div>
-    <h1>Every entry can be traced to <em>who searched, where, and how many times</em>.</h1>
-    <p class="hero-sub">This is not a model writing a summary. Every topic is produced by
-    an <strong>agent-orchestrated pipeline</strong>: plan the retrieval first, gather
-    evidence chain by chain, attach a <strong>mandatory retrieval log</strong> to every
-    research document, fail the mechanical validator and it goes straight back, and clear
-    a global deduplication gate before anything is admitted. Below is the shape of that
-    pipeline — and the evidence it leaves behind.</p>
+    <h1 class="display">Every entry traces back to <em>who searched, where, and how many
+    times</em>.</h1>
+    <p class="lede" style="margin-top:22px;color:#CBD5E1;max-width:66ch">This is not a
+    model writing a summary. Every topic is produced by an
+    <strong>agent-orchestrated pipeline</strong>: plan the retrieval first, gather evidence
+    chain by chain, attach a <strong>mandatory retrieval log</strong> to every research
+    document, fail the mechanical validator and it goes straight back, and clear a global
+    deduplication gate before anything is admitted.</p>
   </div>
 </section>
 
-<!-- ============ PIPELINE ============ -->
-<section class="sec">
+<section class="band light" id="pipeline">
   <div class="wrap">
     <div class="eyebrow">Pipeline</div>
-    <h2>Five stages, three gates</h2>
-    <p class="lede">The gates are <strong>mechanical</strong> — a script decides, a
-    failure means <code>exit 1</code>, and the output does not enter the registry. There
-    is no “close enough, let it through”.</p>
+    <h2 class="title">Five stages, three gates.</h2>
+    <p class="lede" style="margin-bottom:34px">The gates are <strong>mechanical</strong> —
+    a script decides, a failure means <code>exit 1</code>, and the output does not enter
+    the registry. There is no “close enough, let it through”.</p>
 
-    <div class="flow rv">
-      <div class="node"><div class="node-in">
-        <div class="node-top"><span class="node-num">01</span><span class="node-name">Orchestrate</span></div>
-        <div class="node-desc">Topics dispatched in batches, resumable from any
-        breakpoint. Failures are logged for human review, never silently skipped.</div>
-        <div class="node-gate g-none">&#9675; no gate</div>
-      </div></div>
-      <div class="node"><div class="node-in">
-        <div class="node-top"><span class="node-num">02</span><span class="node-name">Plan</span></div>
-        <div class="node-desc">Seed terms, domain semantic expansion and an explicit stop
-        rule. Plan the search before running it — no conclusions off a single query.</div>
-        <div class="node-gate g-none">&#9675; no gate</div>
-      </div></div>
-      <div class="node"><div class="node-in">
-        <div class="node-top"><span class="node-num">03</span><span class="node-name">Gather</span></div>
-        <div class="node-desc">One document per technical chain, each ending in a
-        mandatory retrieval log: every query recorded with its hit count and its use.</div>
-        <div class="node-gate">&#9679; gate <b>retrieval floor</b></div>
-      </div></div>
-      <div class="node"><div class="node-in">
-        <div class="node-top"><span class="node-num">04</span><span class="node-name">Validate</span></div>
-        <div class="node-desc">Per-chain acceptance plus structural validation: all nine
-        sections present, cycle detection, bidirectional consistency, citation
-        closure.</div>
-        <div class="node-gate">&#9679; gate <b>exit 1</b></div>
-      </div></div>
-      <div class="node"><div class="node-in">
-        <div class="node-top"><span class="node-num">05</span><span class="node-name">Admit</span></div>
-        <div class="node-desc">Global registry surrogate keys plus dual-view embedding
-        cosine deduplication — one thing, one entry, registry-wide.</div>
-        <div class="node-gate">&#9679; gate <b>dedup adjudication</b></div>
-      </div></div>
+    <div class="flow" data-rv="0">
+      <div class="pnode">
+        <div class="pnum">01</div>
+        <div class="pname">Orchestrate</div>
+        <div class="pdesc">Topics dispatched in batches, resumable from any breakpoint.
+        Failures are logged for human review, never silently skipped.</div>
+        <div class="pgate none">○ no gate</div>
+      </div>
+      <div class="pnode">
+        <div class="pnum">02</div>
+        <div class="pname">Plan</div>
+        <div class="pdesc">Seed terms, domain semantic expansion and an explicit stop rule.
+        Plan the search before running it — no conclusions off a single query.</div>
+        <div class="pgate none">○ no gate</div>
+      </div>
+      <div class="pnode">
+        <div class="pnum">03</div>
+        <div class="pname">Gather</div>
+        <div class="pdesc">One document per technical chain, each ending in a mandatory
+        retrieval log: every query recorded with its hit count and its use.</div>
+        <div class="pgate">● gate — retrieval floor</div>
+      </div>
+      <div class="pnode">
+        <div class="pnum">04</div>
+        <div class="pname">Validate</div>
+        <div class="pdesc">Per-chain acceptance plus structural validation: all nine
+        sections present, cycle detection, bidirectional consistency, citation closure.</div>
+        <div class="pgate">● gate — exit 1</div>
+      </div>
+      <div class="pnode">
+        <div class="pnum">05</div>
+        <div class="pname">Admit</div>
+        <div class="pdesc">Global registry surrogate keys plus dual-view embedding cosine
+        deduplication — one thing, one entry, registry-wide.</div>
+        <div class="pgate">● gate — dedup adjudication</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ============ EVIDENCE ============ -->
-<section class="sec">
+<section class="band tint" id="evidence">
   <div class="wrap">
     <div class="eyebrow">Evidence</div>
-    <h2>How “we didn't make it up” is enforced</h2>
-    <p class="lede">An agent will naturally smooth things over. So we do not rely on good
-    intentions — we rely on <strong>countable floors</strong>: a finished document must
-    hand over its retrieval ledger, and one that falls short is sent back to be
-    rerun.</p>
+    <h2 class="title">How “we didn't make it up” is enforced.</h2>
+    <p class="lede" style="margin-bottom:34px">An agent will naturally smooth things over.
+    So we do not rely on good intentions — we rely on <strong>countable floors</strong>: a
+    finished document must hand over its retrieval ledger, and one that falls short is sent
+    back to be rerun.</p>
 
-    <div class="eg rv">
-      <div class="eg-rules">
+    <div class="eg" data-rv="0">
+      <div class="floors">
         <h3>Hard floors, per document</h3>
-        <p>Written into the agent prompt, mechanically enforced by script.</p>
-        <div class="quota">
-          <div class="quota-row"><span class="quota-k">WebSearch</span><span class="quota-v">&ge; 10 calls</span></div>
-          <div class="quota-row"><span class="quota-k">WebFetch</span><span class="quota-v">&ge; 8 calls</span></div>
-          <div class="quota-row"><span class="quota-k">check_github.py</span><span class="quota-v">repo is alive</span></div>
-          <div class="quota-row"><span class="quota-k">fetch_paper.py</span><span class="quota-v">paper full text</span></div>
-        </div>
-        <div class="eg-hard"><b>Nothing invented, and no back-filling the log after the
-        fact</b> — a document that misses the floor is rerun, not patched. Every query
-        must also name the section it fed, so each conclusion maps to its source.</div>
+        <p class="fp">Written into the agent prompt, mechanically enforced by script.</p>
+        <div class="qrow"><span>WebSearch</span><span>≥ 10 calls</span></div>
+        <div class="qrow"><span>WebFetch</span><span>≥ 8 calls</span></div>
+        <div class="qrow"><span>check_github.py</span><span>repo is alive</span></div>
+        <div class="qrow"><span>fetch_paper.py</span><span>paper full text</span></div>
+        <div class="hard"><b>Nothing invented, and no back-filling the log after the
+        fact</b> — a document that misses the floor is rerun, not patched. Every query must
+        also name the section it fed, so each conclusion maps to its source.</div>
       </div>
 
-      <div class="eg-log">
-        <div class="log-head">
+      <div style="min-width:0">
+        <div class="loghead">
           <h3>A real ledger, verbatim</h3>
-          <span>from chain_02, navigation efficiency weighted metrics · 12 WebSearch / 8 WebFetch in that document</span>
+          <span>chain_02, navigation efficiency weighted metrics · 12 WebSearch / 8 WebFetch</span>
         </div>
-        <div class="log-box">
-          <div class="log-bar">
-            <span class="tld" style="background:#ff5f57"></span>
-            <span class="tld" style="background:#febc2e"></span>
-            <span class="tld" style="background:#28c840"></span>
-            <span style="margin-left:6px">chain_02_navigation_efficiency_weighted.md &mdash; § 12.1 WebSearch log</span>
+        <div class="logbox">
+          <div class="logbar">
+            <span class="tl" style="background:#FF5F57"></span>
+            <span class="tl" style="background:#FEBC2E"></span>
+            <span class="tl" style="background:#28C840"></span>
+            <span style="margin-left:6px">chain_02_navigation_efficiency_weighted.md — § 12.1 WebSearch log</span>
           </div>
-          <div class="log-scroll">
+          <div class="logscroll">
             <table class="log">
               <thead><tr><th>#</th><th>Query</th><th>Hits</th><th>Key hit</th><th>Used in</th><th>Note</th></tr></thead>
               <tbody>
-                <tr><td class="n">1</td><td class="q">Anderson 2018 "On Evaluation of Embodied Navigation Agents" SPL formula definition</td><td class="n">5</td><td>paper notes</td><td class="s">§1, §10</td><td class="s">mostly Chinese results</td></tr>
-                <tr><td class="n">3</td><td class="q">arxiv 1807.06757 SPL formula geodesic distance</td><td class="n">5</td><td>paper notes</td><td class="s">§1, §10</td><td class="s">paper identity confirmed</td></tr>
-                <tr class="fail"><td class="n">7</td><td class="q">aihabitat.org challenge PointNav ObjectNav evaluation rules success SPL threshold</td><td class="n">1</td><td>no direct hit</td><td class="s">&mdash;</td><td class="s">search failed</td></tr>
-                <tr><td class="n">8</td><td class="q">"SPL" "Success weighted by Path Length" formula "S * l" geodesic shortest path</td><td class="n">5</td><td>contains SPL formula</td><td class="s">§1, §8</td><td class="s">formula confirmed</td></tr>
-                <tr><td class="n">11</td><td class="q">"soft-SPL" habitat definition formula "distance_to_goal" "start_distance"</td><td class="n">5</td><td>soft_spl found in nav.py</td><td class="s">§5, §8</td><td class="s">SoftSPL confirmed</td></tr>
+                <tr><td class="i">1</td><td class="q">Anderson 2018 "On Evaluation of Embodied Navigation Agents" SPL formula definition</td><td class="i">5</td><td>paper notes</td><td class="s">§1, §10</td><td class="s">mostly Chinese results</td></tr>
+                <tr><td class="i">3</td><td class="q">arxiv 1807.06757 SPL formula geodesic distance</td><td class="i">5</td><td>paper notes</td><td class="s">§1, §10</td><td class="s">paper identity confirmed</td></tr>
+                <tr class="fail"><td class="i">7</td><td class="q">aihabitat.org challenge PointNav ObjectNav evaluation rules success SPL threshold</td><td class="i">1</td><td>no direct hit</td><td class="s">—</td><td class="s">search failed</td></tr>
+                <tr><td class="i">8</td><td class="q">"SPL" "Success weighted by Path Length" formula "S * l" geodesic shortest path</td><td class="i">5</td><td>contains SPL formula</td><td class="s">§1, §8</td><td class="s">formula confirmed</td></tr>
+                <tr><td class="i">11</td><td class="q">"soft-SPL" habitat definition formula "distance_to_goal" "start_distance"</td><td class="i">5</td><td>soft_spl found in nav.py</td><td class="s">§5, §8</td><td class="s">SoftSPL confirmed</td></tr>
               </tbody>
             </table>
           </div>
-          <div class="log-foot">Look at row 7: <b>that search returned nothing, and it is
+          <div class="logfoot">Look at row 7: <b>that search returned nothing, and it is
           logged anyway</b>. The ledger records the process, not the trophies — you can
           only trust it if you can see the failures in it.</div>
         </div>
@@ -347,15 +263,14 @@ table.log tr.fail td.n,table.log tr.fail td.q{color:#FF9A92}
   </div>
 </section>
 
-<!-- ============ RECORDING ============ -->
-<section class="sec">
+<section class="band dark" id="recording">
   <div class="wrap">
     <div class="eyebrow">Recording</div>
-    <h2>What it looks like running</h2>
-    <p class="lede">85 seconds, unedited and not sped up.</p>
+    <h2 class="title">What it looks like running.</h2>
+    <p class="lede" style="margin-bottom:26px;color:#CBD5E1">85 seconds, unedited and not
+    sped up.</p>
 
-    <div class="scope rv">
-      <span class="scope-ic">&#9888;</span>
+    <div class="scope" data-rv="0">
       <div>
         <b>Three narrow slices, stated up front:</b>
         <ol>
@@ -364,137 +279,119 @@ table.log tr.fail td.n,table.log tr.fail td.q{color:#FF9A92}
           <li>The research summary for <strong>one</strong> chain inside a single topic</li>
         </ol>
         The full pipeline is considerably more involved. The raw research data and a large
-        volume of intermediate documents <strong>do not</strong> appear on screen.
+        volume of intermediate documents do not appear on screen.
       </div>
     </div>
 
-    <div id="video-slot" class="rv">
-      <div class="ph" onclick="loadVideo()">
-        <div class="play">&#9654;</div>
-        <div class="ph-t">Click to play</div>
-        <div class="ph-b">&#128274; Nothing is transferred until you click &middot; 8.4 MB</div>
-      </div>
+    <div id="video-slot">
+      <button class="ph" type="button" onclick="loadVideo()" aria-label="Play the 85-second pipeline recording">
+        <span class="play" aria-hidden="true">▶</span>
+        <span class="pht">Play the recording</span>
+        <span class="phb">NOTHING IS TRANSFERRED UNTIL YOU CLICK · 8.4 MB</span>
+      </button>
     </div>
   </div>
 </section>
 
-<!-- ============ MATERIALS ============ -->
-<section class="sec">
+<section class="band light" id="materials">
   <div class="wrap">
     <div class="eyebrow">Raw materials</div>
-    <h2>The originals, to read yourself</h2>
-    <p class="lede">The files that appear in the recording, published as they are and
-    unedited. These are <strong>frozen snapshots</strong> — however the pipeline changes
-    later, the versions here do not move. The research documents are in Chinese, the
-    source language of the compiled corpus.</p>
+    <h2 class="title">The originals, to read yourself.</h2>
+    <p class="lede" style="margin-bottom:32px">The files that appear in the recording,
+    published as they are and unedited. These are <strong>frozen snapshots</strong> —
+    however the pipeline changes later, the versions here do not move. The research
+    documents are in Chinese, the source language of the compiled corpus.</p>
 
-    <div class="mats rv">
-      <a class="mat" href="docs/batch_orchestrator_prompt.html" target="_blank" rel="noopener">
-        <div class="mat-ic">&#9881;&#65039;</div>
-        <div class="mat-b">
-          <div class="mat-t">Batch orchestrator launch prompt <span class="zh">ZH</span></div>
-          <div class="mat-d">The document on the left of the recording — the entry point
-          for batch compilation, laying down the unattended-operation rules and the
-          Phase 0–4 execution flow.</div>
-          <div class="mat-m">agent_prompt_batch_orchestrator.md &middot; 17.4 KB &middot; sha256 3539e103</div>
-        </div>
+    <div class="mats" data-rv="0">
+      <a class="card" href="docs/batch_orchestrator_prompt.html" target="_blank" rel="noopener">
+        <span class="arrow">→</span>
+        <div class="ct">Batch orchestrator launch prompt <span class="zh">ZH</span></div>
+        <p class="cd">The document on the left of the recording — the entry point for batch
+        compilation, laying down the unattended-operation rules and the Phase 0–4 execution
+        flow.</p>
+        <div class="cm">agent_prompt_batch_orchestrator.md · 17.4 KB · sha256 3539e103</div>
       </a>
-      <a class="mat" href="docs/evaluation_metric_definition.html" target="_blank" rel="noopener">
-        <div class="mat-ic">&#128203;</div>
-        <div class="mat-b">
-          <div class="mat-t">Primary research document · evaluation_metric_definition <span class="zh">ZH</span></div>
-          <div class="mat-d">The all-chain research summary for one topic: breadth scan →
-          candidate chain identification → red-team review → per-chain quality
-          gating.</div>
-          <div class="mat-m">evaluation_metric_definition.md &middot; 26.8 KB &middot; sha256 fe7ef6e2</div>
-        </div>
+      <a class="card" href="docs/evaluation_metric_definition.html" target="_blank" rel="noopener">
+        <span class="arrow">→</span>
+        <div class="ct">Primary research document <span class="zh">ZH</span></div>
+        <p class="cd">The all-chain research summary for one topic: breadth scan → candidate
+        chain identification → red-team review → per-chain quality gating.</p>
+        <div class="cm">evaluation_metric_definition.md · 26.8 KB · sha256 fe7ef6e2</div>
       </a>
+    </div>
 
-      <div class="mats-sub">Five per-chain deep-research documents under that topic —
-      section 12, “Retrieval log”, is the full version of the ledger above:</div>
-      <div class="chips">
-        <a href="docs/chain_01_programmatic_binary_success.html" target="_blank" rel="noopener">Chain 01 · Programmatic binary success</a>
-        <a href="docs/chain_02_navigation_efficiency_weighted.html" target="_blank" rel="noopener">Chain 02 · Navigation efficiency weighted</a>
-        <a href="docs/chain_03_few_shot_rl_statistical_rigor.html" target="_blank" rel="noopener">Chain 03 · Few-shot RL statistical rigor</a>
-        <a href="docs/chain_04_geometric_precision_metric.html" target="_blank" rel="noopener">Chain 04 · Geometric precision metric</a>
-        <a href="docs/chain_05_human_rated_rubric_metric.html" target="_blank" rel="noopener">Chain 05 · Human-rated rubric metric</a>
-      </div>
+    <p class="matsub">Five per-chain deep-research documents under that topic — section 12,
+    “Retrieval log”, is the full version of the ledger above:</p>
+    <div class="chips">
+      <a href="docs/chain_01_programmatic_binary_success.html" target="_blank" rel="noopener">Chain 01 · Programmatic binary success</a>
+      <a href="docs/chain_02_navigation_efficiency_weighted.html" target="_blank" rel="noopener">Chain 02 · Navigation efficiency weighted</a>
+      <a href="docs/chain_03_few_shot_rl_statistical_rigor.html" target="_blank" rel="noopener">Chain 03 · Few-shot RL statistical rigor</a>
+      <a href="docs/chain_04_geometric_precision_metric.html" target="_blank" rel="noopener">Chain 04 · Geometric precision metric</a>
+      <a href="docs/chain_05_human_rated_rubric_metric.html" target="_blank" rel="noopener">Chain 05 · Human-rated rubric metric</a>
     </div>
   </div>
 </section>
 
-<div class="foot">
+<footer class="foot">
   <div class="wrap">
-    <p>The source markdown behind this page is frozen under <code>docs/_src/</code>, with
-    a <code>manifest.json</code> recording each source path, snapshot time and sha256.
-    The page renders read-only snapshots, so later edits to the source files do not affect
-    it. The ledger sample is taken from chain_02 §12.1 and truncated for layout — the full
-    table is in the original.</p>
-    <p>Artifact counts and reproducible measurements live on the
+    <p class="footnote" style="border:none;padding-top:0">The source markdown behind this
+    page is frozen under <code>docs/_src/</code>, with a <code>manifest.json</code>
+    recording each source path, snapshot time and sha256. The page renders read-only
+    snapshots, so later edits to the source files do not affect it. The ledger sample is
+    taken from chain_02 §12.1 and truncated for layout — the full table is in the original.
+    <br><br>Artifact counts and reproducible measurements live on the
     <a href="../">front page</a> · <a href="../about/">Scope &amp; status</a> ·
     <a href="../data/measurements.json">measurements.json</a></p>
   </div>
-</div>
+</footer>
 
+<script src="../assets/eb.js" defer></script>
 <script>
-(function(){
-  var items=document.querySelectorAll('.rv');
-  function reveal(el){ if(el.classList.contains('in'))return; el.classList.add('in'); }
-  function revealAll(){ for(var i=0;i<items.length;i++) reveal(items[i]); }
-  if(!('IntersectionObserver' in window)){ revealAll(); return; }
-  var io=new IntersectionObserver(function(entries){
-    entries.forEach(function(e){ if(!e.isIntersecting)return; reveal(e.target); io.unobserve(e.target); });
-  },{threshold:.15,rootMargin:'0px 0px -40px 0px'});
-  for(var n=0;n<items.length;n++) io.observe(items[n]);
-  // Fallback: when embedded in an iframe the observer may not fire on display toggles.
-  setTimeout(function(){ if(document.querySelectorAll('.rv:not(.in)').length) revealAll(); },1500);
-})();
+var videoLoaded = false;
+function loadVideo() {
+  if (videoLoaded) return;
+  var slot = document.getElementById('video-slot');
+  if (!slot) return;
+  videoLoaded = true;
 
-// Lazy recording: no video bytes are requested before the click.
-var videoLoaded=false;
-function loadVideo(){
-  if(videoLoaded)return;
-  var slot=document.getElementById('video-slot');
-  if(!slot)return;
-  videoLoaded=true;
+  var tip = document.createElement('div');
+  tip.className = 'loading'; tip.id = 'v-loading';
+  tip.textContent = 'Loading recording… (8.4 MB, plays as soon as the first frame is ready)';
 
-  var tip=document.createElement('div');
-  tip.className='loading'; tip.id='v-loading';
-  tip.textContent='Loading recording… (8.4 MB, plays as soon as the first frame is ready)';
+  var v = document.createElement('video');
+  v.id = 'demo-video';
+  v.controls = true; v.autoplay = true; v.playsInline = true;
+  v.setAttribute('playsinline', '');
+  v.setAttribute('preload', 'auto');
+  v.setAttribute('controlsList', 'nodownload');
+  v.style.cssText = 'width:100%;height:100%;display:block;background:#000;border:none;border-radius:0';
+  v.poster = '../media/pipeline_demo_poster.jpg';
+  v.src = '../media/pipeline_demo.mp4';
 
-  var v=document.createElement('video');
-  v.id='demo-video';
-  v.controls=true; v.autoplay=true; v.playsInline=true;
-  v.setAttribute('playsinline','');
-  v.setAttribute('preload','auto');
-  v.setAttribute('controlsList','nodownload');
-  v.style.cssText='width:100%;height:100%;display:block;background:#000';
-  v.poster='../media/pipeline_demo_poster.jpg';
-  v.src='../media/pipeline_demo.mp4';
-
-  function done(){ var el=document.getElementById('v-loading');
-    if(el&&el.parentNode) el.parentNode.removeChild(el); }
-  v.addEventListener('loadeddata',done);
-  v.addEventListener('canplay',done);
-  v.addEventListener('error',function(){
+  function done() {
+    var el = document.getElementById('v-loading');
+    if (el && el.parentNode) el.parentNode.removeChild(el);
+  }
+  v.addEventListener('loadeddata', done);
+  v.addEventListener('canplay', done);
+  v.addEventListener('error', function () {
     done();
-    slot.innerHTML='<div class="loading" style="flex-direction:column;gap:8px;text-align:center;padding:24px">'
-      +'<div>The recording failed to load</div>'
-      +'<div style="font-size:12px">Possibly a network interruption, or this deployment does not have the media assets mounted.</div></div>';
-    videoLoaded=false;
+    slot.innerHTML = '<div class="loading" style="flex-direction:column;gap:8px">'
+      + '<div>The recording failed to load</div>'
+      + '<div style="font-size:12px">Possibly a network interruption, or this deployment '
+      + 'does not have the media assets mounted.</div></div>';
+    videoLoaded = false;
   });
 
-  slot.innerHTML='';
+  slot.innerHTML = '';
   slot.appendChild(v);
   slot.appendChild(tip);
-  try{ v.play(); }catch(e){}
+  try { v.play(); } catch (e) {}
 }
-
-// Pause playback when a parent page closes this view.
-window.addEventListener('message',function(e){
-  if(e&&e.data==='pause-demo'){
-    var v=document.getElementById('demo-video');
-    if(v){ try{ v.pause(); }catch(err){} }
+window.addEventListener('message', function (e) {
+  if (e && e.data === 'pause-demo') {
+    var v = document.getElementById('demo-video');
+    if (v) { try { v.pause(); } catch (err) {} }
   }
 });
 </script>

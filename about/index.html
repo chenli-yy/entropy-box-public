@@ -9,251 +9,205 @@
 <meta property="og:title" content="Scope, limits &amp; disclosure — Entropy Box">
 <meta property="og:description" content="What this is not, what we are withholding and why, and what we have not established.">
 <meta name="author" content="Yuqi Wang">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230B0D11'/%3E%3Cpath d='M8 11h16M8 16h11M8 21h16' stroke='%232DD4BF' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#05070D">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%2305070D'/%3E%3Cg stroke='%2300D4FF' stroke-width='1.3' fill='none'%3E%3Cpath d='M6 5.5v13M6 5.5h11M6 12h7M6 18.5h11'/%3E%3C/g%3E%3Cg fill='%2300D4FF'%3E%3Ccircle cx='6' cy='5.5' r='1.9'/%3E%3Ccircle cx='6' cy='18.5' r='1.9'/%3E%3C/g%3E%3Cg fill='%2305070D' stroke='%2300D4FF' stroke-width='1.2'%3E%3Ccircle cx='6' cy='12' r='1.7'/%3E%3Ccircle cx='17' cy='5.5' r='1.7'/%3E%3Ccircle cx='13' cy='12' r='1.7'/%3E%3Ccircle cx='17' cy='18.5' r='1.7'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/eb.css">
 <style>
-:root{
-  --bg:#07080B; --bg2:#0B0D12; --panel:#10131A; --panel2:#0D1015;
-  --line:#1E232D; --line2:#2A3240;
-  --text:#EDF1F6; --dim:#98A2B3; --faint:#6B7688;
-  --teal:#2DD4BF; --blue:#5B9DFF; --amber:#F0B429; --green:#3FCF6E; --red:#FF6B60;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:70px}
-body{margin:0;background:var(--bg);color:var(--text);
-  font:16px/1.62 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,
-  "PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
-a{color:var(--teal);text-decoration:none}
-a:hover{text-decoration:underline}
-code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.88em}
-.wrap{max-width:860px;margin:0 auto;padding:0 24px}
-
-nav{position:sticky;top:0;z-index:50;background:rgba(7,8,11,.78);
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  border-bottom:1px solid var(--line)}
-nav .wrap{display:flex;align-items:center;gap:26px;height:56px;max-width:1080px}
-.brand{font-weight:700;font-size:15px;color:var(--text);display:flex;align-items:center;
-  gap:8px;flex-shrink:0}
-.brand:hover{text-decoration:none}
-.brand .dot{width:9px;height:9px;border-radius:50%;background:var(--teal);
-  box-shadow:0 0 12px var(--teal);flex-shrink:0}
-.navlinks{display:flex;gap:22px;font-size:13.5px;margin-left:auto}
-.navlinks a{color:var(--dim)}
-.navlinks a:hover{color:var(--text);text-decoration:none}
-@media(max-width:760px){.navlinks{display:none}}
-
-header{padding:76px 0 44px;border-bottom:1px solid var(--line);position:relative;
-  overflow:hidden}
-header::before{content:'';position:absolute;top:-280px;left:50%;transform:translateX(-50%);
-  width:900px;height:520px;pointer-events:none;
-  background:radial-gradient(ellipse at center,rgba(45,212,191,.12),transparent 62%)}
-header .wrap{position:relative}
-.kicker{font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);
-  font-weight:680}
-h1{font-size:clamp(30px,5vw,46px);line-height:1.1;margin:16px 0 0;font-weight:700;
-  letter-spacing:-.03em;max-width:18ch}
-.sub{font-size:18px;color:var(--dim);margin:20px 0 0;max-width:62ch;line-height:1.55}
-.sub strong{color:var(--text);font-weight:600}
-
-section{padding:60px 0;border-bottom:1px solid var(--line)}
-h2{font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);
-  margin:0 0 14px;font-weight:680;display:flex;align-items:center;gap:9px}
-h2::before{content:'';width:16px;height:1px;background:var(--teal);opacity:.6}
-.h3big{font-size:clamp(23px,3.2vw,31px);line-height:1.18;margin:0 0 18px;font-weight:680;
-  letter-spacing:-.026em;max-width:24ch}
-p{margin:0 0 15px;color:var(--dim)}
-p strong{color:var(--text);font-weight:600}
-.lead{font-size:17px;line-height:1.6;max-width:64ch}
-
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;
-  margin-top:22px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;
-  padding:20px 21px;position:relative;overflow:hidden}
-.card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px}
-.card.ok::before{background:var(--green)}
-.card.hold::before{background:var(--amber)}
-.card.plan::before{background:var(--blue)}
-.card .t{font-weight:650;font-size:15.5px;margin-bottom:7px;letter-spacing:-.012em}
-.card .d{font-size:13.5px;color:var(--dim);line-height:1.58}
-
-ul.plain{padding-left:18px;color:var(--dim);font-size:15px;margin:0}
-ul.plain li{margin:14px 0;line-height:1.62}
-ul.plain strong{color:var(--text);font-weight:600}
-
+.band > .wrap{max-width:900px}
+.nav .wrap{max-width:1120px}
+.hdr{padding:88px 0 56px}
+.hdr .display{max-width:19ch}
 .notlist{list-style:none;margin:0;padding:0}
-.notlist li{border:1px solid var(--line);border-radius:11px;background:var(--panel2);
-  padding:17px 20px;margin:0 0 10px;font-size:14.5px;color:var(--dim);line-height:1.6}
-.notlist b{color:var(--text);font-weight:650;display:block;margin-bottom:4px;font-size:15px}
-
-.callout{border:1px solid rgba(45,212,191,.3);border-radius:12px;
-  background:linear-gradient(160deg,rgba(45,212,191,.07),var(--panel2) 60%);
-  padding:24px 26px;margin-top:26px}
-.callout .t{font-weight:660;font-size:16.5px;margin-bottom:8px;color:var(--teal)}
-.callout p{margin:0;font-size:14.5px}
-
-.btn{display:inline-flex;align-items:center;gap:7px;padding:11px 20px;border-radius:8px;
-  font-size:14.5px;border:1px solid var(--line2);background:var(--panel);color:var(--text);
-  font-weight:550;transition:.16s;margin:22px 8px 0 0}
-.btn:hover{border-color:var(--teal);text-decoration:none;transform:translateY(-1px)}
-.btn.primary{background:var(--teal);border-color:var(--teal);color:#04211E;font-weight:680}
-
-footer{padding:44px 0 80px;font-size:13.5px;color:var(--faint);background:var(--bg2)}
-footer a{color:var(--dim)}
-footer a:hover{color:var(--teal)}
+.notlist li{border:1px solid var(--rule);border-radius:10px;background:var(--card);
+  padding:19px 22px;margin:0 0 10px;font-size:14.5px;line-height:1.62;color:var(--ink-2)}
+.notlist b{display:block;color:var(--ink);font-weight:500;font-size:15.5px;
+  margin-bottom:5px;letter-spacing:-.014em}
+.callout{border:1px solid var(--accent-line);background:var(--accent-soft);
+  border-radius:10px;padding:24px 26px;margin-top:28px}
+.callout .t{font-size:16px;font-weight:500;color:var(--accent);margin:0 0 8px;
+  letter-spacing:-.014em}
+.callout p{margin:0;font-size:14.5px;line-height:1.62;color:var(--ink-2)}
+.pair{display:grid;grid-template-columns:150px 1fr;gap:20px;padding:16px 0;
+  border-bottom:1px solid var(--rule);align-items:baseline}
+.pair:first-of-type{border-top:1px solid var(--rule)}
+.pair dt{font-size:15px;font-weight:500;color:var(--ink)}
+.pair dd{margin:0;font-size:14px;line-height:1.6;color:var(--ink-2)}
+.pair dd s{text-decoration:none;color:var(--ink-3)}
+@media(max-width:620px){.pair{grid-template-columns:1fr;gap:6px}}
 </style>
 </head>
 <body>
 
-<nav>
+<nav class="nav">
   <div class="wrap">
-    <a class="brand" href="../"><span class="dot"></span>Entropy Box</a>
+    <a class="mark" href="../">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <g stroke="#00D4FF" stroke-width="1.3" fill="none">
+          <path d="M6 5.5v13M6 5.5h11M6 12h7M6 18.5h11"/>
+        </g>
+        <g fill="#00D4FF"><circle cx="6" cy="5.5" r="1.9"/><circle cx="6" cy="18.5" r="1.9"/></g>
+        <g fill="#05070D" stroke="#00D4FF" stroke-width="1.2">
+          <circle cx="6" cy="12" r="1.7"/><circle cx="17" cy="5.5" r="1.7"/>
+          <circle cx="13" cy="12" r="1.7"/><circle cx="17" cy="18.5" r="1.7"/>
+        </g>
+      </svg>
+      Entropy Box <span class="zh">箱熵</span>
+    </a>
     <div class="navlinks">
-      <a href="../#why">Why compile</a>
-      <a href="../#how">How it works</a>
-      <a href="../#findings">Findings</a>
+      <a href="../#overview">Overview</a>
+      <a href="../#architecture">Architecture</a>
+      <a href="../graph/capability-network.html">Knowledge graph</a>
+      <a href="../#research">Research</a>
       <a href="../#data">Data</a>
       <a href="../blog/">Notes</a>
     </div>
+    <a class="navpaper" href="../paper/entropy-box-knowledge-compiler-v8.pdf">Paper</a>
   </div>
 </nav>
 
-<header>
+<section class="band dark hdr">
   <div class="wrap">
-    <div class="kicker">Scope · limits · disclosure</div>
-    <h1>What this is, what it is not, and what we withhold</h1>
-    <p class="sub">The project has had almost no publicity so far, and this release is
-    deliberately partial. <strong>We would rather say so plainly than let you discover
-    the gaps.</strong></p>
+    <div class="eyebrow">Scope · limits · disclosure</div>
+    <h1 class="display" style="font-size:clamp(30px,4.6vw,46px)">What this is, what it is
+    not, and what we withhold</h1>
+    <p class="lede" style="margin-top:22px;color:#CBD5E1">The project has had almost no
+    publicity so far, and this release is deliberately partial. <strong>We would rather say
+    so plainly than let you discover the gaps.</strong></p>
   </div>
-</header>
+</section>
 
-<section id="not">
+<section class="band light" id="not">
   <div class="wrap">
-    <h2>What this is not</h2>
-    <p class="h3big">Five things it is regularly mistaken for.</p>
-    <ul class="notlist">
+    <div class="eyebrow">Definitions</div>
+    <h2 class="title">Five things it is regularly mistaken for.</h2>
+    <ul class="notlist" data-rv="0">
       <li><b>Not a search engine.</b> The output is typed entities with declared inputs,
       outputs, prerequisites and implementations, plus the edges between them — intended
       for a program, not a reader.</li>
-      <li><b>Not a RAG system.</b> RAG derives structure at query time and discards it.
-      A compiler derives it once and keeps it.</li>
-      <li><b>Not a vector database.</b> That is a component of the runtime. The content
-      is the typed edge families — hierarchy, ordering, implementation. Vectors give you
+      <li><b>Not a RAG system.</b> RAG derives structure at query time and discards it. A
+      compiler derives it once and keeps it.</li>
+      <li><b>Not a vector database.</b> That is a component of the runtime. The content is
+      the typed edge families — hierarchy, ordering, implementation. Vectors give you
       neighbours; they do not give you <em>precedes</em>.</li>
       <li><b>Not an execution ontology.</b> We model engineering decisions, not action
       semantics. Complementary to KnowRob and IEEE 1872, not a replacement.</li>
       <li><b>Not classical knowledge compilation.</b> We use the term in a source-level,
-      engineering sense and claim none of the tractability results of the OBDD/d-DNNF
-      line of work. The paper says so explicitly.</li>
+      engineering sense and claim none of the tractability results of the OBDD/d-DNNF line
+      of work. The paper says so explicitly.</li>
     </ul>
   </div>
 </section>
 
-<section id="disclosure">
+<section class="band tint" id="disclosure">
   <div class="wrap">
-    <h2>What we are withholding, and why</h2>
-    <p class="h3big">Staging the opening, rather than staging a retreat.</p>
-    <p class="lead">We would rather not put the most load-bearing material into the open
+    <div class="eyebrow">Disclosure</div>
+    <h2 class="title">Staging the opening, rather than staging a retreat.</h2>
+    <p class="lede">We would rather not put the most load-bearing material into the open
     while the project is still this quiet. Here is exactly where the line currently sits.</p>
-    <div class="grid">
-      <div class="card ok">
-        <div class="t">Published in full</div>
-        <div class="d">The three-level taxonomy. Bilingual names and levels for every
+    <div class="cards" data-rv="0" style="margin-top:30px">
+      <div class="card accent">
+        <div class="ct">Published in full</div>
+        <p class="cd">The three-level taxonomy. Bilingual names and levels for every
         capability. The asset index with upstream sources. The dependency network's
         structure — nodes, domains, degrees, topic tags, 50,407 edges. The 126-query
         retrieval golden set. The adjudicated duplicate ledger. Every number we report,
         plus the script that regenerates them. Nine topics reproduced completely, with
-        their diagrams and research ledgers.</div>
+        their diagrams and research ledgers.</p>
       </div>
-      <div class="card hold">
-        <div class="t">Withheld for now</div>
-        <div class="d">Full capability <em>descriptions</em> in bulk — the fields
-        carrying inputs, outputs, constraints and performance envelopes. These are the
-        substance of the artifact, and what would be worth copying wholesale. You can
-        read them in full for the nine case-study topics, which is enough to judge
-        whether the structure is real.</div>
+      <div class="card" style="border-left:2px solid #D97706;border-radius:0 10px 10px 0">
+        <div class="ct">Withheld for now</div>
+        <p class="cd">Full capability <em>descriptions</em> in bulk — the fields carrying
+        inputs, outputs, constraints and performance envelopes. These are the substance of
+        the artifact, and what would be worth copying wholesale. You can read them in full
+        for the nine case-study topics, which is enough to judge whether the structure is
+        real.</p>
       </div>
-      <div class="card plan">
-        <div class="t">The intention</div>
-        <div class="d">Open it completely. The value we are building is the compilation
+      <div class="card" style="border-left:2px solid var(--rule-2);border-radius:0 10px 10px 0">
+        <div class="ct">The intention</div>
+        <p class="cd">Open it completely. The value we are building is the compilation
         pipeline and the standard, not a moat around a name list — and a knowledge layer
         nobody can inspect is not infrastructure. We would rather stage the opening than
-        stage a retreat.</div>
+        stage a retreat.</p>
       </div>
     </div>
     <div class="callout">
       <div class="t">Ask for what is missing</div>
       <p>If you want access to something specific that is not here — for research, for a
       benchmark, for an integration — write to
-      <a href="mailto:wangyuqi11and11@163.com">wangyuqi11and11@163.com</a>. We are far
-      more likely to say yes than to say no.</p>
+      <a href="mailto:wangyuqi11and11@163.com">wangyuqi11and11@163.com</a>. We are far more
+      likely to say yes than to say no.</p>
     </div>
   </div>
 </section>
 
-<section id="status">
+<section class="band light" id="status">
   <div class="wrap">
-    <h2>Honest status</h2>
-    <p class="h3big">What we have not established.</p>
-    <ul class="plain">
-      <li><strong>The central comparison has not been run.</strong> We argue for
-      compilation and quantify its amortization, but we have not demonstrated better
-      answers than a strong RAG or GraphRAG baseline. That experiment needs baselines
-      beside the golden set, and we have not run it.</li>
-      <li><strong>Retrieval numbers are not published yet.</strong> The evaluation
-      harness and golden set exist; a valid run does not. We publish the suite rather
-      than a claim.</li>
-      <li><strong>Build cost is unmeasured.</strong> The pipeline records no per-topic
-      time or token cost, so the economics of front-loading work — the quantity that
-      actually decides whether compilation is worth it — cannot yet be reported.</li>
-      <li><strong>Compilation is in progress</strong> and unattended. Roughly a third of
-      the taxonomy is not yet compiled; the counts on the front page rise over time.</li>
-      <li><strong>74.1% of task chains are purely linear</strong> even though the schema
-      supports branching. The compiler emits the simplest structure that passes, and
-      nothing rewards capturing genuine route divergence.</li>
-      <li><strong>The duplicate-detection result is conditional.</strong> Pairs in the
-      adjudication ledger are conditioned on having been flagged, so it does not estimate
-      the gate's overall discriminative power, and gate recall is unmeasurable from that
-      data. The lexical row rests on four positives and is not a finding.</li>
+    <div class="eyebrow">Honest status</div>
+    <h2 class="title">What we have not established.</h2>
+    <ul class="list" data-rv="0" style="margin-top:26px">
+      <li><b>The central comparison has not been run.</b> We argue for compilation and
+      quantify its amortization, but we have not demonstrated better answers than a strong
+      RAG or GraphRAG baseline. That experiment needs baselines beside the golden set, and
+      we have not run it.</li>
+      <li><b>Retrieval numbers are not published yet.</b> The evaluation harness and golden
+      set exist; a valid run does not. We publish the suite rather than a claim.</li>
+      <li><b>Build cost is unmeasured.</b> The pipeline records no per-topic time or token
+      cost, so the economics of front-loading work — the quantity that actually decides
+      whether compilation is worth it — cannot yet be reported.</li>
+      <li><b>Compilation is in progress</b> and unattended. Roughly a third of the taxonomy
+      is not yet compiled; the counts on the front page rise over time.</li>
+      <li><b>74.1% of task chains are purely linear</b> even though the schema supports
+      branching. The compiler emits the simplest structure that passes, and nothing rewards
+      capturing genuine route divergence.</li>
+      <li><b>The duplicate-detection result is conditional.</b> Pairs in the adjudication
+      ledger are conditioned on having been flagged, so it does not estimate the gate's
+      overall discriminative power, and gate recall is unmeasurable from that data. The
+      lexical row rests on four positives and is not a finding.</li>
     </ul>
   </div>
 </section>
 
-<section id="expect">
+<section class="band tint" id="expect">
   <div class="wrap">
-    <h2>What changes, if it works</h2>
-    <p class="h3big">Stated as design intent — not as a measured outcome.</p>
-    <div class="grid">
-      <div class="card"><div class="t">Route survey</div>
-        <div class="d">Read dozens of papers over several days → candidate routes with
-        alternatives, in minutes.</div></div>
-      <div class="card"><div class="t">Module selection</div>
-        <div class="d">Search GitHub and find out the hard way → every known
-        implementation, with its attribution.</div></div>
-      <div class="card"><div class="t">Orchestration</div>
-        <div class="d">Hand-wire modules and debug the interfaces → ordered from the
-        dependency graph, adaptation flagged.</div></div>
-      <div class="card"><div class="t">Reuse</div>
-        <div class="d">Each project reinvents → the artifact accumulates; every task
-        strengthens it.</div></div>
-      <div class="card"><div class="t">Onboarding</div>
-        <div class="d">Oral tradition and a long ramp → the graph is the map.</div></div>
+    <div class="eyebrow">Design intent</div>
+    <h2 class="title">What changes, if it works.</h2>
+    <p class="lede">Stated as intent — not as a measured outcome.</p>
+    <dl style="margin:30px 0 0" data-rv="0">
+      <div class="pair"><dt>Route survey</dt>
+        <dd>Read dozens of papers over several days <s>→</s> candidate routes with
+        alternatives, in minutes.</dd></div>
+      <div class="pair"><dt>Module selection</dt>
+        <dd>Search GitHub and find out the hard way <s>→</s> every known implementation,
+        with its attribution.</dd></div>
+      <div class="pair"><dt>Orchestration</dt>
+        <dd>Hand-wire modules and debug the interfaces <s>→</s> ordered from the dependency
+        graph, adaptation flagged.</dd></div>
+      <div class="pair"><dt>Reuse</dt>
+        <dd>Each project reinvents <s>→</s> the artifact accumulates; every task strengthens
+        it.</dd></div>
+      <div class="pair"><dt>Onboarding</dt>
+        <dd>Oral tradition and a long ramp <s>→</s> the graph is the map.</dd></div>
+    </dl>
+    <div class="actions">
+      <a class="btn btn-primary" href="../paper/entropy-box-knowledge-compiler-v8.pdf">Read the paper <span class="ar">→</span></a>
+      <a class="btn btn-ghost" href="../">Back to the front page</a>
     </div>
-    <a class="btn primary" href="../paper/entropy-box-knowledge-compiler-v8.pdf">Read the paper</a>
-    <a class="btn" href="../">Back to the front page</a>
   </div>
 </section>
 
-<footer>
+<footer class="foot">
   <div class="wrap">
-    <p><strong style="color:var(--text)">Entropy Box · 箱熵</strong> — a knowledge
-    compiler for embodied AI.</p>
-    <p>Contact: <a href="mailto:wangyuqi11and11@163.com">wangyuqi11and11@163.com</a>
-    · Yuqi Wang ·
-    Data <a href="../#data">CC BY 4.0</a> ·
-    Code <a href="../LICENSE">MIT</a> ·
-    <a href="../CITATION.cff">CITATION.cff</a></p>
+    <p style="color:#CBD5E1"><strong style="font-weight:500">Entropy Box · 箱熵</strong> —
+    a knowledge compiler for embodied intelligence.</p>
+    <p>Contact: <a href="mailto:wangyuqi11and11@163.com">wangyuqi11and11@163.com</a> ·
+    Yuqi Wang · Data <a href="../#data">CC BY 4.0</a> ·
+    Code <a href="../LICENSE">MIT</a> · <a href="../CITATION.cff">CITATION.cff</a></p>
   </div>
 </footer>
 
+<script src="../assets/eb.js" defer></script>
 </body>
 </html>
