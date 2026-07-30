@@ -180,15 +180,14 @@
           <circle cx="13" cy="12" r="1.7"/><circle cx="17" cy="18.5" r="1.7"/>
         </g>
       </svg>
-      Entropy Box <span class="zh">箱熵</span>
+      Entropy Box <span class="zh">&#31665;&#29223;</span>
     </a>
     <div class="navlinks">
       <a href="#overview">Overview</a>
       <a href="#architecture">Architecture</a>
-      <a href="graph/capability-network.html">Knowledge graph</a>
       <a href="#research">Research</a>
       <a href="#demo">Demo</a>
-      <a href="#data">Data</a>
+      <a href="#explore">Explore</a>
     </div>
     <a class="navpaper" href="paper/entropy-box-knowledge-compiler-v8.pdf">Paper</a>
   </div>
@@ -202,14 +201,13 @@
         <div class="eyebrow">Scientific knowledge infrastructure</div>
         <h1 class="display">Knowledge Compiler for <span class="a">Embodied Intelligence</span></h1>
         <div class="pathline">
-          Compile knowledge <s>→</s> Structure capabilities <s>→</s> Enable robot intelligence
+          Compile knowledge <s>&#8594;</s> Structure capabilities <s>&#8594;</s> Enable robot intelligence
         </div>
-        <p class="lede">Robotics knowledge already exists — in papers, repositories, ROS
-        packages and model hubs. It exists as <strong>prose</strong>, not as structure.
-        Entropy Box compiles it once into a typed, persistent graph that programs can
-        consume.</p>
+        <p class="lede">Robotics knowledge already exists &mdash; as <strong>prose</strong>,
+        not as structure. Entropy Box compiles it once into a typed graph that programs
+        can consume.</p>
         <div class="actions">
-          <a class="btn btn-primary" href="paper/entropy-box-knowledge-compiler-v8.pdf">Read the paper <span class="ar">→</span></a>
+          <a class="btn btn-primary" href="paper/entropy-box-knowledge-compiler-v8.pdf">Read the paper <span class="ar">&#8594;</span></a>
           <a class="btn btn-ghost" href="graph/capability-network.html">Explore the knowledge graph</a>
         </div>
       </div>
@@ -220,8 +218,6 @@
           <title>The compilation path</title>
           <desc>Unstructured sources are compiled once into a typed graph, from which
           capability chains and executable robot task plans are derived.</desc>
-
-          <!-- sources -->
           <g>
             <rect class="fr" x="4"   y="16" width="134" height="34" rx="6"/>
             <rect class="fr" x="152" y="16" width="134" height="34" rx="6"/>
@@ -235,15 +231,11 @@
             <path d="M219,50 L219,96"/>
             <path d="M368,50 C368,74 220,68 220,96"/>
           </g>
-
-          <!-- compiler -->
           <rect class="fr-a" x="46" y="96" width="348" height="58" rx="8"/>
           <text class="lb-w" x="220" y="121" text-anchor="middle">KNOWLEDGE COMPILER</text>
-          <text class="lb-a" x="220" y="138" text-anchor="middle">GATED · OFFLINE · AUDITABLE</text>
+          <text class="lb-a" x="220" y="138" text-anchor="middle">GATED &middot; OFFLINE &middot; AUDITABLE</text>
           <path class="ln-a" d="M220,154 L220,190"/>
           <path class="ln-a" d="M215,183 L220,190 L225,183"/>
-
-          <!-- typed graph -->
           <rect class="fr-d" x="46" y="190" width="348" height="176" rx="8"/>
           <text class="lb" x="60" y="210">TYPED GRAPH</text>
           <g class="eg">
@@ -268,8 +260,6 @@
           </g>
           <path class="ln-a" d="M220,366 L220,402"/>
           <path class="ln-a" d="M215,395 L220,402 L225,395"/>
-
-          <!-- capability chain -->
           <text class="lb" x="60" y="422">CAPABILITY CHAIN</text>
           <g class="ln-a">
             <path d="M102,448 L152,448"/><path d="M184,448 L234,448"/>
@@ -287,8 +277,6 @@
           </g>
           <path class="ln-a" d="M220,470 L220,504"/>
           <path class="ln-a" d="M215,497 L220,504 L225,497"/>
-
-          <!-- robot plan -->
           <rect class="fr-a" x="128" y="504" width="184" height="42" rx="8"/>
           <text class="lb-w" x="220" y="530" text-anchor="middle">ROBOT TASK PLAN</text>
         </svg>
@@ -300,7 +288,7 @@
 <!-- ===================== RESEARCH DATASET ===================== -->
 <section class="band deep" id="dataset">
   <div class="wrap">
-    <div class="rule-label">Research dataset · snapshot 2026-07-30</div>
+    <div class="rule-label">Research dataset &middot; snapshot 2026-07-30</div>
     <div class="metrics" data-rv="0">
       <div class="metric"><div class="mv tnum" data-count>24,929</div>
         <div class="mk">Robot capabilities</div><div class="mn">bilingual, typed</div></div>
@@ -313,17 +301,15 @@
       <div class="metric"><div class="mv tnum" data-count>6,078</div>
         <div class="mk">Implementation assets</div><div class="mn">15 asset types</div></div>
       <div class="metric"><div class="mv tnum" data-count>1,740</div>
-        <div class="mk">Compiled topics</div><div class="mn">of a 2,511-leaf taxonomy</div></div>
+        <div class="mk">Compiled topics</div><div class="mn">of 2,511 leaves</div></div>
       <div class="metric"><div class="mv tnum" data-count>7,089</div>
         <div class="mk">Cross-domain hubs</div><div class="mn">bridging capabilities</div></div>
       <div class="metric"><div class="mv tnum" data-count>1,226</div>
         <div class="mk">Adjudicated duplicate pairs</div><div class="mn">1,155 labelled</div></div>
     </div>
-    <p class="note" style="margin-top:20px">Regenerated by
-    <a href="analysis/measure.py">analysis/measure.py</a> from the artifact on disk — no
-    GPU, no network, no service — so anyone with a copy reproduces every figure.
-    Structured output: <a href="data/measurements.json">measurements.json</a>. Compilation
-    runs unattended; roughly a third of the taxonomy is still uncompiled.</p>
+    <p class="note" style="margin-top:20px">Regenerated from the artifact on disk by
+    <a href="analysis/measure.py">measure.py</a> &mdash; no GPU, no network, no service.
+    A third of the taxonomy is still uncompiled, so these rise.</p>
   </div>
 </section>
 
@@ -334,26 +320,24 @@
     <div class="split top">
       <div>
         <h2 class="title">A language model has no chief engineer's view.</h2>
-        <p class="lede">It writes a detector or a control law when you tell it which one
-        you need. It cannot orchestrate the workflow on its own — because
-        <strong>one task hides a dozen steps and a tangle of dependencies between
-        them</strong>.</p>
-        <p class="lede" style="margin-top:18px">A craftsman who has mastered every part,
-        but has never held the drawing. <strong>What we build is that drawing.</strong></p>
+        <p class="lede">It writes the detector you ask for. It cannot see that one task
+        hides a dozen steps and the dependencies between them.</p>
+        <p class="lede" style="margin-top:18px"><strong>A craftsman who has mastered every
+        part but never held the drawing. We build the drawing.</strong></p>
       </div>
       <div class="cards" data-rv="0">
-        <div class="card"><div class="ct">Atomic competence, no composition</div>
-          <p class="cd">Writes a detector happily. Cannot deliver
-          <em>“pick up the red cup”</em> end to end.</p></div>
+        <div class="card"><div class="ct">Competence without composition</div>
+          <p class="cd">Writes a detector. Cannot deliver &ldquo;pick up the red cup&rdquo;
+          end to end.</p></div>
         <div class="card"><div class="ct">Blind to dependencies</div>
-          <p class="cd">Perception → localization → planning → control. Which module feeds
-          which, on what interface, is exactly what gets lost.</p></div>
+          <p class="cd">Perception &rarr; localization &rarr; planning &rarr; control.
+          Which feeds which is what gets lost.</p></div>
         <div class="card"><div class="ct">The route is a black box</div>
-          <p class="cd">Facing a new task, an engineer reads dozens of papers to compare
-          technical routes by trial and error.</p></div>
+          <p class="cd">A new task means reading dozens of papers to compare routes by
+          trial and error.</p></div>
         <div class="card"><div class="ct">Orchestration eats the time</div>
-          <p class="cd">Most hours go into surveying routes and hand-wiring modules — not
-          the algorithm work that matters.</p></div>
+          <p class="cd">Most hours go to wiring modules together, not to the algorithm
+          work.</p></div>
       </div>
     </div>
   </div>
@@ -368,13 +352,13 @@
     <div class="cmp" data-rv="0" style="margin-top:32px">
       <div class="cmpcol">
         <h4>Query-time derivation</h4>
-        <p class="cc">RAG · GraphRAG · agentic search</p>
+        <p class="cc">RAG &middot; GraphRAG &middot; agentic search</p>
         <ul class="steps">
           <li class="hi">Question</li>
           <li>Retrieve passages</li>
           <li>Model derives the structure</li>
           <li>Answer, in prose</li>
-          <li class="out">Structure discarded — the next query redoes it</li>
+          <li class="out">Structure discarded &mdash; the next query redoes it</li>
         </ul>
       </div>
       <div class="cmpcol on">
@@ -382,24 +366,23 @@
         <p class="cc">Entropy Box</p>
         <ul class="steps">
           <li class="hi">Corpus</li>
-          <li>Compile — gated, offline, auditable</li>
+          <li>Compile &mdash; gated, offline, auditable</li>
           <li>Typed persistent graph</li>
           <li>Retrieve over structure</li>
-          <li class="win">Reasoning and assembly — gaps named explicitly</li>
+          <li class="win">Assembly, with the gaps named</li>
         </ul>
       </div>
     </div>
 
     <div class="split top" style="margin-top:56px">
       <div>
-        <h3 class="subtitle">Amortization is still rising, not saturating.</h3>
-        <p class="lede" style="font-size:16px">Each compiled unit is currently consumed
-        <strong>1.61</strong> times on average — <strong>13,936</strong> avoided
-        re-derivations. The curve has not flattened, which is the informative part:
-        <strong>compilation becomes a better deal the more of the domain it covers.</strong></p>
+        <h3 class="subtitle">Amortization is rising, not saturating.</h3>
+        <p class="lede" style="font-size:16px">Each compiled unit is consumed
+        <strong>1.61&times;</strong> on average &mdash; <strong>13,936</strong>
+        re-derivations avoided &mdash; and the curve has not flattened.</p>
         <div class="chiprow">
-          <span class="chip"><b>28.7%</b>&nbsp;of capabilities reused across topics</span>
-          <span class="chip">max reuse&nbsp;<b>32×</b></span>
+          <span class="chip"><b>28.7%</b>&nbsp;reused across topics</span>
+          <span class="chip">max reuse&nbsp;<b>32&times;</b></span>
         </div>
       </div>
       <div class="chartbox">
@@ -414,16 +397,14 @@
           <text class="g-lbl" x="34" y="78" text-anchor="end">1.4</text>
           <text class="g-lbl" x="34" y="39" text-anchor="end">1.6</text>
           <text class="g-lbl" x="40" y="171">50</text>
-          <text class="g-lbl" x="292" y="171" text-anchor="middle">topics compiled →</text>
+          <text class="g-lbl" x="292" y="171" text-anchor="middle">topics compiled &#8594;</text>
           <text class="g-lbl" x="544" y="171" text-anchor="end">1,605</text>
           <path class="f-accent" d="M40,152 L40,145.5 L56.2,139.8 L72.4,134.9 L88.6,129.9 L104.8,125.4 L121,121.1 L137.2,116.1 L153.4,112.4 L169.6,108.5 L185.9,104.4 L202.1,100.2 L218.3,96.8 L234.5,93.4 L250.7,90 L266.9,86.3 L283.1,83 L299.3,79.6 L315.5,76.2 L331.7,72.8 L347.9,69.6 L364.1,66.8 L380.3,63.5 L396.5,60.4 L412.7,57.5 L428.9,54.6 L445.1,51.7 L461.4,49.1 L477.6,46.3 L493.8,43.4 L510,40.6 L526.2,37.9 L542.4,35.2 L544,34.9 L544,152 Z"/>
           <polyline class="l-accent" data-draw="0"
             points="40,145.5 56.2,139.8 72.4,134.9 88.6,129.9 104.8,125.4 121,121.1 137.2,116.1 153.4,112.4 169.6,108.5 185.9,104.4 202.1,100.2 218.3,96.8 234.5,93.4 250.7,90 266.9,86.3 283.1,83 299.3,79.6 315.5,76.2 331.7,72.8 347.9,69.6 364.1,66.8 380.3,63.5 396.5,60.4 412.7,57.5 428.9,54.6 445.1,51.7 461.4,49.1 477.6,46.3 493.8,43.4 510,40.6 526.2,37.9 542.4,35.2 544,34.9"/>
           <circle class="dot-accent" cx="544" cy="34.9" r="3.5"/>
         </svg>
-        <p class="chart-cap">Amortization factor α — capability-topic usages ÷ distinct
-        capabilities — against topics compiled. Source:
-        <a href="data/measurements.json">measurements.json</a></p>
+        <p class="chart-cap">Amortization factor &alpha; against topics compiled.</p>
       </div>
     </div>
   </div>
@@ -435,75 +416,63 @@
     <div class="eyebrow">Architecture</div>
     <h2 class="title">Raw knowledge in, robot intelligence out.</h2>
     <p class="lede" style="margin-bottom:44px">Five stages. The second does the unexpected
-    work — the dependency edges are not authored and not model-inferred.</p>
+    work.</p>
 
     <div class="flowsteps" data-rv="0">
       <div class="fstep">
         <div>
-          <div class="fk">Stage 01 · Raw knowledge</div>
+          <div class="fk">Stage 01</div>
           <div class="fn">Data layer</div>
-          <div class="fd">Papers, open-source projects, technical documentation and
-          engineering practice — extracted, cleaned, aligned, and admitted through gates
-          into a domain ontology.</div>
+          <div class="fd">Papers, repositories, documentation and engineering practice
+          &mdash; cleaned, aligned, admitted through gates.</div>
         </div>
         <div class="fm"><b class="tnum">1,740</b><span>TOPICS</span></div>
       </div>
-      <div class="farrow">↓</div>
+      <div class="farrow">&#8595;</div>
 
       <div class="fstep on">
         <div>
-          <div class="fk">Stage 02 · Knowledge compiler</div>
+          <div class="fk">Stage 02</div>
           <div class="fn">Typed knowledge graph</div>
-          <div class="fd">Topics → capabilities → assets, each node carrying declared
-          inputs, outputs, prerequisites and performance envelope. Ordering edges are
-          derived mechanically from 5,756 task chains by walking each chain's
-          <code>next</code> pointers — the ordering was already latent, and a traversal
-          makes it explicit.</div>
+          <div class="fd">Topics &rarr; capabilities &rarr; assets, every node typed. The
+          ordering edges are <strong>derived mechanically</strong> from 5,756 task chains
+          &mdash; not authored, not model-inferred.</div>
         </div>
         <div class="fm"><b class="tnum">50,407</b><span>EDGES</span></div>
       </div>
-      <div class="farrow">↓</div>
+      <div class="farrow">&#8595;</div>
 
       <div class="fstep">
         <div>
-          <div class="fk">Stage 03 · Retrieval</div>
+          <div class="fk">Stage 03</div>
           <div class="fn">Structure-aware retrieval</div>
-          <div class="fd">Hybrid retrieval that runs over the structure rather than over
-          passages, with every hit traceable to the evidence document it came from. Open
-          read-only endpoint, plus Agent Skill and MCP packaging.</div>
+          <div class="fd">Retrieval over the structure rather than over passages, every hit
+          traceable to its evidence document.</div>
         </div>
         <div class="fm"><b class="tnum">98.3%</b><span>TRACEABLE</span></div>
       </div>
-      <div class="farrow">↓</div>
+      <div class="farrow">&#8595;</div>
 
       <div class="fstep">
         <div>
-          <div class="fk">Stage 04 · Composition</div>
+          <div class="fk">Stage 04</div>
           <div class="fn">Robot capability layer</div>
-          <div class="fd">With the graph in view, an agent selects capability modules,
-          orders execution from the dependency edges, handles interface adaptation, and
-          emits a complete plan — with the gaps named rather than papered over.</div>
+          <div class="fd">An agent orders execution from the dependency edges and emits a
+          plan with the gaps named rather than papered over.</div>
         </div>
         <div class="fm"><b class="tnum">7,089</b><span>HUBS</span></div>
       </div>
-      <div class="farrow">↓</div>
+      <div class="farrow">&#8595;</div>
 
       <div class="fstep" style="border-style:dashed">
         <div>
-          <div class="fk">Stage 05 · Where this is going</div>
+          <div class="fk">Stage 05</div>
           <div class="fn">Robot intelligence</div>
-          <div class="fd">The plan lands on real hardware: attributed implementations,
-          declared interfaces, named gaps. <strong>Not yet demonstrated end to end</strong>
-          — the assembly step is shown in the demo below; execution on a platform is the
-          next thing to earn, not a claim we are making.</div>
+          <div class="fd"><strong>Not yet demonstrated end to end.</strong> The next thing
+          to earn, not a claim we are making.</div>
         </div>
-        <div class="fm"><b>—</b><span>NOT ESTABLISHED</span></div>
+        <div class="fm"><b>&mdash;</b><span>NOT ESTABLISHED</span></div>
       </div>
-    </div>
-
-    <div class="actions" style="justify-content:center">
-      <a class="btn btn-ghost" href="how-it-works/">Five stages, three gates, with source documents</a>
-      <a class="btn btn-text" href="media/pipeline_demo.mp4">85s pipeline recording <span class="ar">→</span></a>
     </div>
   </div>
 </section>
@@ -512,19 +481,18 @@
 <section class="band tint" id="research">
   <div class="wrap">
     <div class="eyebrow">Research</div>
-    <h2 class="title">Two results from the system's own records. One is negative — and
-    more useful.</h2>
+    <h2 class="title">Two results from the system's own records. One is negative &mdash;
+    and more useful.</h2>
 
     <div class="split top" data-rv="0" style="margin-top:34px">
       <div class="finding neg">
         <div class="ft">Embedding similarity cannot decide duplication
           <span class="tag neg">negative</span></div>
-        <p class="fb">On 1,155 adjudicated near-duplicate pairs: once the gate has flagged
-        a pair, the similarity score carries <strong>far too little signal to decide the
-        merge</strong>. Raising the threshold does not fix it — precision barely moves
-        while half the true duplicates are discarded. Any system that merges automatically
-        above a threshold would, at our operating point, be <strong>wrong more than nine
-        times in ten</strong>.</p>
+        <p class="fb">On 1,155 adjudicated pairs, once the gate has flagged a pair the
+        similarity score carries <strong>too little signal to decide the merge</strong>.
+        Raising the threshold does not help: precision stays flat while half the true
+        duplicates are discarded. Merging automatically above a threshold would be
+        <strong>wrong more than nine times in ten</strong>.</p>
         <table style="margin-top:16px">
           <tr><th>Path</th><th class="n">pairs</th><th class="n">dup.</th>
               <th class="n">prec.</th><th class="n">AUC</th></tr>
@@ -533,10 +501,9 @@
           <tr><td>Lexical</td><td class="n">647</td><td class="n">4</td>
               <td class="n">0.006</td><td class="n">0.454</td></tr>
         </table>
-        <p class="note" style="margin-top:14px">Pairs are conditioned on having been
-        flagged, so this does not estimate the gate's overall discriminative power; recall
-        is unmeasurable from this data. The lexical row rests on four positives and is not
-        a finding. <a href="blog/01-similarity-cannot-decide-duplication.html">Full note →</a></p>
+        <p class="note" style="margin-top:14px">Conditioned on having been flagged, so gate
+        recall is unmeasurable here; the lexical row rests on four positives.
+        <a href="blog/01-similarity-cannot-decide-duplication.html">Full note &rarr;</a></p>
       </div>
       <div class="chartbox">
         <svg viewBox="0 0 560 200" role="img"
@@ -550,18 +517,17 @@
           <text class="g-lbl" x="38" y="84" text-anchor="end">66%</text>
           <text class="g-lbl" x="38" y="42" text-anchor="end">100%</text>
           <text class="g-lbl" x="44" y="187">0.863</text>
-          <text class="g-lbl" x="294" y="187" text-anchor="middle">similarity threshold →</text>
+          <text class="g-lbl" x="294" y="187" text-anchor="middle">similarity threshold &#8594;</text>
           <text class="g-lbl" x="544" y="187" text-anchor="end">0.954</text>
           <polyline class="l-neg" data-draw="0"
             points="44,38 106.5,45.2 169,48.8 231.5,52.4 294,70.4 356.5,81.2 419,90 481.5,97.2 544,110"/>
           <polyline class="l-accent" data-draw="260"
             points="44,155.3 106.5,155.4 169,154.8 231.5,153.9 294,153.4 356.5,152.8 419,150.8 481.5,148.1 544,146.7"/>
-          <text class="g-key k-neg" x="182" y="28">recall of true duplicates — collapses</text>
-          <text class="g-key k-accent" x="182" y="140">precision — flat</text>
+          <text class="g-key k-neg" x="182" y="28">recall &mdash; collapses</text>
+          <text class="g-key k-accent" x="182" y="140">precision &mdash; flat</text>
         </svg>
-        <p class="chart-cap">The whole negative result in one picture: tightening the gate
-        throws duplicates away without buying precision. Nine sweep points from the
-        embedding path.</p>
+        <p class="chart-cap">Tightening the gate throws duplicates away without buying
+        precision.</p>
       </div>
     </div>
 
@@ -569,21 +535,17 @@
       <div class="finding ok">
         <div class="ft">Provenance resolvability, proposed as a metric
           <span class="tag">98.3%</span></div>
-        <p class="fb">Every compiled topic cites the documents it was assembled from, and
-        because those are files, the citation is <strong>mechanically checkable</strong>.
-        Structural validity is routinely checked for generated knowledge graphs;
-        provenance resolvability is not — and it is cheap to compute, hard to game, and
-        directly diagnostic of whether an evidence layer is real or decorative. A system
-        that cannot report it does not have one.</p>
+        <p class="fb">Every topic cites the documents it was assembled from, and because
+        those are files the citation is <strong>mechanically checkable</strong>. Cheap to
+        compute, hard to game &mdash; and a system that cannot report it does not have
+        one.</p>
       </div>
       <div class="finding warn">
         <div class="ft">Unverified fields are left unverified
           <span class="tag warn">by design</span></div>
-        <p class="fb"><strong>1,105 fields</strong> are explicitly marked unverified rather
-        than filled in, across 16.2% of topic records. We report this as a
-        <em>positive</em> indicator. Given what is actually verifiable about fast-moving
-        open-source projects, zero unverified markers would not indicate a better artifact
-        — it would indicate a pipeline that fills gaps instead of declaring them.</p>
+        <p class="fb"><strong>1,105 fields</strong> across 16.2% of topics are marked
+        unverified rather than filled in. Zero markers would not mean a better artifact
+        &mdash; it would mean a pipeline that fills gaps instead of declaring them.</p>
       </div>
     </div>
   </div>
@@ -593,67 +555,57 @@
 <section class="band dark" id="demo">
   <div class="wrap">
     <div class="eyebrow">Demo</div>
-    <h2 class="title">Not a paragraph about stair descent — a plan with named
+    <h2 class="title">Not a paragraph about stair descent &mdash; a plan with named
     implementations.</h2>
-    <p class="lede" style="margin-bottom:34px">51 seconds, unedited. The goal
-    <em>“how do you keep a legged robot safe going down stairs?”</em> is decomposed,
-    matched across topics, and assembled into a technical plan whose nodes carry
-    attributed open-source assets. Every card opens onto its repository, licence and
-    import path. <strong>This is what passage retrieval structurally cannot
-    produce.</strong></p>
+    <p class="lede" style="margin-bottom:34px;color:#CBD5E1">51 seconds, unedited. A goal
+    is decomposed, matched across topics, and assembled into a plan whose nodes carry
+    attributed open-source assets.</p>
     <video controls preload="metadata" poster="media/assembly_demo_poster.jpg">
       <source src="media/assembly_demo.mp4" type="video/mp4">
     </video>
-    <p class="chart-cap">1920×844 native. Both recordings are cropped only — to remove OS
-    chrome and capture overlays — otherwise unedited and not sped up.</p>
+    <p class="chart-cap">Cropped only, to remove OS chrome. Not sped up.</p>
   </div>
 </section>
 
 <!-- ===================== EXPLORE ===================== -->
 <section class="band deep" id="explore">
   <div class="wrap">
-    <div class="eyebrow">Knowledge graph</div>
-    <h2 class="title">Everything below is inspectable right now.</h2>
+    <div class="eyebrow">Explore</div>
+    <h2 class="title">Everything here is inspectable right now.</h2>
     <div class="cards" data-rv="0" style="margin-top:34px">
-      <a class="card" href="graph/capability-network.html"><span class="arrow">→</span>
+      <a class="card" href="graph/capability-network.html"><span class="arrow">&#8594;</span>
         <div class="ct">Capability dependency network</div>
-        <p class="cd">The full ordering graph derived from compiled task chains, with
-        English capability names. Search, filter by hub or bridge role, follow dependency
+        <p class="cd">Search the ordering graph, filter by hub or bridge role, follow
         edges.</p>
-        <div class="cm">24,915 nodes · 50,407 edges · 7,089 hubs</div>
+        <div class="cm">24,915 nodes &middot; 50,407 edges</div>
       </a>
-      <a class="card" href="graph/topic-graph.html"><span class="arrow">→</span>
+      <a class="card" href="graph/topic-graph.html"><span class="arrow">&#8594;</span>
         <div class="ct">Topic graph</div>
-        <p class="cd">The curated taxonomy that drives compilation: 15 top-level domains,
-        416 sub-domains, 2,511 leaf topics.</p>
-        <div class="cm">2,942 nodes · 2,511 compilation units</div>
+        <p class="cd">The curated taxonomy that drives compilation.</p>
+        <div class="cm">15 domains &middot; 416 sub &middot; 2,511 leaves</div>
       </a>
-      <a class="card" href="case-study/"><span class="arrow">→</span>
+      <a class="card" href="case-study/"><span class="arrow">&#8594;</span>
         <div class="ct">Nine topics, in full <span class="tag">inspectable</span></div>
-        <p class="cd">Nine compiled topics across nine domains, reproduced completely:
-        every chain and step, every capability description, every implementing repository,
-        the diagrams and the retrieval ledgers behind each.</p>
-        <div class="cm">9 topics · 37 chains · 283 capabilities · 143 assets</div>
+        <p class="cd">Nine compiled topics reproduced completely &mdash; every chain,
+        description, repository and ledger.</p>
+        <div class="cm">37 chains &middot; 283 capabilities &middot; 143 assets</div>
       </a>
-      <a class="card" href="how-it-works/"><span class="arrow">→</span>
-        <div class="ct">How the graph is built <span class="tag mute">with originals</span></div>
-        <p class="cd">Five stages, three gates, and the provenance discipline that forces
-        evidence — plus the actual research documents for one topic, published so you can
-        read what the compiler read.</p>
-        <div class="cm">7 source documents · 1 recording</div>
+      <a class="card" href="how-it-works/"><span class="arrow">&#8594;</span>
+        <div class="ct">How the graph is built</div>
+        <p class="cd">Five stages, three gates, and the original research documents the
+        compiler read.</p>
+        <div class="cm">7 source documents &middot; 1 recording</div>
       </a>
-      <a class="card" href="blog/"><span class="arrow">→</span>
+      <a class="card" href="blog/"><span class="arrow">&#8594;</span>
         <div class="ct">Technical notes <span class="tag mute">2 posts</span></div>
-        <p class="cd">Things we measured and things we got wrong, written to be useful
-        independently of this system. A negative result on embedding-based duplicate
-        detection, and a design rule for multi-agent systems.</p>
-        <div class="cm">CC BY 4.0 · republish with attribution</div>
+        <p class="cd">Things we measured and things we got wrong.</p>
+        <div class="cm">CC BY 4.0</div>
       </a>
-      <a class="card" href="integrate/"><span class="arrow">→</span>
-        <div class="ct">Query it from your agent</div>
-        <p class="cd">Open read-only retrieval endpoint — plain HTTP, an Agent Skill
-        declaration, or an MCP stdio server. No key, nothing to install.</p>
-        <div class="cm">HTTP · Agent Skill · MCP</div>
+      <a class="card" href="about/"><span class="arrow">&#8594;</span>
+        <div class="ct">Scope, limits &amp; disclosure</div>
+        <p class="cd">What this is not, what we withhold, and what we have
+        <em>not</em> established.</p>
+        <div class="cm">read before citing</div>
       </a>
     </div>
   </div>
@@ -663,60 +615,51 @@
 <section class="band light" id="data">
   <div class="wrap">
     <div class="eyebrow">Open data</div>
-    <h2 class="title">Published so the measurements can be reproduced and the resources
+    <h2 class="title">Published so the measurements reproduce and the resources get
     reused.</h2>
-    <p class="lede" style="margin-bottom:34px">Data files CC BY 4.0 · code MIT.</p>
+    <p class="lede" style="margin-bottom:34px">Data CC BY 4.0 &middot; code MIT.</p>
     <div class="cards" data-rv="0">
-      <a class="card" href="data/retrieval_golden.json"><span class="arrow">→</span>
+      <a class="card" href="data/retrieval_golden.json"><span class="arrow">&#8594;</span>
         <div class="ct">Retrieval golden set <span class="tag">126 queries</span></div>
-        <p class="cd">Domain-specific evaluation suite in the mixed Chinese/English
-        register users actually type. Three assertion strengths plus <em>negative</em>
-        assertions declaring what must not be retrieved.</p>
-        <div class="cm">8 intent classes · 120 positive · 13 negative</div>
+        <p class="cd">Three assertion strengths, plus <em>negative</em> assertions declaring
+        what must not be retrieved.</p>
+        <div class="cm">8 intent classes &middot; 120 positive &middot; 13 negative</div>
       </a>
-      <a class="card" href="data/dedup_adjudication_ledger.json"><span class="arrow">→</span>
+      <a class="card" href="data/dedup_adjudication_ledger.json"><span class="arrow">&#8594;</span>
         <div class="ct">Adjudication ledger <span class="tag">labelled</span></div>
-        <p class="cd">Near-duplicate pairs with the similarity score that flagged them, the
-        metric, the adjudicating agent and the written rationale. The dataset behind the
-        negative result above.</p>
-        <div class="cm">1,226 pairs · 1,155 labelled</div>
+        <p class="cd">Near-duplicate pairs with score, metric, adjudicator and written
+        rationale.</p>
+        <div class="cm">1,226 pairs &middot; 1,155 labelled</div>
       </a>
-      <a class="card" href="data/capability_names.json"><span class="arrow">→</span>
+      <a class="card" href="data/capability_names.json"><span class="arrow">&#8594;</span>
         <div class="ct">Capability index <span class="tag">bilingual</span></div>
-        <p class="cd">Every capability with its English and Chinese canonical names and
-        abstraction level. Full descriptions are not distributed in bulk — see the case
-        study for complete examples.</p>
-        <div class="cm">24,929 capabilities · en + zh</div>
+        <p class="cd">Canonical English and Chinese names, with abstraction level.</p>
+        <div class="cm">24,929 capabilities</div>
       </a>
-      <a class="card" href="data/asset_index.json"><span class="arrow">→</span>
+      <a class="card" href="data/asset_index.json"><span class="arrow">&#8594;</span>
         <div class="ct">Asset index</div>
-        <p class="cd">Repositories, frameworks, packages, pretrained models, datasets,
-        simulators, benchmarks and robot platforms, with upstream sources and aliases. One
-        repository is exactly one asset.</p>
-        <div class="cm">6,078 assets · 15 types</div>
+        <p class="cd">Repositories, models, datasets, simulators and platforms, with
+        upstream sources.</p>
+        <div class="cm">6,078 assets &middot; 15 types</div>
       </a>
-      <a class="card" href="data/taxonomy.json"><span class="arrow">→</span>
+      <a class="card" href="data/taxonomy.json"><span class="arrow">&#8594;</span>
         <div class="ct">Taxonomy</div>
-        <p class="cd">The three-level compilation backbone, bilingual. Sibling leaves are
-        passed to the compiler as explicit negative scope — which is what keeps adjacent
-        topics from absorbing each other.</p>
-        <div class="cm">2,942 nodes · 15 / 416 / 2,511</div>
+        <p class="cd">The three-level compilation backbone, bilingual.</p>
+        <div class="cm">2,942 nodes</div>
       </a>
-      <a class="card" href="data/measurements.json"><span class="arrow">→</span>
+      <a class="card" href="data/measurements.json"><span class="arrow">&#8594;</span>
         <div class="ct">Measurements <span class="tag">reproducible</span></div>
-        <p class="cd">Every number on this page and in the paper, as structured output from
-        <code>analysis/measure.py</code>. No GPU, no network, no service.</p>
-        <div class="cm">measure.py → measurements.json</div>
+        <p class="cd">Every number on this page, as structured output from
+        <code>measure.py</code>.</p>
+        <div class="cm">measure.py &rarr; measurements.json</div>
       </a>
     </div>
 
     <div class="split top" style="margin-top:56px">
       <div>
-        <h3 class="subtitle">Query it — no key, nothing to install.</h3>
-        <p class="lede" style="font-size:16px">A read-only retrieval endpoint over the
-        evidence corpus is open, and packaged as an Agent Skill declaration and an MCP
-        stdio server. Concept-level evidence retrieval is exposed; chain assembly and
-        node-level graph queries are implemented but not yet public.</p>
+        <h3 class="subtitle">Query it &mdash; no key, nothing to install.</h3>
+        <p class="lede" style="font-size:16px">A read-only endpoint over the evidence
+        corpus, also packaged as an Agent Skill and an MCP stdio server.</p>
         <div class="actions"><a class="btn btn-ghost" href="integrate/">Integration guide</a></div>
       </div>
       <div>
@@ -736,25 +679,17 @@
     <div class="split top">
       <div>
         <h2 class="title">What we have <em>not</em> established.</h2>
-        <p class="lede" style="font-size:16px">This release is deliberately partial and the
-        central experiment has not been run. We would rather say so plainly than let you
-        discover the gaps.</p>
-        <div class="actions">
-          <a class="btn btn-ghost" href="about/">Full scope, limits &amp; disclosure</a>
-        </div>
+        <p class="lede" style="font-size:16px;color:#CBD5E1">The central experiment has not
+        been run. We would rather say so than let you find the gaps.</p>
       </div>
       <ul class="list">
-        <li><b>The central comparison has not been run.</b> We argue for compilation and
-        quantify its amortization, but have not demonstrated better answers than a strong
-        RAG or GraphRAG baseline.</li>
-        <li><b>Retrieval numbers are not published.</b> The harness and the golden set
-        exist; a valid run does not. We publish the suite rather than a claim.</li>
-        <li><b>Build cost is unmeasured.</b> No per-topic time or token cost is recorded —
-        so the economics of front-loading work cannot yet be reported.</li>
-        <li><b>Compilation is in progress.</b> Roughly a third of the taxonomy is
-        uncompiled; the counts above rise over time.</li>
-        <li><b>74.1% of chains are purely linear</b> even though the schema supports
-        branching. Nothing yet rewards capturing genuine route divergence.</li>
+        <li><b>No baseline comparison.</b> We have not shown better answers than a strong
+        RAG or GraphRAG system.</li>
+        <li><b>No retrieval numbers.</b> The harness and golden set exist; a valid run does
+        not.</li>
+        <li><b>Build cost unmeasured.</b> No per-topic time or token cost is recorded.</li>
+        <li><b>74.1% of chains are purely linear</b> though the schema supports
+        branching.</li>
       </ul>
     </div>
   </div>
@@ -775,22 +710,17 @@
               <circle cx="13" cy="12" r="1.7"/><circle cx="17" cy="18.5" r="1.7"/>
             </g>
           </svg>
-          Entropy Box <span class="zh">箱熵</span>
+          Entropy Box <span class="zh">&#31665;&#29223;</span>
         </a>
-        <p style="max-width:38ch;margin:0 0 14px">A knowledge compiler for embodied
-        intelligence. This GitHub page is the durable entry point for citation and
-        archival.</p>
-        <p style="margin:0">Live dashboard, complex-query retrieval and one-click plan
-        assembly: <a href="https://xiangshang.ngrok.app/">xiangshang.ngrok.app</a></p>
+        <p style="max-width:34ch;margin:0">A knowledge compiler for embodied intelligence.
+        Live system at <a href="https://xiangshang.ngrok.app/">xiangshang.ngrok.app</a>.</p>
       </div>
       <div>
-        <h5>Artifact</h5>
+        <h5>Cite</h5>
         <ul>
-          <li><a href="paper/entropy-box-knowledge-compiler-v8.pdf">Paper (PDF)</a></li>
           <li><a href="paper/entropy-box-knowledge-compiler.tex">LaTeX source</a></li>
           <li><a href="CITATION.cff">CITATION.cff</a></li>
-          <li><a href="#data">Open data · CC BY 4.0</a></li>
-          <li><a href="LICENSE">Code · MIT</a></li>
+          <li><a href="LICENSE">Code &middot; MIT</a></li>
         </ul>
       </div>
       <div>
@@ -798,21 +728,13 @@
         <ul>
           <li><a href="mailto:wangyuqi11and11@163.com">wangyuqi11and11@163.com</a></li>
           <li>Yuqi Wang</li>
-          <li><a href="about/">Scope &amp; status</a></li>
-          <li>Research collaboration, dataset access, integrations and corrections all
-          welcome — including access to material not published here.</li>
         </ul>
       </div>
     </div>
-    <p class="footnote"><strong>On language.</strong> Site text and all capability / asset
+    <p class="footnote"><strong>On language.</strong> Site text and all capability and asset
     <em>names</em> are English. Capability <em>descriptions</em> and the research documents
-    are in Chinese, the source language of the compiled corpus. We publish them as they are
-    rather than machine-translating, because the descriptions carry the engineering detail
-    — inputs, outputs, constraints, performance envelopes — that a translation pass would
-    blur.
-    <br><br>If this is useful to you, or if you find something in it that is wrong, we
-    would like to hear about it. Corrections to an artifact like this are worth more than
-    compliments.</p>
+    stay in Chinese, the source language of the corpus &mdash; a translation pass would blur
+    the engineering detail they carry.</p>
   </div>
 </footer>
 

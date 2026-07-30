@@ -1,6 +1,11 @@
-# Entropy Box — A Knowledge Compiler for Embodied AI
+# Entropy Box — A Knowledge Compiler for Embodied Intelligence
 
-> Compile once, execute everywhere.
+### ➜ **[Open the site: chenli-yy.github.io/entropy-box-public](https://chenli-yy.github.io/entropy-box-public/)**
+
+*Compile knowledge → Structure capabilities → Enable robot intelligence*
+
+The links below point at the **rendered site**. Clicking a `.html` file inside this
+repository shows you its source, not the page.
 
 The bottleneck in embodied AI is not model capacity — it is knowledge. What a robot
 needs to know already exists: in tens of thousands of papers, GitHub repositories,
@@ -26,13 +31,17 @@ that improves incrementally and is reused indefinitely — the drawing.
 This repository is the public face of the project: the paper, the open data, the
 reproducible measurement script, and interactive views of the compiled artifact.
 
-📄 **[Paper (PDF)](paper/entropy-box-knowledge-compiler-v8.pdf)** &nbsp;·&nbsp;
-🔎 **[Nine topics, compiled in full](case-study/)** &nbsp;·&nbsp;
-🛠 **[How the graph is built](how-it-works/)** &nbsp;·&nbsp;
-🕸 **[Capability network](graph/capability-network.html)** &nbsp;·&nbsp;
-🔌 **[Query it from your agent](integrate/)** &nbsp;·&nbsp;
-📝 **[Technical notes](blog/)** &nbsp;·&nbsp;
-📊 **[Open data](#open-data)**
+| | |
+|---|---|
+| 🌐 **[Project site](https://chenli-yy.github.io/entropy-box-public/)** | the front door |
+| 📄 **[Paper (PDF)](https://chenli-yy.github.io/entropy-box-public/paper/entropy-box-knowledge-compiler-v8.pdf)** | the argument |
+| 🕸 **[Capability network](https://chenli-yy.github.io/entropy-box-public/graph/capability-network.html)** | 24,915 nodes · 50,407 edges, live |
+| 🔎 **[Nine topics, compiled in full](https://chenli-yy.github.io/entropy-box-public/case-study/)** | every chain, description and repository |
+| 🛠 **[How the graph is built](https://chenli-yy.github.io/entropy-box-public/how-it-works/)** | five stages, three gates, source documents |
+| 🔌 **[Query it from your agent](https://chenli-yy.github.io/entropy-box-public/integrate/)** | HTTP · Agent Skill · MCP |
+| 📝 **[Technical notes](https://chenli-yy.github.io/entropy-box-public/blog/)** | including one negative result |
+| ⚖️ **[Scope, limits &amp; disclosure](https://chenli-yy.github.io/entropy-box-public/about/)** | read before citing |
+| 📊 **[Open data](#open-data)** | CC BY 4.0 |
 
 > **On language.** Site text and all capability / asset *names* are English.
 > Capability *descriptions* and the research documents are in Chinese, the source
