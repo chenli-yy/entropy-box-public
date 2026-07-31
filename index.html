@@ -114,6 +114,10 @@
       "name": "Entropy Box — A Knowledge Compiler for Embodied Intelligence",
       "alternateName": "箱熵",
       "description": "Entropy Box compiles fragmented robotics and embodied-AI knowledge from papers, repositories, documentation and datasets into a persistent, typed, deduplicated capability graph, through a three-phase multi-agent compilation architecture with admission gates and an auditable retrieval ledger.",
+      "identifier": "https://doi.org/10.5281/zenodo.21712178",
+      "url": "https://xiangshang.ngrok.app/",
+      "sameAs": ["https://doi.org/10.5281/zenodo.21712178", "https://github.com/chenli-yy/entropy-box-public"],
+      "codeRepository": "https://github.com/chenli-yy/entropy-box-public",
       "programmingLanguage": "Python",
       "license": "https://opensource.org/licenses/MIT",
       "author": { "@type": "Person", "name": "Yuqi Wang", "email": "wangyuqi11and11@163.com" },
@@ -124,6 +128,9 @@
       "name": "Entropy Box robotics capability and asset index",
       "description": "Bilingual (English/Chinese) index of 24,929 robotics engineering capabilities and 6,078 implementation assets — repositories, frameworks, packages, pretrained models, datasets, simulators, benchmarks and robot platforms — organised under a three-level, 2,942-node taxonomy of embodied AI, together with a capability dependency network of 50,407 typed edges derived from 5,756 compiled task chains.",
       "keywords": ["robotics", "embodied AI", "knowledge graph", "capability graph", "ROS", "task planning", "open-source assets"],
+      "identifier": "https://doi.org/10.5281/zenodo.21712178",
+      "sameAs": "https://doi.org/10.5281/zenodo.21712178",
+      "url": "https://xiangshang.ngrok.app/",
       "license": "https://creativecommons.org/licenses/by/4.0/",
       "creator": { "@type": "Person", "name": "Yuqi Wang" },
       "isAccessibleForFree": true,
@@ -138,6 +145,9 @@
       "name": "Robotics engineering knowledge retrieval golden set",
       "description": "A 126-query evaluation suite for retrieval over robotics engineering knowledge, in the mixed Chinese/English register practitioners actually type. Eight intent classes and three assertion strengths — exact identifiers, any-of sets, and structural predicates — plus explicit negative assertions declaring what must NOT be retrieved.",
       "keywords": ["information retrieval", "evaluation", "benchmark", "robotics", "nDCG", "negative assertions"],
+      "identifier": "https://doi.org/10.5281/zenodo.21712178",
+      "sameAs": "https://doi.org/10.5281/zenodo.21712178",
+      "creator": { "@type": "Person", "name": "Yuqi Wang" },
       "license": "https://creativecommons.org/licenses/by/4.0/",
       "isAccessibleForFree": true,
       "distribution": [{ "@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "data/retrieval_golden.json" }]
@@ -147,6 +157,9 @@
       "name": "Adjudicated near-duplicate capability pairs",
       "description": "1,226 near-duplicate candidate pairs from a robotics knowledge registry's deduplication gate, each recording the embedding or lexical similarity score that flagged it, the metric, the adjudicating agent and the written rationale for the decision. Includes an explicit selection-bias warning: only pairs above the flagging threshold appear, so recall cannot be estimated from this file.",
       "keywords": ["duplicate detection", "entity resolution", "knowledge graph quality", "labelled dataset"],
+      "identifier": "https://doi.org/10.5281/zenodo.21712178",
+      "sameAs": "https://doi.org/10.5281/zenodo.21712178",
+      "creator": { "@type": "Person", "name": "Yuqi Wang" },
       "license": "https://creativecommons.org/licenses/by/4.0/",
       "isAccessibleForFree": true,
       "distribution": [{ "@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "data/dedup_adjudication_ledger.json" }]
@@ -158,6 +171,8 @@
       "author": { "@type": "Person", "name": "Yuqi Wang" },
       "abstract": "The bottleneck in embodied AI is not model capacity but knowledge. We argue robotics needs a knowledge compiler rather than another chatbot: a system that ingests unstructured sources once and emits a persistent, typed, deduplicated artifact.",
       "keywords": "knowledge compilation, robotics knowledge graph, embodied AI, capability graph, provenance",
+      "identifier": "https://doi.org/10.5281/zenodo.21712178",
+      "sameAs": "https://doi.org/10.5281/zenodo.21712178",
       "url": "paper/entropy-box-knowledge-compiler-v8.pdf",
       "encodingFormat": "application/pdf"
     }
@@ -188,8 +203,9 @@
       <a href="#research">Research</a>
       <a href="#demo">Demo</a>
       <a href="#explore">Explore</a>
+      <a href="paper/entropy-box-knowledge-compiler-v8.pdf">Paper</a>
     </div>
-    <a class="navpaper" href="paper/entropy-box-knowledge-compiler-v8.pdf">Paper</a>
+    <a class="navpaper" href="https://xiangshang.ngrok.app/" rel="noopener">Live system &#8594;</a>
   </div>
 </nav>
 
@@ -207,9 +223,15 @@
         not as structure. Entropy Box compiles it once into a typed graph that programs
         can consume.</p>
         <div class="actions">
-          <a class="btn btn-primary" href="paper/entropy-box-knowledge-compiler-v8.pdf">Read the paper <span class="ar">&#8594;</span></a>
+          <a class="btn btn-primary" href="https://xiangshang.ngrok.app/" rel="noopener">Open the live system <span class="ar">&#8594;</span></a>
+          <a class="btn btn-ghost" href="paper/entropy-box-knowledge-compiler-v8.pdf">Read the paper</a>
           <a class="btn btn-ghost" href="graph/capability-network.html">Explore the knowledge graph</a>
         </div>
+        <p class="lede" style="margin-top:14px;font-size:.92em;opacity:.8">
+          This page is the static mirror. Complex-query retrieval, one-click plan
+          assembly and the live dashboard run at
+          <a href="https://xiangshang.ngrok.app/" rel="noopener">xiangshang.ngrok.app</a>
+          &mdash; no registration, no install.</p>
       </div>
 
       <div>
@@ -718,6 +740,7 @@
       <div>
         <h5>Cite</h5>
         <ul>
+          <li><a href="https://doi.org/10.5281/zenodo.21712178" rel="noopener">DOI 10.5281/zenodo.21712178</a></li>
           <li><a href="paper/entropy-box-knowledge-compiler.tex">LaTeX source</a></li>
           <li><a href="CITATION.cff">CITATION.cff</a></li>
           <li><a href="LICENSE">Code &middot; MIT</a></li>

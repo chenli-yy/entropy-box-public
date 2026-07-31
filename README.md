@@ -1,10 +1,28 @@
 # Entropy Box — A Knowledge Compiler for Embodied Intelligence
 
-### ➜ **[Open the site: chenli-yy.github.io/entropy-box-public](https://chenli-yy.github.io/entropy-box-public/)**
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21712178.svg)](https://doi.org/10.5281/zenodo.21712178)
+[![Live system](https://img.shields.io/badge/live%20system-xiangshang.ngrok.app-00D4FF)](https://xiangshang.ngrok.app/)
+[![Data: CC BY 4.0](https://img.shields.io/badge/data-CC%20BY%204.0-blue)](LICENSE)
+[![Code: MIT](https://img.shields.io/badge/code-MIT-green)](LICENSE)
+
+## ➜ **[Run the live system → xiangshang.ngrok.app](https://xiangshang.ngrok.app/)**
+
+**The compiled artifact is not a static dump — it is a running system, and it is
+open.** Type a robotics goal in plain language and watch it decompose into an
+executable capability chain with attributed repositories and explicitly annotated
+gaps. Complex-query retrieval over 24,929 capabilities, one-click plan assembly and
+the interactive dependency network all run there. No registration, no install.
+
+> The read-only documentation mirror lives at
+> [chenli-yy.github.io/entropy-box-public](https://chenli-yy.github.io/entropy-box-public/),
+> and this repository is the durable entry point for **citation and archival**
+> ([DOI 10.5281/zenodo.21712178](https://doi.org/10.5281/zenodo.21712178)).
+> Neither of them runs the retrieval stack. **If you want to see what the thing
+> actually does, use the live system.**
 
 *Compile knowledge → Structure capabilities → Enable robot intelligence*
 
-The links below point at the **rendered site**. Clicking a `.html` file inside this
+The links below point at the **rendered mirror**. Clicking a `.html` file inside this
 repository shows you its source, not the page.
 
 The bottleneck in embodied AI is not model capacity — it is knowledge. What a robot
@@ -33,7 +51,8 @@ reproducible measurement script, and interactive views of the compiled artifact.
 
 | | |
 |---|---|
-| 🌐 **[Project site](https://chenli-yy.github.io/entropy-box-public/)** | the front door |
+| ⚡ **[Live system](https://xiangshang.ngrok.app/)** | **the running thing — retrieval, plan assembly, dashboard** |
+| 🌐 **[Documentation mirror](https://chenli-yy.github.io/entropy-box-public/)** | static, archival |
 | 📄 **[Paper (PDF)](https://chenli-yy.github.io/entropy-box-public/paper/entropy-box-knowledge-compiler-v8.pdf)** | the argument |
 | 🕸 **[Capability network](https://chenli-yy.github.io/entropy-box-public/graph/capability-network.html)** | 24,915 nodes · 50,407 edges, live |
 | 🔎 **[Nine topics, compiled in full](https://chenli-yy.github.io/entropy-box-public/case-study/)** | every chain, description and repository |
@@ -206,8 +225,10 @@ curl -X POST "$ENTROPY_BOX_API/api/evidence/search" \
 
 The same endpoint is packaged as an Agent Skill declaration and as an MCP stdio
 server. The open endpoint exposes concept-level evidence retrieval; complex task
-retrieval, chain assembly and node-level graph queries are implemented but not yet
-exposed as an API. See the project site for the current base URL.
+retrieval, chain assembly and node-level graph queries are implemented but **not**
+exposed as an API — they are driven interactively at
+**<https://xiangshang.ngrok.app/>**, which is also where the current
+`ENTROPY_BOX_API` base URL is published.
 
 ## What this is not
 
@@ -237,8 +258,22 @@ exposed as an API. See the project site for the current base URL.
 
 ## Citation
 
-See [`CITATION.cff`](CITATION.cff). If you use the golden set or the adjudication
-ledger, please cite the paper.
+Archived release: **[10.5281/zenodo.21712178](https://doi.org/10.5281/zenodo.21712178)**
+(concept DOI — always resolves to the latest version).
+
+```bibtex
+@software{wang_entropy_box_2026,
+  author    = {Wang, Yuqi},
+  title     = {Entropy Box: A Knowledge Compiler for Embodied AI},
+  year      = {2026},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.21712178},
+  url       = {https://doi.org/10.5281/zenodo.21712178}
+}
+```
+
+See also [`CITATION.cff`](CITATION.cff). If you use the golden set or the
+adjudication ledger, please cite the paper.
 
 ## Technical notes
 
@@ -253,11 +288,12 @@ someone who already cares about Entropy Box, it does not belong there.
 
 ## Links and contact
 
-- **Project site** — <https://xiangshang.ngrok.app/> — the interactive dashboard,
-  complex-query retrieval and one-click plan assembly run live there. This
-  repository is the durable entry point for citation and archival.
+- ⚡ **[Live system → xiangshang.ngrok.app](https://xiangshang.ngrok.app/)** — where
+  the retrieval stack and plan assembly actually run. Start here.
 - **Paper** — [PDF](paper/entropy-box-knowledge-compiler-v8.pdf) ·
-  [LaTeX source](paper/entropy-box-knowledge-compiler.tex)
+  [LaTeX source](paper/entropy-box-knowledge-compiler.tex) ·
+  [DOI](https://doi.org/10.5281/zenodo.21712178)
+- **Documentation mirror** — <https://chenli-yy.github.io/entropy-box-public/>
 - **Contact** — Yuqi Wang, <wangyuqi11and11@163.com>
 
 Research collaboration, dataset access, integrations and corrections are all welcome

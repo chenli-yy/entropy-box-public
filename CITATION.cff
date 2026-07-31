@@ -14,8 +14,14 @@ abstract: >-
   paper, the compiled artifact's public indices, a 126-query retrieval evaluation
   suite, an adjudicated near-duplicate ledger usable as labelled data, and a
   reproducible measurement script.
+doi: "10.5281/zenodo.21712178"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.21712178"
+    description: "Concept DOI — always resolves to the latest archived release."
 repository-code: "https://github.com/chenli-yy/entropy-box-public"
-url: "https://chenli-yy.github.io/entropy-box-public/"
+url: "https://xiangshang.ngrok.app/"
+repository-artifact: "https://doi.org/10.5281/zenodo.21712178"
 keywords:
   - knowledge compilation
   - robotics knowledge graph
