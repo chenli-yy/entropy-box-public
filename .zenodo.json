@@ -1,0 +1,40 @@
+{
+  "upload_type": "software",
+  "title": "Entropy Box: A Knowledge Compiler for Embodied AI",
+  "creators": [
+    {
+      "name": "Wang, Yuqi",
+      "affiliation": "Entropy Box"
+    }
+  ],
+  "description": "<p>Entropy Box compiles fragmented robotics and embodied-AI knowledge from papers, repositories, documentation and datasets into a persistent, typed, deduplicated capability graph, through a three-phase multi-agent compilation architecture with admission gates and an auditable retrieval ledger.</p><p>This deposit archives the public release of the project and contains:</p><ul><li>the system paper (30 pages, 7 figures, 9 tables);</li><li>the compiled artifact's public indices &mdash; a 2,942-node domain taxonomy, 22,873 capabilities and 5,624 assets linked by 100,305 typed edges;</li><li>a 126-query retrieval evaluation suite (<code>data/retrieval_golden.json</code>);</li><li>an adjudicated near-duplicate ledger usable as labelled data (<code>data/dedup_adjudication_ledger.json</code>);</li><li>a reproducible measurement script and the measurements it produces.</li></ul><p>Two empirical results are reported from the system's own records: embedding similarity cannot decide flagged duplicate pairs at any threshold (precision 0.069, AUC 0.629); and 98.29% of the artifact's evidence citations resolve to a retrievable document.</p><p>The artifact is publicly browsable and a read-only retrieval API is open at <a href=\"https://chenli-yy.github.io/entropy-box-public/\">https://chenli-yy.github.io/entropy-box-public/</a>.</p>",
+  "access_right": "open",
+  "license": "cc-by-4.0",
+  "keywords": [
+    "knowledge compilation",
+    "robotics knowledge graph",
+    "embodied AI",
+    "capability graph",
+    "retrieval-augmented generation",
+    "provenance",
+    "multi-agent systems",
+    "dataset",
+    "benchmark",
+    "ROS"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://chenli-yy.github.io/entropy-box-public/",
+      "relation": "isDocumentedBy",
+      "resource_type": "other",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://github.com/chenli-yy/entropy-box-public",
+      "relation": "isSupplementTo",
+      "resource_type": "software",
+      "scheme": "url"
+    }
+  ],
+  "language": "eng"
+}
